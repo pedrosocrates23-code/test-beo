@@ -1,0 +1,36 @@
+{
+ "n": 14,
+ "slug": "como-a-reforma-tributaria-de-2025-vai-impactar-o-fluxo-de-caixa-das-empresas",
+ "titulo": "Como a Reforma Tributária de 2025 Vai Impactar o Fluxo de Caixa das Empresas?",
+ "lead": "",
+ "dataIso": "2025-01-10",
+ "categoria": "Tributação",
+ "autor": "Por Beorange",
+ "metaTitle": "Como a Reforma Tributária de 2025 Vai Impactar o Fluxo de... | Beorange",
+ "metaDescription": "",
+ "palavras": 528,
+ "hero": "/img/blog/como-a-reforma-tributaria-de-2025-vai-impactar-o-fluxo-de-caixa-das-empresas/capa.jpg",
+ "card": "/img/blog/como-a-reforma-tributaria-de-2025-vai-impactar-o-fluxo-de-caixa-das-empresas/capa.jpg",
+ "imagemAlt": "Imagem de destaque do artigo: Como a Reforma Tributária de 2025 Vai Impactar o Fluxo de Caixa das Empresas",
+ "corpo": "<h2>Como a Reforma Tributária de 2025 Vai Impactar o Fluxo de Caixa das Empresas?</h2>\n<p>A Reforma Tributária de 2025 promete transformar significativamente o sistema tributário brasileiro, trazendo mudanças que afetam desde a simplificação dos tributos até o fluxo de caixa das empresas. Aprovada por meio da Emenda Constitucional nº 132 em dezembro de 2023, essa reforma introduz um novo modelo de tributação, impactando diretamente a gestão financeira e operacional das empresas.</p>\n<h2><strong>Simplificação Tributária e Unificação de Tributos</strong></h2>\n<p>Uma das principais mudanças é a unificação dos tributos em um modelo de IVA Dual, substituindo tributos como PIS, Cofins, IPI, ICMS e ISS por dois novos impostos: o Imposto sobre Bens e Serviços (IBS) e a Contribuição sobre Bens e Serviços (CBS). Essa simplificação promete reduzir a burocracia e facilitar a gestão tributária, mas também exige adaptação por parte das empresas, principalmente na implementação de novos sistemas e estratégias fiscais.</p>\n<h2><strong>Impacto Positivo no Fluxo de Caixa: Principais Pontos</strong></h2>\n<p>De acordo com especialistas, algumas mudanças trazidas pela reforma podem beneficiar o fluxo de caixa das empresas. Aqui estão os principais destaques:</p>\n<ol><li><h6><strong>Marco Temporal de Crédito (Art. 28)</strong></h6><p>Com a reforma, os créditos tributários estarão disponíveis na data da compra, sem necessidade de esperar a chegada das mercadorias. Essa antecipação melhora a liquidez e reduz os gargalos financeiros.</p></li><li><h6><strong>Crédito Imediato para Pagamentos Eletrônicos (Art. 52)</strong></h6><p>Os pagamentos realizados via transferência eletrônica garantirão crédito imediato ou na data do pagamento, evitando atrasos no reconhecimento dos créditos tributários.</p></li><li><h6><strong>Compensação entre Estabelecimentos (Art. 46)</strong></h6><p>A reforma permite a compensação de saldos devedores e credores entre diferentes estados e estabelecimentos, resolvendo problemas que antes podiam levar anos para serem solucionados.</p></li><li><h6><strong>Utilização de Créditos para Importação (Art. 80)</strong></h6><p>Empresas poderão usar créditos tributários para pagar IBS e CBS sobre importações, uma prática que, atualmente, é limitada em alguns estados.</p></li><li><h6><strong>Split Payment: Pagamento Dividido</strong></h6><p>O modelo de split payment modifica a forma como os impostos são recolhidos, sendo descontados diretamente no momento da venda ou compra. Embora isso possa representar um desafio inicial para o fluxo de caixa, o sistema visa reduzir a inadimplência e a sonegação, trazendo benefícios a longo prazo.</p></li></ol>\n<h3><strong>Outras Mudanças Relevantes</strong></h3>\n<ul><li><p><strong>Tributação no Destino</strong>: Com o objetivo de acabar com a guerra fiscal entre estados, a reforma altera a tributação de origem para destino, garantindo maior equidade no recolhimento dos tributos.</p></li><li><p><strong>Regimes Diferenciados</strong>: Setores específicos, como educação e saúde, terão alíquotas reduzidas, enquanto serviços financeiros e outros setores estratégicos contarão com regimes adaptados às suas particularidades.</p></li><li><p><strong>Simples Nacional Híbrido</strong>: Empresas optantes pelo Simples Nacional poderão escolher entre o regime tradicional e a tributação segregada para IBS e CBS, dependendo do que for mais vantajoso economicamente.</p></li></ul>\n<h3><strong>Como se Preparar para as Mudanças</strong></h3>\n<p>Empresas devem investir em uma análise detalhada de seus processos fiscais e financeiros para se adaptar ao novo regime. A revisão da precificação, otimização do fluxo de caixa e a escolha dos regimes tributários mais adequados serão cruciais para manter a competitividade no mercado.</p>\n<p>A Reforma Tributária de 2025 não apenas simplifica a tributação, mas também apresenta desafios e oportunidades. Estar atualizado sobre as mudanças e contar com especialistas em gestão tributária será essencial para navegar por esse novo cenário.</p>",
+ "cluster": "REFORMA",
+ "relacionados": [
+  {
+   "slug": "reforma-tributaria-para-prestadores-de-servicos-impactos-aliquotas-e-regimes-tributarios",
+   "titulo": "Reforma Tributária para prestadores de serviços: impactos, alíquotas e regimes tributários",
+   "categoria": "Reforma Tributária",
+   "palavras": 632
+  },
+  {
+   "slug": "ibs-e-cbs-2026-o-que-muda-na-pratica-e-como-se-preparar",
+   "titulo": "IBS e CBS 2026: o que muda na prática e como se preparar",
+   "categoria": "Reforma Tributária",
+   "palavras": 2238
+  }
+ ],
+ "urlAntiga": "https://beorange.app/blog/como-a-reforma-tribut%C3%A1ria-de-2025-vai-impactar-o-fluxo-de-caixa-das-empresas",
+ "notasDaMigracao": [
+  "rebaixado 1 <h1> do corpo para <h2>",
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
+ ]
+}

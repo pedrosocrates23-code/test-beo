@@ -1,0 +1,107 @@
+---
+// Página: Blog (índice).
+// Fonte do texto: "Proposta de textos — páginas do novo site", PÁGINA 7, dobra por dobra.
+// Nenhuma linha foi reescrita.
+//
+// ESTADO DO CONTEÚDO: os 149 artigos migrados do Framer já estão na content collection
+// "artigos". As dobras 3 e 4 saem dela — as etiquetas de exemplo caíram junto, como previsto.
+//
+// DOBRA 3 (destaque): o documento pede curadoria, não o mais recente por data. O critério
+// aqui é estrutural, não cronológico: os pilares de cluster (o artigo mais completo e mais
+// central de cada tema) que têm imagem de destaque aprovada, os três mais recentes entre eles.
+//
+// DOBRA 4 (lista): mostra os 149, e não os 12 que o documento pede por bloco. A paginação
+// ainda não existe, e listar 12 deixaria 137 artigos sem nenhum link apontando para eles —
+// órfãos no site inteiro. Lista completa agora, paginação quando houver a rota /blog/2/.
+import { getCollection } from "astro:content";
+import { tempoDeLeitura, formatarData } from "../../lib/artigo";
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-contabilidade.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import HeroIndice from "../../components/elements/HeroIndice.astro";
+import ResourcesSection from "../../components/elements/ResourcesSection.astro";
+import AssinaturaConteudo from "../../components/elements/AssinaturaConteudo.astro";
+import Footer from "../../components/elements/Footer.astro";
+
+const artigos = (await getCollection("artigos"))
+  .map((e) => e.data)
+  .sort((a, b) => b.dataIso.localeCompare(a.dataIso));
+
+/** Card da vitrine. O resumo é o lead do artigo, cortado na palavra — 19 artigos
+ *  vieram do Framer sem parágrafo de abertura e ficam sem resumo até serem escritos. */
+const paraCard = (a: (typeof artigos)[number]) => ({
+  imagem: a.card ?? "/img/blog/hero-image.webp",
+  categoria: a.categoria,
+  titulo: a.titulo,
+  resumo: a.lead.length > 150 ? a.lead.slice(0, 147).replace(/\s+\S*$/, "") + "…" : a.lead,
+  meta: `${formatarData(a.dataIso)} · ${tempoDeLeitura(a.palavras)} min de leitura`,
+  href: `/blog/${a.slug}/`,
+});
+
+// Um pilar por cluster: o artigo mais longo do tema. Entre eles, só os que têm imagem de
+// destaque aprovada — um destaque sem hero fica visualmente quebrado na vitrine.
+const pilares = new Map<string, (typeof artigos)[number]>();
+for (const a of artigos) {
+  const atual = pilares.get(a.cluster);
+  if (!atual || a.palavras > atual.palavras) pilares.set(a.cluster, a);
+}
+const destaques = [...pilares.values()]
+  .filter((a) => a.hero)
+  .sort((a, b) => b.dataIso.localeCompare(a.dataIso))
+  .slice(0, 3)
+  .map(paraCard);
+
+const todos = artigos.map(paraCard);
+---
+<Layout
+  title="Blog Beorange | Contabilidade, tributário e gestão financeira"
+  description="Conteúdo sobre Lucro Real, Reforma Tributária, departamento pessoal, societário e gestão financeira para empresas em crescimento."
+>
+  <Header ativo="blog" tema="claro" />
+  <MobileMenu />
+
+  <!-- DOBRA 1 — Abertura -->
+  <HeroIndice
+    titulo="Conteúdo para quem precisa decidir com número, não com achismo"
+    lead="Lucro Real, Reforma Tributária, obrigações acessórias, folha, estrutura societária e gestão financeira. Escrito por quem opera essas rotinas todos os dias."
+    buscaPlaceholder="Buscar por assunto"
+  />
+
+  <!-- DOBRA 2 — "Navegar por tema" foi removida a pedido (15/09/2026).
+       Os sete blocos de tema eram rótulos que não clicavam: as rotas /blog/tributario/ e
+       irmãs não existem. Quando forem criadas, a navegação por tema volta como lista de
+       links de verdade, montada a partir do campo `categoria` da collection. -->
+
+  <!-- DOBRA 3 — Destaques. Curadoria estrutural: o artigo mais completo de cada tema,
+       entre os que têm imagem de destaque aprovada. Ver a nota no topo do arquivo. -->
+  <ResourcesSection
+    titulo="Em destaque"
+    intro=""
+    cards={destaques}
+    nota={null}
+    link={null}
+  />
+
+  <!-- DOBRA 4 — Todos os artigos, do mais recente para o mais antigo, em lotes de 15.
+       15 = 5 linhas de 3 colunas no desktop (a grade cai para 2 colunas até 980px e para 1
+       no celular, então lá as mesmas 15 rendem mais linhas — o lote é contado em cards, que
+       é o que existe no HTML, não em linhas, que dependem da largura da tela).
+       Os 134 restantes continuam no HTML com `hidden`, e por isso seguem indexáveis e
+       alcançáveis sem JS; o que não é baixado é a imagem de cada um. -->
+  <ResourcesSection
+    titulo="Publicados recentemente"
+    intro=""
+    cards={todos}
+    porLote={15}
+    nota={`${todos.length} artigos migrados do blog anterior. A data exibida é a de publicação original; em conteúdo tributário vale acrescentar a data de atualização, porque a legislação muda.`}
+    link={null}
+  />
+
+  <!-- DOBRA 5 — Assinatura de conteúdo -->
+  <AssinaturaConteudo />
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

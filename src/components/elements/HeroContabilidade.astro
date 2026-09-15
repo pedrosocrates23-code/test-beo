@@ -1,0 +1,46 @@
+---
+// Elemento: Dobra 1 da página Contabilidade — hero centralizado com foto full-bleed.
+// Fonte da verdade: Figma nó 47:936, onde a foto do nó 71:2194 ("image 8") é filha direta da
+// seção e cobre a dobra inteira. O protótipo do designer (beorange-contabilidade_1.html)
+// trazia a foto dentro de um card .hero-media de 900px com o selo "Leitura dos números" —
+// nenhum dos dois existe no Figma, então saíram.
+// A foto entra pela variável --hero-photo em src/styles/prototype-contabilidade.css.
+//
+// Diferente do HeroSection da home, este é centralizado e sem selos. Use em páginas de
+// serviço; para trocar a foto, sobrescreva --hero-photo no CSS da página.
+import Icone from "./Icone.astro";
+
+interface Props {
+  eyebrow?: string;
+  titulo?: string;
+  lead?: string;
+  ctaPrimario?: { texto: string; href: string };
+  ctaSecundario?: { texto: string; href: string };
+  /** Faixa de uma linha abaixo dos botões. Na Conta Beorange carrega o modelo de cobrança,
+   *  que o documento manda expor já na primeira dobra por ser argumento comercial. */
+  destaque?: string;
+}
+
+const {
+  eyebrow = "Contabilidade Beorange",
+  titulo = "Contabilidade para quem precisa de mais do que guias e obrigações",
+  lead = "Execução técnica, tecnologia e acompanhamento consultivo em uma estrutura só. Para empresas em crescimento que precisam de números confiáveis, visão integrada e clareza para decidir.",
+  ctaPrimario = { texto: "Solicitar diagnóstico", href: "#diagnostico" },
+  ctaSecundario = { texto: "Ver as seis frentes", href: "#frentes" },
+  destaque,
+} = Astro.props;
+---
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-inner rv in">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h1>{titulo}</h1>
+      <p class="lead">{lead}</p>
+      <div class="hero-cta">
+        <a href={ctaPrimario.href} class="btn btn-primary">{ctaPrimario.texto}</a>
+        {ctaSecundario && <a href={ctaSecundario.href} class="btn btn-ghost">{ctaSecundario.texto}</a>}
+      </div>
+      {destaque && <p class="hero-destaque">{destaque}</p>}
+    </div>
+  </div>
+</section>

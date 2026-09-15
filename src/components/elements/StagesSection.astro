@@ -1,0 +1,59 @@
+---
+// Elemento: Dobra 2 — Evolução / Estágios.
+// Fonte da verdade: HTML oficial do designer (beorange-homepage_2.html, linhas 406-422).
+//
+// Serve para qualquer página que precise mostrar uma progressão em etapas — maturidade,
+// jornada, fases de um projeto. Marque com `atual: true` o estágio onde o leitor deveria
+// chegar: é ele que recebe a classe .on e ganha destaque.
+interface Props {
+  titulo?: { forte?: string; resto: string };
+  intro?: string;
+  estagios?: { rotulo: string; titulo: string; resumo: string; pontos: string[]; atual?: boolean }[];
+  /** Frase de fecho com a barrinha laranja. Omita para não renderizar. */
+  destaque?: string;
+}
+
+const {
+  titulo = { forte: "Toda empresa muda", resto: "de patamar antes de mudar de estrutura" },
+  intro = "O faturamento sobe primeiro. A estrutura administrativa vem depois, quase sempre atrasada. Nesse intervalo aparecem o retrabalho, o imposto pago sem revisão e a decisão tomada com número de dois meses atrás. A Beorange organiza essa passagem, conectando contabilidade, financeiro e tecnologia em uma estrutura só.",
+  estagios = [
+    {
+      rotulo: "ESTÁGIO 01",
+      titulo: "Controle informal",
+      resumo: "Planilha, banco e contador funcionando separados.",
+      pontos: ["O resultado do mês só fica claro semanas depois", "Ninguém revisa o que foi pago de imposto"],
+    },
+    {
+      rotulo: "ESTÁGIO 02",
+      titulo: "Crescimento acelerado",
+      resumo: "O volume aumenta e o controle manual começa a falhar.",
+      pontos: ["Fiscal, contábil e financeiro apresentam números diferentes", "A estrutura societária já não corresponde ao negócio"],
+    },
+    {
+      rotulo: "ESTÁGIO 03",
+      titulo: "Estrutura profissionalizada",
+      resumo: "Informação integrada, governança definida e leitura tributária ativa.",
+      pontos: ["O dado nasce categorizado e chega à contabilidade sem retrabalho", "A decisão passa a ser tomada com número do mês corrente"],
+      atual: true,
+    },
+  ],
+  destaque = "Empresa em crescimento precisa que os números cheguem a tempo de mudar a decisão.",
+} = Astro.props;
+---
+<section class="alt stages-sec">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>{titulo.forte && <b>{titulo.forte}</b>} {titulo.resto}</h2>
+      {intro && <p>{intro}</p>}
+    </div>
+    <div class="stages rv">
+      {estagios.map((e) => (
+        <div class:list={["stage", { on: e.atual }]}>
+          <div class="num">{e.rotulo}</div><h3>{e.titulo}</h3><p>{e.resumo}</p>
+          <ul>{e.pontos.map((p) => <li>{p}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+    {destaque && <p class="destaque rv"><span class="bar"></span>{destaque}</p>}
+  </div>
+</section>

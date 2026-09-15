@@ -1,0 +1,70 @@
+---
+// Elemento: formulário de diagnóstico.
+// Fonte da verdade: HTML oficial do designer — o mesmo formulário aparece na home
+// (beorange-homepage_2.html, .diag-r) e na Contabilidade (beorange-contabilidade_1.html,
+// .d2r). Estava copiado nos dois; agora vive aqui e as duas seções o chamam.
+//
+// O conjunto de campos é dado, não markup: a lista `campos` monta o grid. Isso vale para
+// qualquer formulário curto do site — orçamento, contato, inscrição — sem duplicar estrutura.
+// `full: true` faz o campo ocupar as duas colunas.
+//
+// AINDA NÃO CONECTADO. O `onSubmit` padrão apenas limpa e avisa, como no protótipo. Ao ligar
+// de verdade, troque essa prop e lembre que os campos coletam dado pessoal de empresa: o
+// destino precisa estar declarado na política de privacidade antes do primeiro envio real.
+
+export type Campo =
+  | { tipo: "text" | "email" | "tel"; rotulo: string; obrigatorio?: boolean; placeholder?: string; full?: boolean }
+  | { tipo: "select"; rotulo: string; obrigatorio?: boolean; vazio?: string; opcoes: string[]; full?: boolean }
+  | { tipo: "textarea"; rotulo: string; obrigatorio?: boolean; full?: boolean };
+
+interface Props {
+  titulo?: string;
+  campos?: Campo[];
+  botao?: string;
+  /** Promessa de retorno ao lado do botão. Só prometa o que o time cumpre. */
+  rodape?: string;
+  onSubmit?: string;
+}
+
+export const CAMPOS_PADRAO: Campo[] = [
+  { tipo: "text", rotulo: "Nome", obrigatorio: true },
+  { tipo: "email", rotulo: "E-mail corporativo", obrigatorio: true },
+  { tipo: "tel", rotulo: "Telefone" },
+  { tipo: "text", rotulo: "Empresa" },
+  { tipo: "text", rotulo: "Faturamento anual aproximado", placeholder: "R$" },
+  { tipo: "select", rotulo: "Regime tributário atual", obrigatorio: true, vazio: "Selecione", opcoes: ["Simples Nacional", "Lucro Presumido", "Lucro Real", "Não sei"] },
+  { tipo: "textarea", rotulo: "Mensagem", full: true },
+];
+
+const {
+  titulo = "Solicitar diagnóstico",
+  campos = CAMPOS_PADRAO,
+  botao = "Solicitar diagnóstico",
+  rodape = "Respondemos em até um dia útil.",
+  onSubmit = "event.preventDefault();this.reset();alert('Protótipo — envio de formulário ainda não conectado.');",
+} = Astro.props;
+---
+<h3>{titulo}</h3>
+<form onsubmit={onSubmit}>
+  <div class="form-grid">
+    {campos.map((campo) => (
+      <div class:list={["field", { full: campo.full }]}>
+        <label>{campo.rotulo}</label>
+        {campo.tipo === "select" ? (
+          <select required={campo.obrigatorio}>
+            {campo.vazio && <option value="" disabled selected>{campo.vazio}</option>}
+            {campo.opcoes.map((o) => <option>{o}</option>)}
+          </select>
+        ) : campo.tipo === "textarea" ? (
+          <textarea required={campo.obrigatorio}></textarea>
+        ) : (
+          <input type={campo.tipo} required={campo.obrigatorio} placeholder={campo.placeholder} />
+        )}
+      </div>
+    ))}
+  </div>
+  <div class="form-foot">
+    <button type="submit" class="btn btn-primary">{botao}</button>
+    {rodape && <span class="rsv">{rodape}</span>}
+  </div>
+</form>

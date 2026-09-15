@@ -1,0 +1,114 @@
+---
+// Elemento: Dobra 5 — Prova (cases, avaliações do Google, reconhecimentos).
+// Fonte da verdade: HTML oficial do designer (beorange-homepage_2.html, linhas 545-598).
+//
+// Três provas independentes numa seção só, e cada uma some se você não passar os dados:
+// omita `cases` e a fileira de cases desaparece, omita `avaliacoes` e o bloco do Google sai,
+// omita `reconhecimentos` e a coluna da direita não é renderizada.
+//
+// As marcas de "exemplo" (etiquetaExemplo, notaCases, notaAvaliacoes) existem porque o
+// conteúdo aqui é ILUSTRATIVO — foi o próprio designer quem marcou assim. Apague essas props
+// quando entrar dado real, e só então: case sem autorização por escrito e nota do Google
+// digitada à mão são os dois jeitos mais fáceis de transformar esta seção em problema.
+interface Props {
+  titulo?: string;
+  /** Etiqueta de aviso ao lado do título. Passe "" quando o conteúdo for real. */
+  etiquetaExemplo?: string;
+  cases?: { segmento: string; resultado: string; tags: { texto: string; regime?: boolean }[] }[];
+  notaCases?: string;
+  linkCases?: { texto: string; href: string };
+  avaliacoes?: {
+    titulo: string;
+    nota: string;
+    estrelas: string;
+    total: string;
+    depoimentos: { texto: string; autor: string; quando: string }[];
+    nota_rodape?: string;
+  };
+  reconhecimentos?: { titulo: string; itens: { antes?: string; forte: string; depois?: string }[] };
+}
+
+const {
+  titulo = "Quem já opera com essa estrutura",
+  etiquetaExemplo = "Conteúdo de exemplo",
+  cases = [
+    { segmento: "Indústria · Embalagens", resultado: "Fechamento que levava semanas passou a sair no mês corrente.", tags: [{ texto: "Contabilidade" }, { texto: "Lucro Real", regime: true }] },
+    { segmento: "Tecnologia · SaaS B2B", resultado: "Créditos de PIS e COFINS identificados e recuperados na operação.", tags: [{ texto: "Tributário" }, { texto: "Lucro Real", regime: true }] },
+    { segmento: "Rede de serviços", resultado: "Fiscal, contábil e financeiro passaram a mostrar o mesmo número.", tags: [{ texto: "Conta + Contabilidade" }, { texto: "Lucro Presumido", regime: true }] },
+  ],
+  notaCases = "Cases ilustrativos por segmento — substituir pelos 3 cases reais, com resultado mensurável e autorização por escrito.",
+  linkCases = { texto: "Ver todos os cases", href: "/cases/" },
+  avaliacoes = {
+    titulo: "O que dizem no Google",
+    nota: "4,9",
+    estrelas: "★★★★★",
+    total: "63 avaliações no Google",
+    depoimentos: [
+      { texto: '"Migramos para o Lucro Real no meio do ano e a virada de regime foi tranquila. O time responde rápido."', autor: "Marina A.", quando: "há 2 semanas" },
+      { texto: '"Finalmente contabilidade e conta no mesmo lugar. Parei de exportar planilha para conciliar."', autor: "Rafael T.", quando: "há 1 mês" },
+      { texto: '"O analista conhece a nossa operação. Não é atendimento genérico de fila."', autor: "Camila S.", quando: "há 1 mês" },
+    ],
+    nota_rodape: "Nota, total e textos ilustrativos — puxar do Perfil da Empresa no Google. Avaliação não se edita.",
+  },
+  reconhecimentos = {
+    titulo: "Reconhecimentos",
+    itens: [
+      { antes: "Aporte pré-seed com valuation de ", forte: "R$ 10 milhões" },
+      { antes: "Indicada a ", forte: "Fintech do Ano", depois: " no Brasil" },
+      { forte: "Top 10 PR", depois: " no Prêmio Sebrae Startups 2026" },
+      { forte: "Top 1.000", depois: " no Prêmio Sebrae Startups" },
+    ],
+  },
+} = Astro.props;
+---
+<section>
+  <div class="wrap">
+    <div class="sec-head rv" style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;max-width:none">
+      <h2 style="max-width:20ch">{titulo}</h2>
+      {etiquetaExemplo && <span class="ex-tag">{etiquetaExemplo}</span>}
+    </div>
+    {cases && cases.length > 0 && (
+      <div class="case-row rv">
+        {cases.map((c) => (
+          <div class="case">
+            <span class="seg">{c.segmento}</span>
+            <div class="res">{c.resultado}</div>
+            <div class="tags">{c.tags.map((t) => <span class:list={{ reg: t.regime }}>{t.texto}</span>)}</div>
+          </div>
+        ))}
+      </div>
+    )}
+    {notaCases && <p class="ex-note rv">{notaCases}</p>}
+    {linkCases && (
+      <div class="pend rv" style="margin-top:16px">
+        <a href={linkCases.href} class="link-cta">{linkCases.texto} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    )}
+    <div class="prova-sub">
+      {avaliacoes && (
+        <div class="reviews-ph rv">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <strong style="font-size:15px;color:var(--ink)">{avaliacoes.titulo}</strong>
+            {etiquetaExemplo && <span class="ex-tag">Exemplo</span>}
+          </div>
+          <div class="g-head">
+            <div class="g-score">{avaliacoes.nota}</div>
+            <div class="g-meta"><div class="stars">{avaliacoes.estrelas}</div><div class="cnt">{avaliacoes.total}</div></div>
+          </div>
+          {avaliacoes.depoimentos.map((d) => (
+            <div class="creview"><div class="rtext">{d.texto}</div><div class="rwho"><b>{d.autor}</b> · {d.quando}</div></div>
+          ))}
+          {avaliacoes.nota_rodape && <p class="ex-note" style="margin-top:12px">{avaliacoes.nota_rodape}</p>}
+        </div>
+      )}
+      {reconhecimentos && (
+        <div class="recog rv">
+          <h3>{reconhecimentos.titulo}</h3>
+          <ul>
+            {reconhecimentos.itens.map((i) => <li>{i.antes}<b>{i.forte}</b>{i.depois}</li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+  </div>
+</section>

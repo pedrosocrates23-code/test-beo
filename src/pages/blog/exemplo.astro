@@ -1,0 +1,56 @@
+---
+// Página: Artigo de blog — reconstruída a partir do HTML oficial do designer
+// (beorange-artigo_2.html). Serve de TEMPLATE para os próximos artigos: o bloco `artigo`
+// logo abaixo é a única coisa que muda de um post para outro, e o tempo de leitura sai da
+// contagem real de palavras do corpo — não é digitado à mão.
+import { contarPalavras, tempoDeLeitura } from "../../lib/artigo";
+// ?raw entrega o .astro do corpo como string já no bundle. Ler o arquivo com node:fs não
+// serve: no build o import.meta.url aponta para dist/, onde o .astro não existe.
+import fonteDoCorpo from "../../components/elements/ArticleBody.astro?raw";
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-artigo.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import ArticleHeader from "../../components/elements/ArticleHeader.astro";
+import ArticleFeaturedImage from "../../components/elements/ArticleFeaturedImage.astro";
+import ArticleBody from "../../components/elements/ArticleBody.astro";
+import RelatedArticles from "../../components/elements/RelatedArticles.astro";
+import Footer from "../../components/elements/Footer.astro";
+
+const artigo = {
+  titulo: "Lucro Real: onde a dedutibilidade das despesas muda o imposto do mês",
+  lead: "No Lucro Real, o imposto não nasce de uma alíquota fixa: ele nasce da base. E a base se forma despesa por despesa. Cada gasto classificado como indedutível por hábito, e não por análise, é dinheiro que a empresa paga a mais todo mês.",
+  dataIso: "2026-06-16",
+  categoria: "Tributário",
+  metaTitle: "Lucro Real: onde a dedutibilidade das despesas muda o imposto do mês | Beorange",
+  metaDescription: "No Lucro Real, a classificação das despesas muda quanto a empresa paga de imposto todo mês. Entenda onde a conta costuma escapar.",
+  aviso: "Conteúdo de exemplo — rascunho editorial, a revisar antes de publicar",
+};
+
+// Tempo de leitura medido no corpo real do artigo, somado ao lead — nunca digitado à mão.
+// Hoje o texto mora no próprio componente; quando migrar para content collections, troca-se
+// só a origem da string: contarPalavras e tempoDeLeitura seguem iguais.
+const minutos = tempoDeLeitura(contarPalavras(fonteDoCorpo) + contarPalavras(artigo.lead));
+---
+<Layout title={artigo.metaTitle} description={artigo.metaDescription}>
+  <Header ativo="blog" tema="claro" />
+<MobileMenu />
+
+  <article class="article">
+    <ArticleHeader
+      titulo={artigo.titulo}
+      lead={artigo.lead}
+      dataIso={artigo.dataIso}
+      categoria={artigo.categoria}
+      minutos={minutos}
+      aviso={artigo.aviso}
+    />
+    <ArticleFeaturedImage alt={`Imagem de destaque: ${artigo.titulo}`} />
+    <ArticleBody />
+    <RelatedArticles />
+  </article>
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

@@ -1,0 +1,40 @@
+---
+// Elemento: "Continue lendo" (protótipo do designer — beorange-artigo_2.html, section.related).
+// Sem <style>: o CSS é global, vindo de src/styles/prototype-artigo.css.
+//
+// Fecha o artigo com outras leituras. Parte do template de /blog/*: cada artigo novo passa
+// aqui os dois vizinhos que fazem sentido — a escolha é editorial, não cronológica, e por
+// isso a lista é explícita em vez de "os dois mais recentes".
+import ArticleCard from "./ArticleCard.astro";
+
+interface Props {
+  titulo?: string;
+  artigos?: { categoria: string; titulo: string; resumo: string; meta: string }[];
+}
+
+const {
+  titulo = "Continue lendo",
+  artigos = [
+    {
+      categoria: "Reforma Tributária",
+      titulo: "IBS e CBS: o que muda no aproveitamento de crédito antes da obrigatoriedade",
+      resumo: "Contratos, preço e cadastros precisam estar prontos antes da transição. Veja o que revisar primeiro na sua operação.",
+      meta: "Exemplo · 8 min de leitura",
+    },
+    {
+      categoria: "Gestão financeira",
+      titulo: "Conciliação na origem: por que o dado categorizado reduz retrabalho contábil",
+      resumo: "Quando a movimentação nasce classificada, a contabilidade deixa de importar, conferir e reclassificar tudo de novo.",
+      meta: "Exemplo · 5 min de leitura",
+    },
+  ],
+} = Astro.props;
+---
+<section class="related">
+  <div class="rh"><h2>{titulo}</h2></div>
+  <div class="rg">
+    {artigos.map((a) => (
+      <ArticleCard thumb={a.categoria} cat={a.categoria} title={a.titulo} excerpt={a.resumo} meta={a.meta} />
+    ))}
+  </div>
+</section>

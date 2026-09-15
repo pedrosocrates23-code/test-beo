@@ -1,0 +1,61 @@
+---
+// Elemento: Cabeçalho do artigo (protótipo do designer — beorange-artigo_2.html, div.art-wrap).
+// Sem <style>: o CSS é global, vindo de src/styles/prototype-artigo.css.
+//
+// A .art-meta saiu de dentro da .art-wrap e virou irmã dela, dentro da própria
+// .art-meta-wrap — que repete a medida da .art-wrap (800px, padding 28) para o desktop ficar
+// pixel a pixel como antes. O motivo é o mobile: lá a faixa precisa aparecer DEPOIS da imagem
+// de destaque, e 'order' só reordena filhos diretos do mesmo container flex. Enquanto estava
+// aninhada na .art-wrap, era impossível movê-la em relação à .feature sem duplicar markup.
+import { formatarData } from "../../lib/artigo";
+
+interface Props {
+  titulo: string;
+  lead: string;
+  /** Data de publicação em AAAA-MM-DD. Vira "16 de junho de 2026" na faixa. */
+  dataIso: string;
+  categoria: string;
+  /** Minutos de leitura — calcule com tempoDeLeitura() em vez de digitar à mão. */
+  minutos: number;
+  autor?: string;
+  autorCargo?: string;
+  /** Faixa de aviso de rascunho. Omita numa publicação real. */
+  aviso?: string;
+}
+
+const {
+  titulo,
+  lead,
+  dataIso,
+  categoria,
+  minutos,
+  autor = "Time Tributário Beorange",
+  autorCargo = "Especialistas em Lucro Real",
+  aviso,
+} = Astro.props;
+---
+<div class="art-meta-wrap">
+  <div class="art-meta">
+    <div class="m">
+      <div class="l">Data</div>
+      <div class="v"><time datetime={dataIso}>{formatarData(dataIso)}</time></div>
+    </div>
+    <div class="m">
+      <div class="l">Categoria</div>
+      <div class="v">{categoria}</div>
+    </div>
+    <div class="m">
+      <div class="l">Tempo de leitura</div>
+      <div class="v">{minutos} min</div>
+    </div>
+  </div>
+</div>
+<div class="art-wrap">
+  <h1 class="art-h1">{titulo}</h1>
+  {lead && <p class="art-lead">{lead}</p>}
+  <div class="byline">
+    <span class="av"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M57.3 8.6 A42 42 0 1 1 42.7 8.6" fill="none" stroke="#FF6A14" stroke-width="14"/></svg></span>
+    <div><div class="bn">{autor}</div><div class="bs">{autorCargo}</div></div>
+  </div>
+  {aviso && <div class="ex-ribbon">{aviso}</div>}
+</div>

@@ -1,0 +1,75 @@
+---
+// Página: Cases (índice).
+// Fonte do texto: "Proposta de textos — páginas do novo site", PÁGINA 6.
+//
+// O documento abre avisando: "nenhum case foi redigido com conteúdo real, porque não há case
+// nos documentos fonte. O que segue é o molde e o texto fixo." Então é exatamente isso que
+// está aqui — todo o texto fixo da página, e nenhum case.
+//
+// DUAS DECISÕES QUE VÊM DO DOCUMENTO, não de preferência:
+//
+// 1. A dobra 2 (filtros) NÃO é renderizada. "Filtros só entram quando houver ao menos 6 cases
+//    publicados. Com menos que isso, filtro vazio comunica que a empresa tem pouca prova."
+//    Hoje há zero. Quando houver seis, os filtros já estão especificados: por solução, por
+//    frente, por regime e por setor.
+//
+// 2. O estado vazio da dobra 3 é OBRIGATÓRIO e está desenhado: "Publicar a página com grade
+//    vazia sem mensagem é pior do que não publicar."
+//
+// [FALTA] para cada case, antes de qualquer publicação:
+//   - três indicadores mensuráveis e verificáveis internamente (prazo de fechamento, valor de
+//     crédito recuperado, horas de conciliação manual, número de inconsistências). Percentual
+//     sem base absoluta não entra;
+//   - o período de apuração, sempre explícito. "Resultado sem janela de tempo não é resultado,
+//     é alegação";
+//   - depoimento literal e autorização POR ESCRITO de uso de nome, cargo, marca e resultado.
+//     Sem autorização documentada, a dobra do depoimento sai do ar.
+// O molde da ficha de case (6 dobras) está na PÁGINA 6 do documento e vira /cases/{slug}/
+// quando o primeiro case for aprovado.
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-contabilidade.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import HeroIndice from "../../components/elements/HeroIndice.astro";
+import SecaoLista from "../../components/elements/SecaoLista.astro";
+import Footer from "../../components/elements/Footer.astro";
+---
+<Layout
+  title="Cases | Beorange"
+  description="Cada case mostra a situação encontrada, o que foi feito e o que mudou. Sem promessa de resultado repetível."
+>
+  <Header ativo="cases" tema="claro" />
+  <MobileMenu />
+
+  <!-- DOBRA 1 — Abertura do índice -->
+  <HeroIndice
+    titulo="Empresas que reorganizaram a estrutura administrativa e passaram a decidir com número"
+    lead="Cada case mostra a situação encontrada, o que foi feito e o que mudou. Sem promessa de resultado repetível: o efeito depende do regime, do setor e do ponto de partida de cada empresa."
+  />
+
+  <!-- DOBRA 2 — Filtros: omitida de propósito até existirem 6 cases. Ver o cabeçalho. -->
+
+  <!-- DOBRA 3 — Grade de cases, hoje no estado vazio -->
+  <SecaoLista
+    titulo="Cases"
+    texto="Estamos preparando os primeiros cases com autorização dos clientes envolvidos. Enquanto isso, fale com um especialista e conheça a estrutura na prática."
+    cta={{ texto: "Falar com um especialista", href: "/contato/" }}
+  />
+
+  <!-- DOBRA 4 — Como medimos resultado -->
+  <SecaoLista
+    variante="alternada"
+    titulo="Como esses números foram apurados"
+    texto="Os resultados apresentados vêm da comparação entre a situação encontrada no diagnóstico de entrada e a situação depois da reorganização, no período informado em cada case. Regime tributário, setor, volume e qualidade da informação inicial mudam o efeito. Nenhum resultado é apresentado como projeção para outra empresa."
+  />
+
+  <!-- DOBRA 5 — Chamada para ação -->
+  <SecaoLista
+    titulo="O próximo case começa com um diagnóstico"
+    cta={{ texto: "Solicitar diagnóstico", href: "/contato/" }}
+  />
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

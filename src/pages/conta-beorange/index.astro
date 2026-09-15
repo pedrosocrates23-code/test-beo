@@ -1,0 +1,155 @@
+---
+// Página: Conta Beorange.
+// Fonte do texto: "Proposta de textos — páginas do novo site", PÁGINA 3, dobra por dobra.
+// Nenhuma linha foi reescrita.
+//
+// Duas instruções do documento que valem para quem for mexer aqui:
+//   - a dobra 4 proíbe a expressão "trilha de auditoria" em qualquer lugar da peça,
+//     incluindo legenda de imagem. Não é preferência de estilo: é limite do que se promete.
+//   - o fecho da dobra 5 ("A automação prepara. A pessoa decide…") é obrigatório e não pode
+//     ser cortado por falta de espaço. Ele delimita a promessa da automação.
+//
+// PENDÊNCIA DE DESIGN: o documento pede "identidade cromática distinta da Contabilidade
+// Beorange" para esta página. Enquanto essa paleta não existir no Figma, ela usa o mesmo
+// prototype-contabilidade.css — visualmente as duas ainda são irmãs.
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-contabilidade.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import HeroContabilidade from "../../components/elements/HeroContabilidade.astro";
+import ProblemaContabilidade from "../../components/elements/ProblemaContabilidade.astro";
+import SeisFrentes from "../../components/elements/SeisFrentes.astro";
+import SecaoLista from "../../components/elements/SecaoLista.astro";
+import DiagnosticoEntrada from "../../components/elements/DiagnosticoEntrada.astro";
+import ContaBeorangeCta from "../../components/elements/ContaBeorangeCta.astro";
+import Footer from "../../components/elements/Footer.astro";
+---
+<Layout
+  title="Conta Beorange | A infraestrutura financeira da sua empresa"
+  description="Conta PJ com múltiplos usuários, limites e alçadas, cobranças automatizadas, portal de gestão e BPO Financeiro. Sem mensalidade fixa, com custo apresentado antes da operação."
+>
+  <Header ativo="solucoes" />
+  <MobileMenu />
+
+  <!-- DOBRA 1 — Abertura -->
+  <HeroContabilidade
+    eyebrow="Conta Beorange"
+    titulo="Sua conta passa a ser a infraestrutura financeira da empresa"
+    lead="Movimentação, cobrança, gestão e conciliação em um ambiente só. Cada transação nasce conectada à gestão financeira, o que reduz controle paralelo, retrabalho e informação perdida no caminho."
+    ctaPrimario={{ texto: "Falar com um especialista", href: "#contato" }}
+    ctaSecundario={{ texto: "Ver como funciona", href: "#camadas" }}
+    destaque="Sem mensalidade fixa. Você paga pelo uso, com o custo apresentado no checkout antes de confirmar."
+  />
+
+  <!-- DOBRA 2 — O problema -->
+  <ProblemaContabilidade
+    titulo="O dinheiro se move no banco. A informação fica para depois"
+    intro="Na estrutura comum, a movimentação acontece no banco e depois precisa ser exportada, classificada e conciliada em outro sistema. Cada passagem consome tempo, abre espaço para erro e atrasa a informação. Quando o relatório fica pronto, ele descreve um mês que já terminou."
+    problemas={[
+      "Contas a pagar em uma planilha, extrato no banco, DRE em um terceiro lugar",
+      "Conciliação bancária feita à mão, todo mês, pela mesma pessoa",
+      "Comprovante e nota fiscal guardados fora do lançamento a que pertencem",
+      "Uma única pessoa com acesso total à movimentação da empresa",
+    ]}
+    destaque="Não é falta de sistema. É excesso de sistemas que não conversam."
+    comFoto={false}
+  />
+
+  <!-- DOBRA 3 — As cinco camadas -->
+  <SeisFrentes
+    id="camadas"
+    titulo="Cinco camadas que sustentam a operação financeira"
+    intro=""
+    frentes={[
+      { titulo: "Movimentação", texto: "Conta PJ, PIX, transferências, pagamentos, tributos e folha. Execução financeira em ambiente integrado.", link: { texto: "Ver Conta PJ", href: "/conta-beorange/conta-pj/" } },
+      { titulo: "Cobrança", texto: "Boletos, PIX cobrança, links, recorrência e régua por e-mail e SMS. Mais previsibilidade e menos trabalho manual.", link: { texto: "Ver Cobranças", href: "/conta-beorange/cobrancas/" } },
+      { titulo: "Gestão", texto: "Portal, conciliação, DRE, fluxo de caixa e previsto versus realizado. Clareza gerencial com dado desde a origem.", link: { texto: "Ver Portal", href: "/conta-beorange/portal/" } },
+      { titulo: "Operação", texto: "BPO Financeiro e assessoria financeira. Rotina executada e acompanhada por analista.", link: { texto: "Ver BPO Financeiro", href: "/conta-beorange/bpo-financeiro/" } },
+      { titulo: "Inteligência", texto: "Bora Financeira. Automação assistida com validação humana.", link: { texto: "Ver Bora Financeira", href: "/conta-beorange/bora-financeira/" } },
+    ]}
+  />
+
+  <!-- DOBRA 4 — Governança -->
+  <SecaoLista
+    variante="alternada"
+    titulo="Quem consulta, quem cadastra, quem aprova e quem executa"
+    texto="A empresa define os perfis de acesso, os limites por usuário e as faixas de aprovação. Um analista pode cadastrar um pagamento sem poder executá-lo. Um sócio pode aprovar acima de um valor definido. A concentração de acesso deixa de ser o padrão da operação."
+    itens={[
+      "Múltiplos usuários por empresa",
+      "Limites por usuário",
+      "Alçadas de aprovação por valor ou tipo de pagamento",
+      "Histórico de aprovações",
+      "Documentos anexados a cada pagamento",
+      "Pagamentos em lote e agendamento",
+    ]}
+    bloco={{
+      titulo: "Documentação vinculada",
+      texto: "Nota fiscal, boleto, contrato e recibo ficam ligados à movimentação que originaram. Conferência, aprovação e conciliação deixam de depender de procurar arquivo em pasta compartilhada.",
+    }}
+  />
+
+  <!-- DOBRA 5 — Bora Financeira -->
+  <SecaoLista
+    titulo="Do documento recebido ao pagamento aprovado"
+    texto="A Bora lê os documentos que chegam por e-mail autorizado, identifica fornecedor, valor e vencimento, cria ou atualiza o lançamento e sugere a categoria com base no histórico e nas regras da empresa. O analista valida. Na Conta Beorange, ela ainda inclui o pagamento no fluxo bancário e o encaminha para aprovação conforme a alçada."
+    itens={[
+      "O documento chega ao e-mail autorizado",
+      "A Bora verifica a origem e lê o conteúdo",
+      "Identifica fornecedor, valor e vencimento",
+      "Cria ou atualiza o lançamento e sugere a categoria",
+      "O analista valida as informações",
+      "O pagamento segue para aprovação e depois é conciliado",
+    ]}
+    bloco={{
+      titulo: "Segurança por domínio",
+      texto: "A Bora só processa documentos vindos de domínios previamente autorizados. Quando a origem é diferente, o item não entra na operação sem análise.",
+    }}
+    destaque="A automação prepara. A pessoa decide. Nenhum lançamento entra na operação sem passar por validação."
+  />
+
+  <!-- DOBRA 6 — Modelo de cobrança -->
+  <SecaoLista
+    variante="alternada"
+    titulo="Sem mensalidade fixa. Você vê o custo antes de confirmar"
+    texto="A Conta Beorange não cobra mensalidade. O custo de cada operação aparece no checkout antes da confirmação, então não existe fatura no fim do mês com linha que ninguém reconhece. O atendimento é humano, e resolve situação operacional com pessoa, não com fila de chatbot."
+    itens={[
+      "Sem mensalidade fixa",
+      "Custo por uso apresentado antes de confirmar a operação",
+      "Atendimento humano para a rotina e para exceções",
+    ]}
+    cta={{ texto: "Falar com um especialista", href: "#contato" }}
+  />
+  <!-- [FALTA] tabela ou faixa de valores por tipo de operação, caso a Beorange queira exibir
+       preço aqui. Sem esse dado a dobra fica só com os três itens acima, como o documento
+       prevê. Nada foi estimado: número de preço inventado vira promessa comercial. -->
+
+  <!-- DOBRA 7 — Chamada para ação -->
+  <DiagnosticoEntrada
+    id="contato"
+    eyebrow=""
+    titulo="Veja a conta funcionando com a sua operação"
+    texto="Na conversa, mapeamos como o financeiro da empresa funciona hoje, quantas pessoas precisam de acesso e quais aprovações fazem sentido. A partir disso, mostramos como a estrutura ficaria na prática."
+    itens={[]}
+    formTitulo="Falar com um especialista"
+    botao="Falar com um especialista"
+    campos={[
+      { tipo: "text", rotulo: "Nome", obrigatorio: true },
+      { tipo: "email", rotulo: "E-mail corporativo", obrigatorio: true },
+      { tipo: "tel", rotulo: "Telefone" },
+      { tipo: "text", rotulo: "Empresa" },
+      { tipo: "text", rotulo: "Volume mensal de pagamentos" },
+      // "Usa BPO hoje?" fica como campo de texto, não select: o documento não define as
+      // opções, e inventar a lista ("Sim / Não / Parcialmente") seria criar conteúdo.
+      { tipo: "text", rotulo: "Usa BPO hoje?" },
+      { tipo: "textarea", rotulo: "Mensagem", full: true },
+    ]}
+  />
+
+  <!-- O documento fecha a página com este botão e nada mais: sem título e sem texto de
+       apoio, porque não há nenhum escrito para aqui. -->
+  <ContaBeorangeCta cta={{ texto: "Conhecer a Contabilidade Beorange", href: "/contabilidade-beorange/" }} />
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

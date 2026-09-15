@@ -1,0 +1,106 @@
+---
+// Página de solução: Contabilidade Beorange — Tributário.
+// Esta é a única das 11 frentes que o documento de tom traz INTEIRA, como exemplo preenchido
+// do modelo (PÁGINA 8). Por isso ela não é gerada a partir do documento de produtos como as
+// outras dez: o texto abaixo é o daquele exemplo, dobra por dobra, sem reescrita — incluindo
+// a dobra 2, que nas demais não existe.
+//
+// A ressalva da dobra 4 não é decorativa. O documento de produtos, na seção "Limites e
+// cuidados de promessa", proíbe apresentar estratégia tributária como resultado garantido
+// antes do diagnóstico e exige deixar claro que projeto consultivo é contratado à parte.
+// Se alguém cortar essa ressalva por espaço, a página passa a prometer o que a empresa não
+// vende.
+import PaginaSolucao from "../../../components/elements/PaginaSolucao.astro";
+---
+<PaginaSolucao
+  metaTitle="Tributário | Estratégia no Lucro Real e preparação para IBS e CBS"
+  metaDescription="Revisão de bases, créditos, recuperação e planejamento tributário para empresas no Lucro Real, com preparação para a Reforma Tributária."
+  produto="Contabilidade Beorange"
+  produtoHref="/contabilidade-beorange/"
+  frente="Tributário"
+  titulo="Estratégia tributária construída a partir da sua operação"
+  lead="Análise que parte da contabilidade, dos documentos fiscais e dos contratos da empresa. Atuação forte em Lucro Real e na preparação para o novo modelo de tributação sobre o consumo."
+  ctaPrimario="Solicitar diagnóstico tributário"
+  problema={{
+    titulo: "No Lucro Real, o erro não aparece na guia. Aparece no caixa",
+    texto: "A qualidade da escrituração, a formação das bases, a dedutibilidade das despesas e o aproveitamento de créditos de PIS e COFINS decidem quanto a empresa efetivamente paga. Quando fiscal, contábil e operação não conversam, a conta fecha sempre para o lado mais caro.",
+    sinais: [
+      "Nenhuma revisão de créditos foi feita nos últimos 12 meses",
+      "Despesas relevantes sem análise de dedutibilidade",
+      "Apurações que ninguém revisou depois de entregues",
+      "Mudança de regime decidida na virada do ano, sem simulação",
+    ],
+    destaque: "Empresa no Lucro Real que não revisa crédito está financiando o próprio imposto.",
+  }}
+  escopoTitulo="Escopo da atuação tributária"
+  escopo={[
+    {
+      rotulo: "Análise e enquadramento",
+      itens: [
+        "Análise e acompanhamento do regime tributário",
+        "Estratégias tributárias para empresas no Lucro Real",
+        "Revisão das bases de IRPJ, CSLL, PIS e COFINS",
+        "Análise tributária de novas operações, produtos e modelos de negócio",
+      ],
+    },
+    {
+      rotulo: "Créditos e recuperação",
+      itens: [
+        "Análise e aproveitamento de créditos tributários",
+        "Identificação de recolhimentos indevidos ou realizados a maior",
+        "Recuperação e compensação de créditos",
+        "Retificação de obrigações acessórias",
+      ],
+    },
+    {
+      rotulo: "Revisão e conformidade",
+      itens: [
+        "Revisão de apurações e obrigações acessórias",
+        "Diagnósticos fiscais e tributários",
+        "Acompanhamento de fiscalizações, notificações e regularizações",
+        "Preparação de relatórios técnicos para atuação conjunta com o jurídico",
+      ],
+    },
+    {
+      rotulo: "Estrutura e planejamento",
+      itens: [
+        "Planejamento tributário",
+        "Apoio técnico em reorganizações societárias",
+      ],
+    },
+  ]}
+  atuacao={{
+    titulo: "Sem tese pronta",
+    texto: "A análise parte da contabilidade, dos documentos fiscais, dos contratos, da natureza das receitas, da cadeia de fornecedores e da estrutura operacional. No Lucro Real, isso significa olhar a formação do resultado tributável, a dedutibilidade das despesas, os créditos de PIS e COFINS e a consistência entre as obrigações entregues.",
+    etapas: [
+      "Diagnóstico da situação atual, com a documentação da própria empresa",
+      "Identificação de inconsistências, riscos e valores recuperáveis",
+      "Apresentação dos caminhos, com impacto estimado e o que cada um exige",
+      "Execução do que for aprovado, com acompanhamento das obrigações",
+    ],
+    ressalva: "Estratégias tributárias dependem de diagnóstico prévio e não são apresentadas como resultado garantido. Projetos consultivos específicos, como recuperação de créditos, são contratados à parte da mensalidade. Quando a estratégia gera economia mensurável, a contratação pode incluir remuneração vinculada à economia efetivamente gerada.",
+  }}
+  beneficios={{
+    itens: [
+      "Redução de riscos fiscais e mais segurança nas apurações",
+      "Melhor aproveitamento de créditos e identificação de valores recuperáveis",
+      "Proteção e previsibilidade de caixa",
+      "Preparação antecipada para IBS e CBS",
+      "Decisões comerciais tomadas com visão tributária",
+      "Consistência entre contabilidade, fiscal, financeiro e operação",
+    ],
+  }}
+  integracao={{
+    texto: "A leitura tributária depende da qualidade da escrituração. Por isso ela anda junto com a frente Contábil e com a Fiscal, e conversa com o Societário quando a estrutura da empresa precisa mudar.",
+    cta: { texto: "Ver a preparação completa para a Reforma Tributária", href: "/reforma-tributaria/" },
+  }}
+  ctaFinal={{
+    titulo: "Comece por um diagnóstico tributário",
+    texto: "O diagnóstico mostra onde há risco, onde há crédito não aproveitado e o que pode ser recuperado. A partir dele, definimos o que vale a pena fazer, e em que ordem.",
+  }}
+  irmas={[
+    { titulo: "Contábil", texto: "Informação contábil completa, confiável e útil para a gestão.", href: "/contabilidade-beorange/contabil/" },
+    { titulo: "Fiscal", texto: "Apuração, escrituração e cumprimento das obrigações fiscais.", href: "/contabilidade-beorange/fiscal/" },
+    { titulo: "Societário", texto: "Estrutura jurídica alinhada ao modelo de negócio e ao crescimento.", href: "/contabilidade-beorange/societario/" },
+  ]}
+/>

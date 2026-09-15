@@ -1,0 +1,144 @@
+---
+// Elemento: overlay de menu mobile.
+// Figma: nó 51:5 "beorange-menu-mobile" (Soluções fechado) e 52:2 (Soluções aberto).
+//
+// Três decisões registradas, porque divergem do que os nós trazem literalmente:
+//
+// 1. UM conjunto de rótulos, não dois. Os nós discordam entre si na mesma posição
+//    ("Serviços" no fechado vs "Sobre Nós" no aberto; "Blog" vs "Blog e Pesquisa").
+//    No Figma são telas separadas, mas aqui é um menu só: os rótulos não podem mudar
+//    quando o usuário expande Soluções. Vale o conjunto do nó 52:2, que é o que bate
+//    com o menu desktop.
+// 2. Sem status bar nem home indicator. Os nós desenham a moldura do iPhone; isso é
+//    o aparelho do mockup, não a interface — um site não renderiza a barra do sistema.
+// 3. Submenu com as soluções REAIS, não as do Figma. Os nós 51:5 e 52:2 trazem itens de
+//    template (Transformação Digital, UX/UI Design, Aplicativos Mobile...) que não têm
+//    relação com o que a Beorange vende. Por um tempo foram mantidos literais, por decisão
+//    do cliente; em 15/09/2026 o cliente pediu a troca pelos três produtos, que é o que o
+//    mega-menu do desktop já mostrava. Aqui eles também viraram links de verdade — antes
+//    todos apontavam para "#".
+//
+// Os dados abaixo são props com valor padrão: uma página nova troca o item ativo sem
+// duplicar o componente. Atenção — os links do menu também existem no Header e no Footer,
+// cada um com a sua cópia. Enquanto forem três listas, mudar uma rota exige mudar as três.
+interface Props {
+  links?: { label: string; href: string; ativo?: boolean }[];
+  submenu?: { label: string; href: string }[];
+  rotuloContato?: string;
+  /** Linha de contato do rodapé do menu. Os dados reais vieram do cliente em 15/09/2026;
+   *  o telefone aqui é o mesmo do rodapé do site, não o do WhatsApp. */
+  contato?: string;
+  ctas?: { texto: string; href: string; icone?: string }[];
+  /** Portal do cliente, em gestao.beorange.app. Abre em nova aba: é outro sistema. */
+  portalHref?: string;
+}
+
+const {
+  links: navLinks = [
+    { label: "Home", href: "/", ativo: true },
+    { label: "Sobre Nós", href: "/sobre-nos/" },
+    { label: "Cases", href: "/cases/" },
+    { label: "Blog e Pesquisa", href: "/blog/" },
+    { label: "Contato", href: "/contato/" },
+  ],
+  submenu: submenuSolucoes = [
+    { label: "Contabilidade Beorange", href: "/contabilidade-beorange/" },
+    { label: "Lucro Real", href: "/lucro-real/" },
+    { label: "Conta Beorange", href: "/conta-beorange/" },
+  ],
+  rotuloContato = "Fale conosco",
+  contato = "contato@beorange.app · +55 41 9644-0060",
+  portalHref = "https://gestao.beorange.app/login",
+} = Astro.props;
+---
+<div class="mm" id="mobileMenu" hidden>
+  <div class="mm__painel" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="mm__topo">
+      <a class="mm__logo" href="/" aria-label="Beorange, página principal">
+        <img src="/img/menu/logo-beorange.svg" alt="Beorange" width="138" height="31" />
+      </a>
+      <button class="mm__fechar" type="button" id="mmFechar" aria-label="Fechar menu">
+        <img src="/img/menu/icon-close.svg" alt="" width="20" height="20" />
+      </button>
+    </div>
+
+    <nav class="mm__nav" aria-label="Menu principal">
+      <a class="mm__link mm__link--ativo" href="/">
+        Home
+        <img class="mm__ponto" src="/img/menu/icon-ellipse-dot.svg" alt="" width="8" height="8" />
+      </a>
+
+      <button class="mm__link mm__toggle" type="button" id="mmSolucoes" aria-expanded="false" aria-controls="mmSubmenu">
+        Soluções
+        <img class="mm__chevron" src="/img/menu/icon-chevron-down.svg" alt="" width="22" height="22" />
+      </button>
+      <div class="mm__submenu" id="mmSubmenu" hidden>
+        {submenuSolucoes.map((item) => <a class="mm__sublink" href={item.href}>{item.label}</a>)}
+      </div>
+
+      {navLinks.slice(1).map((link) => (
+        <a class="mm__link" href={link.href}>{link.label}</a>
+      ))}
+    </nav>
+
+    <div class="mm__rodape">
+      <p class="mm__rotulo">{rotuloContato}</p>
+      <p class="mm__contato">{contato}</p>
+      <a class="mm__cta" href="/contato/">
+        Falar com um especialista
+        <img src="/img/menu/icon-arrow-right.svg" alt="" width="16" height="16" />
+      </a>
+      <a class="mm__cta mm__cta--login" href={portalHref} rel="noopener" target="_blank">Login</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Cores literais dos nós 51:5 / 52:2 — ainda sem token semântico equivalente. */
+  .mm{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.5)}
+  .mm[hidden]{display:none}
+  /* Cobre a tela inteira. O Figma desenha em 390px, mas prender o painel nessa largura
+     deixava uma faixa da pagina aparecendo em telas maiores que isso. As medidas de dentro
+     acompanham a largura em vez de ficarem fixas, para servir de 320px ate tablet. */
+  .mm__painel{
+    display:flex;flex-direction:column;height:100%;width:100%;
+    background:#0c0a09;overflow-y:auto;
+    padding:calc(18px + env(safe-area-inset-top)) clamp(20px,5.5vw,32px) calc(22px + env(safe-area-inset-bottom));
+  }
+  .mm__topo{display:flex;align-items:center;justify-content:space-between;padding-bottom:22px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .mm__logo img{display:block;height:31px;width:auto}
+  .mm__fechar{
+    display:flex;align-items:center;justify-content:center;width:38px;height:38px;flex:none;
+    background:rgba(255,255,255,.08);border:0;border-radius:50%;cursor:pointer;
+  }
+  .mm__fechar:hover{background:rgba(255,255,255,.16)}
+
+  .mm__nav{display:flex;flex-direction:column;padding-top:8px}
+  .mm__link{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;
+    padding:clamp(12px,3.6vw,16px) 0;background:none;border:0;cursor:pointer;text-align:left;
+    font-family:var(--f);font-size:clamp(19px,5.6vw,23px);font-weight:400;color:#fff;
+  }
+  .mm__link--ativo{font-weight:600}
+  .mm__ponto{width:8px;height:8px;flex:none}
+  .mm__chevron{width:22px;height:22px;flex:none;transition:transform .22s ease}
+  .mm__toggle[aria-expanded="true"] .mm__chevron{transform:rotate(180deg)}
+
+  .mm__submenu{display:flex;flex-direction:column;padding:2px 0 10px 18px}
+  .mm__submenu[hidden]{display:none}
+  .mm__sublink{padding:9px 0;font-size:15px;color:rgba(255,255,255,.62)}
+  .mm__sublink:hover{color:#fff}
+
+  .mm__rodape{margin-top:auto;padding-top:24px;border-top:1px solid rgba(255,255,255,.08)}
+  .mm__rotulo{margin:0 0 6px;font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--coral)}
+  .mm__contato{margin:0 0 16px;font-size:13.5px;color:rgba(255,255,255,.72)}
+  .mm__cta{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--coral);color:#fff;font-weight:600;font-size:15px;
+    padding:14px 20px;border-radius:var(--r-btn);
+  }
+  .mm__cta + .mm__cta{margin-top:10px}
+  .mm__cta img{width:16px;height:16px}
+
+  @media(prefers-reduced-motion:reduce){.mm__chevron{transition:none}}
+</style>

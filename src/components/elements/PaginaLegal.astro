@@ -1,0 +1,143 @@
+---
+// Modelo institucional e legal — /politica-de-privacidade/, /termos-de-uso/,
+// /politica-de-cookies/ e /lgpd/.
+// Fonte: "Proposta de textos — páginas do novo site", PÁGINA 10.
+//
+// ESTE COMPONENTE NÃO CONTÉM TEXTO JURÍDICO, E ISSO É PROPOSITAL. O documento diz, com todas
+// as letras: "o texto jurídico não é redigido aqui... Nenhum texto normativo foi redigido,
+// porque conteúdo legal inventado gera risco real."
+//
+// O que existe aqui é a moldura: trilha, título sem adorno, linha de vigência, resumo em
+// linguagem comum e o contato do encarregado. O corpo entra pelo <slot> quando o jurídico da
+// Beorange entregar o texto. Enquanto não entrar, a página exibe o aviso de que o conteúdo
+// está em elaboração — o que é honesto e mantém o link do rodapé funcionando, em vez de levar
+// a um 404 ou, pior, a um texto genérico que ninguém revisou.
+//
+// Decisões de forma que vêm do documento e não são estéticas:
+//   - coluna única, 65 a 75 caracteres por linha;
+//   - sem imagem e sem botão comercial. "Página legal com botão de venda no meio do texto
+//     passa a impressão errada sobre o documento";
+//   - a numeração das seções fica ESCRITA no título (1, 1.1, 1.1.1), não gerada pelo CSS,
+//     para sobreviver ao copiar e colar — é ela que vira a cláusula citada em contrato;
+//   - cada seção precisa de id fixo, porque ele vira a URL citada.
+interface Props {
+  titulo: string;
+  /** Resumo de até 30 palavras, em linguagem comum. */
+  resumo: string;
+  /** Data da última atualização, em AAAA-MM-DD. Sem ela a página não deveria publicar. */
+  vigencia?: string;
+  /** Contato do encarregado de proteção de dados. */
+  encarregado?: { nome?: string; email?: string; prazo?: string };
+}
+
+const { titulo, resumo, vigencia, encarregado } = Astro.props;
+
+const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+function porExtenso(iso: string) {
+  const [a, m, d] = iso.split("-").map(Number);
+  return `${d} de ${MESES[m - 1]} de ${a}`;
+}
+---
+<article class="legal-doc">
+  <div class="wrap">
+    <nav class="legal-doc__trilha" aria-label="Você está em">
+      <a href="/">Início</a> <span aria-hidden="true">›</span> <span>{titulo}</span>
+    </nav>
+
+    <h1 class="legal-doc__titulo">{titulo}</h1>
+
+    {vigencia ? (
+      <p class="legal-doc__vigencia">
+        Última atualização em <time datetime={vigencia}>{porExtenso(vigencia)}</time>
+      </p>
+    ) : (
+      <p class="legal-doc__vigencia legal-doc__vigencia--pendente">
+        Data de vigência a definir com o jurídico.
+      </p>
+    )}
+
+    <p class="legal-doc__resumo">{resumo}</p>
+
+    <div class="legal-doc__corpo">
+      <slot>
+        <div class="legal-doc__aviso" role="status">
+          <strong>Conteúdo em elaboração.</strong>
+          <p>
+            O texto normativo desta página está sendo redigido e revisado pelo jurídico da
+            Beorange. Nada foi publicado provisoriamente: documento legal genérico vale menos
+            que documento nenhum, porque cria a aparência de um compromisso que a empresa não
+            assumiu.
+          </p>
+        </div>
+      </slot>
+    </div>
+
+    <section class="legal-doc__encarregado" id="encarregado">
+      <h2>Dúvidas sobre os seus dados</h2>
+      <p>
+        Para exercer os direitos previstos na Lei Geral de Proteção de Dados, ou para tirar
+        dúvidas sobre o tratamento dos seus dados, fale com o encarregado de proteção de dados
+        da Beorange.
+      </p>
+      {encarregado?.email ? (
+        <p>
+          {encarregado.nome && <span>{encarregado.nome} · </span>}
+          <a href={`mailto:${encarregado.email}`}>{encarregado.email}</a>
+          {encarregado.prazo && <span> · resposta em até {encarregado.prazo}</span>}
+        </p>
+      ) : (
+        <p class="legal-doc__pendente">
+          Faltam o nome do encarregado, o e-mail dele e o prazo de resposta assumido pela
+          empresa. Os três são exigência da LGPD para o canal de titular.
+        </p>
+      )}
+    </section>
+  </div>
+</article>
+
+<style>
+  .legal-doc{padding:150px 0 92px;background:var(--bg-primary,#fff)}
+  /* Coluna única e medida de leitura entre 65 e 75 caracteres, como o documento pede. */
+  .legal-doc .wrap{max-width:780px}
+
+  .legal-doc__trilha{font-size:13.5px;color:var(--text-tertiary,#948B85);margin-bottom:24px}
+  .legal-doc__trilha a{color:var(--text-secondary,#5B534E)}
+  .legal-doc__trilha a:hover{color:var(--text-brand,#F5380F)}
+
+  .legal-doc__titulo{
+    margin:0;font-size:clamp(28px,3.6vw,40px);font-weight:700;line-height:1.1;
+    letter-spacing:-.022em;color:var(--text-primary,#2B2320);
+  }
+  .legal-doc__vigencia{margin:14px 0 0;font-size:13.5px;color:var(--text-tertiary,#948B85)}
+  .legal-doc__vigencia--pendente{color:var(--text-brand,#F5380F)}
+  .legal-doc__resumo{
+    margin:22px 0 0;padding-bottom:28px;border-bottom:1px solid var(--border-subtle,#EFEAE6);
+    font-size:18px;line-height:1.6;color:var(--text-secondary,#5B534E);
+  }
+
+  .legal-doc__corpo{margin-top:36px;font-size:16.5px;line-height:1.75;color:var(--text-secondary,#5B534E)}
+  .legal-doc__corpo :global(h2){margin:40px 0 14px;font-size:21px;font-weight:600;color:var(--text-primary,#2B2320);scroll-margin-top:120px}
+  .legal-doc__corpo :global(h3){margin:28px 0 10px;font-size:17px;font-weight:600;color:var(--text-primary,#2B2320);scroll-margin-top:120px}
+  .legal-doc__corpo :global(p){margin:0 0 16px}
+  .legal-doc__corpo :global(table){width:100%;border-collapse:collapse;margin:20px 0;font-size:15px}
+  .legal-doc__corpo :global(th),.legal-doc__corpo :global(td){border:1px solid var(--border-subtle,#EFEAE6);padding:10px 12px;text-align:left;vertical-align:top}
+  .legal-doc__corpo :global(th){background:var(--bg-secondary,#FBF9F7);font-weight:600;color:var(--text-primary,#2B2320)}
+
+  .legal-doc__aviso{
+    background:var(--bg-secondary,#FBF9F7);border:1px solid var(--border-subtle,#EFEAE6);
+    border-left:3px solid var(--action-primary,#F5380F);border-radius:var(--radius-md,12px);
+    padding:22px 24px;
+  }
+  .legal-doc__aviso strong{display:block;margin-bottom:8px;color:var(--text-primary,#2B2320)}
+  .legal-doc__aviso p{margin:0;font-size:15.5px}
+
+  .legal-doc__encarregado{margin-top:48px;padding-top:32px;border-top:1px solid var(--border-subtle,#EFEAE6)}
+  .legal-doc__encarregado h2{margin:0 0 12px;font-size:21px;font-weight:600;color:var(--text-primary,#2B2320)}
+  .legal-doc__encarregado p{margin:0 0 12px;font-size:16px;line-height:1.7;color:var(--text-secondary,#5B534E)}
+  .legal-doc__encarregado a{color:var(--text-brand,#F5380F);font-weight:600}
+  .legal-doc__pendente{color:var(--text-brand,#F5380F);font-size:15px}
+
+  @media(max-width:680px){
+    .legal-doc{padding:120px 0 64px}
+  }
+</style>

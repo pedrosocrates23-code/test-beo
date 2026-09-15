@@ -1,0 +1,165 @@
+---
+// Página: Reforma Tributária, IBS e CBS.
+// Fonte do texto: "Proposta de textos — páginas do novo site", PÁGINA 12, dobra por dobra.
+// Nenhuma linha foi reescrita.
+//
+// ================== LEIA ANTES DE EDITAR ==================
+// O documento abre esta página com uma nota de verificação factual, obrigatória antes da
+// publicação, e ela é a coisa mais importante deste arquivo:
+//
+//   "Nenhuma data, alíquota, percentual ou artigo de lei foi incluído neste texto. O conteúdo
+//    trata de mecanismo e de impacto operacional. Qualquer número de cronograma, alíquota de
+//    referência ou regra de transição precisa ser verificado na legislação vigente por um
+//    responsável técnico antes de entrar na página, e revisado sempre que a regulamentação
+//    mudar."
+//
+// Ou seja: o texto aqui fala de COMO a mudança afeta a operação, nunca de quanto nem de
+// quando. Isso é deliberado. Acrescentar uma alíquota ou uma data "só para ilustrar" quebra a
+// única garantia que a página oferece — e legislação em transição muda depois que a página
+// fica pronta. Se for incluir número, o dono da página é quem verifica na fonte primária e
+// registra a data da consulta.
+// ==========================================================
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-contabilidade.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import HeroContabilidade from "../../components/elements/HeroContabilidade.astro";
+import ProblemaContabilidade from "../../components/elements/ProblemaContabilidade.astro";
+import EspecialidadeTributaria from "../../components/elements/EspecialidadeTributaria.astro";
+import SecaoLista from "../../components/elements/SecaoLista.astro";
+import SeisFrentes from "../../components/elements/SeisFrentes.astro";
+import DiagnosticoEntrada from "../../components/elements/DiagnosticoEntrada.astro";
+import Footer from "../../components/elements/Footer.astro";
+---
+<Layout
+  title="Reforma Tributária para empresas | Preparação para IBS e CBS"
+  description="Análise de impacto sobre preços, margens, contratos e créditos, revisão de cadastros e simulações comparativas. Prepare a operação antes que a mudança seja obrigatória."
+>
+  <Header ativo="solucoes" />
+  <MobileMenu />
+
+  <!-- DOBRA 1 — Abertura -->
+  <HeroContabilidade
+    eyebrow="Especialidade tributária"
+    titulo="A Reforma Tributária não muda só o cálculo. Muda a operação"
+    lead="Contratos, formação de preço, margens, créditos, cadastros, sistemas e fluxo de caixa mudam junto. Preparamos a empresa para essa transição antes que ela se torne obrigatória."
+    ctaPrimario={{ texto: "Solicitar análise de impacto", href: "#analise" }}
+    ctaSecundario={{ texto: "Ver o que muda na prática", href: "#transicao" }}
+  />
+
+  <!-- DOBRA 2 — O problema -->
+  <ProblemaContabilidade
+    titulo="Quem esperar a obrigatoriedade vai descobrir o impacto pelo caixa"
+    intro="A Reforma altera a lógica de créditos, e isso atinge diretamente quem forma preço com base na carga tributária atual. Contrato assinado hoje, com preço calculado na regra antiga, pode virar margem negativa depois. Sistema, cadastro e classificação fiscal precisam estar prontos antes, não durante."
+    subtitulo="O que é atingido"
+    problemas={[
+      "Preços e margens praticados hoje",
+      "Contratos de longo prazo já assinados",
+      "Aproveitamento de créditos ao longo da cadeia",
+      "Cadastros e classificações fiscais",
+      "Sistemas, documentos fiscais e rotinas de apuração",
+      "Fluxo de caixa mensal",
+    ]}
+    destaque="Adaptação feita no prazo é projeto. Feita fora do prazo é emergência, e emergência sai mais cara."
+    comFoto={false}
+  />
+
+  <!-- DOBRA 3 — O que muda na estrutura.
+       O documento avisa que este é o bloco que mais será citado e compartilhado, e que ele
+       precisa ser visualmente autocontido — capaz de funcionar como imagem em apresentação.
+       A banda escura dá esse recorte. Se um dia virar imagem para download, a versão em
+       texto continua aqui: é ela que o buscador lê e que o leitor de tela anuncia. -->
+  <EspecialidadeTributaria
+    id="transicao"
+    eyebrow=""
+    titulo="O que a transição substitui"
+    intro=""
+    cards={[
+      {
+        titulo: "CBS",
+        texto: "Substitui PIS e COFINS na tributação sobre o consumo. Afeta diretamente empresas que hoje operam no regime não cumulativo e apuram crédito sobre insumos.",
+      },
+      {
+        titulo: "IBS",
+        texto: "Substitui gradualmente ICMS e ISS. Afeta a tributação estadual e municipal, e com ela a operação de quem vende para outros estados ou presta serviço em mais de um município.",
+      },
+    ]}
+    fecho="A mudança acontece de forma gradual, com convivência entre os modelos durante a transição. Na prática, isso significa operar as duas lógicas ao mesmo tempo por um período, o que exige que a contabilidade, o fiscal e os sistemas estejam preparados para as duas."
+    ressalva=""
+  />
+
+  <!-- DOBRA 4 — Como preparamos a empresa -->
+  <SecaoLista
+    titulo="A preparação, etapa por etapa"
+    itens={[
+      "Análise dos impactos da Reforma sobre a operação específica da empresa",
+      "Preparação para a transição de PIS e COFINS para a CBS",
+      "Preparação para a substituição gradual de ICMS e ISS pelo IBS",
+      "Avaliação de impactos sobre preços, margens, contratos, créditos e fluxo de caixa",
+      "Revisão de cadastros, classificações fiscais e processos internos",
+      "Apoio na adaptação de sistemas, documentos fiscais e rotinas de apuração",
+      "Simulações comparativas entre o modelo atual e o novo sistema",
+    ]}
+    destaque="A empresa não precisa estar pronta para tudo de uma vez. Precisa saber, agora, o que vai doer primeiro."
+  />
+
+  <!-- DOBRA 5 — Simulação comparativa -->
+  <SecaoLista
+    variante="alternada"
+    titulo="Ver o número antes de precisar dele"
+    texto="A simulação comparativa coloca lado a lado a carga atual e a carga no novo sistema, aplicada à operação real da empresa: suas receitas, seus insumos, sua cadeia de fornecedores e seus contratos. O resultado mostra onde a margem aperta e quais contratos precisam de revisão antes do prazo."
+    subtitulo="O que a simulação entrega"
+    itens={[
+      "Comparação entre modelo atual e novo, sobre a operação real",
+      "Efeito estimado sobre preço e margem por linha de receita",
+      "Contratos que exigem revisão de cláusula ou de reajuste",
+      "Ajustes necessários em cadastro, classificação e sistema",
+      "Ordem de prioridade das adaptações",
+    ]}
+    cta={{ texto: "Solicitar simulação comparativa", href: "#analise" }}
+  />
+
+  <!-- DOBRA 6 — Quem precisa começar agora -->
+  <SeisFrentes
+    id="urgencia"
+    titulo="Onde a urgência é maior"
+    intro=""
+    frentes={[
+      { titulo: "Empresas no Lucro Real com crédito relevante", texto: "A lógica de aproveitamento de crédito muda, e o efeito no caixa é imediato." },
+      { titulo: "Quem vende para outros estados", texto: "A substituição de ICMS pelo IBS altera a tributação interestadual." },
+      { titulo: "Quem presta serviço em vários municípios", texto: "A substituição do ISS pelo IBS muda a apuração municipal." },
+      { titulo: "Quem tem contrato de longo prazo assinado", texto: "Preço calculado na regra antiga precisa de revisão de cláusula." },
+    ]}
+  />
+  <SecaoLista
+    titulo=""
+    destaque="Empresa que se encaixa em dois desses perfis não tem margem para tratar isso no ano que vem."
+  />
+
+  <!-- DOBRA 7 — Chamada para ação -->
+  <DiagnosticoEntrada
+    id="analise"
+    eyebrow=""
+    titulo="Descubra o impacto na sua operação antes que ele seja obrigatório"
+    texto="A análise parte dos seus documentos fiscais, contratos e estrutura de receitas. Entrega o efeito estimado sobre preço, margem e caixa, e a ordem em que os ajustes precisam acontecer."
+    itens={[]}
+    formTitulo="Solicitar análise de impacto"
+    botao="Solicitar análise de impacto"
+    campos={[
+      { tipo: "text", rotulo: "Nome", obrigatorio: true },
+      { tipo: "email", rotulo: "E-mail corporativo", obrigatorio: true },
+      { tipo: "tel", rotulo: "Telefone" },
+      { tipo: "text", rotulo: "Empresa" },
+      { tipo: "text", rotulo: "Faturamento anual aproximado", placeholder: "R$" },
+      { tipo: "select", rotulo: "Regime tributário atual", obrigatorio: true, vazio: "Selecione", opcoes: ["Simples Nacional", "Lucro Presumido", "Lucro Real", "Não sei"] },
+      // Como em "Usa BPO hoje?" na Conta Beorange: campo de texto, não select. O documento
+      // não lista as opções, e inventá-las seria escrever conteúdo que ninguém aprovou.
+      { tipo: "text", rotulo: "Vende para outros estados?" },
+      { tipo: "textarea", rotulo: "Mensagem", full: true },
+    ]}
+  />
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

@@ -1,0 +1,99 @@
+---
+// Elemento: cookie banner (Figma node 2:1489).
+//
+// ATENÇÃO — ESTE COMPONENTE NÃO ESTÁ EM USO E NÃO DEVE ENTRAR COMO ESTÁ.
+// Duas razões, ambas verificadas:
+//
+// 1. O texto afirma que os cookies servem para "exibir publicidade personalizada com base em
+//    sua atividade". O site NÃO faz isso: não há script de publicidade, de analytics nem
+//    document.cookie em lugar nenhum. Declarar tratamento que não existe é tão problemático
+//    quanto omitir tratamento que existe.
+// 2. O único botão é "Ok, Entendi". O guia orientativo da ANPD (out/2022) pede botão que
+//    permita RECUSAR todos os cookies não necessários, com a mesma facilidade do aceite, e
+//    trata como incompatível com a LGPD o consentimento obtido de forma forçada ou presumido
+//    pela continuidade da navegação.
+//
+// Enquanto o site não usar cookies não necessários, ele não precisa de banner. No dia em que
+// usar, este componente precisa de: texto que descreva o uso real, recusa em primeiro nível
+// e gerenciamento por categoria.
+export interface Props {
+  privacyHref?: string;
+}
+const { privacyHref = "/politica-de-privacidade/" } = Astro.props;
+---
+<div class="cookie-banner" id="cookie-banner" data-node-id="2:1489">
+  <p class="cookie-banner__text">
+    Cookies são utilizados em nossas plataformas para auxiliar a sua navegação, analisar,
+    personalizar conteúdos e exibir publicidade personalizada com base em sua atividade e de
+    acordo com nossa <a href={privacyHref}>política de privacidade</a>.
+  </p>
+  <button class="cookie-banner__accept" id="cookie-accept" type="button">
+    Ok, Entendi
+    <img src="/img/cookie/arrow-right.svg" alt="" width="16" height="16" />
+  </button>
+</div>
+
+<script>
+  const banner = document.getElementById("cookie-banner");
+  const accept = document.getElementById("cookie-accept");
+  if (banner && localStorage.getItem("beorange-cookies") === "accepted") {
+    banner.hidden = true;
+  }
+  accept?.addEventListener("click", () => {
+    localStorage.setItem("beorange-cookies", "accepted");
+    if (banner) banner.hidden = true;
+  });
+</script>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    gap: var(--space-64);
+    background: var(--bg-primary);
+    border-top: 1px solid #e0e0e0;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    padding: var(--space-20);
+  }
+  .cookie-banner[hidden] { display: none; }
+  .cookie-banner__text {
+    flex: 1;
+    margin: 0;
+    font: 400 16px/24px var(--font-family-base);
+    color: var(--text-secondary);
+  }
+  .cookie-banner__text a {
+    color: var(--text-brand);
+    text-decoration: underline;
+  }
+  .cookie-banner__accept {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    background: var(--action-primary);
+    color: var(--text-inverse);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 13px var(--space-24);
+    font: 600 15.5px/25.575px var(--font-family-base);
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .cookie-banner__accept:hover { background: var(--action-primary-hover); }
+  .cookie-banner__accept:active { background: var(--action-primary-active); }
+
+  @media (max-width: 720px) {
+    .cookie-banner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-16);
+    }
+    .cookie-banner__accept { justify-content: center; }
+  }
+</style>

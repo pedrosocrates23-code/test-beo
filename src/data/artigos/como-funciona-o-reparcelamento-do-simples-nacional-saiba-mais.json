@@ -1,0 +1,35 @@
+{
+ "n": 26,
+ "slug": "como-funciona-o-reparcelamento-do-simples-nacional-saiba-mais",
+ "titulo": "Como Funciona o Reparcelamento do Simples Nacional? Saiba Mais",
+ "lead": "",
+ "dataIso": "2025-01-29",
+ "categoria": "Simples Nacional",
+ "autor": "Por Beorange",
+ "metaTitle": "Como Funciona o Reparcelamento do Simples Nacional? Saiba... | Beorange",
+ "metaDescription": "",
+ "palavras": 421,
+ "hero": null,
+ "card": "/img/blog/como-funciona-o-reparcelamento-do-simples-nacional-saiba-mais/capa.webp",
+ "imagemAlt": "Imagem de destaque do artigo: Como Funciona o Reparcelamento do Simples Nacional",
+ "corpo": "<h2><strong>O que é o Reparcelamento do Simples Nacional?</strong></h2>\n<p>O reparcelamento do Simples Nacional é uma oportunidade oferecida pela Receita Federal para empresas que enfrentam dificuldades em manter suas obrigações tributárias em dia. Implementado desde 2020 com a Instrução Normativa RFB nº 1.981, esse programa permite regularizar débitos vencidos de maneira facilitada, evitando problemas como exclusão do regime tributário e bloqueios fiscais.</p>\n<p>O reparcelamento é a possibilidade de renegociar débitos anteriores que já foram parcelados, mas que a empresa não conseguiu pagar integralmente. Diferente do parcelamento tradicional, ele não possui limite de solicitações por ano.</p>\n<h3><strong>Como Funciona o Reparcelamento?</strong></h3>\n<ol><li><p><strong>Número de Parcelas:</strong> De 2 a 60 vezes, com parcelas mínimas de R$ 300,00.</p></li><li><p><strong>Entrada Obrigatória:</strong> Pagamento inicial de 10% do valor consolidado da dívida, ou 20% se houver reparcelamentos anteriores.</p></li><li><p><strong>Solicitação:</strong> O processo é realizado online, através do e-CAC ou Portal do Simples Nacional, onde o próprio sistema faz o cálculo das parcelas.</p></li><li><p><strong>Efetivação:</strong> O reparcelamento só é confirmado após o pagamento da primeira parcela (DAS).</p></li></ol>\n<h3><strong>Quem Pode Fazer o Reparcelamento?</strong></h3>\n<ul><li><p>Empresas que já tiveram parcelamentos anteriores no Simples Nacional e não conseguiram quitá-los.</p></li><li><p>Débitos apurados enquanto a empresa estava no regime Simples Nacional, mesmo que atualmente esteja em outro regime tributário.</p></li><li><p>Microempreendedores Individuais (MEIs) também podem aderir, desde que sigam as regras específicas para reparcelamento.</p></li></ul>\n<h3><strong>Situações em que o Reparcelamento Não se Aplica</strong></h3>\n<ul><li><p>Multas por descumprimento de obrigações acessórias;</p></li><li><p>Contribuições Previdenciárias em certos casos específicos;</p></li><li><p>Débitos transferidos para dívida ativa;</p></li><li><p>Tributos não abrangidos pelo Simples Nacional;</p></li><li><p>Dívidas de MEIs fora das condições específicas.</p></li></ul>\n<h3><strong>Passo a Passo para Solicitar o Reparcelamento</strong></h3>\n<ol><li><p><strong>Acesse o Portal:</strong> Faça login no Simples Nacional ou e-CAC.</p></li><li><p><strong>Escolha os Débitos:</strong> Selecione os valores que deseja incluir no reparcelamento.</p></li><li><p><strong>Simule o Parcelamento:</strong> Verifique os valores das parcelas e as condições oferecidas.</p></li><li><p><strong>Confirme a Adesão:</strong> Aceite as condições e gere o DAS da primeira parcela.</p></li><li><p><strong>Acompanhe os Pagamentos:</strong> Certifique-se de pagar as parcelas em dia para manter o reparcelamento ativo.</p></li></ol>\n<h3><strong>Dúvidas Comuns Sobre o Reparcelamento</strong></h3>\n<ul><li><p><strong>Posso fazer mais de um reparcelamento?</strong> Sim, não há limite anual para solicitações.</p></li><li><p><strong>Há cobrança de juros?</strong> Sim, a Receita Federal aplica juros e multas automaticamente.</p></li><li><p><strong>É possível antecipar parcelas?</strong> Sim, basta emitir o DAS do mês desejado e realizar o pagamento.</p></li></ul>\n<h3><strong>Conclusão</strong></h3>\n<p>O reparcelamento do Simples Nacional é uma ferramenta valiosa para empresas que precisam colocar suas obrigações fiscais em dia sem comprometer o fluxo de caixa. Organizar as finanças, pagar as parcelas em dia e manter um controle eficaz dos tributos são medidas essenciais para garantir a sustentabilidade e o crescimento do negócio.</p>",
+ "cluster": "SIMPLES",
+ "relacionados": [
+  {
+   "slug": "parcelamento-do-simples-nacional-como-regularizar-suas-dividas-com-a-receita-federal",
+   "titulo": "Parcelamento do Simples Nacional: como regularizar suas dívidas com a Receita Federal",
+   "categoria": "Simples Nacional",
+   "palavras": 534
+  },
+  {
+   "slug": "mei-2025-nova-regra-soma-receitas-do-cpf-e-do-cnpj",
+   "titulo": "MEI 2025: nova regra soma receitas do CPF e do CNPJ",
+   "categoria": "Fiscal",
+   "palavras": 1014
+  }
+ ],
+ "urlAntiga": "https://beorange.app/blog/como-funciona-o-reparcelamento-do-simples-nacional-saiba-mais",
+ "notasDaMigracao": [
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
+ ]
+}

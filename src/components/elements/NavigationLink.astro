@@ -1,0 +1,27 @@
+---
+// Elemento: Navigation/Link (Figma node 21:127)
+export interface Props {
+  label?: string;
+  href?: string;
+  class?: string;
+}
+const { label = "Link", href = "#", class: className = "" } = Astro.props;
+---
+<a href={href} class={`nav-link ${className}`}>
+  {label}
+</a>
+
+<style>
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8);
+    font: 400 14px/normal var(--font-family-base);
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .nav-link:hover {
+    color: var(--text-brand);
+  }
+</style>

@@ -1,0 +1,61 @@
+---
+// Elemento: Dobra 7 da página Contabilidade — Diagnóstico (banda laranja).
+// Fonte da verdade: HTML oficial do designer (beorange-contabilidade_1.html).
+// CSS global: src/styles/prototype-contabilidade.css
+//
+// Mesma oferta da DiagnosticSection da home, em outra moldura: aqui a faixa é laranja
+// (.brand-band) e o grid é .diag2, lá é clara (.alt) e o grid é .diag. O formulário é o
+// mesmo componente nos dois — ver FormularioDiagnostico.astro.
+import Icone from "./Icone.astro";
+import FormularioDiagnostico, { type Campo } from "./FormularioDiagnostico.astro";
+
+interface Props {
+  /** Âncora do botão "Solicitar diagnóstico" do hero desta página. */
+  id?: string;
+  eyebrow?: string;
+  titulo?: string;
+  texto?: string;
+  itens?: string[];
+  /** 1 quando esta seção abre a página (é o caso do /contato/, onde ela é a dobra 1) e o
+   *  título precisa ser o H1. Uma página só pode ter um H1, e ele tem de ser o primeiro. */
+  nivel?: 1 | 2;
+  formTitulo?: string;
+  campos?: Campo[];
+  botao?: string;
+  rodape?: string;
+}
+
+const {
+  id = "diagnostico",
+  eyebrow = "Diagnóstico de entrada",
+  titulo = "Comece pelo diagnóstico de entrada",
+  texto = "Todo cliente que entra na Beorange passa por um diagnóstico: situação contábil, consistência fiscal, estrutura societária e enquadramento tributário. É ele que mostra o que precisa ser corrigido, o que pode ser recuperado e o que já está bem resolvido.",
+  itens = [
+    "Situação contábil e consistência fiscal",
+    "Estrutura societária e enquadramento tributário",
+    "O que corrigir, o que recuperar e o que já está resolvido",
+  ],
+  nivel = 2,
+  formTitulo,
+  campos,
+  botao,
+  rodape,
+} = Astro.props;
+---
+<section class="brand-band" id={id}>
+  <div class="wrap">
+    <div class="diag2">
+      <div class="d2l rv">
+        {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+        {nivel === 1 ? <h1>{titulo}</h1> : <h2>{titulo}</h2>}
+        <p>{texto}</p>
+        <ul>
+          {itens.map((item) => <li><Icone nome="check" />{item}</li>)}
+        </ul>
+      </div>
+      <div class="d2r rv">
+        <FormularioDiagnostico titulo={formTitulo} campos={campos} botao={botao} rodape={rodape} />
+      </div>
+    </div>
+  </div>
+</section>

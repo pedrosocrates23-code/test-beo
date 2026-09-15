@@ -1,0 +1,53 @@
+---
+// Elemento: Dobra 3 — As seis frentes.
+// Fonte da verdade: HTML oficial do designer (beorange-contabilidade_1.html).
+// CSS global: src/styles/prototype-contabilidade.css
+//
+// Grade de cards de serviço, três por linha no desktop. Serve para qualquer página que
+// precise listar frentes de atuação, planos ou especialidades — o nome veio das seis da
+// Contabilidade, mas a lista é livre. Cada card puxa o desenho do catálogo compartilhado
+// (Icone.astro) em vez de trazer o próprio SVG.
+import Icone, { type NomeIcone } from "./Icone.astro";
+
+interface Props {
+  id?: string;
+  titulo?: string;
+  intro?: string;
+  /** `icone` é opcional: sem ele o card não desenha o quadro, o que é o certo quando o
+   *  Figma ainda não definiu um símbolo para aquela frente — melhor sem ícone do que com
+   *  um emprestado de outro significado. */
+  frentes?: { icone?: NomeIcone; titulo: string; texto: string; link?: { texto: string; href: string } }[];
+}
+
+const {
+  id = "frentes",
+  titulo = "Seis frentes conectadas, sob o mesmo acompanhamento",
+  intro = "As áreas não trabalham separadas. O que o fiscal apura, o tributário revisa. O que o societário altera, a contabilidade registra. É essa ligação que evita retrabalho e informação desencontrada.",
+  frentes = [
+    { icone: "contabil", titulo: "Contábil", texto: "Escrituração, conciliações, balanço e DRE com informação útil para a gestão.", link: { texto: "Ver Contábil", href: "/contabilidade-beorange/contabil/" } },
+    { icone: "fiscal", titulo: "Fiscal", texto: "Apuração e obrigações federais, estaduais e municipais, sem inconsistência.", link: { texto: "Ver Fiscal", href: "/contabilidade-beorange/fiscal/" } },
+    { icone: "departamento-pessoal", titulo: "Departamento Pessoal", texto: "Admissão a rescisão, folha, encargos e eSocial em processo digital.", link: { texto: "Ver Departamento Pessoal", href: "/contabilidade-beorange/departamento-pessoal/" } },
+    { icone: "tributario", titulo: "Tributário", texto: "Estratégia no Lucro Real, créditos e preparação para IBS e CBS.", link: { texto: "Ver Tributário", href: "/contabilidade-beorange/tributario/" } },
+    { icone: "societario", titulo: "Societário", texto: "Estrutura jurídica alinhada ao modelo de negócio e ao crescimento.", link: { texto: "Ver Societário", href: "/contabilidade-beorange/societario/" } },
+    { icone: "assessoria", titulo: "Assessoria e Consultoria", texto: "Análise recorrente dos números com um analista dedicado.", link: { texto: "Ver Assessoria", href: "/contabilidade-beorange/assessoria/" } },
+  ],
+} = Astro.props;
+---
+<section class="alt" id={id}>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>{titulo}</h2>
+      {intro && <p>{intro}</p>}
+    </div>
+    <div class="frentes">
+      {frentes.map((f) => (
+        <div class="frente rv">
+          {f.icone && <div class="ic"><Icone nome={f.icone} /></div>}
+          <h3>{f.titulo}</h3>
+          <p>{f.texto}</p>
+          {f.link && <div class="pfoot"><a href={f.link.href} class="link-cta">{f.link.texto} <Icone nome="seta-direita" /></a></div>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

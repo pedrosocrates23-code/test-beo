@@ -1,0 +1,170 @@
+---
+// Elemento: Dobra 7 — Recursos / Blog.
+// Fonte da verdade: HTML oficial do designer (beorange-homepage_2.html, linhas 646-686).
+// Imagens reais plugadas no .thumb de cada card (resource-*.webp), no lugar do rótulo
+// placeholder que o protótipo mostrava ali (a mesma categoria continua no .cat abaixo).
+//
+// Vitrine de três cards. É CURADORIA, não uma lista ordenada por data: o critério na home é
+// um card por eixo temático. Quando os artigos existirem de fato, dê `href` a cada card —
+// sem ele o título não vira link, que é o estado atual porque os textos ainda são exemplo.
+interface Props {
+  titulo?: string;
+  intro?: string;
+  cards?: { imagem: string; categoria: string; titulo: string; resumo: string; meta: string; href?: string }[];
+  /** Aviso de conteúdo ilustrativo. Passe `null` para não mostrar nenhum aviso —
+   *  `undefined` NÃO serve: em JS o default do destructuring só é ignorado quando o valor
+   *  é diferente de undefined, então `nota={undefined}` traz de volta o texto de exemplo. */
+  nota?: string | null;
+  /** Chamada no rodapé da dobra. `null` para omitir, pelo mesmo motivo acima. */
+  link?: { texto: string; href: string } | null;
+  /** Quantos cards aparecem de cara. Os demais vão para o HTML com `hidden` e entram em
+   *  lotes do mesmo tamanho, pelo card "Carregar mais" no fim da grade.
+   *
+   *  Por que `hidden` e não renderizar menos cards: assim TODO artigo continua com um link
+   *  no HTML, alcançável por buscador e por quem navega sem JS. O que pesava não era o HTML
+   *  (122 KB com os 149), e sim as imagens — 58,9 MB somados. Com `hidden` + loading="lazy",
+   *  o navegador não baixa a imagem de um card que não está na tela.
+   *
+   *  Omita (ou passe null) para mostrar todos de uma vez, que é o comportamento das
+   *  outras dobras do site. */
+  porLote?: number | null;
+}
+
+const {
+  titulo = "Para entender antes de decidir",
+  intro = "Lucro Real, Reforma Tributária e as obrigações que mudam a rotina de quem cresce. Escrito por quem opera essas frentes todos os dias.",
+  cards = [
+    {
+      imagem: "/img/home/resource-lucro-real.webp",
+      categoria: "Tributário",
+      titulo: "Lucro Real: onde a dedutibilidade das despesas muda o imposto do mês",
+      resumo: "O que entra e o que não entra na base, e por que a classificação genérica faz a empresa pagar mais do que deveria.",
+      meta: "Exemplo · 6 min de leitura",
+    },
+    {
+      imagem: "/img/home/resource-ibs-cbs.webp",
+      categoria: "Reforma Tributária",
+      titulo: "IBS e CBS: o que muda no aproveitamento de crédito antes da obrigatoriedade",
+      resumo: "Contratos, preço e cadastros precisam estar prontos antes da transição. Veja o que revisar primeiro na sua operação.",
+      meta: "Exemplo · 8 min de leitura",
+    },
+    {
+      imagem: "/img/home/resource-conciliacao.webp",
+      categoria: "Gestão financeira",
+      titulo: "Conciliação na origem: por que o dado categorizado reduz retrabalho contábil",
+      resumo: "Quando a movimentação nasce classificada, a contabilidade deixa de importar, conferir e reclassificar tudo de novo.",
+      meta: "Exemplo · 5 min de leitura",
+    },
+  ],
+  nota = "Títulos ilustrativos — curadoria (não ordem por data): um de Tributário, um de Reforma Tributária e um de Gestão financeira, a definir e revisar.",
+  link = { texto: "Ver todos os conteúdos", href: "/blog/" },
+  porLote = null,
+} = Astro.props;
+
+const emLotes = porLote != null && porLote > 0 && cards.length > porLote;
+const visiveisDeInicio = emLotes ? porLote! : cards.length;
+/** Restam quantos para o texto do botão, que diz o número em vez de só "carregar mais". */
+const restantes = cards.length - visiveisDeInicio;
+---
+<section>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>{titulo}</h2>
+      {intro && <p>{intro}</p>}
+    </div>
+    <div class="blog-grid" data-lote={emLotes ? String(porLote) : undefined}>
+      {cards.map((c, i) => (
+        <article class="art-ph rv" hidden={emLotes && i >= visiveisDeInicio}>
+          {/* Os três primeiros são os que aparecem sem rolar: carregam de imediato, para não
+              atrasar a maior imagem da tela. Do quarto em diante, só quando chegar perto. */}
+          <div class="thumb"><img src={c.imagem} alt="" loading={i < 3 ? "eager" : "lazy"} decoding="async" /></div>
+          <div class="abody">
+            <div class="cat">{c.categoria}</div>
+            <h3 style="font-size:17px;font-weight:600;margin:10px 0 8px;line-height:1.3">{c.href ? <a href={c.href}>{c.titulo}</a> : c.titulo}</h3>
+            <p style="font-size:14px">{c.resumo}</p>
+            <div class="meta">{c.meta}</div>
+          </div>
+        </article>
+      ))}
+      {emLotes && (
+        <button type="button" class="art-ph carregar-mais" data-restantes={String(restantes)}>
+          <span class="cm-sinal" aria-hidden="true">+</span>
+          <span class="cm-texto">Carregar mais</span>
+          <span class="cm-conta">{restantes} {restantes === 1 ? "artigo" : "artigos"} restantes</span>
+        </button>
+      )}
+    </div>
+    {emLotes && (
+      <noscript>
+        {/* Sem JS o botão não faz nada: esta regra revela todos os cards e esconde o botão,
+            para que o acervo inteiro continue acessível. */}
+        <style is:inline>{`.blog-grid [hidden]{display:block!important}.carregar-mais{display:none!important}`}</style>
+      </noscript>
+    )}
+    {nota && <p class="ex-note rv">{nota}</p>}
+    {link && (
+      <div class="pend rv" style="margin-top:16px">
+        <a href={link.href} class="link-cta">{link.texto} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    )}
+  </div>
+</section>
+
+<script>
+  // Card "Carregar mais": revela o próximo lote de cards que já estão no HTML.
+  // Não busca nada na rede — os cards estão todos na página desde o início, apenas com
+  // `hidden`. O que se ganha ao escondê-los é a imagem: `loading="lazy"` não baixa a foto
+  // de um card oculto, e são 58,9 MB somados no acervo inteiro.
+  //
+  // querySelectorAll porque a mesma página pode ter mais de uma grade em lotes.
+  document.querySelectorAll<HTMLElement>(".blog-grid[data-lote]").forEach((grade) => {
+    const passo = Number(grade.dataset.lote) || 15;
+    const botao = grade.querySelector<HTMLButtonElement>(".carregar-mais");
+    if (!botao) return;
+
+    botao.addEventListener("click", () => {
+      const ocultos = grade.querySelectorAll<HTMLElement>(".art-ph[hidden]");
+      const lote = Array.from(ocultos).slice(0, passo);
+
+      lote.forEach((card) => {
+        card.hidden = false;
+        // O observer de revelação em site.js só varre a página uma vez, no carregamento:
+        // um card revelado depois nunca entraria na tela sem isto, porque .rv começa com
+        // opacity 0. Marcar como já revelado é mais honesto que reanimar a lista inteira.
+        card.classList.add("in");
+      });
+
+      const restam = grade.querySelectorAll(".art-ph[hidden]").length;
+      if (restam === 0) {
+        botao.remove();
+      } else {
+        const conta = botao.querySelector(".cm-conta");
+        if (conta) conta.textContent = `${restam} ${restam === 1 ? "artigo" : "artigos"} restantes`;
+      }
+
+      // Devolve o foco ao primeiro card novo, senão quem navega por teclado fica preso no
+      // botão sem saber que a lista cresceu.
+      const primeiro = lote[0]?.querySelector<HTMLAnchorElement>(".abody h3 a");
+      primeiro?.focus();
+    });
+  });
+</script>
+
+<style is:global>
+  /* Card "Carregar mais": ocupa uma célula da grade, como os demais cards. */
+  .blog-grid .carregar-mais{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    min-height:220px;padding:28px;cursor:pointer;text-align:center;
+    border:1px dashed var(--border);border-radius:var(--r-card);
+    background:transparent;color:var(--text-primary);font-family:inherit;
+    transition:.25s;
+  }
+  .blog-grid .carregar-mais:hover{background:#fff;border-style:solid;box-shadow:var(--shadow);transform:translateY(-2px)}
+  .blog-grid .carregar-mais:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+  .blog-grid .carregar-mais .cm-sinal{
+    width:44px;height:44px;border-radius:50%;background:var(--coral);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1;font-weight:400;
+  }
+  .blog-grid .carregar-mais .cm-texto{font-size:16px;font-weight:600}
+  .blog-grid .carregar-mais .cm-conta{font-size:12.5px;color:var(--muted)}
+</style>

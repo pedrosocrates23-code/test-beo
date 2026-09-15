@@ -1,0 +1,156 @@
+---
+// Página: Contato.
+// Fonte do texto: "Proposta de textos — páginas do novo site", PÁGINA 5, dobra por dobra.
+// As opções de "Faturamento anual aproximado" e de "Assunto" vêm das notas do próprio
+// documento, não foram inventadas.
+//
+// Dados de contato reais, fornecidos pelo cliente em 15/09/2026:
+//   endereço  Av. Visc. de Guarapuava, 3263 - Centro, Curitiba - PR, 80010-100
+//   telefone  +55 41 9644-0060
+//   e-mail    contato@beorange.app
+//   WhatsApp  41 99693-0218 (número do link de conversa)
+//
+// ATENÇÃO: o número do WhatsApp é DIFERENTE do telefone. Não são o mesmo contato e não devem
+// ser unificados sem alguém confirmar — trocar um pelo outro manda a pessoa para a linha
+// errada.
+//
+// O portal do cliente ("Acessar o portal") é EXTERNO: gestao.beorange.app/login. Não é uma
+// rota deste site, e por isso não existe /login/ em src/pages.
+//
+// AINDA FALTA, e por isso a dobra 4 está incompleta:
+//   - horário exato de atendimento (o texto só diz "horário comercial, de segunda a sexta")
+//   - CNPJ (a Beorange vai fornecer)
+//   - endereços de eventuais filiais
+// O documento avisa que essa dobra alimenta os dados estruturados de organização do site;
+// sem esses campos a marcação fica incompleta. Nada foi preenchido por estimativa.
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-contabilidade.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import DiagnosticoEntrada from "../../components/elements/DiagnosticoEntrada.astro";
+import SeisFrentes from "../../components/elements/SeisFrentes.astro";
+import StagesSection from "../../components/elements/StagesSection.astro";
+import SecaoLista from "../../components/elements/SecaoLista.astro";
+import Footer from "../../components/elements/Footer.astro";
+
+const WHATSAPP =
+  "https://api.whatsapp.com/send/?phone=5541996930218&text=Ol%C3%A1%2C+vim+pelo+site+da+Beorange+e+gostaria+de+conhecer+melhor+as+solu%C3%A7%C3%B5es&type=phone_number&app_absent=0";
+const TELEFONE = "+55 41 9644-0060";
+const TELEFONE_LINK = "tel:+554196440060";
+const EMAIL = "contato@beorange.app";
+const ENDERECO = "Av. Visc. de Guarapuava, 3263 - Centro, Curitiba - PR, 80010-100";
+---
+<Layout
+  title="Contato | Beorange"
+  description="Fale com um especialista da Beorange. Diagnóstico contábil, fiscal, societário e tributário para empresas em crescimento."
+>
+  <Header ativo="contato" tema="marca" />
+  <MobileMenu />
+
+  <!-- DOBRA 1 — Abertura com formulário.
+       nivel={1} porque aqui o título da seção é o H1 da página. -->
+  <DiagnosticoEntrada
+    id="formulario"
+    nivel={1}
+    eyebrow=""
+    titulo="Fale com quem vai ler os seus números"
+    texto="Conte em que momento a empresa está. A partir daí, marcamos uma conversa e definimos se um diagnóstico faz sentido agora."
+    itens={[]}
+    formTitulo=""
+    botao="Enviar mensagem"
+    rodape="Respondemos em até um dia útil. Seus dados são usados apenas para este contato."
+    campos={[
+      { tipo: "text", rotulo: "Nome", obrigatorio: true },
+      { tipo: "email", rotulo: "E-mail corporativo", obrigatorio: true },
+      { tipo: "tel", rotulo: "Telefone ou WhatsApp" },
+      { tipo: "text", rotulo: "Empresa" },
+      {
+        tipo: "select",
+        rotulo: "Faturamento anual aproximado",
+        vazio: "Selecione",
+        opcoes: ["Até R$ 1,2 milhão", "De R$ 1,2 a R$ 5 milhões", "De R$ 5 a R$ 20 milhões", "Acima de R$ 20 milhões"],
+      },
+      {
+        tipo: "select",
+        rotulo: "Regime tributário atual",
+        vazio: "Selecione",
+        opcoes: ["Simples Nacional", "Lucro Presumido", "Lucro Real", "Não sei"],
+      },
+      {
+        tipo: "select",
+        rotulo: "Assunto",
+        vazio: "Selecione",
+        opcoes: [
+          "Contabilidade Beorange",
+          "Conta Beorange",
+          "Lucro Real e estratégia tributária",
+          "Reforma Tributária IBS e CBS",
+          "Abertura ou alteração societária",
+          "Trabalhar na Beorange",
+          "Outro assunto",
+        ],
+      },
+      { tipo: "textarea", rotulo: "Mensagem", full: true },
+    ]}
+  />
+
+  <!-- DOBRA 2 — Canais diretos.
+       O documento pede e-mail e telefone clicáveis: no celular o toque abre o discador e o
+       aplicativo de e-mail. Daí os href tel: e mailto: em vez de texto solto.
+       O bloco de cliente atual existe para não misturar suporte com comercial no mesmo funil. -->
+  <SeisFrentes
+    id="canais"
+    titulo="Prefere falar direto"
+    intro=""
+    frentes={[
+      {
+        titulo: "WhatsApp",
+        texto: "Para dúvidas rápidas e primeiro contato comercial.",
+        link: { texto: "Abrir conversa", href: WHATSAPP },
+      },
+      {
+        titulo: "E-mail",
+        texto: "Para propostas, documentos e assuntos que pedem registro.",
+        link: { texto: EMAIL, href: `mailto:${EMAIL}` },
+      },
+      {
+        titulo: "Telefone",
+        texto: "Atendimento em horário comercial, de segunda a sexta.",
+        link: { texto: TELEFONE, href: TELEFONE_LINK },
+      },
+      {
+        titulo: "Já é cliente Beorange?",
+        texto: "O atendimento acontece pelo portal e com o seu analista responsável.",
+        link: { texto: "Acessar o portal", href: "https://gestao.beorange.app/login" },
+      },
+    ]}
+  />
+
+  <!-- DOBRA 3 — O que acontece depois -->
+  <StagesSection
+    titulo={{ resto: "O que acontece depois que você envia" }}
+    intro=""
+    estagios={[
+      { rotulo: "ETAPA 01", titulo: "Retorno", resumo: "Um especialista entra em contato em até um dia útil para entender o momento da empresa.", pontos: [] },
+      { rotulo: "ETAPA 02", titulo: "Conversa", resumo: "Mapeamos modelo de negócio, regime tributário, volume de operação e o que hoje não funciona.", pontos: [] },
+      { rotulo: "ETAPA 03", titulo: "Diagnóstico", resumo: "Se fizer sentido, avançamos para o diagnóstico contábil, fiscal, societário e tributário, que define o escopo real.", pontos: [], atual: true },
+    ]}
+    destaque="Não enviamos proposta antes de entender a operação. Escopo genérico costuma custar caro depois."
+  />
+
+  <!-- DOBRA 4 — Onde estamos.
+       [FALTA] horário exato de atendimento, CNPJ, URLs das redes sociais e endereços de
+       eventuais filiais. Sem eles os dados estruturados de organização ficam incompletos —
+       ver o cabeçalho do arquivo. O mapa é opcional no documento e, se entrar, deve carregar
+       sob clique: esta é página de conversão e um iframe de mapa custa caro no carregamento. -->
+  <SecaoLista
+    variante="alternada"
+    titulo="Onde estamos"
+    subtitulo="Sede"
+    itens={[ENDERECO, TELEFONE, EMAIL]}
+  />
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

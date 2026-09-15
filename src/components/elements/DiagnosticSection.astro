@@ -1,0 +1,53 @@
+---
+// Elemento: Dobra 6 da home — Diagnóstico de entrada + formulário.
+// Fonte da verdade: HTML oficial do designer (beorange-homepage_2.html, linhas 601-643).
+//
+// Mesma oferta da DiagnosticoEntrada da página Contabilidade, em outra moldura: aqui o fundo
+// é claro (.alt) e o grid é .diag, lá a faixa é laranja e o grid é .diag2. O formulário é o
+// mesmo componente nos dois — ver FormularioDiagnostico.astro.
+import Icone from "./Icone.astro";
+import FormularioDiagnostico, { type Campo } from "./FormularioDiagnostico.astro";
+
+interface Props {
+  eyebrow?: string;
+  titulo?: string;
+  texto?: string;
+  itens?: string[];
+  formTitulo?: string;
+  campos?: Campo[];
+  botao?: string;
+  rodape?: string;
+}
+
+const {
+  eyebrow = "Diagnóstico de entrada",
+  titulo = "Comece por um diagnóstico, não por uma proposta",
+  texto = "Toda empresa que entra na Beorange passa por um diagnóstico de entrada: situação contábil, consistência fiscal, estrutura societária e enquadramento tributário. É a partir dele que se define o que faz sentido mudar, e o que já está bem resolvido.",
+  itens = [
+    "Entendemos o momento da empresa e o modelo de negócio",
+    "Identificamos inconsistências e pontos de atenção",
+    "Apresentamos caminhos, com escopo e condições claras",
+  ],
+  formTitulo,
+  campos,
+  botao,
+  rodape,
+} = Astro.props;
+---
+<section class="alt diag-sec">
+  <div class="wrap">
+    <div class="diag rv">
+      <div class="diag-l">
+        {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+        <h2>{titulo}</h2>
+        <p>{texto}</p>
+        <ul>
+          {itens.map((item) => <li><Icone nome="check" />{item}</li>)}
+        </ul>
+      </div>
+      <div class="diag-r">
+        <FormularioDiagnostico titulo={formTitulo} campos={campos} botao={botao} rodape={rodape} />
+      </div>
+    </div>
+  </div>
+</section>

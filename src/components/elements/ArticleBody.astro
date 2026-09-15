@@ -1,0 +1,62 @@
+---
+// Elemento: Corpo do artigo (protótipo do designer — beorange-artigo_2.html, div.art-main).
+// Sem <style>: o CSS é global, vindo de src/styles/prototype-artigo.css.
+//
+// O texto entra por <slot>: um artigo novo escreve o próprio conteúdo entre as tags, e a
+// moldura (coluna de leitura, barra de compartilhar, tipografia da .prose) vem de graça.
+//
+//   <ArticleBody>
+//     <h2>Primeira seção</h2>
+//     <p>…</p>
+//   </ArticleBody>
+//
+// Sem nada entre as tags, cai no artigo de exemplo abaixo — é ele que /blog/exemplo mostra.
+//
+// ATENÇÃO ao tempo de leitura: a página calcula lendo ESTE arquivo (ArticleBody.astro?raw),
+// o que só está certo enquanto o texto for o de exemplo. Ao passar conteúdo pelo slot, conte
+// o texto novo com contarPalavras() e passe o resultado — senão o artigo anuncia os minutos
+// de um texto que não é o dele.
+import ArticleShare from "./ArticleShare.astro";
+---
+<div class="art-main">
+  <div class="art-layout">
+    <ArticleShare />
+
+    <div class="prose">
+      <slot>
+      <h2>O que é dedutibilidade, na prática</h2>
+      <p>Uma despesa dedutível reduz o resultado tributável — ou seja, diminui a base sobre a qual incidem IRPJ e CSLL. Uma despesa indedutível, não. O ponto sensível é que a diferença entre uma e outra quase nunca é óbvia: depende da natureza do gasto, da documentação que o sustenta e da relação dele com a atividade da empresa.</p>
+      <p>Na correria do fechamento, o caminho mais rápido é classificar tudo pelo padrão mais conservador. É seguro para quem lança, mas caro para quem paga. Despesa legítima tratada como indedutível vira imposto que não precisava existir.</p>
+
+      <h2>Onde a conta costuma escapar</h2>
+      <p>Os pontos de perda se repetem de empresa para empresa. Não porque o time erra, mas porque ninguém tem tempo de revisar item a item toda competência. Os mais comuns:</p>
+      <ul>
+        <li>Despesas dedutíveis classificadas como indedutíveis por falta de análise ou de documento anexado</li>
+        <li>Créditos de PIS e COFINS sobre insumos que não foram identificados na cadeia</li>
+        <li>Provisões e baixas registradas sem o tratamento fiscal correto</li>
+        <li>Recolhimentos feitos a maior que nunca foram revisados nem compensados</li>
+      </ul>
+
+      <div class="pullquote">Despesa dedutível tratada como indedutível é dinheiro que fica na mesa — todo mês, sem ninguém avisar.</div>
+
+      <h2>Créditos de PIS e COFINS entram na mesma conta</h2>
+      <p>No regime não cumulativo, o aproveitamento de créditos sobre insumos muda diretamente quanto a empresa recolhe. O problema é que a identificação desses créditos exige olhar a operação real: o que entra, de quem, para quê. Uma classificação genérica de despesa apaga o crédito antes mesmo de ele ser calculado.</p>
+      <p>Por isso a análise não parte de uma tese pronta. Parte da contabilidade e dos documentos fiscais da própria empresa — que é onde o crédito, o risco e a oportunidade realmente aparecem.</p>
+
+      <div class="inline-cta">
+        <div class="t">Quer saber onde a sua empresa pode estar pagando a mais?</div>
+        <a href="/contabilidade-beorange/#diagnostico" class="btn btn-primary">Solicitar diagnóstico</a>
+      </div>
+
+      <h3>Como a Beorange faz a leitura</h3>
+      <p>A revisão das bases de IRPJ, CSLL, PIS e COFINS entra no acompanhamento recorrente: o mesmo analista que conhece a operação acompanha a formação do resultado mês a mês e sinaliza onde a classificação está deixando imposto na mesa. Diagnósticos e teses específicas, quando fazem sentido, são tratados como projeto — sempre depois da análise, nunca antes dela.</p>
+      <p>O objetivo não é prometer economia no papel. É dar à empresa a informação necessária para decidir com clareza — e, quando houver oportunidade real, ir atrás dela com escopo e condições definidas.</p>
+
+      <div class="conclusion">
+        <div class="l">Conclusão</div>
+        <p>No Lucro Real, o regime que dá mais trabalho é também o que dá mais margem de correção. Quem revisa a dedutibilidade das despesas e o aproveitamento de créditos com frequência não paga menos por sorte: paga o que deve porque enxerga a conta antes de ela fechar.</p>
+      </div>
+      </slot>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+---
+// Página de solução: Conta Beorange — Bora Financeira.
+// Estrutura: "Proposta de textos", PÁGINA 8 (modelo de 6 dobras).
+// Conteúdo: "Estrutura de Produtos beorange", seção 3.5. Texto literal, sem acréscimo.
+//
+// A dobra 2 (O problema) não é renderizada: o documento de tom só escreve esse texto
+// para a frente Tributário. Ver a pendência desta URL na planilha de status.
+import PaginaSolucao from "../../../components/elements/PaginaSolucao.astro";
+---
+<PaginaSolucao
+  metaTitle="Bora Financeira | Conta Beorange"
+  metaDescription="Duas camadas de automação e operação financeira assistida."
+  produto="Conta Beorange"
+  produtoHref="/conta-beorange/"
+  frente="Bora Financeira"
+  titulo="Duas camadas de automação e operação financeira assistida."
+  lead="A Bora Financeira é a inteligência operacional da beorange para gestão de contas a pagar e receber. Ela pode ser contratada em conjunto com o BPO Financeiro, mesmo quando o cliente mantém contas em outros bancos, ou operar de forma mais profunda quando conectada à Conta beorange. Em ambos os modelos, a automação trabal"
+  ctaPrimario="Solicitar diagnóstico"
+  escopoTitulo="O que está incluído"
+  escopo={[
+    { rotulo: "Camada 1 - Bora com BPO Financeiro", itens: [
+      "Lê documentos recebidos por e-mail",
+      "Valida se o remetente pertence a domínio autorizado",
+      "Cria lançamentos de contas a pagar",
+      "Atualiza lançamentos já projetados",
+      "Identifica fornecedor, cliente, valor e vencimento",
+      "Sugere categorias com base no histórico",
+      "Aplica regras definidas pelo cliente",
+      "Identifica duplicidades e inconsistências",
+      "Cria faturamentos com base nos contratos recebidos",
+      "Organiza contas a receber",
+      "Prepara os lançamentos para validação do analista",
+    ] },
+    { rotulo: "Camada 2 - Bora integrada à Conta beorange", itens: [
+      "Inclui pagamentos no fluxo bancário",
+      "Encaminha pagamentos aos aprovadores definidos",
+      "Respeita limites, perfis e alçadas",
+      "Relaciona pagamento, lançamento e documento de origem",
+      "Concilia a movimentação após a execução",
+      "Atualiza automaticamente o previsto versus realizado",
+    ] },
+    { rotulo: "Regras personalizadas", itens: [
+      "Regras de categorização por fornecedor ou cliente",
+      "Definição de remetentes e domínios autorizados",
+      "Limites por usuário",
+      "Alçadas por valor ou tipo de pagamento",
+      "Aprovadores responsáveis por cada faixa",
+    ] },
+  ]}
+  beneficios={{ itens: [
+    "Redução do trabalho manual",
+    "Maior acuracidade dos lançamentos",
+    "Menos digitação e retrabalho",
+    "Contas a pagar e receber atualizados",
+    "Menor risco de documentos esquecidos",
+    "Identificação de duplicidades e inconsistências",
+    "Automação sem retirada do controle humano",
+    "Integração direta com relatórios e contabilidade",
+  ] }}
+  irmas={[
+    { titulo: "Conta PJ e movimentação", texto: "Controle financeiro com múltiplos usuários, limites e alçadas.", href: "/conta-beorange/conta-pj/" },
+    { titulo: "Cobranças e recebimentos", texto: "Cobrança organizada do início ao recebimento.", href: "/conta-beorange/cobrancas/" },
+    { titulo: "Portal de gestão financeira", texto: "Uma estrutura que substitui controles e softwares desconectados.", href: "/conta-beorange/portal/" },
+  ]}
+/>

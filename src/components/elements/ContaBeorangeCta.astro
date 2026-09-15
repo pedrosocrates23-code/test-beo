@@ -1,0 +1,35 @@
+---
+// Elemento: faixa estreita de chamada cruzada entre produtos.
+// Fonte da verdade: HTML oficial do designer (beorange-contabilidade_1.html, dobra 6).
+// CSS global: src/styles/prototype-contabilidade.css
+//
+// Faixa de largura inteira com texto à esquerda e um botão à direita. Serve para apontar de
+// uma página de produto para outra, em qualquer direção — o nome do arquivo veio do primeiro
+// uso, não de um vínculo com a Conta Beorange.
+interface Props {
+  /** Título e texto são opcionais: em alguns fechos o documento traz só o botão, e inventar
+   *  uma frase de apoio para preencher a faixa seria escrever conteúdo que ninguém aprovou. */
+  titulo?: string;
+  texto?: string;
+  cta?: { texto: string; href: string };
+}
+
+const {
+  titulo,
+  texto,
+  cta = { texto: "Conhecer a Conta Beorange", href: "/conta-beorange/" },
+} = Astro.props;
+---
+<section class="integ">
+  <div class="wrap">
+    <div class="integ-band rv">
+      {(titulo || texto) && (
+        <div class="it">
+          {titulo && <h2>{titulo}</h2>}
+          {texto && <p>{texto}</p>}
+        </div>
+      )}
+      <a href={cta.href} class="btn btn-primary">{cta.texto}</a>
+    </div>
+  </div>
+</section>

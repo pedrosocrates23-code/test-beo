@@ -1,0 +1,121 @@
+---
+// Elemento: Dobra 4 da página Contabilidade — Como acompanhamos.
+// Fonte da verdade: HTML oficial do designer (beorange-contabilidade_1.html).
+// CSS global: src/styles/prototype-contabilidade.css
+//
+// Lista de escopo à esquerda, painel ilustrativo à direita. O painel é desenhado em HTML e
+// CSS — não é screenshot — e por isso os números são dados, não pixels: trocar um valor aqui
+// muda o desenho. Ele é ILUSTRATIVO e está marcado como tal no aria-label; se um dia mostrar
+// número de cliente, isso vira dado sensível e não pode ficar num componente estático.
+import Icone from "./Icone.astro";
+
+interface Props {
+  titulo?: string;
+  intro?: string;
+  subtituloLista?: string;
+  itens?: string[];
+  painel?: {
+    rotulo: string;
+    kpis: { rotulo: string; valor: string; delta?: { texto: string; cor: string } }[];
+    legenda: { texto: string; cor: string }[];
+    /** Cada mês com duas alturas em %: previsto e realizado. */
+    barras: { mes: string; previsto: number; realizado: number }[];
+    alertas: { cor: string; forte: string; resto: string }[];
+  };
+  plano?: { titulo: string; texto: string };
+  ressalva?: string;
+  destaque?: string;
+}
+
+const {
+  titulo = "Os números contam uma história. Nosso trabalho é traduzi-la",
+  intro = "A assessoria recorrente está incluída na mensalidade e acompanha as diferentes áreas administrativas. A frequência é definida conforme o momento da empresa: semanal, quinzenal, mensal ou trimestral. A partir dos números, o analista aponta desvios, riscos e prioridades.",
+  subtituloLista = "O que é analisado",
+  itens = [
+    "Balanço Patrimonial e DRE",
+    "Fluxo de caixa e projeções",
+    "Previsto versus realizado",
+    "Margens e rentabilidade",
+    "Evolução de receitas e despesas",
+    "Riscos fiscais, tributários e trabalhistas",
+    "Mudanças de regime tributário",
+    "Impactos do crescimento na estrutura",
+    "Cenários de expansão e contratação",
+    "Indicadores de desempenho",
+  ],
+  painel = {
+    rotulo: "Leitura dos números · Beorange",
+    kpis: [
+      { rotulo: "Resultado do mês", valor: "R$ 128k" },
+      { rotulo: "Margem", valor: "18,4%", delta: { texto: "▼", cor: "#E8A317" } },
+      { rotulo: "Prev. x Real", valor: "96%", delta: { texto: "▲", cor: "var(--coral)" } },
+    ],
+    legenda: [
+      { texto: "Previsto", cor: "var(--surface-2)" },
+      { texto: "Realizado", cor: "var(--coral)" },
+    ],
+    barras: [
+      { mes: "Jan", previsto: 58, realizado: 70 },
+      { mes: "Fev", previsto: 66, realizado: 60 },
+      { mes: "Mar", previsto: 74, realizado: 82 },
+      { mes: "Abr", previsto: 80, realizado: 72 },
+    ],
+    alertas: [
+      { cor: "#E8A317", forte: "Margem", resto: "abaixo do previsto · atenção" },
+      { cor: "var(--coral)", forte: "Crédito tributário", resto: "não aproveitado · oportunidade" },
+      { cor: "#12B76A", forte: "Fluxo de caixa", resto: "dentro do projetado" },
+    ],
+  },
+  plano = {
+    titulo: "Planejamento anual de crescimento",
+    texto: "No último trimestre de cada ano, aprofundamos a análise dos clientes que cresceram ou que projetam crescer. O objetivo é preparar o ciclo seguinte com antecedência, com previsibilidade de caixa e sem que a empresa pague mais imposto do que precisa.",
+  },
+  ressalva = "A assessoria recorrente está incluída na mensalidade. Projetos consultivos específicos, como recuperação de créditos, Lei do Bem e reestruturação de modelo de negócio, são contratados à parte.",
+  destaque = "A decisão continua sendo do cliente. O que muda é a quantidade de informação disponível quando ela é tomada.",
+} = Astro.props;
+---
+<section>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>{titulo}</h2>
+      {intro && <p>{intro}</p>}
+    </div>
+    <div class="an-grid">
+      <div class="rv">
+        <div class="an-sub-h">{subtituloLista}</div>
+        <ul class="an-list">
+          {itens.map((item) => <li><Icone nome="check" />{item}</li>)}
+        </ul>
+      </div>
+      <div class="rv">
+        <div class="dash" role="img" aria-label="Leitura dos números — dashboard de análise Beorange">
+          <div class="dbar"><i></i><i></i><i></i><span class="t">{painel.rotulo}</span></div>
+          <div class="body">
+            <div class="dkpis">
+              {painel.kpis.map((k) => (
+                <div class="dk"><div class="l">{k.rotulo}</div><div class="v">{k.valor}{k.delta && <> <small style={`color:${k.delta.cor}`}>{k.delta.texto}</small></>}</div></div>
+              ))}
+            </div>
+            <div class="dash-legend">{painel.legenda.map((l) => <span><i style={`background:${l.cor}`}></i>{l.texto}</span>)}</div>
+            <div class="bars">
+              {painel.barras.map((b) => (
+                <div class="bcol"><div class="bwrap"><div class="bp" style={`height:${b.previsto}%`}></div><div class="br" style={`height:${b.realizado}%`}></div></div><span class="lbl">{b.mes}</span></div>
+              ))}
+            </div>
+            {painel.alertas.map((a) => (
+              <div class="flag"><span class="fd" style={`background:${a.cor}`}></span><b>{a.forte}</b>&nbsp;{a.resto}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+    {plano && (
+      <div class="plan rv">
+        <h3>{plano.titulo}</h3>
+        <p>{plano.texto}</p>
+      </div>
+    )}
+    {ressalva && <p class="ressalva rv">{ressalva}</p>}
+    {destaque && <p class="destaque rv"><span class="bar"></span>{destaque}</p>}
+  </div>
+</section>

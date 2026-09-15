@@ -1,0 +1,32 @@
+---
+// Elemento: Imagem de destaque do artigo (protótipo do designer — beorange-artigo_2.html,
+// div.feature). Sem <style>: o CSS é global, vindo de src/styles/prototype-artigo.css.
+//
+// A foto entra pela variável --art-foto, e não por <img>, porque a moldura tem proporção fixa
+// (16/7.6) com recorte central: a foto de cada artigo pode ter qualquer tamanho e o
+// enquadramento continua igual. O default aponta para a imagem do protótipo.
+interface Props {
+  /** Caminho da foto a partir de public/, ex.: "/img/blog/meu-artigo.webp". */
+  src?: string;
+  /** Descrição para leitor de tela. Deixe "" quando a foto for puramente decorativa. */
+  alt?: string;
+  /** Legenda sobreposta no canto. Omita para não mostrar nenhuma. */
+  legenda?: string;
+}
+
+const {
+  src = "/img/blog/hero-image.webp",
+  alt = "Imagem de destaque do artigo",
+  legenda,
+} = Astro.props;
+---
+<div class="feature">
+  <div
+    class="img"
+    role="img"
+    aria-label={alt}
+    style={`--art-foto:url('${src}')`}
+  >
+    {legenda && <span class="cap">{legenda}</span>}
+  </div>
+</div>

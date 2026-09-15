@@ -1,0 +1,59 @@
+---
+// Elemento: Dobra 1 — Hero full-bleed.
+// Fonte da verdade: HTML oficial do designer (beorange-homepage_2.html, linhas 384-403).
+// A foto entra pela variável --hero-photo em src/styles/prototype-home.css
+// (/img/home/hero-desktop.webp); por isso o <span class="photo-note"> do protótipo saiu.
+//
+// Reaproveitável em qualquer página que abra com hero escuro de largura inteira: o que muda
+// é o texto e os links. O título vem em três partes porque o desenho pinta cada uma de um
+// jeito — a primeira em <b>, a segunda na cor de apoio (.h1-mid), a terceira normal. Passe só
+// as que a frase precisar: as vazias não geram tag.
+interface Props {
+  eyebrow?: string;
+  tituloForte?: string;
+  tituloMeio?: string;
+  tituloFim?: string;
+  lead?: string;
+  ctaPrimario?: { texto: string; href: string };
+  /** Botão secundário, contornado. Omita para o hero ficar só com um botão. */
+  ctaSecundario?: { texto: string; href: string };
+  /** Selos abaixo do bloco de texto. Lista vazia esconde a faixa inteira. */
+  selos?: string[];
+}
+
+const {
+  eyebrow = "Contabilidade e infraestrutura financeira",
+  tituloForte = "A estrutura",
+  tituloMeio = "administrativa que acompanha",
+  tituloFim = "o crescimento da sua empresa",
+  lead = "Contabilidade consultiva e operação financeira no mesmo ambiente, conectadas por dados e tecnologia. Para empresas que já passaram do controle informal e precisam enxergar o próprio negócio com clareza.",
+  ctaPrimario = { texto: "Falar com um especialista", href: "/contato/" },
+  ctaSecundario = { texto: "Ver as soluções", href: "#solucoes" },
+  selos = [
+    "Especialistas em Lucro Real",
+    "Preparação para IBS e CBS",
+    "Tecnologia própria de operação financeira",
+  ],
+} = Astro.props;
+---
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-inner rv in">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h1>{tituloForte && <b>{tituloForte}</b>} {tituloMeio && <span class="h1-mid">{tituloMeio}</span>} {tituloFim}</h1>
+      <p class="lead">{lead}</p>
+      <div class="hero-cta">
+        <a href={ctaPrimario.href} class="btn btn-primary">{ctaPrimario.texto}</a>
+        {ctaSecundario && <a href={ctaSecundario.href} class="btn btn-ghost">{ctaSecundario.texto}</a>}
+      </div>
+    </div>
+    <!-- Os selos ficam FORA do .hero-inner de propósito: no Figma (nó 1:908) eles ocupam
+         a largura inteira do container (1084px) e são centralizados, enquanto o título
+         fica preso a ~490px. Dentro do .hero-inner de 660px eles quebravam em duas linhas. -->
+    {selos.length > 0 && (
+      <div class="creds">
+        {selos.map((selo) => <span>{selo}</span>)}
+      </div>
+    )}
+  </div>
+</section>

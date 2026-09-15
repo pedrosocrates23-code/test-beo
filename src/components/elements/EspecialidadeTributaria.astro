@@ -1,0 +1,90 @@
+---
+// Elemento: Dobra 5 — Especialidade tributária (banda escura).
+// Fonte da verdade: HTML oficial do designer (beorange-contabilidade_1.html).
+// CSS global: src/styles/prototype-contabilidade.css
+//
+// Cards sobre fundo escuro, cada um com lista de entregas. Etiqueta e botão são opcionais:
+// com dois cards e botão vira comparativo de ofertas; com quatro e sem botão, vira o escopo de
+// um serviço em blocos (é o uso em /lucro-real/). A grade é de duas colunas.
+// A classe .dark da seção é o que inverte as cores do texto — o conteúdo não muda por isso.
+// Serve para qualquer página que precise destacar duas especialidades lado a lado.
+import Icone from "./Icone.astro";
+
+interface Props {
+  /** Âncora da seção, quando algum botão aponta para ela. */
+  id?: string;
+  eyebrow?: string;
+  titulo?: string;
+  intro?: string;
+  /** Cada card traz `itens` (lista com check) OU `texto` (parágrafo corrido). O parágrafo
+   *  existe porque nem todo conteúdo é lista: quebrar uma frase escrita em prosa para caber
+   *  numa lista é reescrever o texto, não formatá-lo. */
+  cards?: { etiqueta?: string; titulo: string; itens?: string[]; texto?: string; cta?: { texto: string; href: string } }[];
+  /** Parágrafo de fecho abaixo dos cards, quando o argumento não termina neles. */
+  fecho?: string;
+  /** Ressalva em letra miúda. Em tema de consultoria tributária ela não é decorativa:
+   *  é o que separa "podemos analisar" de "garantimos resultado". */
+  ressalva?: string;
+}
+
+const {
+  id,
+  eyebrow = "Especialidade tributária",
+  titulo = "Onde a diferença aparece no caixa: Lucro Real e a transição para IBS e CBS",
+  intro = "No Lucro Real, a formação do resultado tributável, a dedutibilidade das despesas, os créditos de PIS e COFINS e a consistência das obrigações afetam diretamente quanto a empresa paga. A análise parte da contabilidade e dos documentos fiscais da própria empresa.",
+  cards = [
+    {
+      etiqueta: "Lucro Real",
+      titulo: "Estratégia no Lucro Real",
+      itens: [
+        "Revisão das bases de IRPJ, CSLL, PIS e COFINS",
+        "Aproveitamento e recuperação de créditos",
+        "Identificação de recolhimentos indevidos ou a maior",
+        "Diagnósticos fiscais e planejamento tributário",
+      ],
+      cta: { texto: "Estratégia tributária no Lucro Real", href: "/lucro-real/" },
+    },
+    {
+      etiqueta: "Reforma Tributária",
+      titulo: "Preparação para IBS e CBS",
+      itens: [
+        "Impactos sobre preços, margens, contratos e caixa",
+        "Transição de PIS e COFINS para a CBS",
+        "Substituição gradual de ICMS e ISS pelo IBS",
+        "Revisão de cadastros, classificações e processos",
+      ],
+      cta: { texto: "Preparação para IBS e CBS", href: "/reforma-tributaria/" },
+    },
+  ],
+  fecho,
+  ressalva = "Estratégias tributárias dependem de diagnóstico prévio. Nenhum resultado é apresentado como garantido antes dessa análise.",
+} = Astro.props;
+---
+<section class="dark" id={id}>
+  <div class="wrap">
+    <div class="sec-head rv">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h2>{titulo}</h2>
+      {intro && <p>{intro}</p>}
+    </div>
+    <div class="esp-grid">
+      {cards.map((c) => (
+        <div class="esp rv">
+          {c.etiqueta && <span class="ptag">{c.etiqueta}</span>}
+          <h3>{c.titulo}</h3>
+          {c.texto && <p>{c.texto}</p>}
+          {c.itens && (
+            <ul>
+              {c.itens.map((item) => <li><Icone nome="check" />{item}</li>)}
+            </ul>
+          )}
+          {c.cta && <div class="pfoot"><a href={c.cta.href} class="btn btn-primary">{c.cta.texto}</a></div>}
+        </div>
+      ))}
+    </div>
+    {fecho && <p class="esp-fecho rv">{fecho}</p>}
+    {ressalva && (
+      <p class="ressalva rv" style="color:rgba(255,255,255,.6);border-left-color:var(--orange)">{ressalva}</p>
+    )}
+  </div>
+</section>

@@ -1,0 +1,162 @@
+---
+// Página legal: Política de Cookies.
+// Fonte normativa: ANPD, "Cookies e proteção de dados pessoais — guia orientativo", out/2022.
+// Estrutura da página: "Proposta de textos", PÁGINA 10.
+//
+// O QUE SUSTENTA CADA AFIRMAÇÃO DESTA PÁGINA
+// As definições de categoria, os requisitos de consentimento e o que uma política de cookies
+// precisa informar vêm do guia da ANPD, que por sua vez se apoia nos arts. 7º, 9º, 16 e 18 da
+// LGPD. O que o site faz HOJE foi verificado no código, não presumido:
+//   - nenhum script de terceiros é carregado nas páginas;
+//   - não há document.cookie em lugar nenhum do projeto;
+//   - o único armazenamento local é a chave "beorange-cookies", usada pelo banner para não
+//     reaparecer depois do aceite — e o banner NÃO está ativo em nenhuma página;
+//   - saem requisições para fonts.googleapis.com e fonts.gstatic.com (as fontes Outfit), que
+//     não gravam cookie, mas transmitem o IP do visitante ao Google.
+//
+// REVISÃO JURÍDICA CONTINUA NECESSÁRIA. Este texto descreve com precisão o estado atual do
+// site e segue o guia da ANPD, mas quem responde por ele é o jurídico da Beorange. E ele
+// precisa ser reescrito no dia em que entrar qualquer analytics, pixel ou chat — hoje a
+// página diz, corretamente, que nada disso existe.
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-contabilidade.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import PaginaLegal from "../../components/elements/PaginaLegal.astro";
+import Footer from "../../components/elements/Footer.astro";
+---
+<Layout
+  title="Política de Cookies | Beorange"
+  description="Quais cookies o site da Beorange usa, para quê, e como você controla cada categoria."
+>
+  <Header tema="claro" />
+  <MobileMenu />
+
+  <PaginaLegal
+    titulo="Política de Cookies"
+    resumo="Quais cookies o site da Beorange usa, para quê, e como você controla cada categoria."
+  >
+    <h2 id="s1">1. O que são cookies</h2>
+    <p>
+      Cookies são pequenos arquivos que um site grava no seu navegador quando você o visita.
+      Eles permitem que a página funcione, lembre preferências e, em alguns casos, acompanhe
+      a sua atividade. Quando essas informações permitem identificar uma pessoa natural,
+      diretamente ou pela associação a um perfil de comportamento, elas são dados pessoais e
+      o tratamento passa a ser regulado pela Lei Geral de Proteção de Dados.
+    </p>
+
+    <h2 id="s2">2. O que este site usa hoje</h2>
+    <p>
+      Este site não utiliza cookies de análise, de publicidade ou de rastreamento, nem carrega
+      scripts de terceiros que os instalem. Não há pixel de rede social, ferramenta de
+      estatística ou chat embarcado.
+    </p>
+    <p>
+      O único armazenamento que fazemos no seu navegador é a lembrança de que você já viu o
+      aviso de cookies, para que ele não reapareça a cada visita. Essa informação fica no seu
+      próprio dispositivo, não identifica você e não é enviada para nós nem para terceiros.
+    </p>
+    <table>
+      <thead>
+        <tr><th>O que é gravado</th><th>Para quê</th><th>Categoria</th><th>Quanto tempo</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Preferência de aviso de cookies</td>
+          <td>Não repetir o aviso a cada visita</td>
+          <td>Necessário</td>
+          <td>Até você limpar os dados do navegador</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Além disso, as fontes tipográficas do site são carregadas dos servidores do Google
+      (<code>fonts.googleapis.com</code> e <code>fonts.gstatic.com</code>). Esse carregamento
+      não grava cookies, mas transmite ao Google o endereço IP do seu dispositivo, por ser
+      necessário para entregar o arquivo.
+    </p>
+
+    <h2 id="s3">3. Categorias de cookies</h2>
+    <p>
+      As categorias abaixo seguem o guia orientativo da Autoridade Nacional de Proteção de
+      Dados. Elas não são excludentes: um mesmo cookie pode pertencer a mais de uma.
+    </p>
+
+    <h3 id="s3-1">3.1. Quanto a quem gerencia</h3>
+    <table>
+      <tbody>
+        <tr><th>Próprios ou primários</th><td>Definidos pelo próprio site que você está visitando. Em geral não servem para acompanhar a sua atividade em outros sites.</td></tr>
+        <tr><th>De terceiros</th><td>Criados por um domínio diferente do site visitado.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="s3-2">3.2. Quanto à necessidade</h3>
+    <table>
+      <tbody>
+        <tr><th>Necessários</th><td>Sem eles o site não funciona ou o serviço não é prestado. Limitam-se ao essencial para o que você pediu, e não atendem a outros interesses de quem mantém o site.</td></tr>
+        <tr><th>Não necessários</th><td>O site funciona sem eles. É o caso dos que medem desempenho, acompanham comportamento ou exibem anúncios.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="s3-3">3.3. Quanto à finalidade</h3>
+    <table>
+      <tbody>
+        <tr><th>Desempenho ou análise</th><td>Mostram as páginas mais visitadas, os erros que acontecem e como o site se comporta.</td></tr>
+        <tr><th>Funcionalidade</th><td>Guardam preferências como idioma, região ou nome de usuário.</td></tr>
+        <tr><th>Publicidade</th><td>Coletam hábitos de navegação para montar perfis e exibir anúncios direcionados.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="s3-4">3.4. Quanto à duração</h3>
+    <table>
+      <tbody>
+        <tr><th>De sessão</th><td>Descartados quando você fecha o navegador.</td></tr>
+        <tr><th>Persistentes</th><td>Continuam gravados depois que a sessão termina, pelo prazo definido.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="s4">4. Com que base tratamos esses dados</h2>
+    <p>
+      Quando o uso de cookies envolve dados pessoais, ele só é permitido se houver uma hipótese
+      legal que o autorize. Para cookies necessários, o consentimento não é a base adequada: a
+      informação é indispensável ao funcionamento da página, e não haveria escolha real entre
+      aceitar e recusar. Para cookies não necessários, o tratamento depende de consentimento
+      livre, informado e inequívoco, ou de outra hipótese legal aplicável ao caso.
+    </p>
+    <p>
+      Consentimento obtido de forma forçada não vale: não é admissível condicionar o uso do
+      site ao aceite integral dos cookies, usar opções pré-marcadas ou presumir concordância
+      pelo simples fato de a navegação continuar. E o caminho para revogar o consentimento
+      precisa ser tão simples e gratuito quanto o caminho que o obteve.
+    </p>
+    <p>
+      O período de retenção precisa ser compatível com a finalidade e limitado ao estritamente
+      necessário. Prazos indeterminados, excessivos ou desproporcionais não são compatíveis
+      com a LGPD.
+    </p>
+
+    <h2 id="s5">5. Como você controla os cookies</h2>
+    <p>
+      Todos os navegadores permitem ver, bloquear e apagar cookies, normalmente na área de
+      privacidade ou de configurações do site. Você pode bloquear todos os cookies, aceitar
+      apenas os do próprio site ou apagar os que já estiverem gravados.
+    </p>
+    <p>
+      Bloquear cookies necessários pode impedir que partes de um site funcionem. Como este
+      site não utiliza cookies de análise ou publicidade, bloqueá-los aqui não muda nada na
+      sua navegação.
+    </p>
+
+    <h2 id="s6">6. Quando esta política mudar</h2>
+    <p>
+      Esta página descreve o que o site faz na data indicada no topo. Se passarmos a usar
+      ferramentas de análise, publicidade ou qualquer recurso que grave cookies não
+      necessários, esta política será atualizada antes de a ferramenta entrar no ar, e o aviso
+      de cookies passará a oferecer aceitação e recusa por categoria.
+    </p>
+  </PaginaLegal>
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

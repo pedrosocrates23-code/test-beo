@@ -1,0 +1,129 @@
+---
+// Página legal: Política de Privacidade.
+// Fonte normativa: ANPD, "Cookies e proteção de dados pessoais — guia orientativo", out/2022,
+// que remete ao art. 9º da LGPD (o que precisa ser informado ao titular).
+// Estrutura da página: "Proposta de textos", PÁGINA 10.
+//
+// ATÉ ONDE ESTE TEXTO VAI, E POR QUÊ
+// O guia da ANPD sustenta a moldura de transparência: finalidades específicas, período de
+// retenção, compartilhamento com terceiros e direitos do titular, tudo em linguagem clara e
+// de fácil acesso. Foi isso que escrevi, mais o que foi VERIFICADO no código do site.
+//
+// O que NÃO está escrito, porque nenhum documento fornecido diz:
+//   - os dados que a Beorange trata na relação com CLIENTES (contábil, fiscal, folha,
+//     societário), que é o volume maior e o mais sensível;
+//   - prazos de retenção por categoria;
+//   - operadores e fornecedores que acessam esses dados;
+//   - transferência internacional, se houver;
+//   - base legal de cada finalidade fora do site.
+// Nada disso foi estimado. Uma política de privacidade que descreve por alto o tratamento de
+// uma contabilidade é pior que documento nenhum: cria a aparência de um compromisso que a
+// empresa não verificou se cumpre.
+//
+// [FALTA] o levantamento acima e a revisão do jurídico. Enquanto não vier, esta página cobre
+// com honestidade o site, e diz que a relação com clientes é regida por contrato.
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-contabilidade.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import PaginaLegal from "../../components/elements/PaginaLegal.astro";
+import Footer from "../../components/elements/Footer.astro";
+---
+<Layout
+  title="Política de Privacidade | Beorange"
+  description="Como a Beorange coleta, usa, armazena e protege os dados pessoais de clientes e visitantes."
+>
+  <Header tema="claro" />
+  <MobileMenu />
+
+  <PaginaLegal
+    titulo="Política de Privacidade"
+    resumo="Como a Beorange coleta, usa, armazena e protege os dados pessoais de clientes e visitantes."
+  >
+    <div class="legal-doc__aviso" role="status">
+      <strong>Esta versão cobre o site. A parte de clientes está em elaboração.</strong>
+      <p>
+        O tratamento de dados na prestação dos serviços contábeis, fiscais, de folha e
+        societários está sendo levantado e passará por revisão jurídica antes de ser descrito
+        aqui. Até lá, essa relação é regida pelo contrato de prestação de serviços. Se você é
+        cliente e quer saber como tratamos um dado específico, fale com o encarregado pelo
+        canal no fim desta página.
+      </p>
+    </div>
+
+    <h2 id="s1">1. Quem trata os seus dados</h2>
+    <p>
+      A Beorange é a responsável pelo tratamento dos dados pessoais coletados neste site. O
+      endereço e os canais de contato estão no rodapé de todas as páginas.
+    </p>
+
+    <h2 id="s2">2. Que dados coletamos neste site</h2>
+    <p>
+      Coletamos apenas o que você digita nos formulários. Não usamos ferramentas de análise,
+      publicidade ou rastreamento, e o site não instala cookies para essas finalidades — o que
+      está detalhado na <a href="/politica-de-cookies/">Política de Cookies</a>.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Onde</th><th>O que é pedido</th><th>Para quê</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Formulários de contato e diagnóstico</td>
+          <td>Nome, e-mail corporativo, telefone, empresa, faturamento aproximado, regime tributário, assunto e mensagem</td>
+          <td>Responder ao contato e avaliar se um diagnóstico faz sentido</td>
+        </tr>
+        <tr>
+          <td>Assinatura de conteúdo</td>
+          <td>Nome e e-mail corporativo</td>
+          <td>Enviar aviso quando houver mudança relevante nos temas assinados</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      As fontes tipográficas são carregadas dos servidores do Google, o que transmite a ele o
+      endereço IP do seu dispositivo — necessário para entregar o arquivo. Nenhum cookie é
+      gravado nesse processo.
+    </p>
+
+    <h2 id="s3">3. Com que finalidade e por quanto tempo</h2>
+    <p>
+      Os dados enviados por formulário são usados para responder ao seu contato e conduzir a
+      conversa comercial que dele decorrer. Não são usados para outra finalidade sem que você
+      seja informado antes, e são mantidos pelo tempo necessário a essa finalidade ou ao
+      cumprimento de obrigação legal.
+    </p>
+
+    <h2 id="s4">4. Com quem compartilhamos</h2>
+    <p>
+      Os dados enviados pelos formulários são acessados pela equipe da Beorange responsável
+      pelo atendimento. Não vendemos dados pessoais e não os cedemos para uso publicitário de
+      terceiros.
+    </p>
+
+    <h2 id="s5">5. Segurança</h2>
+    <p>
+      Adotamos medidas técnicas e administrativas para proteger os dados contra acesso não
+      autorizado e situações acidentais ou ilícitas de destruição, perda, alteração ou
+      difusão.
+    </p>
+
+    <h2 id="s6">6. Os seus direitos</h2>
+    <p>
+      Você pode pedir confirmação, acesso, correção, eliminação, portabilidade, informação
+      sobre compartilhamento, revogação de consentimento e oposição ao tratamento. Como
+      exercer cada um está detalhado na <a href="/lgpd/">página sobre a LGPD</a>.
+    </p>
+
+    <h2 id="s7">7. Alterações desta política</h2>
+    <p>
+      Quando esta política mudar, a data de atualização no topo da página muda junto. Se a
+      alteração afetar de forma relevante o tratamento dos seus dados, avisaremos pelos canais
+      de contato que você tiver informado.
+    </p>
+  </PaginaLegal>
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

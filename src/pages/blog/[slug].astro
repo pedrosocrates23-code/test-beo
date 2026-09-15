@@ -1,0 +1,83 @@
+---
+// Página: artigo do blog (/blog/<slug>/).
+// Mesma moldura de /blog/exemplo/, mas alimentada pela content collection "artigos" —
+// os 149 posts migrados do Framer. O exemplo continua no lugar como referência do designer.
+//
+// Imagem de destaque: sai do campo `hero`. Quando `hero` é null, a capa daquele artigo não
+// passou no corte de qualidade (menos de 1200px de largura) e a página sobe SEM hero, em vez
+// de esticar uma imagem pequena na largura da tela. A mesma capa segue servindo de card na
+// listagem, onde o tamanho basta.
+//
+// Tempo de leitura: medido no corpo real de cada artigo com contarPalavras(), como manda o
+// aviso em ArticleBody.astro — nunca digitado à mão, nunca herdado do exemplo.
+import type { GetStaticPaths } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { contarPalavras, tempoDeLeitura } from "../../lib/artigo";
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-artigo.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import ArticleHeader from "../../components/elements/ArticleHeader.astro";
+import ArticleFeaturedImage from "../../components/elements/ArticleFeaturedImage.astro";
+import ArticleBody from "../../components/elements/ArticleBody.astro";
+import RelatedArticles from "../../components/elements/RelatedArticles.astro";
+import Footer from "../../components/elements/Footer.astro";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const artigos = await getCollection("artigos");
+  return artigos.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { artigo: entry.data },
+  }));
+};
+
+// Sem este tipo, Astro.props entra como `unknown` e todo acesso a artigo.* deixa de ser
+// verificado: um campo renomeado no schema passaria batido no build e só apareceria na página.
+interface Props {
+  artigo: CollectionEntry<"artigos">["data"];
+}
+
+const { artigo } = Astro.props as Props;
+
+const minutos = tempoDeLeitura(
+  contarPalavras(artigo.corpo) + contarPalavras(artigo.lead),
+);
+
+const relacionados = artigo.relacionados.map((r) => ({
+  categoria: r.categoria,
+  titulo: r.titulo,
+  resumo: "",
+  meta: `${tempoDeLeitura(r.palavras)} min de leitura`,
+  href: `/blog/${r.slug}/`,
+}));
+---
+<Layout title={artigo.metaTitle} description={artigo.metaDescription}>
+  <Header ativo="blog" tema="claro" />
+  <MobileMenu />
+
+  <article class="article">
+    <ArticleHeader
+      titulo={artigo.titulo}
+      lead={artigo.lead}
+      dataIso={artigo.dataIso}
+      categoria={artigo.categoria}
+      minutos={minutos}
+      autor={artigo.autor}
+      autorCargo="Conteúdo Beorange"
+    />
+
+    {artigo.hero && (
+      <ArticleFeaturedImage src={artigo.hero} alt={artigo.imagemAlt} />
+    )}
+
+    <ArticleBody>
+      <Fragment set:html={artigo.corpo} />
+    </ArticleBody>
+
+    {relacionados.length > 0 && <RelatedArticles artigos={relacionados} />}
+  </article>
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

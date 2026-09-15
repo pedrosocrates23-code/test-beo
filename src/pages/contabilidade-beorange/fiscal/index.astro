@@ -1,0 +1,40 @@
+---
+// Página de solução: Contabilidade Beorange — Fiscal.
+// Estrutura: "Proposta de textos", PÁGINA 8 (modelo de 6 dobras).
+// Conteúdo: "Estrutura de Produtos beorange", seção 2.2. Texto literal, sem acréscimo.
+//
+// A dobra 2 (O problema) não é renderizada: o documento de tom só escreve esse texto
+// para a frente Tributário. Ver a pendência desta URL na planilha de status.
+import PaginaSolucao from "../../../components/elements/PaginaSolucao.astro";
+---
+<PaginaSolucao
+  metaTitle="Fiscal | Contabilidade Beorange"
+  metaDescription="Apuração, escrituração e cumprimento das obrigações fiscais."
+  produto="Contabilidade Beorange"
+  produtoHref="/contabilidade-beorange/"
+  frente="Fiscal"
+  titulo="Apuração, escrituração e cumprimento das obrigações fiscais."
+  lead="A frente fiscal cuida da apuração dos tributos e do cumprimento das obrigações fiscais da empresa nas esferas federal, estadual e municipal. O objetivo é assegurar regularidade, previsibilidade e consistência entre documentos, escrituração e declarações."
+  ctaPrimario="Solicitar diagnóstico"
+  escopoTitulo="O que está incluído"
+  escopo={[
+    { rotulo: "Escopo", itens: [
+      "Escrituração fiscal",
+      "Apuração de tributos federais, estaduais e municipais",
+      "Entrega das obrigações acessórias aplicáveis",
+      "Validação de documentos e bases fiscais",
+      "Acompanhamento da rotina fiscal mensal",
+      "Orientações sobre emissão e tratamento de documentos fiscais",
+    ] },
+  ]}
+  beneficios={{ itens: [
+    "Mais segurança no cumprimento das obrigações",
+    "Redução de riscos e inconsistências",
+    "Maior previsibilidade dos compromissos tributários",
+  ] }}
+  irmas={[
+    { titulo: "Contábil", texto: "Informação contábil completa, confiável e útil para a gestão.", href: "/contabilidade-beorange/contabil/" },
+    { titulo: "Departamento Pessoal", texto: "Operação trabalhista e previdenciária organizada, digital e acompanhada.", href: "/contabilidade-beorange/departamento-pessoal/" },
+    { titulo: "Tributário", texto: "Estratégia tributária construída a partir da realidade da operação.", href: "/contabilidade-beorange/tributario/" },
+  ]}
+/>

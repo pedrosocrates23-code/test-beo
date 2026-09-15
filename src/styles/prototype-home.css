@@ -1,0 +1,576 @@
+  /* Cor, raio e família tipográfica vêm de tokens.css — inclusive os nomes antigos
+     (--coral, --ink, --muted…), que lá apontam para os tokens do Figma. Ver a seção
+     "Ponte" naquele arquivo. Aqui ficam só os valores que o design system não define:
+     os dois gradientes, as duas sombras, a pilha de fontes com os fallbacks de sistema
+     e a largura máxima do container. */
+  :root{
+    --grad:linear-gradient(130deg,#FF7A18 0%,#F5380F 60%,#E71C0C 100%);
+    --wash:radial-gradient(120% 120% at 85% 8%,#FFE9DD 0%,rgba(255,233,221,0) 55%);
+    --shadow:0 18px 44px rgba(43,35,32,.06); --shadow-lg:0 30px 70px rgba(43,35,32,.10);
+    --f:'Outfit',system-ui,-apple-system,sans-serif; --max:1140px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--f);color:var(--ink);background:var(--white);line-height:1.65;font-weight:400;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+  .eyebrow{display:inline-block;font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin-bottom:18px}
+  h1,h2,h3{letter-spacing:-.02em;line-height:1.12;font-weight:700;color:var(--ink)}
+  h1{font-size:clamp(31px,3.9vw,46px);font-weight:700;line-height:1.08}
+  h2{font-size:clamp(24px,2.9vw,35px);font-weight:600}
+  h3{font-size:20px;font-weight:600;line-height:1.25}
+  p{color:var(--ink-2);font-size:16.5px}
+  section{padding:104px 0}
+  section.alt{background:var(--surface)}
+
+  /* ---------- BUTTONS ---------- */
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-weight:600;font-size:15.5px;padding:13px 24px;border-radius:var(--r-btn);border:0;cursor:pointer;transition:.22s;white-space:nowrap}
+  .btn svg{width:16px;height:16px}
+  .btn-primary{background:var(--coral);color:#fff}
+  .btn-primary:hover{background:var(--red);transform:translateY(-1px);box-shadow:0 10px 24px rgba(231,28,12,.24)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border)}
+  .btn-ghost:hover{border-color:var(--ink)}
+  .link-cta{display:inline-flex;align-items:center;gap:6px;color:var(--coral);font-weight:600;font-size:15px}
+  .link-cta svg{width:15px;height:15px;transition:.2s}
+  .link-cta:hover svg{transform:translateX(3px)}
+
+  /* ---------- HEADER ---------- */
+  header.site{position:fixed;top:0;left:0;right:0;z-index:60;padding:18px 0;transition:background .28s,padding .28s,box-shadow .28s}
+  /* Ao rolar, a barra some por completo — sem fundo branco, sem blur, sem borda inferior —
+     e o que continua visivel e o .navpill, que ja tem fundo proprio e passa a flutuar sobre
+     o conteudo. O padding segue 18px (era 11px quando rolava), entao o pill nao muda de
+     posicao: sem salto no momento da transicao.
+     O logo sai junto porque, sem a barra atras dele, nao existe variante que funcione em toda
+     a pagina: a clara sumiria nas secoes claras e a escura sumiria nas escuras (#231F20 e
+     #F53D11). Usa visibility em vez de display para o logo manter a caixa e o pill nao
+     escorregar para a esquerda. */
+  header.site.scrolled{background:transparent;backdrop-filter:none;border-bottom:none;padding:18px 0}
+  .logo{transition:opacity .28s ease,visibility .28s ease}
+  header.site.scrolled .logo{opacity:0;visibility:hidden;pointer-events:none}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .logo{display:inline-flex;align-items:center;font-weight:700;font-size:25px;letter-spacing:-.03em}
+  .logo .be{color:#fff;transition:color .28s} .logo .rg{color:var(--coral)}
+  header.site.scrolled .logo .be{color:var(--ink)}
+  .logo svg{width:.7em;height:.7em;margin:0 .005em;transform:translateY(.015em)}
+
+  /* ---------- LOGO (arquivo oficial da marca) ----------
+     logo.webp e logo-dark.webp: 218x48, lossless, sem recorte. Altura fixa + width:auto
+     preservam a proporcao 4.5417 (a 36px de altura da 163.5px de largura — exatamente a
+     medida do header no Figma). A variante escura existe porque o "range" da logo e branco
+     e sumiria no header pos-scroll, que tem fundo branco. */
+  .logo{line-height:0}
+  .logo .logo-img{display:block;height:36px;width:auto;max-width:none}
+  .logo .logo-img--dark{display:none}
+  header.site.scrolled .logo .logo-img--light{display:none}
+  header.site.scrolled .logo .logo-img--dark{display:block}
+  .foot-brand .logo .logo-img{height:29px}
+  /* nav pill (estilo Hillsdale) */
+  .navpill{display:flex;align-items:center;gap:2px;background:rgba(28,22,19,.80);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:7px 7px 7px 10px}
+  .navpill a,.navpill button{font-family:var(--f);font-size:14.5px;font-weight:500;color:rgba(255,255,255,.88);background:none;border:0;cursor:pointer;padding:9px 15px;border-radius:999px;display:inline-flex;align-items:center;gap:5px;transition:.18s}
+  .navpill a:hover,.navpill button:hover{color:#fff;background:rgba(255,255,255,.12)}
+  .navpill .caret{width:11px;height:11px;transition:.2s}
+  .navpill .icon-btn{padding:9px;border-radius:50%}
+  .navpill .icon-btn svg{width:18px;height:18px;stroke:rgba(255,255,255,.88);fill:none}
+  .navpill .icon-btn:hover svg{stroke:#fff}
+  /* Figma no 2056:48: o item ativo usa rgba(255,233,221,.10) — um bege translucido, diferente
+     do branco .12 do hover. E o Login (pill-cta) segue a mesma metrica dos outros itens:
+     padding 9/15, peso 500 e a mesma cor de texto; so o fundo muda. O prototipo usava
+     10/20 e peso 600, o que o deixava maior que os vizinhos. */
+  .navpill .is-active{background:rgba(255,233,221,.10)}
+  .pill-cta{background:var(--coral);color:rgba(255,255,255,.88);font-weight:500;padding:9px 15px}
+  /* O Login e #F5380F em qualquer estado. A regra generica .navpill a:hover tem
+     especificidade (0,2,1) e vencia a .pill-cta:hover (0,2,0), fazendo o botao perder o
+     laranja e assumir o rgba(255,255,255,.12) dos outros itens ao passar o mouse.
+     Qualificar com .navpill leva a (0,3,0) e resolve. O Figma (no 2056:48) nao define
+     estado de hover para ele — a cor e sempre a mesma. */
+  .navpill .pill-cta,.navpill .pill-cta:hover,.navpill .pill-cta:focus-visible{background:var(--coral);color:rgba(255,255,255,.88)}
+  .hamburger{display:none;background:rgba(28,22,19,.80);border:1px solid rgba(255,255,255,.12);border-radius:12px;cursor:pointer;padding:11px 10px}
+  header.site.scrolled .hamburger{background:var(--ink)}
+  /* mega dropdown card */
+  .mega{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%) translateY(-8px);width:min(880px,calc(100vw - 32px));background:#fff;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transition:.22s}
+  .mega.open{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .mega-inner{padding:30px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px}
+  .mcol > a.mtitle{font-size:16px;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;gap:6px;margin-bottom:14px}
+  .mcol > a.mtitle:hover{color:var(--coral)}
+  .mcol.spec{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px}
+  .mcol ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .mcol li a{font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:9px}
+  .mcol li a:hover{color:var(--coral)}
+  .mcol li a::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--coral);flex:none;opacity:.55}
+  .mcol.spec li a{font-weight:500;color:var(--ink)}
+  .mcol.spec .mtitle{color:var(--coral);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase}
+
+  /* ---------- HERO ---------- */
+  /* HERO escuro full-bleed — troque --hero-photo pela sua foto */
+  /* Pilha igual a do Figma: a imagem e FILHA da secao, entao fica NA FRENTE do gradiente
+     de fundo. Inverter isso virava uma cortina preta sobre a foto (a mascara real do Figma
+     e ~0.00 em toda a largura).
+     ENQUADRAMENTO: hero-desktop.webp e 4052x1540 (proporcao 2.631) e foi montado para que o
+     CENTRO do quadro do Figma caia exatamente no centro do arquivo — por isso 'center' aqui
+     reproduz o enquadramento do design sem nenhum ajuste fino.
+     Como foi montado: recorte VERTICAL do Figma (y 118..1658 do original) preservado, porque e
+     ele que define a escala do tablet; na horizontal usa a largura inteira do original (0..3650)
+     mais 402px replicados da borda esquerda, so para centralizar o quadro. A extensao e invisivel
+     (RGB 5,4,4 contra 7,6,5 da foto real). O original inteiro esta em hero-desktop-full.webp.
+     ESCALA PELA ALTURA (auto 100%), nao pela largura: assim o tamanho do tablet depende so
+     da altura do hero e NAO da largura da tela — a composicao fica igual em qualquer monitor
+     ou zoom, com o container parado em 1140px. Com cover, a foto crescia junto com a viewport
+     e a razao tablet/container ia de 0.47 para 0.78 num monitor de 2560px.
+     O gradiente de tras usa as cores medidas das proprias bordas da foto (#080707 na esquerda,
+     #222120 na direita) para que a sobra lateral em telas largas nao tenha emenda visivel. */
+  .hero{position:relative;min-height:min(94vh,820px);display:flex;align-items:center;overflow:hidden;color:#fff;padding:150px 0 90px;
+    --hero-photo:url('/img/home/hero-desktop.webp');
+    background:var(--hero-photo),linear-gradient(90deg,#080707 0%,#12100f 42%,#1a1918 58%,#222120 100%);
+    background-repeat:no-repeat,no-repeat;
+    background-size:auto 100%,cover;
+    background-position:center,center}
+  /* O ::before do prototipo jogava um brilho coral no canto inferior esquerdo. Medido
+     contra o render do Figma, aquela area nao tem brilho nenhum (diferenca de 0.3/255),
+     entao a regra foi removida para a foto chegar limpa. */
+  /* width:100% — sem isso o .wrap vira item flex (o .hero é display:flex) e encolhe
+     para o conteúdo, saindo do alinhamento de 1140px do header. O próprio designer
+     aplicou essa correção em beorange-contabilidade_1.html (linha 85) e esqueceu aqui. */
+  .hero .wrap{position:relative;z-index:2;width:100%}
+  .hero-inner{max-width:660px}
+  .hero .eyebrow{color:var(--orange)}
+  /* Pesos vindos do Figma, que o prototipo tinha achatado num peso so.
+     h1 (no 1:879): "A estrutura" em Bold 700, o restante em Light 300.
+     h2 de Estagios (no 1:9): "Toda empresa muda" em SemiBold 600, restante em Regular 400.
+     Os outros quatro h2 da home sao peso unico no Figma e ficaram como estavam. */
+  .hero h1{color:#fff;margin-bottom:22px;max-width:16ch;font-weight:300}
+  .hero h1 b{font-weight:700}
+  .stages-sec .sec-head h2{font-weight:400}
+  .stages-sec .sec-head h2 b{font-weight:600}
+  /* Figma no 1:882: 16px, line-height 29.7px, Outfit Regular 400, rgba(255,255,255,.82),
+     caixa de 438px. O prototipo usava 18px e deixava a entrelinha vir do body (1.65), o que
+     dava 29.7px por coincidencia — trocar so o tamanho derrubaria para 26.4px, entao a
+     entrelinha vai fixa. 46ch a 16px da ~432px, praticamente a caixa do Figma. */
+  .hero p.lead{font-size:16px;line-height:29.7px;max-width:46ch;color:rgba(255,255,255,.82)}
+  .hero-cta{display:flex;gap:13px;margin:34px 0 0;flex-wrap:wrap}
+  .hero .btn-ghost{color:#fff;border-color:rgba(255,255,255,.42)}
+  .hero .btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.10)}
+  /* Selos do hero — ajustados ao Figma (no 1:871): ponto coral solido de 19px SEM icone de
+     check, texto 12px Medium em CAIXA ALTA, line-height 23.1px, gap 23px e padding-top 16px.
+     O protótipo trazia check dentro do ponto e texto 14px em caixa normal, o que empurrava
+     os selos para duas linhas. */
+  .creds{display:flex;flex-wrap:wrap;justify-content:center;gap:11px 23px;margin-top:40px;padding-top:16px;border-top:1px solid rgba(255,255,255,.2)}
+  .creds span{display:inline-flex;align-items:center;gap:9px;font-size:12px;line-height:23.1px;font-weight:500;text-transform:uppercase;letter-spacing:.02em;color:rgba(255,255,255,.9)}
+  .creds span::before{content:"";width:19px;height:19px;border-radius:50%;flex:none;background:var(--coral)}
+  .photo-note{position:absolute;right:22px;bottom:18px;z-index:2;font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.04em;background:rgba(0,0,0,.25);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px)}
+
+  /* ---------- PRODUCT MOCK (screenshot look) ---------- */
+  .shot{background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow-lg);overflow:hidden}
+  .shot .bar{display:flex;align-items:center;gap:7px;padding:13px 16px;border-bottom:1px solid var(--border)}
+  .shot .bar i{width:9px;height:9px;border-radius:50%;background:#E7E1DC;display:block}
+  .shot .bar .t{margin-left:8px;font-size:12px;color:var(--muted);font-weight:500}
+  .shot .body{padding:18px}
+  .kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
+  .kpi{background:var(--surface);border-radius:12px;padding:12px}
+  .kpi .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+  .kpi .v{font-size:18px;font-weight:600;color:var(--ink);margin-top:3px}
+  .kpi .v small{color:var(--coral);font-size:11px}
+  .trow{display:flex;align-items:center;justify-content:space-between;padding:10px 2px;border-top:1px solid var(--border)}
+  .trow:first-of-type{border-top:0}
+  .tl{display:flex;align-items:center;gap:10px}
+  .tic{width:30px;height:30px;border-radius:9px;background:var(--coral-soft);display:flex;align-items:center;justify-content:center}
+  .tic b{width:11px;height:11px;border-radius:3px;background:var(--coral);display:block}
+  .tt{font-size:13px;font-weight:600;color:var(--ink)}
+  .ts{font-size:11px;color:var(--muted)}
+  .tag{font-size:10.5px;font-weight:600;color:var(--coral);background:var(--coral-soft);padding:4px 9px;border-radius:7px}
+  .val{font-size:13.5px;font-weight:600;color:var(--ink)}
+
+
+  /* ---------- 2a DOBRA — FAIXA DE MARCAS (Figma no 2:1696) ----------
+     Animacoes so com transform/opacity: nao disparam layout nem paint, rodam no compositor.
+     Nenhuma biblioteca: um marquee em CSS puro custa ~0 e um carousel de React custaria
+     o runtime inteiro do framework nesta pagina, que hoje e 100% estatica. */
+  /* A faixa colorida acompanha a largura da pagina (no Figma o no 2:1696 tem 1440px, que e a
+     prancheta inteira — ou seja, full-bleed). O conteudo de dentro e que respeita o container. */
+  .marcas{background:#f4f1ef;padding:45.36px 0 64.8px;width:100%;
+    display:flex;flex-direction:column;align-items:center;gap:45.36px;overflow:hidden}
+  .marcas-titulo{font-size:clamp(24px,2.9vw,35px);line-height:39.2px;letter-spacing:-.7px;color:var(--ink);
+    text-align:center;font-weight:300;margin:0;width:100%;max-width:var(--max);padding:0 28px}
+  .marcas-titulo b{font-weight:600}
+  .marcas-leve{font-weight:300}
+
+  /* contador que SOBE ate o alvo. @property permite animar um inteiro de verdade, e counter()
+     imprime o valor — e o unico jeito de fazer o numero subir sem JavaScript.
+     initial-value ja e o valor final: navegador sem suporte a @property mostra 40 parado em
+     vez de zero. min-width em ch + tabular-nums evitam o titulo pular quando vai de 1 para
+     2 digitos. */
+  @property --num{syntax:"<integer>";initial-value:40;inherits:false}
+  .odo{display:inline-block;min-width:2ch;text-align:center;font-variant-numeric:tabular-nums;counter-reset:num var(--num)}
+  .odo::after{content:counter(num)}
+  .marcas.in .odo{animation:marcas-conta 1.1s cubic-bezier(.16,.84,.3,1) forwards}
+  @keyframes marcas-conta{from{--num:0}to{--num:var(--alvo,40)}}
+
+  /* marquee: o trilho tem 2 grupos identicos e anda exatamente -50%, entao a emenda e invisivel */
+  .marcas-esteira{width:100%;position:relative;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .marcas-trilho{display:flex;width:max-content;will-change:transform;animation:marcas-anda 38s linear infinite}
+  .marcas-esteira:hover .marcas-trilho{animation-play-state:paused}
+  .marcas-grupo{display:flex;align-items:center;gap:40px;padding-right:40px}
+  .marcas-item{display:flex;align-items:center;justify-content:center;width:198px;height:63px;flex:none;opacity:.8}
+  .marcas-item img{max-width:100%;height:auto;width:auto}
+  @keyframes marcas-anda{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+
+  .marcas-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+
+  /* quem pediu menos movimento recebe a faixa parada e o numero ja no valor final */
+  @media(prefers-reduced-motion:reduce){
+    .marcas-trilho{animation:none;transform:none}
+    .marcas-grupo:nth-child(2){display:none}
+    .marcas-grupo{justify-content:center;width:100%;flex-wrap:wrap}
+    .marcas.in .odo{animation:none}
+  }
+  @media(max-width:680px){
+    .marcas{padding:32px 0 40px;gap:28px}
+    .marcas-item{width:150px;height:52px}
+    .marcas-grupo{gap:28px;padding-right:28px}
+  }
+
+
+  /* ---------- 3a DOBRA — foto do time ao fundo (Figma no 18:2180, filho do no 1:5) ----------
+     No Figma a foto ocupa a secao inteira (1525x1041 num frame de 1440x1008) com o homem
+     sangrando pela direita. Aqui ela e ancorada a DIREITA e dimensionada pela ALTURA da secao,
+     nao pela largura: assim o homem mantem a proporcao e a posicao em qualquer monitor, do mesmo
+     jeito que foi feito no hero. A esquerda da foto e papel liso; o fundo dela foi tingido para #FBF9F7 (o mesmo
+     --surface do design system) e a cor da secao usa esse valor, entao onde a foto acaba nao
+     existe emenda. A foto original vinha em #FEFEFE, 3-7 pontos mais clara que o --surface.
+     Abaixo de 940px a foto sai: a tela mobile do Figma (no 48:33) nao tem foto nessa secao. */
+  section.alt.stages-sec{background-color:#FBF9F7;background-image:url('/img/home/time-beorange.webp');
+    background-repeat:no-repeat;background-position:right center;background-size:auto 100%}
+  .stages-sec .wrap{position:relative;z-index:1}
+  @media(max-width:940px){
+    section.alt.stages-sec{background-image:none;background-color:var(--surface)}
+  }
+
+  /* ---------- DUAS SOLUCOES (Figma no 1:282) ----------
+     A secao e ESCURA (#231F20). O prototipo trazia ela como .alt (#FBF9F7), claro — por isso
+     o titulo, o paragrafo e o contraste inteiro estavam errados. Em fundo escuro o titulo e o
+     paragrafo ficam brancos e "Duas solucoes" fica em coral.
+     O .hl e um span de COR, nao de peso: os dois trechos do titulo sao 600 no Figma, so a cor
+     muda — por isso nao usa <b>, que alteraria o peso.
+     Os cards em si ja batiam com o Figma (padding 38, radius 20, borda #EFEAE6, eyebrow com
+     letter-spacing 1.2, checks laranja de 16px, CTA 13/24 com radius 12). */
+  section#solucoes.alt{background:#231F20}
+  #solucoes .sec-head h2{color:#fff}
+  #solucoes .sec-head h2 .hl{color:var(--coral)}
+  #solucoes .sec-head p{color:#fff}
+
+  /* ---------- DIAGNOSTICO (Figma no 1:558) ----------
+     O bloco e LARANJA com texto branco. O prototipo trazia um degrade claro
+     (#FFF4EE -> #FFE9DD) com texto escuro, o que invertia o peso da secao inteira.
+     Atencao a cor: o Figma usa a variavel orange-400 = #F53D11, que NAO e o mesmo
+     #F5380F de action/primary usado nos botoes. Sao dois laranjas distintos no arquivo.
+     O check da lista e cinza (#B8AFA9, o token text-placeholder), nao laranja — laranja
+     sobre laranja sumiria. O card branco do formulario segue igual, ja batia com o Figma. */
+  section.alt.diag-sec{background:#F53D11}
+  .diag-sec .diag{background:#F53D11}
+  .diag-sec .diag-l .eyebrow{color:#fff}
+  .diag-sec .diag-l h2{color:#fff}
+  .diag-sec .diag-l p{color:#EFEAE6;line-height:26.4px}
+  .diag-sec .diag-l li{color:#fff;line-height:24.75px}
+  .diag-sec .diag-l li svg{stroke:#B8AFA9}
+
+  /* ---------- SECTION HEAD ---------- */
+  .sec-head{max-width:54ch}
+  .sec-head.center{margin:0 auto;text-align:center}
+  .sec-head p{margin-top:16px}
+
+  /* ---------- ALTERNATING ROWS (delicate) ---------- */
+  .rows{display:flex;flex-direction:column;gap:92px;margin-top:72px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  .row:nth-child(even) .row-txt{order:2}
+  .row-txt h3{font-size:26px;font-weight:600;margin-bottom:14px;letter-spacing:-.02em}
+  .row-txt p{font-size:16.5px;margin-bottom:16px}
+  .row-txt .ctas{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin-top:20px}
+  .row-visual{position:relative}
+
+  /* Foto das telas do app (Figma no 15:2116). Ela NAO vive dentro da coluna da direita:
+     no Figma e filha direta do container de 1140px, em x=495 / y=-140.18, com 702x573 em
+     escala 1:1 — ou seja, mais larga que a coluna (702 contra 510), 107px mais a esquerda e
+     transbordando 140px para cima, por tras do titulo. O no 1:126 (a antiga caixa "Analise
+     tributaria") ficou vazio no Figma, e por isso a coluna da direita da linha 1 nao tem nada.
+     Percentuais calculados sobre os mesmos 1140px: 495/1140 = 43.42% e 702/1140 = 61.58%.
+     No mobile ela volta para o fluxo normal, embaixo do texto. */
+  /* mix-blend-mode:multiply vem do Figma (o proprio no 15:2116 exporta assim). Com ele o
+     fundo branco da foto some contra qualquer fundo claro — e o que resolve o transbordo de
+     36px sobre a secao anterior, que e #FBF9F7. */
+  .row-visual .row-img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
+  @media(min-width:941px){
+    /* overflow-x:clip contem o sangramento lateral sem criar barra de rolagem e, ao contrario
+       de hidden, preserva o transbordo vertical que o desenho pede. */
+    .diff{overflow-x:clip}
+    .diff .wrap{position:relative}
+    /* o .row-visual do prototipo e position:relative e virava o bloco de referencia do
+       absolute, fazendo os 61.58% valerem sobre 510px (=314px) em vez dos 1140px (=702px).
+       static devolve a referencia para o .wrap. */
+    .diff .row-visual{position:static}
+    .diff .row-img{position:absolute;left:43.42%;top:-140px;width:61.58%;max-width:none}
+  }
+
+  /* small delicate visual panels */
+  .panel{background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:20px}
+  .panel .ph{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
+  .pline{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid var(--border)}
+  .pline:first-of-type{border-top:0}
+  .pline .pl{font-size:13.5px;color:var(--ink-2);display:flex;align-items:center;gap:9px}
+  .pline .pl .d{width:8px;height:8px;border-radius:50%;background:var(--coral);flex:none}
+  .pline .pr{font-size:12.5px;font-weight:600;color:var(--coral);background:var(--coral-soft);padding:3px 9px;border-radius:6px}
+  .pline .pr.n{background:none;color:var(--ink)}
+  .flow{display:flex;flex-direction:column;gap:10px}
+  .fstep{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:13px 15px;box-shadow:var(--shadow)}
+  .fstep .fn{width:26px;height:26px;border-radius:8px;background:var(--coral-soft);color:var(--coral);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+  .fstep .fx{font-size:13.5px;color:var(--ink);font-weight:500}
+  .fstep.on{background:var(--surface)}
+  .farrow{width:16px;height:16px;margin:0 auto;color:var(--coral)}
+  .schedule{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  .schedule span{font-size:12.5px;font-weight:500;padding:7px 13px;border-radius:9px;background:var(--surface);color:var(--ink-2);border:1px solid var(--border)}
+  .schedule span.act{background:var(--coral-soft);color:var(--coral);border-color:transparent}
+  .roles{display:flex;flex-direction:column;gap:10px}
+  .role{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--border);border-radius:12px;padding:13px 15px;box-shadow:var(--shadow)}
+  .role .rn{font-size:13.5px;font-weight:600;color:var(--ink)}
+  .role .rp{display:flex;gap:6px}
+  .chip{font-size:11px;font-weight:600;padding:4px 9px;border-radius:6px}
+  .chip.y{background:var(--coral-soft);color:var(--coral)}
+  .chip.n{background:var(--surface-2);color:var(--muted)}
+  .ressalva{margin-top:56px;font-size:13.5px;color:var(--muted);border-left:2px solid var(--coral);padding:4px 0 4px 16px;max-width:76ch}
+
+  /* ---------- STAGES (dobra 2) delicate ---------- */
+  .stages{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:60px;align-items:stretch}
+  .stage{padding:30px 26px;border-radius:16px;position:relative}
+  /* Rotulo ESTAGIO em laranja nos tres: o Figma manda #f5380f tanto no 01 (no 1:18)
+     quanto no 03 (no 1:66). O prototipo usava cinza e so pintava o 03. */
+  .stage .num{font-size:11.5px;font-weight:700;color:var(--coral);letter-spacing:.12em}
+  .stage h3{margin:14px 0 9px;font-size:19px}
+  .stage p{font-size:14.5px;margin-bottom:14px}
+  .stage ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .stage li{font-size:13.5px;color:var(--ink-2);display:flex;gap:9px;align-items:flex-start}
+  /* Bullets laranja nos tres por decisao do cliente. Divergencia consciente do Figma,
+     que usa cinza #948b85 nos estagios 01/02 (no 1:28) e laranja so no 03 (no 1:76). */
+  .stage li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--coral);margin-top:8px;flex:none}
+  /* Figma no 1:64: #FBF9F7 com opacity .8 e radius 16, SEM borda. A transparencia e do
+     container inteiro (o Figma aplica opacity-80 no frame), e e ela que deixa a foto do time
+     aparecer por tras do card. Os estagios 01 e 02 (no 1:16) nao tem fundo nenhum no Figma —
+     so padding e radius, que o .stage ja aplica. */
+  .stage.on{background:var(--surface);opacity:.8}
+  .stage.on .num{color:var(--coral)}
+  .stage.on li::before{background:var(--coral)}
+  .stage-sep{display:flex;align-items:center;justify-content:center;color:#D9D0C9}
+  .destaque{margin-top:56px;font-size:clamp(20px,2.5vw,26px);font-weight:600;letter-spacing:-.02em;line-height:1.3;max-width:26ch;color:var(--ink)}
+  .destaque .bar{display:block;width:46px;height:3px;background:var(--grad);border-radius:3px;margin-bottom:20px}
+
+  /* ---------- PRODUCTS (dobra 4) ---------- */
+  .pcards{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:64px}
+  .pcard{background:#fff;border:1px solid var(--border);border-radius:var(--r-card);padding:38px;display:flex;flex-direction:column;transition:.25s}
+  .pcard:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+  .pcard .ptag{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--coral)}
+  .pcard h3{font-size:24px;font-weight:600;margin:10px 0 8px}
+  .pcard > p{font-size:15.5px;margin-bottom:22px}
+  .pcard ul{list-style:none;display:grid;gap:12px;margin-bottom:28px}
+  .pcard li{font-size:14.5px;color:var(--ink-2);display:flex;gap:10px;align-items:center}
+  .pcard li svg{width:16px;height:16px;stroke:var(--coral);flex:none}
+  .pcard .pfoot{margin-top:auto}
+
+  /* ---------- PROVA (dobra 5) ---------- */
+  .case-row{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
+  .case-ph{border:1px dashed #DDD5CE;border-radius:var(--r-card);background:var(--surface);padding:26px;min-height:172px;display:flex;flex-direction:column;gap:12px}
+  .case-ph .logo-sk{width:82px;height:24px;border-radius:6px;background:#E9E3DD}
+  .case-ph .ln{height:10px;border-radius:5px;background:#E9E3DD}
+  .case-ph .ln.s{width:66%} .case-ph .ln.m{width:88%}
+  .case-ph .tags{display:flex;gap:8px;margin-top:auto}
+  .case-ph .tags span{height:20px;width:60px;border-radius:6px;background:#F0EAE5}
+  .pend{margin-top:18px}
+  .pend .pill{display:inline-block;background:var(--coral-soft);color:var(--coral);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:10px}
+  .pend p{font-size:14px;color:var(--muted);max-width:64ch;margin-bottom:12px}
+  .prova-sub{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;margin-top:40px}
+  /* Figma no 1:557: borda solida #DDD5CE (mais forte que a --border das outras caixas) e
+     fundo branco. O prototipo trazia tracejado sobre #FBF9F7 por ser um placeholder de review. */
+  .reviews-ph{border:1px solid #DDD5CE;border-radius:var(--r-card);background:#fff;padding:28px}
+  .reviews-ph .stars{color:var(--orange);letter-spacing:2px;font-size:17px;margin-top:8px}
+  .recog{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:28px}
+  .recog h3{font-size:16px;margin-bottom:18px}
+  .recog ul{list-style:none;display:flex;flex-direction:column;gap:13px}
+  .recog li{font-size:14px;color:var(--ink-2);display:flex;gap:11px;align-items:flex-start;padding-bottom:13px;border-bottom:1px solid var(--border)}
+  .recog li:last-child{border-bottom:0;padding-bottom:0}
+  .recog li b{color:var(--ink);font-weight:600}
+  .recog li::before{content:"★";color:var(--orange);flex:none}
+  /* filled cases + reviews (conteúdo ilustrativo) */
+  .ex-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:4px 10px;border-radius:999px}
+  .ex-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange)}
+  .ex-note{font-size:12.5px;color:var(--muted);margin-top:14px}
+  .case{background:#fff;border:1px solid var(--border);border-radius:var(--r-card);padding:26px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow);transition:.25s}
+  .case:hover{transform:translateY(-2px)}
+  .case .seg{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--coral)}
+  .case .res{font-size:17px;font-weight:600;color:var(--ink);line-height:1.3;letter-spacing:-.01em}
+  .case .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+  .case .tags span{font-size:11.5px;font-weight:600;color:var(--ink-2);background:var(--surface);border:1px solid var(--border);padding:5px 11px;border-radius:7px}
+  .case .tags span.reg{color:var(--coral);background:var(--coral-soft);border-color:transparent}
+  .g-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .g-score{font-size:34px;font-weight:700;color:var(--ink);line-height:1}
+  .g-meta .stars{color:var(--orange);letter-spacing:2px;font-size:15px}
+  .g-meta .cnt{font-size:12.5px;color:var(--muted)}
+  .creview{padding:15px 0;border-top:1px solid var(--border)}
+  .creview:first-of-type{border-top:0}
+  .creview .rtext{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+  .creview .rwho{font-size:12px;color:var(--muted);margin-top:6px}
+  .creview .rwho b{color:var(--ink);font-weight:600}
+
+  /* ---------- DIAGNÓSTICO (dobra 6) delicate ---------- */
+  .diag{background:linear-gradient(135deg,#FFF4EE 0%,#FFE9DD 100%);border:1px solid var(--border);border-radius:24px;overflow:hidden;display:grid;grid-template-columns:1fr 1.05fr}
+  .diag-l{padding:56px 48px}
+  .diag-l .eyebrow{margin-bottom:16px}
+  .diag-l h2{margin-bottom:16px}
+  .diag-l p{font-size:16px}
+  .diag-l ul{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:13px}
+  .diag-l li{display:flex;gap:11px;align-items:flex-start;font-size:15px;color:var(--ink)}
+  .diag-l li svg{width:19px;height:19px;stroke:var(--coral);flex:none;margin-top:3px}
+  .diag-r{background:#fff;margin:16px;border-radius:18px;padding:36px;box-shadow:var(--shadow)}
+  .diag-r h3{font-size:19px;margin-bottom:20px}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field.full{grid-column:1 / -1}
+  .field label{font-size:12.5px;font-weight:500;color:var(--ink-2)}
+  .field input,.field select,.field textarea{font-family:var(--f);font-size:14.5px;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;background:#fff;color:var(--ink);transition:.18s}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--coral);box-shadow:0 0 0 3px var(--coral-soft)}
+  .field textarea{resize:vertical;min-height:70px}
+  .form-foot{margin-top:20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .form-foot .rsv{font-size:12.5px;color:var(--muted)}
+
+  /* ---------- BLOG (dobra 7) ---------- */
+  .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+  .art-ph{border:1px solid var(--border);border-radius:var(--r-card);overflow:hidden;background:#fff;transition:.25s}
+  .art-ph:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+  .art-ph .thumb{height:132px;background:var(--surface);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border)}
+  .art-ph .thumb span{color:var(--coral);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+  .art-ph .abody{padding:22px}
+  .art-ph .cat{font-size:11.5px;font-weight:600;color:var(--coral);text-transform:uppercase;letter-spacing:.06em}
+  .art-ph .ln{height:11px;border-radius:5px;background:#EEE8E3;margin-top:12px}
+  .art-ph .ln.t{height:15px;width:88%} .art-ph .ln.m{width:96%} .art-ph .ln.s{width:58%}
+  .art-ph .meta{margin-top:16px;font-size:12px;color:var(--muted)}
+
+  /* ---------- FOOTER ---------- */
+  footer.site{background:var(--ink);color:#cfc8c3;padding:70px 0 32px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1.1fr;gap:36px}
+  .foot-brand .logo{color:#fff;font-size:23px;margin-bottom:16px}
+  .foot-brand .logo .be{color:#fff}.foot-brand .logo .rg{color:var(--orange)}
+  .foot-brand p{font-size:13.5px;color:#a99f99;max-width:32ch;line-height:1.6}
+  .socials{display:flex;gap:10px;margin-top:20px}
+  .socials a{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;transition:.2s}
+  .socials a:hover{background:var(--coral)}
+  .socials svg{width:16px;height:16px;fill:#fff}
+  .foot-col h4{font-size:12.5px;font-weight:600;color:#fff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+  .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .foot-col li a{font-size:13.5px;color:#b8afa9}
+  .foot-col li a:hover{color:var(--orange)}
+  .foot-contact p{font-size:13.5px;color:#b8afa9;margin-bottom:9px}
+  .foot-pending{font-size:11.5px;color:#7a716b;font-style:italic;margin-top:8px;line-height:1.5}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:48px;padding-top:24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .foot-bottom .legal{display:flex;gap:18px;flex-wrap:wrap}
+  .foot-bottom .legal a{font-size:12px;color:#8f857f}
+  .foot-bottom .legal a:hover{color:#fff}
+  .foot-bottom .copy{font-size:12px;color:#8f857f}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+  .rv.in{opacity:1;transform:none}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:940px){
+    .hero-grid{grid-template-columns:1fr;gap:44px}
+    .row{grid-template-columns:1fr;gap:32px}
+    .row:nth-child(even) .row-txt{order:0}
+    .rows{gap:64px}
+    .stages{grid-template-columns:1fr;gap:12px}
+    .stage-sep{display:none}
+    .pcards{grid-template-columns:1fr}
+    .case-row,.blog-grid{grid-template-columns:1fr 1fr}
+    .prova-sub{grid-template-columns:1fr}
+    .diag{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .mega-inner{grid-template-columns:1fr}
+    .kpis{grid-template-columns:1fr 1fr 1fr}
+  }
+  @media(max-width:880px){
+    .navpill{display:none}
+      /* Header mobile (Figma no 48:6): a barra tem fundo proprio aqui — diferente do desktop,
+       onde ela some ao rolar e so o pill flutua. Logo visivel sempre, inclusive rolado. */
+    header.site,header.site.scrolled{background:rgba(28,22,19,.8);border-bottom:1px solid rgba(255,255,255,.12);padding:12px 0;position:fixed}
+    header.site .wrap{padding-inline:20px}
+    header.site .logo img{height:30px}
+    header.site.scrolled .logo{opacity:1;visibility:visible;pointer-events:auto}
+    /* o gatilho e o texto "Menu" numa pilula, nao o icone de tres barras */
+    .hamburger{display:block;background:rgba(255,233,221,.10);border:0;border-radius:20px;
+      padding:8px 14px;color:#fff;font:600 13px var(--f);cursor:pointer}
+    header.site.scrolled .hamburger{background:rgba(255,233,221,.10)}
+    .mobile-open .navpill{display:flex;position:absolute;top:72px;left:16px;right:16px;flex-direction:column;align-items:stretch;background:rgba(28,22,19,.96);backdrop-filter:blur(14px);border-radius:18px;padding:12px;gap:2px;box-shadow:var(--shadow-lg)}
+    .mobile-open .navpill a,.mobile-open .navpill button{width:100%;justify-content:flex-start}
+    .mobile-open .navpill .icon-btn{display:none}
+    .mobile-open .navpill .pill-cta{justify-content:center;margin-top:6px}
+  }
+  @media(max-width:680px){
+    section{padding:64px 0}
+    .hero{padding:130px 0 70px;min-height:auto}
+    .form-grid{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr}
+    .case-row,.blog-grid{grid-template-columns:1fr}
+    /* H1 do hero no mobile (Figma no 48:16): 32/38 fixo, tracking -0.5px e largura cheia.
+       No desktop o tamanho vem do clamp do h1 (31-46px) com entrelinha 1.08, e no piso de
+       390px isso dava 31/33.5 — apertado demais para as cinco linhas do no. O max-width de
+       16ch tambem e do desktop (no 1:879) e aqui cortaria antes da borda.
+       Os dois nos DISCORDAM sobre onde o negrito termina: no desktop e so "A estrutura",
+       no mobile vai ate "...que acompanha". Por isso o trecho do meio e um <span class=h1-mid>
+       neutro, que herda o Light 300 no desktop e vira Bold 700 aqui — um H1 so, mesmo texto.
+       A cor do trecho leve tambem muda: branco puro no desktop, rgba(255,255,255,.90) aqui. */
+    .hero h1{font-size:32px;line-height:38px;letter-spacing:-.5px;max-width:none;color:rgba(255,255,255,.90)}
+    .hero h1 b,.hero h1 .h1-mid{font-weight:700;color:#fff}
+    /* Figma mobile (nos 48:18 / 48:19): os dois CTAs do hero sao w-full, empilhados com
+       gap 12. Com flex-wrap cada botao ficava do tamanho do proprio texto, deixando os
+       dois com larguras diferentes. */
+    .hero-cta{flex-direction:column;align-items:stretch;gap:12px}
+    /* CTAs do hero no mobile (Figma nos 48:18 / 48:19 / 48:21): largura cheia, 16px,
+       padding 14/24, centralizados. O primario NAO tem icone no mobile — a seta e do
+       desktop (no 1:888) — e a borda do secundario e #A99F99 opaco, nao o branco a 42%. */
+    .hero-cta .btn{width:100%;justify-content:center;font-size:16px;padding:14px 24px}
+    .hero .btn-ghost{border-color:#A99F99}
+    /* Selos no mobile (Figma no 48:23): coluna alinhada a esquerda, ponto de 8px e texto
+       de 13px em caixa normal. O tratamento em CAIXA ALTA com ponto de 19px, centralizado,
+       e do desktop (no 1:893) — aqui ele nao cabe e some a leitura. */
+    .creds{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:12px;
+      padding-top:20px;border-top-color:rgba(255,255,255,.13)}
+    .creds span{gap:8px;font-size:13px;line-height:1.45;font-weight:400;text-transform:none;letter-spacing:0}
+    .creds span::before{width:8px;height:8px}
+    /* Foto do hero no mobile (Figma no 48:13): outro arquivo, retrato 390x768. O PNG ja vem
+       com alpha uniforme de 76/255 = 30%, que e o opacity-30 do no — por isso ela entra como
+       camada SOBRE o gradiente e se compoe sozinha, sem veu extra no CSS.
+       O gradiente e o do no 48:12, com angulo proprio do mobile (116.9deg). */
+    .hero{
+      --hero-photo:url('/img/home/hero-mobile.webp');
+      background:var(--hero-photo),linear-gradient(117deg,#33291f 0%,#1a1512 55%,#0c0a09 100%);
+      background-size:cover,cover;
+      background-position:center,center;
+    }
+  }
+  @media(prefers-reduced-motion:reduce){.rv{transition:none;opacity:1;transform:none}*{scroll-behavior:auto}}
+
+  /* ---------- IMAGENS PLUGADAS (unico acrescimo ao CSS do prototipo) ---------- */
+  .art-ph .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* ---------- CARD INTEIRO CLICAVEL ----------
+     O link continua sendo o do titulo: e ele que da o texto do link para leitor de tela e
+     que recebe o foco do teclado. O ::after so estica a area de clique ate as bordas do
+     card, entao o card inteiro responde ao mouse sem que o HTML vire um <a> gigante
+     embrulhando categoria, resumo e data — o que faria o leitor de tela anunciar o card
+     todo de uma vez como se fosse o nome do link.
+     Efeito colateral conhecido: selecionar o texto do card com o mouse deixa de funcionar,
+     porque a camada de clique fica por cima. */
+  .art-ph{position:relative}
+  .art-ph:has(.abody h3 a){cursor:pointer}
+  .art-ph .abody h3 a::after{content:"";position:absolute;inset:0;z-index:1}
+  /* qualquer outro link que venha a existir dentro do card precisa ficar ACIMA da camada */
+  .art-ph .abody a:not(h3 a){position:relative;z-index:2}
+  /* o foco do teclado tem de aparecer no card, nao so nas palavras do titulo */
+  .art-ph:has(.abody h3 a:focus-visible){outline:2px solid var(--coral);outline-offset:2px}
+  .art-ph .abody h3 a:focus-visible{outline:none}

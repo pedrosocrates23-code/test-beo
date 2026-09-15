@@ -1,0 +1,159 @@
+/* ==========================================================================
+   Beorange Design System — tokens do Figma "Be Orange - Website"
+   ==========================================================================
+   Extraídos das variáveis dos nós 30:3, 30:183, 30:259 e 111:2 (a seção dos
+   componentes-símbolo). Este arquivo é a ÚNICA fonte de verdade de cor, medida
+   e tipografia do site: os prototype-*.css não repetem mais valores literais,
+   apenas apontam para cá — ver a seção "Ponte" no fim.
+
+   Três camadas, nesta ordem de preferência ao escrever CSS novo:
+     1. semânticos  (--text-primary, --action-primary…)  ← use estes
+     2. primitivos  (--orange-500, --neutral-900…)       ← só quando não houver semântico
+     3. literais    (#f5380f)                            ← não use
+
+   O semântico é o que sobrevive a uma troca de marca: se o laranja mudar,
+   muda-se --action-primary num lugar só. Quem escreveu #f5380f fica para trás.
+   ========================================================================== */
+
+:root {
+  /* ---------- Primitivos: escala Orange (10 degraus) ---------- */
+  --orange-50:  #FFEDE4;
+  --orange-100: #FFD4BF;
+  --orange-200: #FFA87A;
+  --orange-300: #FF6A14;
+  --orange-400: #F53D11;
+  --orange-500: #F5380F;  /* a cor da marca */
+  --orange-600: #D42E0B;
+  --orange-700: #A82308;
+  --orange-800: #7D1A06;
+  --orange-900: #521103;
+
+  /* ---------- Primitivos: escala Neutral warm (13 degraus) ---------- */
+  --neutral-0:    #FFFFFF;
+  --neutral-50:   #FFFEFD;
+  --neutral-100:  #FBF9F7;
+  --neutral-200:  #F4F1EF;
+  --neutral-300:  #EFEAE6;
+  --neutral-400:  #DDD5CE;
+  --neutral-500:  #B8AFA9;
+  --neutral-600:  #948B85;
+  --neutral-700:  #8F857F;
+  --neutral-800:  #5B534E;
+  --neutral-900:  #2B2320;
+  --neutral-950:  #231F20;
+  --neutral-1000: #111111;
+
+  /* ---------- Semânticos: Background ---------- */
+  --bg-primary: var(--neutral-0);
+  --bg-secondary: var(--neutral-100);
+  --bg-tertiary: var(--neutral-300);
+  --bg-inverse: var(--neutral-900);
+  --bg-brand: var(--orange-500);
+  --bg-brand-subtle: var(--orange-50);
+
+  /* ---------- Semânticos: Text ---------- */
+  --text-primary: var(--neutral-900);
+  --text-secondary: var(--neutral-800);
+  --text-tertiary: var(--neutral-600);
+  --text-placeholder: var(--neutral-500);
+  --text-inverse: var(--neutral-0);
+  --text-brand: var(--orange-500);
+
+  /* ---------- Semânticos: Border ---------- */
+  --border-subtle: var(--neutral-300);
+  --border-default: var(--neutral-400);
+  --border-strong: var(--neutral-800);
+  --border-brand: var(--orange-500);
+
+  /* ---------- Semânticos: Action ---------- */
+  --action-primary: var(--orange-500);
+  --action-primary-hover: var(--orange-600);
+  --action-primary-active: var(--orange-700);
+  --action-secondary: var(--neutral-900);
+  --action-secondary-hover: var(--neutral-1000);
+
+  /* ---------- Semânticos: Icon ---------- */
+  --icon-primary: var(--neutral-900);
+  --icon-secondary: var(--neutral-600);
+  --icon-inverse: var(--neutral-0);
+  --icon-brand: var(--orange-500);
+
+  /* ---------- Semânticos: Surface ---------- */
+  --surface-card: var(--neutral-0);
+  --surface-overlay: var(--neutral-900);
+
+  /* ---------- Tipografia ---------- */
+  --font-family-base: 'Outfit', sans-serif;
+
+  /* ---------- Espaçamento ---------- */
+  --space-2: 2px;   --space-4: 4px;   --space-8: 8px;   --space-12: 12px;
+  --space-16: 16px; --space-20: 20px; --space-24: 24px; --space-32: 32px;
+  --space-40: 40px; --space-48: 48px; --space-64: 64px; --space-80: 80px;
+  --space-96: 96px; --space-120: 120px;
+
+  /* ---------- Raio ---------- */
+  --radius-none: 0px; --radius-xs: 4px;  --radius-sm: 8px;   --radius-md: 12px;
+  --radius-lg: 16px;  --radius-xl: 20px; --radius-2xl: 24px; --radius-full: 999px;
+}
+
+/* ==========================================================================
+   Escala tipográfica
+   ==========================================================================
+   Os sete estilos confirmados nas variáveis do Figma trazem o entreletra do
+   próprio nó. Os demais (Display 1, H1, H2, Button) não apareceram em nenhum
+   dos nós consultados e ficam aqui pela escala do protótipo — estão marcados,
+   e devem ser conferidos contra o Figma antes de virarem referência.
+   ========================================================================== */
+.display-1    { font: 700 48px/56px var(--font-family-base); }                        /* a confirmar no Figma */
+.display-2    { font: 600 35px/42px var(--font-family-base); letter-spacing: -0.5px; }
+.heading-h1   { font: 600 26px/32px var(--font-family-base); }                        /* a confirmar no Figma */
+.heading-h2   { font: 600 24px/30px var(--font-family-base); }                        /* a confirmar no Figma */
+.heading-h3   { font: 600 19px/24px var(--font-family-base); }
+.body-large   { font: 400 16px/24px var(--font-family-base); }
+.body-medium  { font: 400 14px/20px var(--font-family-base); }
+.body-small   { font: 400 12px/16px var(--font-family-base); }
+.label-large  { font: 500 16px/20px var(--font-family-base); }                        /* a confirmar no Figma */
+.label-medium { font: 500 14px/18px var(--font-family-base); }
+.label-small  { font: 500 12px/16px var(--font-family-base); }
+.button-large { font: 600 16px/20px var(--font-family-base); }                        /* a confirmar no Figma */
+.button-medium{ font: 600 14px/18px var(--font-family-base); }                        /* a confirmar no Figma */
+.button-small { font: 600 12px/16px var(--font-family-base); }                        /* a confirmar no Figma */
+
+/* ==========================================================================
+   Ponte com o vocabulário do protótipo
+   ==========================================================================
+   O HTML que o designer entregou usa nomes próprios (--coral, --ink, --muted…)
+   e são eles que aparecem nas mais de 400 declarações dos prototype-*.css. Em
+   vez de reescrever tudo — o que trocaria a régua do desenho por uma tarefa de
+   busca e substituição, com risco em cada linha — os nomes antigos passam a
+   APONTAR para os tokens. O CSS das páginas continua igual e o valor passa a
+   ter um dono só.
+
+   Cada `var(…, #hex)` traz o literal como reserva porque o build HTML5 estático
+   pode carregar um prototype-*.css sem este arquivo ao lado; com o fallback, a
+   página degrada para a cor certa em vez de perder a cor.
+
+   Duas exceções, que NÃO vêm do design system e por isso ficam literais:
+     --red       #E71C0C  não existe na escala Orange do Figma. O vizinho mais
+                          próximo é --orange-600 (#D42E0B), diferente o bastante
+                          para não trocar por conta própria. Usado no X dos
+                          cards de problema e no hover do botão primário.
+     --surface-2 #F4F0EC  o Figma tem --neutral-200 (#F4F1EF). A diferença é de
+                          3 níveis em dois canais — invisível, mas é divergência
+                          real e quem decide é o designer, não este arquivo.
+   ========================================================================== */
+:root {
+  --orange: var(--orange-300, #FF6A14);
+  --coral: var(--action-primary, #F5380F);
+  --red: #E71C0C;                                   /* fora do design system — ver acima */
+  --ink: var(--text-primary, #2B2320);
+  --ink-2: var(--text-secondary, #5B534E);
+  --muted: var(--text-tertiary, #948B85);
+  --white: var(--bg-primary, #FFFFFF);
+  --surface: var(--bg-secondary, #FBF9F7);
+  --surface-2: #F4F0EC;                             /* diverge de --neutral-200 — ver acima */
+  --border: var(--border-subtle, #EFEAE6);
+  --coral-soft: var(--bg-brand-subtle, #FFEDE4);
+  --r-btn: var(--radius-md, 12px);
+  --r-card: var(--radius-xl, 20px);
+}

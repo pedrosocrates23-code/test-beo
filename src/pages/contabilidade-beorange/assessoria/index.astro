@@ -1,0 +1,67 @@
+---
+// Página de solução: Contabilidade Beorange — Assessoria e Consultoria.
+// Estrutura: "Proposta de textos", PÁGINA 8 (modelo de 6 dobras).
+// Conteúdo: "Estrutura de Produtos beorange", seção 2.6. Texto literal, sem acréscimo.
+//
+// A dobra 2 (O problema) não é renderizada: o documento de tom só escreve esse texto
+// para a frente Tributário. Ver a pendência desta URL na planilha de status.
+import PaginaSolucao from "../../../components/elements/PaginaSolucao.astro";
+---
+<PaginaSolucao
+  metaTitle="Assessoria e Consultoria | Contabilidade Beorange"
+  metaDescription="Os números contam uma história. A beorange ajuda o cliente a entender o que ela está dizendo."
+  produto="Contabilidade Beorange"
+  produtoHref="/contabilidade-beorange/"
+  frente="Assessoria e Consultoria"
+  titulo="Os números contam uma história. A beorange ajuda o cliente a entender o que ela está dizendo."
+  lead="A assessoria acompanha a empresa de forma recorrente, conectando informações contábeis, fiscais, tributárias, financeiras, trabalhistas e societárias para transformar números em decisões mais seguras. A beorange não entrega apenas relatórios: interpreta os dados, identifica riscos, mostra pontos de atenção e ajuda o cl"
+  ctaPrimario="Solicitar diagnóstico"
+  escopoTitulo="O que está incluído"
+  escopo={[
+    { rotulo: "Informações analisadas", itens: [
+      "Balanço Patrimonial e DRE",
+      "Fluxo de caixa e projeções",
+      "Previsto versus realizado",
+      "Indicadores de desempenho",
+      "Margens e rentabilidade",
+      "Evolução de receitas e despesas",
+      "Riscos fiscais, tributários e trabalhistas",
+      "Mudanças de regime tributário",
+      "Impactos do crescimento sobre a estrutura administrativa",
+    ] },
+    { rotulo: "Diagnóstico ao longo da jornada", itens: [
+      "Na entrada: compreensão da situação atual, identificação de inconsistências e organização da base",
+    ] },
+    { rotulo: "Planejamento anual de crescimento", itens: [
+      "Possível mudança de regime tributário",
+      "Impactos no caixa e na carga tributária",
+      "Estrutura societária e operacional",
+      "Margens e projeções de faturamento",
+    ] },
+    { rotulo: "Projetos consultivos avulsos", itens: [
+      "Lei do Bem",
+      "Aplicação de teses tributárias",
+      "Revisão ou transformação do modelo de negócio",
+      "Estruturação de operações",
+      "Estudos de viabilidade",
+      "Pareceres e relatórios técnicos",
+      "Simulações tributárias e financeiras",
+      "Recuperação de créditos",
+    ] },
+  ]}
+  atuacao={{ titulo: "Papel do analista", texto: "O analista não apenas apresenta os números. Ele ajuda a identificar desvios, inconsistências, riscos e oportunidades, além de recomendar caminhos e prioridades. A decisão permanece com o cliente, mas passa a ser tomada com mais informação, contexto e segurança." }}
+  beneficios={{ itens: [
+    "Acuracidade das informações",
+    "Clareza sobre a situação real da empresa",
+    "Visão integrada do negócio",
+    "Apoio qualificado à decisão",
+    "Antecipação de riscos",
+    "Melhor planejamento do crescimento",
+    "Maior previsibilidade de caixa",
+  ] }}
+  irmas={[
+    { titulo: "Contábil", texto: "Informação contábil completa, confiável e útil para a gestão.", href: "/contabilidade-beorange/contabil/" },
+    { titulo: "Fiscal", texto: "Apuração, escrituração e cumprimento das obrigações fiscais.", href: "/contabilidade-beorange/fiscal/" },
+    { titulo: "Departamento Pessoal", texto: "Operação trabalhista e previdenciária organizada, digital e acompanhada.", href: "/contabilidade-beorange/departamento-pessoal/" },
+  ]}
+/>

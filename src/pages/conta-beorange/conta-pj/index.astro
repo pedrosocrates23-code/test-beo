@@ -1,0 +1,52 @@
+---
+// Página de solução: Conta Beorange — Conta PJ e movimentação.
+// Estrutura: "Proposta de textos", PÁGINA 8 (modelo de 6 dobras).
+// Conteúdo: "Estrutura de Produtos beorange", seção 3.1. Texto literal, sem acréscimo.
+//
+// A dobra 2 (O problema) não é renderizada: o documento de tom só escreve esse texto
+// para a frente Tributário. Ver a pendência desta URL na planilha de status.
+import PaginaSolucao from "../../../components/elements/PaginaSolucao.astro";
+---
+<PaginaSolucao
+  metaTitle="Conta PJ e movimentação | Conta Beorange"
+  metaDescription="Controle financeiro com múltiplos usuários, limites e alçadas."
+  produto="Conta Beorange"
+  produtoHref="/conta-beorange/"
+  frente="Conta PJ e movimentação"
+  titulo="Controle financeiro com múltiplos usuários, limites e alçadas."
+  lead="A Conta PJ beorange centraliza a movimentação financeira da empresa e conecta pagamentos, aprovações, documentos e gestão em uma única infraestrutura. Diferentes usuários podem operar a conta conforme limites e alçadas definidos pela empresa, preservando o controle sobre quem cadastra, aprova e executa cada movimentaçã"
+  ctaPrimario="Solicitar diagnóstico"
+  escopoTitulo="O que está incluído"
+  escopo={[
+    { rotulo: "Funcionalidades", itens: [
+      "PIX e transferências",
+      "Pagamento de boletos e contas de consumo",
+      "Pagamento de tributos",
+      "Processamento de folha de pagamento",
+      "Agendamento de pagamentos",
+      "Pagamentos em lote",
+      "Consulta de extratos",
+      "Operação pelo portal, web e aplicativo",
+      "Emissão e acesso a comprovantes",
+      "Anexação de documentos aos pagamentos",
+      "Múltiplos usuários por empresa",
+      "Limites por usuário",
+      "Alçadas de aprovação",
+    ] },
+  ]}
+  atuacao={{ titulo: "Governança financeira", texto: "A empresa pode definir quem consulta, cadastra, aprova e executa pagamentos, além de estabelecer limites por usuário e faixas de aprovação. Essa estrutura reduz a concentração de acesso e cria um fluxo de governança compatível com empresas em crescimento." }}
+  beneficios={{ itens: [
+    "Sem mensalidade fixa",
+    "Custo proporcional ao uso e apresentado antes da confirmação",
+    "Múltiplos usuários, limites e alçadas",
+    "Pagamentos em lote e agendamento",
+    "Documentação vinculada às movimentações",
+    "Histórico de aprovações",
+    "Integração com BPO, Bora e contabilidade",
+  ] }}
+  irmas={[
+    { titulo: "Cobranças e recebimentos", texto: "Cobrança organizada do início ao recebimento.", href: "/conta-beorange/cobrancas/" },
+    { titulo: "Portal de gestão financeira", texto: "Uma estrutura que substitui controles e softwares desconectados.", href: "/conta-beorange/portal/" },
+    { titulo: "BPO Financeiro", texto: "Execução operacional com clareza e orientação, sem substituir a decisão do cliente.", href: "/conta-beorange/bpo-financeiro/" },
+  ]}
+/>

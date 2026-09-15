@@ -1,0 +1,96 @@
+---
+// Página: Home.
+// Fonte da verdade: HTML oficial do designer (beorange-homepage_2.html) — acima do Figma.
+// O CSS do protótipo entra verbatim por src/styles/prototype-home.css (global, sem refatoração).
+import Layout from "../layouts/Layout.astro";
+import "../styles/prototype-home.css";
+import Header from "../components/elements/Header.astro";
+import MobileMenu from "../components/elements/MobileMenu.astro";
+import HeroSection from "../components/elements/HeroSection.astro";
+import TrustBanner from "../components/elements/TrustBanner.astro";
+import StagesSection from "../components/elements/StagesSection.astro";
+import KeyDifferentiators from "../components/elements/KeyDifferentiators.astro";
+import DualSolutionsSection from "../components/elements/DualSolutionsSection.astro";
+import SocialProofSection from "../components/elements/SocialProofSection.astro";
+import DiagnosticSection from "../components/elements/DiagnosticSection.astro";
+import ResourcesSection from "../components/elements/ResourcesSection.astro";
+import Footer from "../components/elements/Footer.astro";
+import { getCollection } from "astro:content";
+import { tempoDeLeitura, formatarData } from "../lib/artigo";
+
+// Dobra 7 (Recursos): os 3 artigos mais recentes do blog.
+// O protótipo trazia três títulos de exemplo fixos no componente; agora a dobra lê a
+// content collection, então a home acompanha o blog sozinha a cada artigo novo.
+//
+// Só entram artigos com imagem de destaque aprovada: a vitrine da home é uma grade de três
+// cards com foto, e um card sem foto quebra a linha. Todo artigo continua alcançável pelo
+// /blog/, que lista os 149 — aqui o corte é de vitrine, não de publicação.
+const recentes = (await getCollection("artigos"))
+  .map((e) => e.data)
+  .filter((a) => a.hero)
+  .sort((a, b) => b.dataIso.localeCompare(a.dataIso))
+  .slice(0, 3)
+  .map((a) => ({
+    imagem: a.card!,
+    categoria: a.categoria,
+    titulo: a.titulo,
+    resumo: a.lead.length > 150 ? a.lead.slice(0, 147).replace(/\s+\S*$/, "") + "…" : a.lead,
+    meta: `${formatarData(a.dataIso)} · ${tempoDeLeitura(a.palavras)} min de leitura`,
+    href: `/blog/${a.slug}/`,
+  }));
+---
+<Layout
+  title="Beorange | Contabilidade e infraestrutura financeira para empresas"
+  description="Contabilidade consultiva, conta PJ e automação financeira no mesmo ambiente. Especialistas em Lucro Real e na transição para IBS e CBS. Fale com um analista."
+>
+  <Header logoHref="#top" />
+  <MobileMenu />
+  <HeroSection />
+  <TrustBanner />
+  <StagesSection />
+  <KeyDifferentiators />
+  <DualSolutionsSection />
+  <SocialProofSection />
+  <DiagnosticSection />
+  <ResourcesSection cards={recentes} nota={null} />
+  <Footer logoHref="#top" />
+</Layout>
+
+<script>
+  const solBtn=document.getElementById('solBtn') as HTMLButtonElement, mega=document.getElementById('mega') as HTMLElement;
+  function closeMega(){mega.classList.remove('open');solBtn.setAttribute('aria-expanded','false');}
+  solBtn.addEventListener('click',e=>{e.stopPropagation();const open=mega.classList.toggle('open');solBtn.setAttribute('aria-expanded',String(open));});
+  document.addEventListener('click',e=>{if(!mega.contains(e.target as Node)&&e.target!==solBtn)closeMega();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMega();});
+  mega.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMega));
+  // menu mobile: overlay do Figma (nos 51:5 / 52:2) no lugar do dropdown do prototipo
+  const burger=document.getElementById('burger') as HTMLButtonElement;
+  const header=document.getElementById('top') as HTMLElement;
+  const mm=document.getElementById('mobileMenu') as HTMLElement;
+  const mmFechar=document.getElementById('mmFechar') as HTMLButtonElement;
+  const mmSol=document.getElementById('mmSolucoes') as HTMLButtonElement;
+  const mmSub=document.getElementById('mmSubmenu') as HTMLElement;
+  function abrirMenu(v:boolean){
+    mm.hidden=!v;
+    burger.setAttribute('aria-expanded',String(v));
+    document.body.style.overflow=v?'hidden':'';        // trava o scroll do fundo
+    if(v) mmFechar.focus(); else burger.focus();
+  }
+  burger.setAttribute('aria-expanded','false');
+  // !! porque hidden e boolean|"until-found" no lib.dom atual, e abrirMenu so aceita boolean
+  burger.addEventListener('click',()=>abrirMenu(!!mm.hidden));
+  mmFechar.addEventListener('click',()=>abrirMenu(false));
+  mm.addEventListener('click',e=>{if(e.target===mm)abrirMenu(false);});  // clique no fundo fecha
+  mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>abrirMenu(false)));
+  mmSol.addEventListener('click',()=>{
+    const aberto=mmSub.hidden;
+    mmSub.hidden=!aberto;
+    mmSol.setAttribute('aria-expanded',String(aberto));
+  });
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!mm.hidden)abrirMenu(false);});
+  // header muda para fundo claro ao rolar (sai da foto do hero)
+  const onScroll=()=>header.classList.toggle('scrolled',window.scrollY>60);
+  onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+  const io=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}})},{threshold:.12});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>

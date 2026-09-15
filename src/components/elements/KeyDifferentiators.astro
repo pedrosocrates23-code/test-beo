@@ -1,0 +1,150 @@
+---
+// Elemento: Dobra 3 — Pontos-chave (blocos alternados).
+// Fonte da verdade: HTML oficial do designer (beorange-homepage_2.html, linhas 425-501).
+//
+// Cada linha é texto de um lado e um visual do outro; a alternância esquerda/direita é do CSS
+// (.row:nth-child(even)), não desta lista — basta pôr as linhas na ordem de leitura.
+// O visual tem quatro formatos, e o campo `tipo` escolhe qual. Os três últimos são desenhados
+// em HTML e CSS, sem imagem, porque representam estado do produto e precisam ficar nítidos em
+// qualquer tela e legíveis por leitor de tela:
+//   imagem  — foto ou screenshot
+//   fluxo   — passos encadeados por setas, o último em destaque
+//   painel  — cartão com uma escala de opções, uma delas ativa
+//   papeis  — quem pode o quê, em selos de permitido/negado
+type Visual =
+  | { tipo: "imagem"; src: string; alt: string; width: number; height: number }
+  | { tipo: "fluxo"; passos: string[] }
+  | {
+      tipo: "painel";
+      titulo: string;
+      linhaTopo: string;
+      escala: string[];
+      escalaAtiva: string;
+      linhaBase: string;
+      selo?: string;
+    }
+  | { tipo: "papeis"; papeis: { nome: string; permissoes: { texto: string; negado?: boolean }[] }[] };
+
+interface Props {
+  titulo?: string;
+  linhas?: { titulo: string; texto: string; ctas?: { texto: string; href: string }[]; visual: Visual }[];
+  /** Nota de rodapé em cinza. Omita para não renderizar. */
+  ressalva?: string;
+}
+
+const {
+  titulo = "O que faz diferença na prática",
+  linhas = [
+    {
+      titulo: "Profundidade em Lucro Real e preparação para IBS e CBS",
+      texto: "No Lucro Real, a formação das bases, a dedutibilidade das despesas e o aproveitamento de créditos de PIS e COFINS mudam quanto a empresa paga todo mês. A análise parte da sua contabilidade e dos seus documentos fiscais.",
+      ctas: [
+        { texto: "Estratégia para Lucro Real", href: "/lucro-real/" },
+        { texto: "Preparação para IBS e CBS", href: "/reforma-tributaria/" },
+      ],
+      visual: {
+        tipo: "imagem",
+        src: "/img/home/app-beorange.webp",
+        alt: "Aplicativo da Conta Beorange em três telas: seleção de conta, token de acesso e extrato com as últimas transações",
+        width: 702,
+        height: 573,
+      },
+    },
+    {
+      titulo: "O dado nasce conectado à operação",
+      texto: "Na estrutura comum, a movimentação acontece no banco e depois precisa ser exportada, classificada e conciliada em outro sistema. Na Beorange, ela nasce dentro da infraestrutura financeira, já categorizada, e segue por um caminho só.",
+      visual: {
+        tipo: "fluxo",
+        passos: ["Movimentação na Conta Beorange", "Categorizada na origem", "Chega à contabilidade sem retrabalho"],
+      },
+    },
+    {
+      titulo: "Um analista que conhece a sua empresa",
+      texto: "A assessoria recorrente está incluída na mensalidade, com frequência definida conforme o momento do negócio: semanal, quinzenal, mensal ou trimestral. É a mesma pessoa acompanhando os números, mês após mês.",
+      visual: {
+        tipo: "painel",
+        titulo: "Acompanhamento recorrente",
+        linhaTopo: "Frequência definida com você",
+        escala: ["Semanal", "Quinzenal", "Mensal", "Trimestral"],
+        escalaAtiva: "Quinzenal",
+        linhaBase: "Mesmo analista, mês após mês",
+        selo: "Dedicado",
+      },
+    },
+    {
+      titulo: "Governança de quem aprova e de quem executa",
+      texto: "A empresa define perfis de acesso, limites por usuário e faixas de aprovação. Um analista pode cadastrar um pagamento sem poder executá-lo. A concentração de acesso deixa de ser o padrão da operação.",
+      visual: {
+        tipo: "papeis",
+        papeis: [
+          { nome: "Analista", permissoes: [{ texto: "Cadastra" }, { texto: "Não executa", negado: true }] },
+          { nome: "Gestor", permissoes: [{ texto: "Aprova até R$ 20k" }] },
+          { nome: "Sócio", permissoes: [{ texto: "Aprova acima" }, { texto: "Executa" }] },
+        ],
+      },
+    },
+  ],
+  ressalva = "Estratégias tributárias dependem de diagnóstico prévio. Nenhum resultado é apresentado como garantido antes dessa análise.",
+} = Astro.props;
+---
+<section class="diff">
+  <div class="wrap">
+    <div class="sec-head rv"><h2>{titulo}</h2></div>
+    <div class="rows">
+      {linhas.map((linha) => {
+        // `visual` precisa ser uma const local: dentro dos .map() aninhados o TypeScript
+        // perde o estreitamento de linha.visual (é propriedade de item de array, que ele
+        // trata como mutável) e passa a ver a união inteira, reclamando de .passos e
+        // .escalaAtiva. Numa const o estreitamento sobrevive aos callbacks.
+        const visual = linha.visual;
+        return (
+        <div class="row rv">
+          <div class="row-txt">
+            <h3>{linha.titulo}</h3>
+            <p>{linha.texto}</p>
+            {linha.ctas && linha.ctas.length > 0 && (
+              <div class="ctas">
+                {linha.ctas.map((cta) => (
+                  <a href={cta.href} class="link-cta">{cta.texto} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                ))}
+              </div>
+            )}
+          </div>
+          <div class="row-visual">
+            {visual.tipo === "imagem" && (
+              <img class="row-img" src={visual.src} alt={visual.alt}
+                   width={visual.width} height={visual.height} loading="lazy" decoding="async" />
+            )}
+            {visual.tipo === "fluxo" && (
+              <div class="flow">
+                {visual.passos.map((passo, i) => (
+                  <>
+                    {i > 0 && <svg class="farrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>}
+                    <div class:list={["fstep", { on: i === visual.passos.length - 1 }]}><span class="fn">{i + 1}</span><span class="fx">{passo}</span></div>
+                  </>
+                ))}
+              </div>
+            )}
+            {visual.tipo === "painel" && (
+              <div class="panel">
+                <div class="ph">{visual.titulo}</div>
+                <div class="pline"><span class="pl"><span class="d"></span>{visual.linhaTopo}</span></div>
+                <div class="schedule">{visual.escala.map((op) => <span class:list={{ act: op === visual.escalaAtiva }}>{op}</span>)}</div>
+                <div class="pline" style="margin-top:8px"><span class="pl"><span class="d"></span>{visual.linhaBase}</span>{visual.selo && <span class="pr">{visual.selo}</span>}</div>
+              </div>
+            )}
+            {visual.tipo === "papeis" && (
+              <div class="roles">
+                {visual.papeis.map((p) => (
+                  <div class="role"><span class="rn">{p.nome}</span><span class="rp">{p.permissoes.map((perm) => <span class:list={["chip", perm.negado ? "n" : "y"]}>{perm.texto}</span>)}</span></div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        );
+      })}
+    </div>
+    {ressalva && <p class="ressalva rv">{ressalva}</p>}
+  </div>
+</section>

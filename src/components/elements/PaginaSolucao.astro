@@ -1,0 +1,143 @@
+---
+// Modelo de página de solução — as 11 frentes dos dois produtos.
+// Fonte da estrutura: "Proposta de textos", PÁGINA 8 (modelo de 6 dobras).
+// Fonte do conteúdo: "Estrutura de Produtos beorange", seções 2.1 a 2.6 e 3.1 a 3.5.
+//
+// O documento do modelo é explícito: "O escopo vem do documento de produtos, sem acréscimo.
+// Nada de item inventado para encher a lista." Por isso os blocos de escopo entram como
+// estão lá — inclusive quando uma frente tem 21 itens e outra tem 6. Lista desigual é o
+// retrato honesto do que cada frente entrega; emparelhar as duas exigiria inventar.
+//
+// A dobra 2 (O problema) é OPCIONAL neste modelo, e isso é deliberado: o documento de tom só
+// traz esse texto escrito para a frente Tributário. Onde ele não existe, a dobra não é
+// renderizada — melhor uma página de 5 dobras verdadeiras do que 6 com uma inventada.
+import Layout from "../../layouts/Layout.astro";
+// O CSS entra AQUI, e não em cada uma das 11 páginas: elas só chamam este componente e não
+// têm markup próprio. Sem esta linha as páginas saem sem estilo nenhum — o HTML fica certo e
+// a página fica quebrada, que foi exatamente o que aconteceu na primeira geração.
+import "../../styles/prototype-contabilidade.css";
+import Header from "./Header.astro";
+import MobileMenu from "./MobileMenu.astro";
+import HeroContabilidade from "./HeroContabilidade.astro";
+import ProblemaContabilidade from "./ProblemaContabilidade.astro";
+import EspecialidadeTributaria from "./EspecialidadeTributaria.astro";
+import SecaoLista from "./SecaoLista.astro";
+import SeisFrentes from "./SeisFrentes.astro";
+import DiagnosticoEntrada from "./DiagnosticoEntrada.astro";
+import Footer from "./Footer.astro";
+
+export interface Props {
+  metaTitle: string;
+  metaDescription: string;
+  /** "Contabilidade Beorange" ou "Conta Beorange" — vira a etiqueta e o caminho de volta. */
+  produto: string;
+  produtoHref: string;
+  /** Nome da frente, ex.: "Contábil". */
+  frente: string;
+  /** O H1: nome da frente mais o que ela resolve. */
+  titulo: string;
+  /** Subtítulo de até 30 palavras. */
+  lead: string;
+  ctaPrimario: string;
+  /** Dobra 2 — só renderiza quando houver texto escrito para ela. */
+  problema?: { titulo: string; texto: string; sinais: string[]; destaque?: string };
+  /** Dobra 3 — blocos de escopo, na ordem do documento de produtos. */
+  escopo?: { rotulo: string; titulo?: string; itens: string[] }[];
+  escopoTitulo?: string;
+  /** Dobra 4 — como o trabalho é conduzido. */
+  atuacao?: { titulo: string; texto: string; etapas?: string[]; ressalva?: string };
+  /** Dobra 5 — efeitos, não adjetivos. */
+  beneficios?: { titulo?: string; itens: string[] };
+  /** Frase que liga esta frente a outra, mais o link. */
+  integracao?: { texto: string; cta?: { texto: string; href: string } };
+  /** Dobra 6 — frentes irmãs, pelo menos duas. */
+  irmas?: { titulo: string; texto: string; href: string }[];
+  ctaFinal?: { titulo: string; texto: string };
+}
+
+const {
+  metaTitle, metaDescription, produto, produtoHref, frente, titulo, lead, ctaPrimario,
+  problema, escopo = [], escopoTitulo, atuacao, beneficios, integracao, irmas = [], ctaFinal,
+} = Astro.props;
+---
+<Layout title={metaTitle} description={metaDescription}>
+  <Header ativo="solucoes" />
+  <MobileMenu />
+
+  <!-- DOBRA 1 — Abertura -->
+  <HeroContabilidade
+    eyebrow={`${produto}, ${frente}`}
+    titulo={titulo}
+    lead={lead}
+    ctaPrimario={{ texto: ctaPrimario, href: "#diagnostico" }}
+    ctaSecundario={{ texto: `Ver todas as frentes de ${produto}`, href: produtoHref }}
+  />
+
+  <!-- DOBRA 2 — O problema (só quando há texto escrito para ela) -->
+  {problema && (
+    <ProblemaContabilidade
+      titulo={problema.titulo}
+      intro={problema.texto}
+      problemas={problema.sinais}
+      destaque={problema.destaque}
+      comFoto={false}
+    />
+  )}
+
+  <!-- DOBRA 3 — O que está incluído -->
+  {escopo.length > 0 && (
+    <EspecialidadeTributaria
+      id="escopo"
+      eyebrow=""
+      titulo={escopoTitulo ?? `Escopo da frente ${frente}`}
+      intro=""
+      cards={escopo.map((b) => ({ titulo: b.titulo ?? b.rotulo, itens: b.itens }))}
+      ressalva=""
+    />
+  )}
+
+  <!-- DOBRA 4 — Como atuamos -->
+  {atuacao && (
+    <SecaoLista
+      titulo={atuacao.titulo}
+      texto={atuacao.texto}
+      itens={atuacao.etapas ?? []}
+      ressalva={atuacao.ressalva}
+    />
+  )}
+
+  <!-- DOBRA 5 — Benefícios e integração -->
+  {beneficios && (
+    <SecaoLista
+      variante="alternada"
+      titulo={beneficios.titulo ?? "O que muda na operação"}
+      itens={beneficios.itens}
+      bloco={integracao ? { titulo: "Integração", texto: integracao.texto } : undefined}
+      cta={integracao?.cta}
+    />
+  )}
+
+  <!-- DOBRA 6 — Chamada para ação e frentes irmãs -->
+  <DiagnosticoEntrada
+    id="diagnostico"
+    eyebrow=""
+    titulo={ctaFinal?.titulo ?? `Comece por um diagnóstico`}
+    texto={ctaFinal?.texto ?? "O diagnóstico mostra a situação atual e define o que vale a pena fazer, e em que ordem."}
+    itens={[]}
+    formTitulo={ctaPrimario}
+    botao={ctaPrimario}
+  />
+
+  {irmas.length > 0 && (
+    <SeisFrentes
+      id="irmas"
+      titulo="Outras frentes desta solução"
+      intro=""
+      frentes={irmas.map((f) => ({ titulo: f.titulo, texto: f.texto, link: { texto: `Ver ${f.titulo}`, href: f.href } }))}
+    />
+  )}
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

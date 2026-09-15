@@ -1,0 +1,104 @@
+---
+// Página: Sobre nós.
+// Fonte do texto: "Proposta de textos — páginas do novo site", PÁGINA 4, dobra por dobra.
+// Nenhuma linha foi reescrita.
+//
+// A dobra 1 não tem botão, e isso é instrução do documento: "é a única página do site em que
+// a primeira dobra pode não pedir ação. O primeiro botão aparece na dobra 3."
+//
+// FALTAM DOIS DADOS, ambos marcados no documento:
+//   1. ano e nome completo de cada reconhecimento, para que cada item exiba prêmio, entidade
+//      e ano. Hoje os itens estão como o documento os escreve, sem ano.
+//   2. fotos, nomes, cargos e uma linha de formação das lideranças. O documento chama isso de
+//      "o dado mais importante que falta" — sem ele a dobra 5 fica só com o parágrafo, e a
+//      página inteira enfraquece. E avisa: se as fotos não saírem no prazo, fotografe o time
+//      real; banco de imagens em página institucional destrói o que a página tenta construir.
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-contabilidade.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import HeroIndice from "../../components/elements/HeroIndice.astro";
+import SecaoLista from "../../components/elements/SecaoLista.astro";
+import SeisFrentes from "../../components/elements/SeisFrentes.astro";
+import Footer from "../../components/elements/Footer.astro";
+---
+<Layout
+  title="Sobre a Beorange | Contabilidade, tecnologia e leitura dos números"
+  description="Quem somos, como trabalhamos e por que a Beorange existe. Contabilidade consultiva e infraestrutura financeira para empresas em crescimento."
+>
+  <Header ativo="sobre" tema="claro" />
+  <MobileMenu />
+
+  <!-- DOBRA 1 — Abertura, sem botão por decisão do documento -->
+  <HeroIndice
+    titulo="Contabilidade que entende de operação. Tecnologia que entende de contabilidade"
+    lead="A Beorange existe para dar às empresas em crescimento uma estrutura administrativa capaz de acompanhar sua evolução, conectando contabilidade, financeiro, tecnologia e leitura dos números."
+  />
+
+  <!-- DOBRA 2 — O que fazemos.
+       As quatro linhas da lista são, segundo o documento, o bloco mais citável da página, e
+       pedem "tratamento tipográfico de manifesto: corpo grande, muito respiro, uma linha por
+       vez". Hoje elas saem na lista com check padrão — o tratamento de manifesto é uma
+       pendência de design, não de texto. -->
+  <SecaoLista
+    titulo="Uma estrutura, não um pacote de serviços"
+    texto="A Beorange entrega contabilidade, software e conta bancária dentro de um mesmo ambiente, sob o mesmo acompanhamento. É uma estrutura administrativa integrada, formada por execução técnica, operação financeira, tecnologia, automação assistida e leitura estratégica dos números."
+    itens={[
+      "Contabilidade para dar segurança e visão",
+      "Conta para sustentar a operação",
+      "Bora, a inteligência artificial da Beorange, para reduzir trabalho manual",
+      "Assessoria para transformar números em decisão",
+    ]}
+  />
+
+  <!-- DOBRA 3 — Como trabalhamos. Primeiro botão da página. -->
+  <SeisFrentes
+    id="compromissos"
+    titulo="Quatro compromissos que definem como atendemos"
+    intro=""
+    frentes={[
+      { titulo: "A análise parte da sua operação", texto: "A leitura tributária começa pela sua contabilidade, seus documentos fiscais, seus contratos e sua cadeia de fornecedores." },
+      { titulo: "A decisão continua sendo sua", texto: "Organizamos, analisamos e apresentamos caminhos. A escolha, a aprovação e o direcionamento do negócio permanecem com você." },
+      { titulo: "A automação é assistida", texto: "A tecnologia prepara o trabalho e reduz digitação. Um analista valida antes de qualquer coisa entrar na operação." },
+      { titulo: "O diagnóstico vem antes da proposta", texto: "Todo cliente passa por diagnóstico contábil, fiscal, societário e tributário na entrada. É ele que define o escopo, não uma tabela padrão." },
+    ]}
+  />
+  <SecaoLista titulo="" cta={{ texto: "Solicitar diagnóstico", href: "/contato/" }} />
+
+  <!-- DOBRA 4 — Reconhecimentos.
+       [FALTA] ano exato e nome completo de cada premiação — ver o cabeçalho do arquivo.
+       Os itens estão exatamente como o documento os escreve. Nenhum ano foi deduzido: prêmio
+       com ano errado numa página institucional é o tipo de erro que a concorrência printa. -->
+  <SecaoLista
+    variante="alternada"
+    titulo="O que já reconheceram no caminho"
+    itens={[
+      "Aporte pré-seed com valuation de R$ 10 milhões",
+      "Indicada a Fintech do Ano no Brasil",
+      "Top 10 PR no Prêmio Sebrae Startups 2026",
+      "Top 1.000 no Prêmio Sebrae Startups",
+      "Reconhecida por aplicação de inteligência artificial na contabilidade",
+    ]}
+    cta={{ texto: "Ver na imprensa", href: "/imprensa/" }}
+  />
+
+  <!-- DOBRA 5 — Quem atende.
+       [FALTA] a grade de lideranças com foto, nome, cargo e formação. Enquanto não vier, a
+       dobra fica com o parágrafo, exatamente como o documento prevê. -->
+  <SecaoLista
+    titulo="Quem cuida da sua operação"
+    texto="Cada cliente tem um analista responsável, que conhece a operação e acompanha os números com a frequência definida no contrato: semanal, quinzenal, mensal ou trimestral. Não é central de atendimento. É a mesma pessoa, mês após mês."
+  />
+
+  <!-- DOBRA 6 — Chamada para ação -->
+  <SecaoLista
+    variante="alternada"
+    titulo="Se a sua empresa chegou nesse ponto, vale uma conversa"
+    texto="Empresas que superaram o controle informal e precisam de mais previsibilidade, governança e segurança tributária costumam chegar até aqui. O primeiro passo é um diagnóstico da situação atual."
+    cta={{ texto: "Marcar uma conversa", href: "/contato/" }}
+  />
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

@@ -1,0 +1,79 @@
+---
+// Elemento genérico: título, texto de apoio e uma lista com check.
+//
+// Nasceu da documentação de texto do site ("Proposta de textos — páginas do novo site"), onde
+// esse arranjo se repete em quase toda página: uma dobra que explica algo e enumera o que
+// está incluído. Antes de existir, cada página copiaria a mesma estrutura.
+//
+// Tudo é opcional menos o título, então a mesma peça serve para dobras bem diferentes:
+// só título e lista; título, subtítulo e lista; ou o conjunto inteiro com destaque, ressalva
+// e botão. O visual acompanha o CSS da página que a renderiza — em fundo escuro, basta passar
+// `variante="escura"`.
+import Icone from "./Icone.astro";
+
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  titulo: string;
+  texto?: string;
+  /** Título do bloco da lista, quando ela precisa de um rótulo próprio. */
+  subtitulo?: string;
+  itens?: string[];
+  /** Frase isolada com a barrinha laranja. */
+  destaque?: string;
+  /** Texto miúdo obrigatório. Nunca escondido: em tema tributário é ele que separa
+   *  "podemos analisar" de "garantimos resultado". */
+  ressalva?: string;
+  /** Bloco de fecho com título próprio, para o desdobramento que não cabe na lista. */
+  bloco?: { titulo: string; texto: string };
+  cta?: { texto: string; href: string };
+  /** "clara" (padrão), "alternada" (fundo bege) ou "escura" (banda escura). */
+  variante?: "clara" | "alternada" | "escura";
+}
+
+const {
+  id,
+  eyebrow,
+  titulo,
+  texto,
+  subtitulo,
+  itens = [],
+  destaque,
+  ressalva,
+  bloco,
+  cta,
+  variante = "clara",
+} = Astro.props;
+
+const classe = variante === "alternada" ? "alt" : variante === "escura" ? "dark" : undefined;
+---
+<section class={classe} id={id}>
+  <div class="wrap">
+    <div class="sec-head rv">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h2>{titulo}</h2>
+      {texto && <p>{texto}</p>}
+    </div>
+    {itens.length > 0 && (
+      <div class="rv">
+        {subtitulo && <div class="an-sub-h">{subtitulo}</div>}
+        <ul class="an-list">
+          {itens.map((item) => <li><Icone nome="check" />{item}</li>)}
+        </ul>
+      </div>
+    )}
+    {bloco && (
+      <div class="plan rv">
+        <h3>{bloco.titulo}</h3>
+        <p>{bloco.texto}</p>
+      </div>
+    )}
+    {cta && (
+      <div class="rv" style="margin-top:32px">
+        <a href={cta.href} class="btn btn-primary">{cta.texto}</a>
+      </div>
+    )}
+    {ressalva && <p class="ressalva rv">{ressalva}</p>}
+    {destaque && <p class="destaque rv"><span class="bar"></span>{destaque}</p>}
+  </div>
+</section>

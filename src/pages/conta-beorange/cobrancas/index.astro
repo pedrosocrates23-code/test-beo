@@ -1,0 +1,55 @@
+---
+// Página de solução: Conta Beorange — Cobranças e recebimentos.
+// Estrutura: "Proposta de textos", PÁGINA 8 (modelo de 6 dobras).
+// Conteúdo: "Estrutura de Produtos beorange", seção 3.2. Texto literal, sem acréscimo.
+//
+// A dobra 2 (O problema) não é renderizada: o documento de tom só escreve esse texto
+// para a frente Tributário. Ver a pendência desta URL na planilha de status.
+import PaginaSolucao from "../../../components/elements/PaginaSolucao.astro";
+---
+<PaginaSolucao
+  metaTitle="Cobranças e recebimentos | Conta Beorange"
+  metaDescription="Cobrança organizada do início ao recebimento."
+  produto="Conta Beorange"
+  produtoHref="/conta-beorange/"
+  frente="Cobranças e recebimentos"
+  titulo="Cobrança organizada do início ao recebimento."
+  lead="A Conta beorange centraliza a emissão, o acompanhamento e a automação das cobranças. A empresa pode emitir boletos, PIX e links de pagamento, configurar cobranças recorrentes e automatizar lembretes por meio de uma régua personalizada."
+  ctaPrimario="Solicitar diagnóstico"
+  escopoTitulo="O que está incluído"
+  escopo={[
+    { rotulo: "Funcionalidades", itens: [
+      "Emissão de boletos",
+      "Cobrança por PIX",
+      "Links de pagamento",
+      "Cobranças avulsas e recorrentes",
+      "Definição de vencimentos",
+      "Juros e multas",
+      "Acompanhamento do status da cobrança",
+      "Identificação dos recebimentos",
+      "Gestão de inadimplência",
+      "Reenvio de cobranças",
+    ] },
+    { rotulo: "Régua de cobrança personalizável", itens: [
+      "Envio automático por e-mail",
+      "Envio automático por SMS",
+      "Lembretes antes do vencimento",
+      "Avisos no dia do vencimento",
+      "Comunicações após o vencimento",
+      "Personalização dos textos",
+      "Definição dos intervalos",
+    ] },
+  ]}
+  beneficios={{ itens: [
+    "Redução do trabalho manual de cobrança",
+    "Mais previsibilidade dos recebimentos",
+    "Padronização sem perder o tom da empresa",
+    "Menor risco de cobranças esquecidas",
+    "Acompanhamento centralizado da inadimplência",
+  ] }}
+  irmas={[
+    { titulo: "Conta PJ e movimentação", texto: "Controle financeiro com múltiplos usuários, limites e alçadas.", href: "/conta-beorange/conta-pj/" },
+    { titulo: "Portal de gestão financeira", texto: "Uma estrutura que substitui controles e softwares desconectados.", href: "/conta-beorange/portal/" },
+    { titulo: "BPO Financeiro", texto: "Execução operacional com clareza e orientação, sem substituir a decisão do cliente.", href: "/conta-beorange/bpo-financeiro/" },
+  ]}
+/>

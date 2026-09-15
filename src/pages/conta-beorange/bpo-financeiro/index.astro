@@ -1,0 +1,48 @@
+---
+// Página de solução: Conta Beorange — BPO Financeiro.
+// Estrutura: "Proposta de textos", PÁGINA 8 (modelo de 6 dobras).
+// Conteúdo: "Estrutura de Produtos beorange", seção 3.4. Texto literal, sem acréscimo.
+//
+// A dobra 2 (O problema) não é renderizada: o documento de tom só escreve esse texto
+// para a frente Tributário. Ver a pendência desta URL na planilha de status.
+import PaginaSolucao from "../../../components/elements/PaginaSolucao.astro";
+---
+<PaginaSolucao
+  metaTitle="BPO Financeiro | Conta Beorange"
+  metaDescription="Execução operacional com clareza e orientação, sem substituir a decisão do cliente."
+  produto="Conta Beorange"
+  produtoHref="/conta-beorange/"
+  frente="BPO Financeiro"
+  titulo="Execução operacional com clareza e orientação, sem substituir a decisão do cliente."
+  lead="O BPO Financeiro assume a execução e a organização das rotinas financeiras, conectando contas a pagar, contas a receber, cobrança, emissão de notas, conciliação, fluxo de caixa e relatórios. Além da execução, inclui assessoria financeira: o analista acompanha os números, identifica pontos de atenção e apresenta caminho"
+  ctaPrimario="Solicitar diagnóstico"
+  escopoTitulo="O que está incluído"
+  escopo={[
+    { rotulo: "Escopo", itens: [
+      "Contas a pagar",
+      "Contas a receber",
+      "Emissão de notas fiscais",
+      "Emissão e acompanhamento de cobranças",
+      "Conciliação bancária",
+      "Organização e categorização das movimentações",
+      "Controle e projeção de fluxo de caixa",
+      "Relatórios financeiros",
+      "Acompanhamento de inadimplência",
+      "Assessoria financeira",
+      "Análise dos números e apresentação de pontos de atenção",
+    ] },
+  ]}
+  beneficios={{ itens: [
+    "Mais clareza sobre a situação financeira",
+    "Rotinas organizadas e acompanhadas",
+    "Redução de erros, atrasos e perda de informação",
+    "Mais previsibilidade de caixa",
+    "Informação confiável para decidir",
+    "Menor dependência de planilhas e controles paralelos",
+  ] }}
+  irmas={[
+    { titulo: "Conta PJ e movimentação", texto: "Controle financeiro com múltiplos usuários, limites e alçadas.", href: "/conta-beorange/conta-pj/" },
+    { titulo: "Cobranças e recebimentos", texto: "Cobrança organizada do início ao recebimento.", href: "/conta-beorange/cobrancas/" },
+    { titulo: "Portal de gestão financeira", texto: "Uma estrutura que substitui controles e softwares desconectados.", href: "/conta-beorange/portal/" },
+  ]}
+/>

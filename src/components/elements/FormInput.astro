@@ -1,0 +1,60 @@
+---
+// Elemento: Form/Input (Figma node 21:112)
+export interface Props {
+  label?: string;
+  placeholder?: string;
+  name?: string;
+  id?: string;
+  class?: string;
+}
+const {
+  label = "Label",
+  placeholder = "Digite aqui...",
+  name,
+  id,
+  class: className = "",
+} = Astro.props;
+---
+<div class={`form-input ${className}`}>
+  <label class="form-input__label" for={id}>{label}</label>
+  <div class="form-input__box">
+    <input class="form-input__field" type="text" id={id} name={name} placeholder={placeholder} />
+  </div>
+</div>
+
+<style>
+  .form-input {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+    width: 320px;
+  }
+  .form-input__label {
+    width: 100%;
+    font: 500 14px/normal var(--font-family-base);
+    color: var(--text-primary);
+  }
+  .form-input__box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: var(--space-12) var(--space-16);
+  }
+  .form-input__field {
+    flex: 1 0 0;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font: 400 14px/normal var(--font-family-base);
+    color: var(--text-primary);
+  }
+  .form-input__field::placeholder {
+    color: var(--text-placeholder);
+  }
+</style>

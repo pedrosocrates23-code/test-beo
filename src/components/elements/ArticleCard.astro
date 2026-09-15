@@ -1,0 +1,21 @@
+---
+// Elemento: Card de artigo relacionado (protótipo do designer — beorange-artigo_2.html, article.art-ph)
+// Sem <style>: o CSS é global, vindo de src/styles/prototype-artigo.css.
+export interface Props {
+  thumb: string;
+  cat: string;
+  title: string;
+  excerpt: string;
+  meta: string;
+}
+const { thumb, cat, title, excerpt, meta } = Astro.props;
+---
+<article class="art-ph">
+  <div class="thumb"><span>{thumb}</span></div>
+  <div class="abody">
+    <div class="cat">{cat}</div>
+    <h3 style="font-size:17px;font-weight:600;margin:10px 0 8px;line-height:1.3">{title}</h3>
+    <p style="font-size:14px">{excerpt}</p>
+    <div class="meta">{meta}</div>
+  </div>
+</article>

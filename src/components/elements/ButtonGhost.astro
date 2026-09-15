@@ -1,0 +1,33 @@
+---
+// Elemento: Button/Ghost (Figma node 21:107)
+export interface Props {
+  label?: string;
+  href?: string;
+  class?: string;
+}
+const { label = "Ghost", href, class: className = "" } = Astro.props;
+const Tag = href ? "a" : "button";
+---
+<Tag href={href} class={`btn-ghost ${className}`}>
+  {label}
+</Tag>
+
+<style>
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--text-brand);
+    border: none;
+    border-radius: var(--radius-full);
+    padding: var(--space-12) var(--space-24);
+    font: 600 14px/normal var(--font-family-base);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  .btn-ghost:hover {
+    background: var(--bg-brand-subtle);
+  }
+</style>

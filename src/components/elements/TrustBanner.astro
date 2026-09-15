@@ -1,0 +1,52 @@
+---
+// Elemento: 2a dobra — faixa de marcas (Figma nó 2:1696).
+// Essa dobra existe no Figma mas NÃO existia no HTML do designer, por isso faltava na home.
+// Spec do nó: fundo #f4f1ef, radius 26.25px, padding 45.36 / 64.8, gap 45.36, título 35px
+// ("+ XX empresas" SemiBold + "já contam com" Light), logos em caixas de 198x63 com opacity .8.
+//
+// Duas camadas de animação, ambas só com transform (sem JS novo, sem biblioteca):
+//  - marquee em loop contínuo das marcas
+//  - contador que sobe de 0 até o número quando a seção entra na tela, aproveitando o
+//    IntersectionObserver que o protótipo já tem para o .rv
+export interface Props {
+  /** Número de empresas. O Figma deixou "XX" sem preencher; o nó mobile (48:74) diz 40. */
+  total?: number;
+}
+const { total = 40 } = Astro.props;
+
+const marcas = [
+  { arquivo: "escavador", nome: "Escavador", w: 198, h: 40 },
+  { arquivo: "ventiur", nome: "Ventiur Aceleradora", w: 123, h: 33 },
+  { arquivo: "omie", nome: "Omie", w: 124, h: 40 },
+  { arquivo: "kamino", nome: "Kamino", w: 168, h: 30 },
+];
+// O loop só emenda sem salto se cada grupo for pelo menos tão largo quanto a tela — por isso
+// a repetição é CALCULADA, não fixa: ao acrescentar marcas aqui, ela se ajusta sozinha
+// (com 4 marcas dá 3 repetições; passando de ~9 marcas, 1 já basta e nada é desperdiçado).
+const LARGURA_ITEM = 198 + 40; // caixa da marca + gap
+const LARGURA_ALVO = 2250; // maior largura que a foto do hero cobre; serve de teto de tela
+const repeticoes = Math.max(1, Math.ceil(LARGURA_ALVO / (marcas.length * LARGURA_ITEM)));
+const grupo = Array.from({ length: repeticoes }, () => marcas).flat();
+---
+<section class="marcas rv" aria-labelledby="marcas-titulo">
+  <h2 id="marcas-titulo" class="marcas-titulo">
+    <b>+&nbsp;<span class="odo" style={`--alvo:${total}`} role="img" aria-label={`mais de ${total}`}></span>&nbsp;empresas</b> <span class="marcas-leve">já contam com</span>
+  </h2>
+
+  <div class="marcas-esteira">
+    <div class="marcas-trilho" aria-hidden="true">
+      {[0, 1].map(() => (
+        <div class="marcas-grupo">
+          {grupo.map((m) => (
+            <span class="marcas-item">
+              <img src={`/img/marcas/${m.arquivo}.webp`} alt="" width={m.w} height={m.h} loading="lazy" decoding="async" />
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+    <ul class="marcas-sr">
+      {marcas.map((m) => <li>{m.nome}</li>)}
+    </ul>
+  </div>
+</section>

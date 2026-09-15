@@ -1,0 +1,95 @@
+---
+// Página legal: LGPD — direitos do titular.
+// Fonte normativa: ANPD, "Cookies e proteção de dados pessoais — guia orientativo", out/2022,
+// que remete aos arts. 9º e 18 da Lei 13.709/2018.
+// Estrutura da página: "Proposta de textos", PÁGINA 10.
+//
+// LIMITE DESTA PÁGINA, E ELE É IMPORTANTE
+// O guia da ANPD que serviu de base trata de COOKIES. Ele sustenta com segurança o que está
+// escrito abaixo sobre direitos do titular, gratuidade, procedimento facilitado e o papel do
+// encarregado — todos citados explicitamente lá. O que ele NÃO sustenta, e por isso não foi
+// escrito, é o detalhe do tratamento que a Beorange faz fora do site: dados de clientes
+// contábeis, prazos de retenção fiscal, operadores contratados e transferências. Isso depende
+// de levantamento interno e de revisão jurídica.
+//
+// [FALTA] nome do encarregado (DPO), e-mail dele e prazo de resposta assumido pela empresa.
+// Os três são exigência para o canal do titular, e sem eles a página descreve direitos que
+// ninguém sabe onde exercer. É a pendência mais urgente deste arquivo.
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-contabilidade.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import PaginaLegal from "../../components/elements/PaginaLegal.astro";
+import Footer from "../../components/elements/Footer.astro";
+---
+<Layout
+  title="LGPD | Beorange"
+  description="Como exercer os direitos previstos na Lei Geral de Proteção de Dados junto à Beorange."
+>
+  <Header tema="claro" />
+  <MobileMenu />
+
+  <PaginaLegal
+    titulo="LGPD"
+    resumo="Como exercer os direitos previstos na Lei Geral de Proteção de Dados junto à Beorange."
+  >
+    <h2 id="s1">1. A quem esta página se dirige</h2>
+    <p>
+      A Lei Geral de Proteção de Dados (Lei 13.709/2018) chama de titular a pessoa natural a
+      quem os dados pessoais se referem. Se você visitou este site, entrou em contato conosco
+      ou é cliente da Beorange, esta página explica quais direitos você tem sobre os seus
+      dados e como exercê-los.
+    </p>
+
+    <h2 id="s2">2. Os seus direitos</h2>
+    <p>
+      A LGPD assegura ao titular, entre outros, os direitos abaixo. Todos podem ser exercidos
+      por procedimento gratuito e facilitado — a lei não admite que o caminho para exercer um
+      direito seja mais difícil que o caminho que levou à coleta.
+    </p>
+    <table>
+      <tbody>
+        <tr><th>Confirmação</th><td>Saber se tratamos dados seus.</td></tr>
+        <tr><th>Acesso</th><td>Obter os dados que temos sobre você.</td></tr>
+        <tr><th>Correção</th><td>Corrigir dados incompletos, inexatos ou desatualizados.</td></tr>
+        <tr><th>Eliminação</th><td>Pedir a exclusão de dados desnecessários, excessivos ou tratados fora da lei, e dos dados tratados com base no seu consentimento.</td></tr>
+        <tr><th>Portabilidade</th><td>Levar seus dados a outro fornecedor, nos termos da regulamentação.</td></tr>
+        <tr><th>Informação sobre compartilhamento</th><td>Saber com quem compartilhamos seus dados.</td></tr>
+        <tr><th>Revogação do consentimento</th><td>Retirar, a qualquer tempo, um consentimento que você tenha dado.</td></tr>
+        <tr><th>Oposição</th><td>Opor-se a um tratamento feito com base em hipótese que dispense o consentimento.</td></tr>
+      </tbody>
+    </table>
+    <p>
+      No contexto específico de cookies, o guia orientativo da Autoridade Nacional de Proteção
+      de Dados destaca como especialmente relevantes os direitos de acesso, de eliminação, de
+      revogação do consentimento e de oposição ao tratamento.
+    </p>
+
+    <h2 id="s3">3. Como exercer</h2>
+    <p>
+      O pedido é feito ao encarregado de proteção de dados da Beorange, pelo canal indicado no
+      fim desta página. Informe qual direito você quer exercer e os dados que permitam
+      localizar o seu registro. Podemos pedir informações adicionais para confirmar a sua
+      identidade — o que existe para proteger você, não para dificultar o pedido.
+    </p>
+
+    <h2 id="s4">4. Quando um pedido pode não ser atendido integralmente</h2>
+    <p>
+      Alguns dados precisam ser mantidos mesmo depois de um pedido de exclusão, quando há
+      obrigação legal ou regulatória de guarda, ou quando são necessários ao exercício regular
+      de direitos. É o caso, por exemplo, de documentos contábeis e fiscais, sujeitos a prazos
+      próprios de retenção. Nessas situações, informaremos qual é a base da recusa e por
+      quanto tempo os dados permanecerão conosco.
+    </p>
+
+    <h2 id="s5">5. Reclamação à autoridade</h2>
+    <p>
+      Se você entender que um pedido não foi adequadamente atendido, pode apresentar
+      reclamação à Autoridade Nacional de Proteção de Dados (ANPD).
+    </p>
+  </PaginaLegal>
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

@@ -1,0 +1,48 @@
+/* ==========================================================================
+   LOGO DO HEADER — qual das três imagens aparece, e quando
+   ==========================================================================
+   QUAL ARQUIVO usar em cada tema é decisão do Header.astro, não deste arquivo.
+   Ele renderiza três <img> com papel fixo — topo, rolado e mobile — já com o
+   arquivo certo em cada uma. Aqui só se decide QUAL DAS TRÊS fica visível.
+
+   ESPECIFICIDADE, E POR QUE ELA É ALTA DE PROPÓSITO
+   Os prototype-*.css trazem `.logo .logo-img{display:block}`, que pesa (0,2,0)
+   e é carregado DEPOIS deste arquivo. Uma regra curta como
+   `.logo .logo-img--rolado{display:none}` também pesa (0,2,0) e por isso perde
+   o desempate — as três imagens aparecem ao mesmo tempo, lado a lado. Foi
+   exatamente o que aconteceu na primeira versão.
+   Por isso toda regra aqui é escrita como
+       header.site .logo .logo-img.logo-img--PAPEL
+   que pesa (0,4,1): um elemento e quatro classes. Vence o display:block do
+   protótipo independentemente da ordem em que o bundler junta os arquivos,
+   que não é garantida.
+   ========================================================================== */
+
+/* Desktop: a do topo até rolar, a de rolagem depois. */
+header.site .logo .logo-img.logo-img--topo{display:block}
+header.site .logo .logo-img.logo-img--rolado{display:none}
+header.site .logo .logo-img.logo-img--mobile{display:none}
+
+header.site.scrolled .logo .logo-img.logo-img--topo{display:none}
+header.site.scrolled .logo .logo-img.logo-img--rolado{display:block}
+header.site.scrolled .logo .logo-img.logo-img--mobile{display:none}
+
+/* --------------------------------------------------------------------------
+   Mobile, em QUALQUER página e em qualquer posição de rolagem.
+   Abaixo de 880px o header deixa de ser transparente e ganha barra própria —
+   header.site,header.site.scrolled{background:rgba(28,22,19,.8)} nos três
+   prototype-*.css. O fundo é escuro no topo e continua escuro depois de rolar,
+   então vale sempre a mesma imagem, e nunca a do estado de rolagem.
+   As regras abaixo repetem o peso (0,4,1) das de cima e vêm depois, então
+   ganham por ordem, que é o desempate correto entre iguais.
+   -------------------------------------------------------------------------- */
+@media(max-width:880px){
+  header.site .logo .logo-img.logo-img--topo,
+  header.site.scrolled .logo .logo-img.logo-img--topo{display:none}
+
+  header.site .logo .logo-img.logo-img--rolado,
+  header.site.scrolled .logo .logo-img.logo-img--rolado{display:none}
+
+  header.site .logo .logo-img.logo-img--mobile,
+  header.site.scrolled .logo .logo-img.logo-img--mobile{display:block}
+}

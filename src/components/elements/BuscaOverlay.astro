@@ -1,0 +1,528 @@
+---
+// Busca do site — sobreposição com desfoque, no formato de paleta de comandos.
+//
+// SÓ NO DESKTOP, a partir de 881px. Abaixo disso o gatilho não existe e o diálogo não abre:
+// a navegação no celular é o menu em tela cheia, e uma busca ali competia com ele sem
+// acrescentar caminho — quem chega pelo telefone usa o menu, não uma caixa de texto.
+//
+// Abre pela lupa do header, pelo campo da página de blog, por Ctrl+K (ou ⌘K) e pela tecla "/".
+// Fecha com Esc, com clique fora ou no botão. O índice vem de /busca.json, baixado UMA vez na
+// primeira abertura e guardado em memória: 149 artigos mais as páginas fixas filtram
+// instantaneamente, sem ida à rede por tecla digitada.
+//
+// Decisões que não são estéticas:
+//
+// - O diálogo é um <dialog> nativo. Ele já entrega o que um <div role="dialog"> exigiria
+//   escrever à mão e quase sempre sai errado: foco preso dentro, Esc fechando, o resto da
+//   página inerte para leitor de tela e para o teclado.
+// - O desfoque fica no ::backdrop, não num <div> por cima. É o elemento que o próprio
+//   navegador desenha atrás do diálogo, então não há disputa de z-index com o header fixo.
+// - A lista é um listbox com aria-activedescendant. As setas movem a seleção sem tirar o foco
+//   do campo, que é como uma paleta de comandos precisa se comportar: quem digita continua
+//   digitando.
+// - Nada é destacado com innerHTML. O trecho que casou é marcado montando os nós no DOM, para
+//   que um título de artigo com "<" ou "&" não vire injeção de markup.
+---
+<dialog class="busca" id="busca" aria-label="Buscar no site">
+  <div class="busca__caixa">
+    <!-- topo: o campo -->
+    <div class="busca__linha">
+      <svg class="busca__lupa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4-4"></path>
+      </svg>
+      <input
+        class="busca__campo"
+        id="busca-campo"
+        type="search"
+        placeholder="Buscar por assunto"
+        autocomplete="off"
+        role="combobox"
+        aria-expanded="false"
+        aria-controls="busca-resultados"
+        aria-autocomplete="list"
+      />
+      <button class="busca__esc" type="button" id="busca-fechar" aria-label="Fechar a busca">Esc</button>
+    </div>
+
+    <!-- meio: a lista, que rola -->
+    <div class="busca__corpo" id="busca-corpo">
+      <ul class="busca__resultados" id="busca-resultados" role="listbox" aria-label="Resultados"></ul>
+      <p class="busca__vazio" id="busca-vazio" hidden></p>
+    </div>
+
+    <!-- rodapé: o filtro -->
+    <div class="busca__filtros">
+      <span class="busca__filtro-rotulo">Filtro:</span>
+      <button class="busca__filtro" type="button" id="busca-filtro" aria-expanded="false" aria-haspopup="listbox">
+        <span id="busca-filtro-nome">Tudo</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+      </button>
+      <span class="busca__teclas" aria-hidden="true">
+        <span><kbd>↑</kbd><kbd>↓</kbd> Navegar</span>
+        <span><kbd>↵</kbd> Abrir</span>
+      </span>
+      <span class="busca__contagem" id="busca-contagem"></span>
+      <ul class="busca__menu" id="busca-menu" role="listbox" aria-label="Filtrar por" hidden></ul>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  /* ------------------------------------------------------------------ posição
+     `margin:auto` centraria a caixa, mas ela cresce conforme a lista aparece — e o campo
+     saltaria para cima a cada tecla. Em vez disso, o topo fica preso num ponto calculado a
+     partir da ALTURA MÁXIMA da caixa: ela nasce onde vai estar quando estiver cheia, e cresce
+     para baixo sem se mover. Centro ótico e campo firme, ao mesmo tempo.
+     O `max()` é a proteção de tela baixa: nunca menos que 6vh do topo. */
+  .busca{
+    width:min(680px, calc(100vw - 32px));
+    margin:max(6vh, calc((100vh - 500px) / 2)) auto auto;
+    padding:0;border:0;background:transparent;overflow:visible;
+  }
+  .busca::backdrop{
+    background:rgba(28,22,19,.28);
+    backdrop-filter:blur(10px) saturate(115%);
+    -webkit-backdrop-filter:blur(10px) saturate(115%);
+  }
+
+  /* Uma caixa só, em três faixas: campo, lista e filtro. As divisórias são bordas de 1px,
+     não espaços — é o que mantém o conjunto lendo como um objeto único. */
+  .busca__caixa{
+    display:flex;flex-direction:column;
+    background:var(--bg-primary,#fff);
+    border-radius:var(--radius-lg,16px);
+    box-shadow:0 26px 70px rgba(28,22,19,.26), 0 2px 8px rgba(28,22,19,.10);
+    overflow:hidden;
+  }
+
+  /* ---------------------------------------------------------------- topo */
+  .busca__linha{display:flex;align-items:center;gap:12px;padding:15px 16px;flex:none}
+  .busca__lupa{width:19px;height:19px;flex:none;color:var(--text-tertiary,#948B85)}
+  .busca__campo{
+    flex:1;min-width:0;border:0;background:none;outline:none;padding:0;
+    font:500 16.5px var(--f,'Outfit',sans-serif);color:var(--text-primary,#2B2320);
+  }
+  .busca__campo::placeholder{color:var(--text-placeholder,#B8AFA9);font-weight:400}
+  .busca__campo::-webkit-search-cancel-button{display:none}
+
+  .busca__esc{
+    flex:none;border:1px solid var(--border-subtle,#EFEAE6);background:var(--bg-secondary,#FBF9F7);
+    border-radius:8px;padding:4px 9px;cursor:pointer;
+    font:600 11.5px var(--f,'Outfit',sans-serif);color:var(--text-tertiary,#948B85);
+  }
+  .busca__esc:hover{color:var(--text-primary,#2B2320);border-color:var(--border-default,#DDD5CE)}
+
+  /* ---------------------------------------------------------------- meio */
+  .busca__corpo{
+    flex:1;min-height:0;overflow-y:auto;
+    max-height:min(46vh, 372px);
+    border-top:1px solid var(--border-subtle,#EFEAE6);
+  }
+  /* Sem termo digitado a faixa do meio não existe: a caixa fica só campo e filtro. */
+  .busca__corpo[hidden]{display:none}
+  .busca__corpo::-webkit-scrollbar{width:10px}
+  .busca__corpo::-webkit-scrollbar-thumb{
+    background:var(--border-default,#DDD5CE);border-radius:999px;
+    border:3px solid var(--bg-primary,#fff);
+  }
+
+  .busca__resultados{list-style:none;margin:0;padding:6px}
+  .busca__resultados:empty{display:none}
+  .busca__resultados a{
+    display:flex;align-items:center;gap:12px;
+    padding:8px 12px;border-radius:7px;text-decoration:none;
+  }
+  .busca__resultados li[data-sel="sim"] a,.busca__resultados a:hover{background:var(--bg-secondary,#FBF9F7)}
+  .busca__titulo mark{background:var(--bg-brand-subtle,#FFEDE4);color:inherit;border-radius:3px;padding:0 1px}
+  /* O grupo fica à direita, discreto: distingue artigo de página sem competir com o título. */
+  /* O título ocupa o espaço que sobra e corta em uma linha: entre os 149 artigos migrados há
+     títulos de 120 caracteres, e deixá-los quebrar em três linhas destrói o ritmo da lista. */
+  .busca__titulo{
+    flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+    font-size:14.5px;font-weight:500;line-height:1.4;color:var(--text-primary,#2B2320);
+  }
+
+  .busca__vazio{
+    margin:0;padding:44px 16px;text-align:center;
+    font-size:14px;color:var(--text-tertiary,#948B85);
+  }
+  .busca__vazio[hidden]{display:none}
+
+  /* -------------------------------------------------------------- rodapé */
+  .busca__filtros{
+    display:flex;align-items:center;gap:8px;position:relative;flex:none;
+    padding:10px 16px;
+    border-top:1px solid var(--border-subtle,#EFEAE6);
+    background:var(--bg-secondary,#FBF9F7);
+  }
+  .busca__filtro-rotulo{font-size:12.5px;color:var(--text-tertiary,#948B85)}
+  .busca__filtro{
+    display:inline-flex;align-items:center;gap:5px;border:0;background:none;cursor:pointer;padding:2px 4px;
+    font:600 12.5px var(--f,'Outfit',sans-serif);color:var(--text-brand,#F5380F);border-radius:6px;
+  }
+  .busca__filtro svg{width:13px;height:13px;transition:transform .18s ease}
+  .busca__filtro[aria-expanded="true"] svg{transform:rotate(180deg)}
+  .busca__filtro:focus-visible{outline:2px solid var(--action-primary,#F5380F);outline-offset:1px}
+  /* Dicas de teclado no rodapé, como no bloco de referência. Somem em caixa estreita: são
+     ajuda, não informação — e quem usa teclado descobre a navegação na primeira seta. */
+  .busca__teclas{display:flex;gap:14px;margin-left:12px;font-size:11px;color:var(--text-placeholder,#B8AFA9)}
+  .busca__teclas span{display:inline-flex;align-items:center;gap:4px}
+  .busca__teclas kbd{
+    display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 3px;
+    border:1px solid var(--border-subtle,#EFEAE6);border-bottom-width:2px;border-radius:4px;
+    background:var(--bg-primary,#fff);font:600 10px var(--f,'Outfit',sans-serif);color:var(--text-tertiary,#948B85);
+  }
+  .busca__contagem{margin-left:auto;font-size:11.5px;color:var(--text-placeholder,#B8AFA9);font-variant-numeric:tabular-nums}
+  @media(max-width:620px){ .busca__teclas{display:none} }
+
+  /* ---- agrupamento por categoria ---- */
+  .busca__grupo-titulo{
+    padding:12px 14px 5px;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--text-placeholder,#B8AFA9);
+  }
+  .busca__resultados li:first-child .busca__grupo-titulo{padding-top:8px}
+
+  /* ---- ícone por tipo ---- */
+  .busca__icone{
+    display:flex;align-items:center;justify-content:center;flex:none;width:30px;height:30px;
+    border:1px solid var(--border-subtle,#EFEAE6);border-radius:7px;color:var(--text-tertiary,#948B85);
+    background:var(--bg-primary,#fff);
+  }
+  .busca__icone svg{width:15px;height:15px}
+
+  /* ---- atalho no item selecionado ---- */
+  .busca__enter{
+    flex:none;display:none;align-items:center;gap:4px;
+    font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--text-tertiary,#948B85);
+    border:1px solid var(--border-subtle,#EFEAE6);border-radius:5px;padding:3px 6px;
+    background:var(--bg-primary,#fff);
+  }
+  .busca__resultados li[data-sel="sim"] .busca__enter{display:inline-flex}
+
+  /* O menu sobe, porque o filtro agora mora no rodapé: aberto para baixo, sairia da tela. */
+  .busca__menu{
+    position:absolute;bottom:calc(100% + 6px);left:12px;z-index:3;
+    min-width:252px;max-height:300px;overflow-y:auto;margin:0;padding:5px;list-style:none;
+    background:var(--bg-primary,#fff);border:1px solid var(--border-subtle,#EFEAE6);
+    border-radius:10px;box-shadow:0 16px 40px rgba(28,22,19,.18), 0 2px 6px rgba(28,22,19,.08);
+  }
+  .busca__menu[hidden]{display:none}
+  .busca__menu li{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:9px 12px;border-radius:6px;cursor:pointer;
+    font-size:14px;line-height:1.3;color:var(--text-secondary,#5B534E);
+  }
+  .busca__menu li:hover{background:var(--bg-secondary,#FBF9F7);color:var(--text-primary,#2B2320)}
+  /* Medido na referência: o item ativo é ~10% mais escuro que o painel. --bg-secondary dava
+     4 níveis de diferença, invisível; --bg-tertiary dá 16. */
+  .busca__menu li[data-ativo="sim"]{
+    background:var(--bg-tertiary,#EFEAE6);color:var(--text-primary,#2B2320);font-weight:500;
+  }
+  .busca__menu li .conta{font-size:11.5px;color:var(--text-placeholder,#B8AFA9);font-variant-numeric:tabular-nums}
+  .busca__menu li .check{width:15px;height:15px;flex:none;opacity:0;color:var(--text-primary,#2B2320)}
+  .busca__menu li[data-ativo="sim"] .check{opacity:1}
+
+  /* -------------------------------------------------------------- telas baixas */
+  @media(max-height:640px){
+    .busca{margin-top:20px}
+    .busca__corpo{max-height:52vh}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .busca__filtro svg{transition:none}
+  }
+</style>
+
+<script>
+  const encontrado = document.getElementById("busca") as HTMLDialogElement | null;
+  if (encontrado) {
+    // Alias não-nulo: dentro do bloco o TypeScript perde o estreitamento de `encontrado`
+    // ao entrar em funções declaradas, porque elas podem ser chamadas em qualquer momento.
+    const dialogo: HTMLDialogElement = encontrado;
+    const campo = document.getElementById("busca-campo") as HTMLInputElement;
+    const lista = document.getElementById("busca-resultados") as HTMLUListElement;
+    const vazio = document.getElementById("busca-vazio") as HTMLParagraphElement;
+    const corpo = document.getElementById("busca-corpo") as HTMLDivElement;
+    const contagem = document.getElementById("busca-contagem") as HTMLSpanElement;
+    const botaoFiltro = document.getElementById("busca-filtro") as HTMLButtonElement;
+    const nomeFiltro = document.getElementById("busca-filtro-nome") as HTMLSpanElement;
+    const menu = document.getElementById("busca-menu") as HTMLUListElement;
+    const fechar = document.getElementById("busca-fechar") as HTMLButtonElement;
+
+    type Item = { tipo: string; titulo: string; url: string; grupo: string; resumo: string; busca: string; data?: string };
+    let itens: Item[] = [];
+    let grupos: { nome: string; total: number }[] = [];
+    let filtro = "";          // "" = tudo
+    let selecionado = -1;
+    let carregando = false;
+
+    const semAcento = (t: string) =>
+      t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+    async function carregarIndice() {
+      if (itens.length || carregando) return;
+      carregando = true;
+      try {
+        const r = await fetch("/busca.json");
+        const d = await r.json();
+        itens = d.itens;
+        grupos = d.grupos;
+        montarMenu();
+      } catch {
+        vazio.textContent = "Não foi possível carregar a busca. Recarregue a página e tente de novo.";
+        vazio.hidden = false;
+      } finally {
+        carregando = false;
+      }
+    }
+
+    function montarMenu() {
+      menu.replaceChildren();
+      const opcoes = [{ nome: "Tudo", total: itens.length, valor: "" },
+                      ...grupos.map((g) => ({ nome: g.nome, total: g.total, valor: g.nome }))];
+      for (const o of opcoes) {
+        const li = document.createElement("li");
+        li.setAttribute("role", "option");
+        li.dataset.valor = o.valor;
+        li.dataset.ativo = o.valor === filtro ? "sim" : "nao";
+        li.setAttribute("aria-selected", String(o.valor === filtro));
+
+        const nome = document.createElement("span");
+        nome.textContent = o.nome;
+
+        const dir = document.createElement("span");
+        dir.style.display = "inline-flex";
+        dir.style.alignItems = "center";
+        dir.style.gap = "8px";
+        const conta = document.createElement("span");
+        conta.className = "conta";
+        conta.textContent = String(o.total);
+        const check = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        check.setAttribute("class", "check");
+        check.setAttribute("viewBox", "0 0 24 24");
+        check.setAttribute("fill", "none");
+        check.setAttribute("stroke", "currentColor");
+        check.setAttribute("stroke-width", "2.5");
+        check.setAttribute("stroke-linecap", "round");
+        check.setAttribute("stroke-linejoin", "round");
+        const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        p.setAttribute("d", "M20 6 9 17l-5-5");
+        check.appendChild(p);
+        dir.append(conta, check);
+
+        li.append(nome, dir);
+        li.addEventListener("click", () => {
+          filtro = o.valor;
+          nomeFiltro.textContent = o.nome;
+          abrirMenu(false);
+          montarMenu();
+          filtrar();
+          campo.focus();
+        });
+        menu.appendChild(li);
+      }
+    }
+
+    /** Monta o título com o trecho encontrado em <mark>, sem innerHTML. */
+    function tituloMarcado(texto: string, termo: string): HTMLElement {
+      const span = document.createElement("span");
+      span.className = "busca__titulo";
+      if (!termo) { span.textContent = texto; return span; }
+      const i = semAcento(texto).indexOf(termo);
+      if (i < 0) { span.textContent = texto; return span; }
+      span.append(
+        document.createTextNode(texto.slice(0, i)),
+        Object.assign(document.createElement("mark"), { textContent: texto.slice(i, i + termo.length) }),
+        document.createTextNode(texto.slice(i + termo.length)),
+      );
+      return span;
+    }
+
+    /** Desenho do ícone, por tipo. Os dois vivem no catálogo (Icone.astro) e são copiados
+     *  aqui como markup porque este script monta os nós no DOM, sem passar por componente. */
+    const DESENHO: Record<string, string> = {
+      pagina: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 9v11"/>',
+      artigo: '<path d="M6 3h9l3 3v15H6z"/><path d="M9 9h6M9 13h6M9 17h4"/>',
+    };
+
+    function icone(tipo: string): SVGSVGElement {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("viewBox", "0 0 24 24");
+      svg.setAttribute("fill", "none");
+      svg.setAttribute("stroke", "currentColor");
+      svg.setAttribute("stroke-width", "1.8");
+      svg.setAttribute("stroke-linecap", "round");
+      svg.setAttribute("stroke-linejoin", "round");
+      svg.setAttribute("aria-hidden", "true");
+      // markup fixo, escrito aqui — nunca conteúdo vindo do índice
+      svg.innerHTML = DESENHO[tipo] ?? DESENHO.pagina;
+      return svg;
+    }
+
+    function filtrar() {
+      const termo = semAcento(campo.value.trim());
+      selecionado = -1;
+      lista.replaceChildren();
+
+      // Sem termo e sem filtro, a faixa do meio nem existe: a caixa fica só campo e rodapé.
+      if (!termo && !filtro) {
+        vazio.hidden = true;
+        corpo.hidden = true;
+        contagem.textContent = "";
+        campo.setAttribute("aria-expanded", "false");
+        return;
+      }
+      corpo.hidden = false;
+
+      const achados = itens
+        .filter((i) => (!filtro || i.grupo === filtro) && (!termo || i.busca.includes(termo)));
+      const mostrados = achados.slice(0, 60);
+
+      campo.setAttribute("aria-expanded", String(mostrados.length > 0));
+      contagem.textContent = achados.length
+        ? `${achados.length} ${achados.length === 1 ? "resultado" : "resultados"}`
+        : "";
+
+      if (!mostrados.length) {
+        vazio.textContent = "Nenhum resultado encontrado";
+        vazio.hidden = false;
+        return;
+      }
+      vazio.hidden = true;
+
+      // AGRUPAMENTO: os resultados saem organizados por categoria, com um cabeçalho por
+      // grupo. Com 172 itens indexados e buscas curtas trazendo 20 ou 30 achados, uma lista
+      // corrida obriga a ler tudo para entender o que é página e o que é artigo. Agrupado,
+      // a pessoa salta direto para a seção que interessa.
+      //
+      // A ordem dos grupos é a de PRIMEIRA APARIÇÃO no índice, que já põe as páginas do site
+      // antes dos artigos — quem busca "contato" quer a página, não um texto que a cite.
+      const porGrupo = new Map<string, typeof mostrados>();
+      for (const item of mostrados) {
+        const atual = porGrupo.get(item.grupo);
+        if (atual) atual.push(item);
+        else porGrupo.set(item.grupo, [item]);
+      }
+
+      let n = 0;
+      for (const [grupo, doGrupo] of porGrupo) {
+        // O cabeçalho é presentation: sem isso o leitor de tela anunciaria "13 opções" numa
+        // lista que na verdade tem 10 resultados e 3 títulos de seção.
+        const cab = document.createElement("li");
+        cab.setAttribute("role", "presentation");
+        const h = document.createElement("div");
+        h.className = "busca__grupo-titulo";
+        h.textContent = grupo;
+        cab.appendChild(h);
+        lista.appendChild(cab);
+
+        for (const item of doGrupo) {
+          const li = document.createElement("li");
+          li.id = `busca-item-${n++}`;
+          li.setAttribute("role", "option");
+          li.setAttribute("aria-selected", "false");
+
+          const a = document.createElement("a");
+          a.href = item.url;
+
+          const quadro = document.createElement("span");
+          quadro.className = "busca__icone";
+          quadro.appendChild(icone(item.tipo));
+
+          const enter = document.createElement("span");
+          enter.className = "busca__enter";
+          enter.textContent = "↵ Enter";
+
+          a.append(quadro, tituloMarcado(item.titulo, termo), enter);
+          li.appendChild(a);
+          lista.appendChild(li);
+        }
+      }
+
+      corpo.scrollTop = 0;
+    }
+
+    function mover(passo: number) {
+      // só os itens navegáveis: os cabeçalhos de grupo entram na lista como role=presentation
+      const itensLi = [...lista.querySelectorAll('li[role="option"]')] as HTMLLIElement[];
+      if (!itensLi.length) return;
+      if (selecionado >= 0) {
+        itensLi[selecionado].dataset.sel = "nao";
+        itensLi[selecionado].setAttribute("aria-selected", "false");
+      }
+      selecionado = (selecionado + passo + itensLi.length) % itensLi.length;
+      const atual = itensLi[selecionado];
+      atual.dataset.sel = "sim";
+      atual.setAttribute("aria-selected", "true");
+      campo.setAttribute("aria-activedescendant", atual.id);
+      atual.scrollIntoView({ block: "nearest" });   // rola dentro de .busca__corpo
+    }
+
+    function abrirMenu(v: boolean) {
+      menu.hidden = !v;
+      botaoFiltro.setAttribute("aria-expanded", String(v));
+    }
+
+    /** A mesma medida do CSS que esconde o pill do header, onde vive a lupa. Abaixo dela não
+     *  há gatilho visível, e abrir por atalho deixaria o visitante numa interface sem saída
+     *  óbvia. */
+    const ehDesktop = () => window.matchMedia("(min-width: 881px)").matches;
+
+    function abrir() {
+      if (!ehDesktop() || dialogo.open) return;
+      dialogo.showModal();
+      carregarIndice();
+      campo.value = "";
+      filtrar();
+      campo.focus();
+    }
+
+    // --- gatilhos -----------------------------------------------------------
+    document.querySelectorAll('[aria-label="Buscar"]').forEach((b) =>
+      b.addEventListener("click", (e) => { e.preventDefault(); abrir(); }),
+    );
+
+    // o campo da página de blog não busca sozinho: abre esta mesma sobreposição, para não
+    // existirem duas buscas com comportamentos diferentes no mesmo site
+    const campoIndice = document.getElementById("busca-indice") as HTMLInputElement | null;
+    if (campoIndice) {
+      const abrirDoIndice = (e: Event) => { e.preventDefault(); campoIndice.blur(); abrir(); };
+      campoIndice.addEventListener("focus", abrirDoIndice);
+      campoIndice.addEventListener("click", abrirDoIndice);
+      campoIndice.closest("form")?.addEventListener("submit", abrirDoIndice);
+    }
+
+    fechar.addEventListener("click", () => dialogo.close());
+    botaoFiltro.addEventListener("click", () => abrirMenu(menu.hidden === true));
+
+    campo.addEventListener("input", filtrar);
+
+    campo.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") { e.preventDefault(); mover(1); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); mover(-1); }
+      else if (e.key === "Enter") {
+        const alvo = lista.querySelectorAll('li[role="option"]')[selecionado] as HTMLLIElement | undefined;
+        const link = alvo?.querySelector("a");
+        if (link) { e.preventDefault(); window.location.href = link.getAttribute("href")!; }
+      }
+    });
+
+    // clique fora fecha: no <dialog>, o clique no backdrop chega como clique no próprio dialog
+    dialogo.addEventListener("click", (e) => {
+      if (e.target === dialogo) dialogo.close();
+      if (!menu.hidden && !menu.contains(e.target as Node) && e.target !== botaoFiltro) abrirMenu(false);
+    });
+    dialogo.addEventListener("close", () => abrirMenu(false));
+
+    window.addEventListener("resize", () => {
+      if (dialogo.open && !ehDesktop()) dialogo.close();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      const alvo = e.target as HTMLElement;
+      const digitando = alvo?.closest("input, textarea, select, [contenteditable]");
+      if ((e.key === "k" || e.key === "K") && (e.ctrlKey || e.metaKey)) { e.preventDefault(); abrir(); }
+      else if (e.key === "/" && !digitando && !dialogo.open) { e.preventDefault(); abrir(); }
+    });
+  }
+</script>

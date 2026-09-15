@@ -1,0 +1,38 @@
+---
+// Pagina: Contabilidade Beorange
+// Fonte da verdade: HTML oficial do designer (beorange-contabilidade_1.html).
+// O CSS do prototipo entra VERBATIM via src/styles/prototype-contabilidade.css.
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-contabilidade.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import HeroContabilidade from "../../components/elements/HeroContabilidade.astro";
+import ProblemaContabilidade from "../../components/elements/ProblemaContabilidade.astro";
+import SeisFrentes from "../../components/elements/SeisFrentes.astro";
+import LeituraNumeros from "../../components/elements/LeituraNumeros.astro";
+import EspecialidadeTributaria from "../../components/elements/EspecialidadeTributaria.astro";
+import ContaBeorangeCta from "../../components/elements/ContaBeorangeCta.astro";
+import DiagnosticoEntrada from "../../components/elements/DiagnosticoEntrada.astro";
+import Footer from "../../components/elements/Footer.astro";
+---
+<Layout
+  title="Contabilidade Beorange | Contabilidade consultiva para empresas em crescimento"
+  description="Contábil, fiscal, DP, tributário, societário e assessoria recorrente em uma estrutura só. Profundidade em Lucro Real e preparação para IBS e CBS."
+>
+<Header ativo="solucoes" />
+<MobileMenu />
+<HeroContabilidade />
+<ProblemaContabilidade />
+<SeisFrentes />
+<LeituraNumeros />
+<EspecialidadeTributaria />
+<ContaBeorangeCta
+    titulo="A contabilidade fica mais precisa quando a operação financeira está no mesmo ambiente"
+    texto="Quando a empresa usa a Conta Beorange, o dado é categorizado na origem e chega à contabilidade sem importação sucessiva. Menos conciliação manual, menos divergência e relatórios mais atualizados. A contabilidade funciona sem isso. Funciona melhor com isso."
+    cta={{ texto: "Conhecer a Conta Beorange", href: "/conta-beorange/" }}
+  />
+<DiagnosticoEntrada />
+<Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

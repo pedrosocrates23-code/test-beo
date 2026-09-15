@@ -1,0 +1,64 @@
+---
+// Página de solução: Contabilidade Beorange — Societário.
+// Estrutura: "Proposta de textos", PÁGINA 8 (modelo de 6 dobras).
+// Conteúdo: "Estrutura de Produtos beorange", seção 2.5. Texto literal, sem acréscimo.
+//
+// A dobra 2 (O problema) não é renderizada: o documento de tom só escreve esse texto
+// para a frente Tributário. Ver a pendência desta URL na planilha de status.
+import PaginaSolucao from "../../../components/elements/PaginaSolucao.astro";
+---
+<PaginaSolucao
+  metaTitle="Societário | Contabilidade Beorange"
+  metaDescription="Estrutura jurídica alinhada ao modelo de negócio e ao crescimento."
+  produto="Contabilidade Beorange"
+  produtoHref="/contabilidade-beorange/"
+  frente="Societário"
+  titulo="Estrutura jurídica alinhada ao modelo de negócio e ao crescimento."
+  lead="A área societária cuida da constituição, alteração, regularização e reorganização das empresas, conectando os atos societários à realidade operacional, contábil e tributária do negócio. O trabalho não começa apenas na execução de um protocolo: todo cliente que entra na beorange passa por um diagnóstico societário para "
+  ctaPrimario="Solicitar diagnóstico"
+  escopoTitulo="O que está incluído"
+  escopo={[
+    { rotulo: "Diagnóstico societário de entrada", itens: [
+      "No diagnóstico, a beorange avalia se:",
+      "As atividades registradas refletem o que a empresa realmente executa",
+      "O tipo societário continua adequado",
+      "O quadro societário e a distribuição de capital estão atualizados",
+      "Os estabelecimentos e endereços estão corretamente registrados",
+      "A estrutura comporta novas unidades, produtos ou fontes de receita",
+      "Existem riscos ou inconsistências cadastrais",
+    ] },
+    { rotulo: "Escopo", itens: [
+      "Abertura de empresas",
+      "Alterações contratuais",
+      "Encerramento e baixa",
+      "Transformação societária",
+      "Incorporação, cisão e fusão",
+      "Reorganizações societárias",
+      "Constituição e estruturação de holdings",
+      "Entrada e saída de sócios",
+      "Alteração de capital social",
+      "Mudança de atividades econômicas",
+      "Mudança de endereço, município ou estado",
+      "Abertura e encerramento de filiais",
+      "Registro de atas e deliberações",
+      "Regularizações cadastrais",
+      "Atualizações perante Junta Comercial, Receita Federal, Estado e prefeituras",
+      "Regularizações perante órgãos de classe",
+    ] },
+  ]}
+  atuacao={{ titulo: "Forma de atuação", texto: "A beorange conduz o processo de ponta a ponta, desde o levantamento das informações e definição da estrutura até os protocolos, pagamentos de taxas, acompanhamento e conclusão. Nos casos que exigem aprofundamento jurídico, atua de forma integrada com o jurídico: a beorange organiza a estrutura técnica, contábil e tributária, enquanto o jurídico lapida os instrumentos e reforça a segurança legal." }}
+  beneficios={{ itens: [
+    "Agilidade na condução dos processos",
+    "Segurança técnica e documental",
+    "Menos burocracia para o cliente",
+    "Centralização de protocolos e pagamentos",
+    "Integração entre societário, contabilidade e tributário",
+    "Estrutura compatível com o modelo de negócio",
+    "Redução de riscos cadastrais e operacionais",
+  ] }}
+  irmas={[
+    { titulo: "Contábil", texto: "Informação contábil completa, confiável e útil para a gestão.", href: "/contabilidade-beorange/contabil/" },
+    { titulo: "Fiscal", texto: "Apuração, escrituração e cumprimento das obrigações fiscais.", href: "/contabilidade-beorange/fiscal/" },
+    { titulo: "Departamento Pessoal", texto: "Operação trabalhista e previdenciária organizada, digital e acompanhada.", href: "/contabilidade-beorange/departamento-pessoal/" },
+  ]}
+/>

@@ -1,0 +1,105 @@
+---
+// Elemento: assinatura de conteúdo (a "newsletter" que não é semanal).
+//
+// O documento é explícito: "este bloco fecha a página [do blog] e também aparece no fim de
+// cada artigo. Componente único, dois lugares." Daí ele existir aqui em vez de estar escrito
+// duas vezes — e daí também a saída secundária para diagnóstico, que é o caminho de quem
+// chegou ao fim do texto e quer análise da própria operação, não mais leitura.
+//
+// A promessa do texto padrão é de frequência por EVENTO, não por calendário ("sem envio
+// semanal por obrigação"). Se o time passar a mandar boletim semanal, é este texto que passa
+// a mentir — troque a prop antes de mudar a régua de envio.
+//
+// AINDA NÃO CONECTADO: como os demais formulários do protótipo, o envio só limpa e avisa.
+// Ao ligar de verdade, lembre que e-mail corporativo é dado pessoal — precisa de base legal
+// declarada e de um cancelamento que funcione de verdade, não só da frase abaixo do botão.
+interface Props {
+  titulo?: string;
+  texto?: string;
+  rotuloNome?: string;
+  rotuloEmail?: string;
+  botao?: string;
+  ressalva?: string;
+  /** Saída alternativa, para quem quer análise e não conteúdo. */
+  alternativa?: { pergunta: string; texto: string; href: string };
+  onSubmit?: string;
+}
+
+const {
+  titulo = "Receba o que muda antes que vire obrigação",
+  texto = "Um e-mail quando houver mudança relevante em Lucro Real, na Reforma Tributária ou nas obrigações que afetam empresas em crescimento. Sem envio semanal por obrigação de calendário.",
+  rotuloNome = "Nome",
+  rotuloEmail = "E-mail corporativo",
+  botao = "Quero receber",
+  ressalva = "Você pode cancelar a qualquer momento.",
+  alternativa = {
+    pergunta: "Precisa de análise da sua operação, e não de conteúdo geral?",
+    texto: "Solicitar diagnóstico",
+    href: "/contato/",
+  },
+  onSubmit = "event.preventDefault();this.reset();alert('Protótipo — assinatura ainda não conectada.');",
+} = Astro.props;
+---
+<section class="assina">
+  <div class="wrap assina__inner">
+    <div class="assina__texto">
+      <h2>{titulo}</h2>
+      <p>{texto}</p>
+    </div>
+    <div class="assina__form">
+      <form onsubmit={onSubmit}>
+        <div class="assina__campos">
+          <div class="field">
+            <label for="assina-nome">{rotuloNome}</label>
+            <input id="assina-nome" type="text" name="nome" autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="assina-email">{rotuloEmail}</label>
+            <input id="assina-email" type="email" name="email" autocomplete="email" required />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">{botao}</button>
+        {ressalva && <p class="assina__ressalva">{ressalva}</p>}
+      </form>
+    </div>
+  </div>
+  {alternativa && (
+    <div class="wrap">
+      <p class="assina__alternativa">
+        {alternativa.pergunta} <a href={alternativa.href}>{alternativa.texto}</a>
+      </p>
+    </div>
+  )}
+</section>
+
+<style>
+  .assina{padding:84px 0;background:var(--bg-secondary,#FBF9F7);border-top:1px solid var(--border-subtle,#EFEAE6)}
+  .assina__inner{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+  .assina__texto h2{margin:0;font-size:clamp(24px,2.9vw,35px);font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--text-primary,#2B2320)}
+  .assina__texto p{margin:16px 0 0;font-size:16.5px;line-height:1.65;color:var(--text-secondary,#5B534E)}
+
+  .assina__campos{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+  .assina__form .field{display:flex;flex-direction:column;gap:6px}
+  .assina__form label{font-size:13px;font-weight:500;color:var(--text-secondary,#5B534E)}
+  .assina__form input{
+    padding:12px 14px;border:1px solid var(--border-default,#DDD5CE);border-radius:var(--radius-md,12px);
+    font:400 15px var(--f,'Outfit',sans-serif);color:var(--text-primary,#2B2320);background:#fff;
+  }
+  .assina__form input:focus-visible{outline:2px solid var(--action-primary,#F5380F);outline-offset:1px;border-color:transparent}
+  .assina__ressalva{margin:12px 0 0;font-size:12.5px;color:var(--text-tertiary,#948B85)}
+
+  .assina__alternativa{
+    margin:40px 0 0;padding-top:24px;border-top:1px solid var(--border-subtle,#EFEAE6);
+    font-size:15px;color:var(--text-secondary,#5B534E);
+  }
+  .assina__alternativa a{color:var(--text-brand,#F5380F);font-weight:600}
+
+  @media(max-width:880px){
+    .assina__inner{grid-template-columns:1fr;gap:28px}
+  }
+  @media(max-width:680px){
+    .assina{padding:56px 0}
+    .assina__campos{grid-template-columns:1fr}
+    .assina__form .btn{width:100%;justify-content:center}
+  }
+</style>

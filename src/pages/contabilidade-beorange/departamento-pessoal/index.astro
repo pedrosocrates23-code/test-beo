@@ -1,0 +1,46 @@
+---
+// Página de solução: Contabilidade Beorange — Departamento Pessoal.
+// Estrutura: "Proposta de textos", PÁGINA 8 (modelo de 6 dobras).
+// Conteúdo: "Estrutura de Produtos beorange", seção 2.3. Texto literal, sem acréscimo.
+//
+// A dobra 2 (O problema) não é renderizada: o documento de tom só escreve esse texto
+// para a frente Tributário. Ver a pendência desta URL na planilha de status.
+import PaginaSolucao from "../../../components/elements/PaginaSolucao.astro";
+---
+<PaginaSolucao
+  metaTitle="Departamento Pessoal | Contabilidade Beorange"
+  metaDescription="Operação trabalhista e previdenciária organizada, digital e acompanhada."
+  produto="Contabilidade Beorange"
+  produtoHref="/contabilidade-beorange/"
+  frente="Departamento Pessoal"
+  titulo="Operação trabalhista e previdenciária organizada, digital e acompanhada."
+  lead="O Departamento Pessoal assume a operação trabalhista e previdenciária da empresa, desde a entrada do colaborador até os processos de folha, férias, encargos e desligamento. O trabalho combina processamento, controle, orientação e suporte ao cliente."
+  ctaPrimario="Solicitar diagnóstico"
+  escopoTitulo="O que está incluído"
+  escopo={[
+    { rotulo: "Escopo", itens: [
+      "Admissões, demissões e alterações cadastrais",
+      "Folha de pagamento de colaboradores e pró-labore",
+      "Férias e 13º salário",
+      "Rescisões e documentos relacionados",
+      "Encargos sociais, incluindo FGTS, INSS e IRRF",
+      "eSocial, DCTFWeb e demais obrigações trabalhistas e previdenciárias aplicáveis",
+      "Orientações sobre legislação trabalhista e previdenciária",
+      "Consultoria sobre convenções coletivas",
+      "Controle e acompanhamento de férias",
+      "Envio automatizado de holerites",
+      "Processos digitais e suporte pela plataforma",
+    ] },
+  ]}
+  beneficios={{ itens: [
+    "Mais organização e previsibilidade",
+    "Redução de falhas trabalhistas",
+    "Maior segurança no processamento da folha",
+    "Centralização das informações dos colaboradores",
+  ] }}
+  irmas={[
+    { titulo: "Contábil", texto: "Informação contábil completa, confiável e útil para a gestão.", href: "/contabilidade-beorange/contabil/" },
+    { titulo: "Fiscal", texto: "Apuração, escrituração e cumprimento das obrigações fiscais.", href: "/contabilidade-beorange/fiscal/" },
+    { titulo: "Tributário", texto: "Estratégia tributária construída a partir da realidade da operação.", href: "/contabilidade-beorange/tributario/" },
+  ]}
+/>

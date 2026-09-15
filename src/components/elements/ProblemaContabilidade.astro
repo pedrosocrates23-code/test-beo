@@ -1,0 +1,53 @@
+---
+// Elemento: Dobra 2 da página Contabilidade — O PROBLEMA.
+// Fonte da verdade: Figma nó 47:242. O texto, o grid 2x2 de cards e o bloco de destaque já
+// vinham fiéis do HTML do designer (medidos: .sec-head 54ch = 566,8px contra 566,78px do nó
+// 47:197; grid de 534+16+534 = os 1084 do container). O que faltava era a foto de fundo
+// (nó 70:2188, "image 8"), aplicada pela classe .problema em prototype-contabilidade.css.
+//
+// Enumera sintomas antes de oferecer a solução — os cards são a dor que o leitor reconhece.
+// A classe .problema é o que traz a foto de fundo; tirando-a, a seção funciona sobre branco.
+import Icone from "./Icone.astro";
+
+interface Props {
+  titulo?: string;
+  intro?: string;
+  /** Rótulo acima da grade de sintomas. Omita para a grade vir logo após o texto. */
+  subtitulo?: string;
+  /** Sintomas, dois por linha no desktop. Prefira números pares para a grade fechar. */
+  problemas?: string[];
+  /** Frase de virada, com a barrinha laranja. É a ponte para a próxima seção. */
+  destaque?: string;
+  /** Traz a foto de fundo. Passe false para a seção ficar só sobre o branco da página. */
+  comFoto?: boolean;
+}
+
+const {
+  titulo = "A contabilidade que só olha para trás não sustenta uma empresa que cresce",
+  intro = "Quando o volume aumenta, aumentam as obrigações, os riscos tributários e a necessidade de informação. Muitas empresas chegam nesse ponto com processos fragmentados, controles manuais e uma contabilidade que atua depois que tudo já aconteceu. O resultado é previsível: decisão tomada no escuro e imposto pago sem revisão.",
+  subtitulo,
+  problemas = [
+    "O balanço só fica pronto meses depois do fechamento",
+    "Fiscal, contábil e financeiro apresentam números diferentes",
+    "Nenhuma revisão de crédito tributário foi feita nos últimos 12 meses",
+    "A estrutura societária é a mesma de quando a empresa faturava um décimo",
+  ],
+  destaque = "Contabilidade sem leitura é registro. Registro não muda decisão.",
+  comFoto = true,
+} = Astro.props;
+---
+<section class:list={{ problema: comFoto }}>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>{titulo}</h2>
+      {intro && <p>{intro}</p>}
+    </div>
+    {subtitulo && <div class="an-sub-h rv">{subtitulo}</div>}
+    <div class="prob-grid rv">
+      {problemas.map((p) => (
+        <div class="prob"><span class="x"><Icone nome="x" /></span><span>{p}</span></div>
+      ))}
+    </div>
+    {destaque && <p class="destaque rv"><span class="bar"></span>{destaque}</p>}
+  </div>
+</section>

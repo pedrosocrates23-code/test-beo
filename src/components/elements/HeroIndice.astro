@@ -1,0 +1,73 @@
+---
+// Elemento: abertura de página de listagem (blog, cases, imprensa).
+//
+// Diferente dos heros de produto: sem foto, sem botão, fundo claro. O documento é explícito
+// sobre o porquê no caso do blog — "sem banner de destaque com imagem genérica: o conteúdo é
+// o produto desta página". Uma foto de banco de imagens aqui empurraria os artigos para
+// baixo da dobra sem acrescentar nada.
+//
+// Estilo próprio em <style> scoped, e não no prototype-*.css, porque esta peça não existe no
+// HTML do designer: nasceu da documentação de texto. Assim ela funciona em qualquer página,
+// independente de qual protótipo de CSS a página carrega.
+interface Props {
+  titulo: string;
+  lead?: string;
+  /** Campo de busca. Passe o texto interno para exibi-lo; omita para não renderizar. */
+  buscaPlaceholder?: string;
+  /** Rótulo do botão de busca, para leitor de tela. */
+  buscaRotulo?: string;
+}
+
+const { titulo, lead, buscaPlaceholder, buscaRotulo = "Buscar" } = Astro.props;
+---
+<section class="indice">
+  <div class="wrap">
+    <h1 class="indice__titulo">{titulo}</h1>
+    {lead && <p class="indice__lead">{lead}</p>}
+    {buscaPlaceholder && (
+      <form class="indice__busca" role="search" onsubmit="event.preventDefault();">
+        <label class="indice__busca-rotulo" for="busca-indice">{buscaRotulo}</label>
+        <input id="busca-indice" type="search" name="q" placeholder={buscaPlaceholder} autocomplete="off" />
+        <button type="submit" class="btn btn-primary">{buscaRotulo}</button>
+      </form>
+    )}
+  </div>
+</section>
+
+<style>
+  /* O recuo do topo cobre o header fixo, como o .article faz nas páginas de artigo. */
+  .indice{padding:150px 0 44px;background:var(--bg-primary,#fff)}
+  .indice__titulo{
+    max-width:22ch;margin:0;
+    font-size:clamp(30px,4.2vw,46px);font-weight:700;line-height:1.08;letter-spacing:-.025em;
+    color:var(--text-primary,#2B2320);
+  }
+  .indice__lead{
+    max-width:62ch;margin:20px 0 0;
+    font-size:18px;line-height:1.6;color:var(--text-secondary,#5B534E);
+  }
+
+  .indice__busca{display:flex;gap:10px;margin-top:32px;max-width:560px}
+  /* O rótulo fica fora da tela, não ausente: o placeholder some assim que a pessoa digita,
+     e um campo sem nome acessível deixa de ser anunciado por leitor de tela. */
+  .indice__busca-rotulo{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+  }
+  .indice__busca input{
+    flex:1;min-width:0;
+    padding:13px 16px;border:1px solid var(--border-default,#DDD5CE);border-radius:var(--radius-md,12px);
+    font:400 15.5px var(--f,'Outfit',sans-serif);color:var(--text-primary,#2B2320);background:#fff;
+  }
+  .indice__busca input::placeholder{color:var(--text-placeholder,#B8AFA9)}
+  .indice__busca input:focus-visible{outline:2px solid var(--action-primary,#F5380F);outline-offset:1px;border-color:transparent}
+
+  /* O campo abre a sobreposição de busca, que é recurso de desktop. Abaixo de 881px ele
+     sairia do ar ao ser tocado, ou pior, ficaria inerte — um campo que não busca nada. */
+  @media(max-width:880px){
+    .indice__busca{display:none}
+  }
+  @media(max-width:680px){
+    .indice{padding:120px 0 32px}
+  }
+</style>

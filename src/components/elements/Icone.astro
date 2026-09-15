@@ -1,0 +1,68 @@
+---
+// Catálogo de ícones do site — a peça que faltava no design system.
+//
+// Todos vieram dos SVGs inline do HTML do designer, sem redesenho: o que mudou é que
+// deixaram de estar copiados dezenas de vezes pelas seções. Assim um ajuste de traço ou de
+// forma acontece num lugar só, e uma seção nova não precisa inventar o próprio desenho.
+//
+// Duas decisões que parecem detalhe e não são:
+//
+// 1. O desenho é guardado como MARKUP em ordem, não como lista de paths com as outras formas
+//    à parte. Num SVG a ordem dos filhos é a ordem de pintura, e ela varia de ícone para
+//    ícone — em "tributario" a linha vem antes dos dois círculos, em "busca" o círculo vem
+//    antes da linha. Separar path de circle reordenava o desenho.
+//
+// 2. A espessura é por ícone porque no HTML original ela também era. Os ícones de ação usam
+//    2.5, os de ilustração das seis frentes 1.9, e o X dos cards de problema não declarava
+//    stroke-width nenhum — valia o padrão do SVG, que é 1. Uniformizar isso engrossaria o X.
+//
+// fill e stroke ficam no <svg> como "none" e "currentColor", que é o que a maioria dos
+// originais trazia. Onde o CSS já manda (.frente .ic svg define fill e stroke, por exemplo),
+// o CSS vence o atributo e nada muda.
+export type NomeIcone =
+  | "seta-direita" | "seta-baixo" | "check" | "x" | "chevron-baixo" | "busca"
+  | "contabil" | "fiscal" | "departamento-pessoal" | "tributario" | "societario" | "assessoria"
+  | "pagina" | "artigo";
+
+interface Props {
+  nome: NomeIcone;
+  /** Classe do <svg>. O tamanho vem do CSS de quem usa, não de atributos aqui. */
+  class?: string;
+  /** Sobrescreve a espessura do ícone. */
+  traco?: number;
+}
+
+const { nome, class: classe, traco } = Astro.props;
+
+const CATALOGO: Record<NomeIcone, { markup: string; traco: number }> = {
+  "seta-direita":         { markup: '<path d="M5 12h14M13 6l6 6-6 6"/>', traco: 2.5 },
+  "seta-baixo":           { markup: '<path d="M12 5v14M6 13l6 6 6-6"/>', traco: 2.5 },
+  "check":                { markup: '<path d="M20 6 9 17l-5-5"/>', traco: 2.5 },
+  "x":                    { markup: '<path d="M18 6 6 18M6 6l12 12"/>', traco: 1 },
+  "chevron-baixo":        { markup: '<path d="M6 9l6 6 6-6"/>', traco: 2.5 },
+  "busca":                { markup: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/>', traco: 2 },
+  "contabil":             { markup: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M8 13h6M8 16h4"/>', traco: 1.9 },
+  "fiscal":               { markup: '<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>', traco: 1.9 },
+  "departamento-pessoal": { markup: '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5"/><path d="M16 5a3 3 0 010 6"/>', traco: 1.9 },
+  "tributario":           { markup: '<path d="M19 5 5 19"/><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/>', traco: 1.9 },
+  "societario":           { markup: '<path d="M5 21V4h9v17"/><path d="M14 9h5v12"/><path d="M8 8h3M8 12h3M8 16h3"/>', traco: 1.9 },
+  "assessoria":           { markup: '<path d="M4 5h16v11H9l-4 4z"/><path d="M8 9h8M8 12h5"/>', traco: 1.9 },
+  // Os dois abaixo nasceram na busca: distinguem, de relance, uma página do site de um texto
+  // do blog. Traço 1.8 porque aparecem pequenos, dentro de um quadro de 30px.
+  "pagina":               { markup: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 9v11"/>', traco: 1.8 },
+  "artigo":               { markup: '<path d="M6 3h9l3 3v15H6z"/><path d="M9 9h6M9 13h6M9 17h4"/>', traco: 1.8 },
+};
+
+const icone = CATALOGO[nome];
+const espessura = traco ?? icone.traco;
+---
+<svg
+  class={classe}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={espessura}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+><Fragment set:html={icone.markup} /></svg>

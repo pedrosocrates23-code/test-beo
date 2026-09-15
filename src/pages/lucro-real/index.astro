@@ -1,0 +1,156 @@
+---
+// Página: Lucro Real e estratégia tributária.
+// Fonte do texto: "Proposta de textos — páginas do novo site", PÁGINA 11, dobra por dobra.
+// Nenhuma linha foi reescrita: o documento entrega o texto pronto e é ele que está aqui.
+// Duas adaptações de FORMA, sem mudar palavra:
+//   - a dobra 4 traz as etapas como "Diagnóstico: levantamento da situação atual…"; aqui o
+//     nome virou o título do cartão e o resto o resumo, com a inicial em maiúscula e ponto
+//     final. O texto é o mesmo, partido em dois campos.
+//   - dobras sem etiqueta no documento recebem eyebrow="" para não inventar rótulo.
+//
+// A página carrega o posicionamento central da marca e pode receber tráfego pago, então
+// mantém o cabeçalho completo do site — a nota do documento é explícita nisso: página sem
+// menu reduz a confiança em venda B2B.
+//
+// Montada só com elementos existentes, sem markup novo: é o teste real da componentização.
+// O CSS é o de página de serviço (prototype-contabilidade.css), o mesmo da Contabilidade.
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-contabilidade.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import HeroContabilidade from "../../components/elements/HeroContabilidade.astro";
+import ProblemaContabilidade from "../../components/elements/ProblemaContabilidade.astro";
+import EspecialidadeTributaria from "../../components/elements/EspecialidadeTributaria.astro";
+import StagesSection from "../../components/elements/StagesSection.astro";
+import SecaoLista from "../../components/elements/SecaoLista.astro";
+import DiagnosticoEntrada from "../../components/elements/DiagnosticoEntrada.astro";
+import Footer from "../../components/elements/Footer.astro";
+---
+<Layout
+  title="Contabilidade para Lucro Real | Estratégia tributária Beorange"
+  description="Revisão de bases, aproveitamento de créditos, recuperação de valores e planejamento tributário para empresas no Lucro Real. Comece por um diagnóstico."
+>
+  <Header ativo="solucoes" />
+  <MobileMenu />
+
+  <!-- DOBRA 1 — Abertura -->
+  <HeroContabilidade
+    eyebrow="Especialidade tributária"
+    titulo="No Lucro Real, contabilidade bem feita é dinheiro que fica na empresa"
+    lead="Revisão de bases, aproveitamento de créditos, identificação de valores recuperáveis e planejamento construído a partir da sua operação. Para empresas que estão no Lucro Real ou que vão migrar para ele."
+    ctaPrimario={{ texto: "Solicitar diagnóstico tributário", href: "#diagnostico" }}
+    ctaSecundario={{ texto: "Ver o escopo completo", href: "#escopo" }}
+  />
+
+  <!-- DOBRA 2 — O problema -->
+  <ProblemaContabilidade
+    titulo="O erro no Lucro Real não gera multa. Gera imposto pago a mais"
+    intro="No Lucro Real, a base tributável nasce da contabilidade. Despesa classificada sem análise de dedutibilidade, crédito de PIS e COFINS não aproveitado e inconsistência entre escrituração e documento fiscal aumentam o que a empresa paga, sem gerar autuação. Ninguém avisa. A conta só chega maior."
+    subtitulo="Onde o dinheiro costuma ficar parado"
+    problemas={[
+      "Créditos de PIS e COFINS não identificados na cadeia de insumos",
+      "Despesas dedutíveis tratadas como indedutíveis por classificação genérica",
+      "Recolhimentos feitos a maior que nunca foram revisados",
+      "Obrigações acessórias entregues com inconsistência que ninguém retificou",
+    ]}
+    destaque="Regime que dá mais trabalho é também o que dá mais margem de correção. Quem não revisa, abre mão dela."
+    comFoto={false}
+  />
+
+  <!-- DOBRA 3 — O que fazemos -->
+  <EspecialidadeTributaria
+    id="escopo"
+    eyebrow="Escopo"
+    titulo="O escopo da atuação no Lucro Real"
+    intro=""
+    cards={[
+      {
+        titulo: "Revisão de bases",
+        itens: [
+          "Revisão das bases de IRPJ, CSLL, PIS e COFINS",
+          "Análise da formação do resultado tributável",
+          "Análise da dedutibilidade das despesas",
+        ],
+      },
+      {
+        titulo: "Créditos",
+        itens: [
+          "Análise e aproveitamento de créditos tributários",
+          "Identificação de recolhimentos indevidos ou a maior",
+          "Recuperação e compensação de créditos",
+        ],
+      },
+      {
+        titulo: "Conformidade",
+        itens: [
+          "Revisão de apurações e obrigações acessórias",
+          "Retificação de obrigações",
+          "Acompanhamento de fiscalizações, notificações e regularizações",
+        ],
+      },
+      {
+        titulo: "Estratégia",
+        itens: [
+          "Planejamento tributário",
+          "Análise tributária de novas operações e modelos de negócio",
+          "Apoio técnico em reorganizações societárias",
+        ],
+      },
+    ]}
+    ressalva=""
+  />
+
+  <!-- DOBRA 4 — Como a análise é feita -->
+  <StagesSection
+    titulo={{ resto: "A análise parte da sua operação, não de uma tese" }}
+    intro="Trabalhamos a partir da contabilidade, dos documentos fiscais, dos contratos, da natureza das receitas, da cadeia de fornecedores e da estrutura operacional da empresa. É esse conjunto que define quais créditos existem, quais despesas são dedutíveis e onde a apuração está inconsistente."
+    estagios={[
+      { rotulo: "ETAPA 01", titulo: "Diagnóstico", resumo: "Levantamento da situação atual com a documentação da própria empresa.", pontos: [] },
+      { rotulo: "ETAPA 02", titulo: "Identificação", resumo: "Inconsistências, riscos e valores potencialmente recuperáveis, com ordem de grandeza.", pontos: [] },
+      { rotulo: "ETAPA 03", titulo: "Apresentação", resumo: "Caminhos possíveis, o que cada um exige e o impacto estimado.", pontos: [] },
+      { rotulo: "ETAPA 04", titulo: "Execução", resumo: "O que for aprovado é executado e acompanhado, incluindo retificações e compensações.", pontos: [], atual: true },
+    ]}
+    destaque="Tese aplicada sem leitura da operação é aposta. A conta de uma aposta errada chega com juros."
+  />
+
+  <!-- DOBRA 5 — Migração de regime -->
+  <SecaoLista
+    titulo="Vai migrar para o Lucro Real? A hora de decidir é antes da virada"
+    texto="A mudança de regime muda a forma de apurar, o que é dedutível, como os créditos funcionam e quanto entra de caixa por mês. Decidir isso em dezembro, sem simulação, é escolher no escuro. No último trimestre do ano, aprofundamos a análise dos clientes que cresceram ou que projetam crescer, justamente para preparar o ciclo seguinte com antecedência."
+    subtitulo="O que a análise de migração cobre"
+    itens={[
+      "Simulação comparativa entre os regimes aplicáveis",
+      "Impacto no caixa e na carga tributária",
+      "Adequação da estrutura societária e operacional",
+      "Margens e projeções de faturamento",
+      "Ajustes necessários na contabilidade e nos processos",
+    ]}
+    cta={{ texto: "Simular a mudança de regime", href: "#diagnostico" }}
+  />
+
+  <!-- DOBRA 6 — Modelo de contratação -->
+  <SecaoLista
+    variante="alternada"
+    titulo="Como esses projetos são contratados"
+    itens={[
+      "A assessoria recorrente está incluída na mensalidade e acompanha as áreas administrativas",
+      "Projetos consultivos específicos, como recuperação de créditos e aplicação de teses tributárias, são contratados à parte",
+      "Quando a estratégia gera economia tributária mensurável, a contratação pode incluir remuneração vinculada à economia efetivamente gerada",
+    ]}
+    ressalva="Nenhuma estratégia é apresentada como resultado garantido antes do diagnóstico. O que o diagnóstico entrega é a dimensão real da oportunidade, com o que ela exige para ser executada."
+  />
+
+  <!-- DOBRA 7 — Chamada para ação -->
+  <DiagnosticoEntrada
+    eyebrow=""
+    titulo="Descubra o que a sua empresa está pagando a mais"
+    texto="O diagnóstico tributário analisa bases, créditos, apurações e obrigações a partir dos seus próprios documentos. No fim dele, você sabe onde há risco, onde há crédito não aproveitado e o que pode ser recuperado."
+    itens={[]}
+    formTitulo="Solicitar diagnóstico tributário"
+    botao="Solicitar diagnóstico tributário"
+  />
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

@@ -1,0 +1,40 @@
+---
+// Página legal: Termos de Uso.
+// Fonte da estrutura: "Proposta de textos — páginas do novo site", PÁGINA 10.
+//
+// SEM TEXTO NORMATIVO. Esta é a única das quatro páginas legais que continua só com a
+// moldura, e o motivo é específico: o guia orientativo da ANPD fornecido como fonte trata de
+// COOKIES E PROTEÇÃO DE DADOS. Termos de uso são outra coisa — condições de acesso ao site e
+// ao portal, propriedade intelectual, responsabilidades, suspensão de acesso, foro. Nada
+// disso está no guia, e escrever por analogia seria inventar cláusula contratual.
+//
+// As outras três páginas (privacidade, cookies e LGPD) já têm texto, porque o guia as
+// sustenta. Esta espera o jurídico da Beorange.
+//
+// Ao preencher, siga o que o documento pede: numeração escrita dentro do título (1, 1.1,
+// 1.1.1) para sobreviver ao copiar e colar, id fixo em cada seção porque ele vira a URL
+// citada em contrato, e tabelas para categorias de dados, finalidades, prazos de retenção e
+// categorias de cookies.
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/prototype-contabilidade.css";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import PaginaLegal from "../../components/elements/PaginaLegal.astro";
+import Footer from "../../components/elements/Footer.astro";
+---
+<Layout
+  title="Termos de Uso | Beorange"
+  description="As condições para utilizar o site, o portal e as soluções da Beorange."
+>
+  <Header tema="claro" />
+  <MobileMenu />
+
+  <PaginaLegal
+    titulo="Termos de Uso"
+    resumo="As condições para utilizar o site, o portal e as soluções da Beorange."
+  />
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>

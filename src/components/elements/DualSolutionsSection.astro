@@ -1,0 +1,61 @@
+---
+// Elemento: Dobra 4 — Duas soluções (Contabilidade Beorange / Conta Beorange).
+// Fonte da verdade: HTML oficial do designer (beorange-homepage_2.html, linhas 504-542).
+//
+// Comparador de ofertas lado a lado. O grid é de duas colunas no CSS (.pcards), então passe
+// dois produtos; com mais, as colunas apertam. A etiqueta e o h3 aceitam textos diferentes de
+// propósito — na home repetem o nome do produto, mas em outra página a etiqueta pode
+// classificar ("Para quem fatura até X") enquanto o título nomeia.
+interface Props {
+  /** Ancora do menu. Mantenha "solucoes" na home, que é o alvo do "Ver as soluções" do hero. */
+  id?: string;
+  titulo?: { destaque?: string; resto: string };
+  intro?: string;
+  produtos?: { etiqueta: string; titulo: string; resumo: string; itens: string[]; cta: { texto: string; href: string } }[];
+}
+
+const {
+  id = "solucoes",
+  titulo = { destaque: "Duas soluções", resto: "que resolvem lados diferentes do mesmo problema" },
+  intro = "Uma organiza a informação. A outra sustenta a operação. Juntas, entregam a estrutura administrativa que a empresa passa a precisar quando cresce.",
+  produtos = [
+    {
+      etiqueta: "Contabilidade Beorange",
+      titulo: "Contabilidade Beorange",
+      resumo: "Números confiáveis, visão integrada e clareza para crescer.",
+      itens: ["Contábil", "Fiscal", "Departamento Pessoal", "Tributário", "Societário", "Assessoria e Consultoria"],
+      cta: { texto: "Conhecer a Contabilidade", href: "/contabilidade-beorange/" },
+    },
+    {
+      etiqueta: "Conta Beorange",
+      titulo: "Conta Beorange",
+      resumo: "Sua conta passa a ser a infraestrutura financeira da empresa.",
+      itens: ["Conta PJ e movimentação", "Cobranças e recebimentos", "Portal de gestão financeira", "BPO Financeiro", "Bora Financeira"],
+      cta: { texto: "Conhecer a Conta", href: "/conta-beorange/" },
+    },
+  ],
+} = Astro.props;
+---
+<section class="alt" id={id}>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>{titulo.destaque && <span class="hl">{titulo.destaque}</span>} {titulo.resto}</h2>
+      {intro && <p>{intro}</p>}
+    </div>
+    <div class="pcards">
+      {produtos.map((p) => (
+        <div class="pcard rv">
+          <span class="ptag">{p.etiqueta}</span>
+          <h3>{p.titulo}</h3>
+          <p>{p.resumo}</p>
+          <ul>
+            {p.itens.map((item) => (
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>{item}</li>
+            ))}
+          </ul>
+          <div class="pfoot"><a href={p.cta.href} class="btn btn-primary">{p.cta.texto}</a></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

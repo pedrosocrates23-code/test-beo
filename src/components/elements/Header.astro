@@ -1,0 +1,119 @@
+---
+// Elemento: Header + mega-dropdown "Soluções".
+// Fonte da verdade: HTML oficial do designer (beorange-homepage_2.html, linhas 331-381).
+// Sem <style>: o CSS global vem do prototype-*.css da página que o usa.
+// Único ponto variável entre páginas: a home aponta o logo para "#top" (topo da
+// própria página), as demais apontam para "/".
+export interface Props {
+  logoHref?: string;
+  /** Item do menu correspondente à página atual. A Home não marca nada — ela não está
+   *  representada no pill, então destacar qualquer item seria mentira para o usuário. */
+  ativo?: "solucoes" | "sobre" | "cases" | "blog" | "contato" | null;
+  /** O que existe ATRÁS do header no topo da página. São três casos, e cada um pede uma
+   *  variante diferente do logotipo:
+   *
+   *    "escuro" (padrão) — hero escuro, como a home e a Contabilidade. Usa logo.webp, com o
+   *                        "be" branco e o "orange" laranja.
+   *    "claro"           — a página abre no branco, como o blog. Usa logo-dark.webp.
+   *    "marca"           — a página abre sobre a faixa laranja (.brand-band), que é o caso do
+   *                        /contato/. Aqui NÃO serve nenhuma das duas: na logo padrão o
+   *                        "orange" é laranja e desaparece dentro do laranja do fundo, e a
+   *                        escura fica ilegível. Usa logo-branca.webp, com a palavra inteira
+   *                        em branco.
+   *
+   *  Nada disso afeta o mobile, onde o header tem barra escura própria em qualquer página e
+   *  a logo branca vale sempre. Ver src/styles/header-logo.css.
+   */
+  tema?: "claro" | "escuro" | "marca";
+  /** Portal do cliente. Fica FORA do site — é outro sistema, em gestao.beorange.app — por
+   *  isso abre em nova aba e leva rel="noopener". Antes apontava para /login/, uma rota que
+   *  nunca existiu: o botão mais à direita do header levava a um 404. */
+  portalHref?: string;
+}
+const { logoHref = "/", ativo = null, tema = "escuro", portalHref = "https://gestao.beorange.app/login" } = Astro.props;
+
+// Qual arquivo do logotipo vai em cada estado. Isto ficava no CSS, com uma regra por
+// combinação de tema e variante disputando especificidade com os prototype-*.css — nove
+// regras concorrentes que ninguém conseguia auditar de cabeça, e onde um engano fazia a logo
+// sumir sem erro nenhum no build. Agora o componente escolhe o arquivo e o CSS só alterna
+// entre dois elementos: o do topo e o de depois da rolagem.
+//
+// No mobile é sempre a clara, em qualquer tema: lá o header tem barra escura própria
+// (rgba(28,22,19,.8)) no topo e continua escura depois de rolar.
+// As três têm proporção equivalente de propósito. O arquivo branco vinha com 31% da altura
+// em margem vazia, o que o deixava visivelmente menor que as outras com a mesma altura de
+// CSS; foi recortado pela opacidade real do desenho, e não pelo getbbox(), que ia até o
+// antialiasing quase invisível. A 36px de altura no header: colorida 164px, branca 166px.
+const LOGOS = {
+  light:  { src: "/img/logo.webp",        w: 218, h: 48 },
+  dark:   { src: "/img/logo-dark.webp",   w: 218, h: 48 },
+  branca: { src: "/img/logo-branca.webp", w: 221, h: 48 },
+} as const;
+
+const POR_TEMA = {
+  // hero escuro no topo; ao rolar, o fundo vira o branco do conteúdo
+  escuro: { topo: "light",  rolado: "dark" },
+  // a página já abre no branco
+  claro:  { topo: "dark",   rolado: "dark" },
+  // abre sobre a faixa laranja da marca, onde só a variante toda branca é legível; ao rolar,
+  // sai da faixa e cai no branco do conteúdo
+  marca:  { topo: "branca", rolado: "dark" },
+} as const;
+
+const noTopo = LOGOS[POR_TEMA[tema].topo];
+const aoRolar = LOGOS[POR_TEMA[tema].rolado];
+const noMobile = LOGOS.light;
+---
+<header class:list={["site", { "site--fundo-claro": tema === "claro", "site--fundo-marca": tema === "marca" }]} id="top">
+  <div class="wrap nav">
+    <a href={logoHref} class="logo" aria-label="Beorange, página principal">
+      <img class="logo-img logo-img--topo" src={noTopo.src} alt="Beorange" width={noTopo.w} height={noTopo.h} />
+      <img class="logo-img logo-img--rolado" src={aoRolar.src} alt="" aria-hidden="true" width={aoRolar.w} height={aoRolar.h} />
+      <img class="logo-img logo-img--mobile" src={noMobile.src} alt="" aria-hidden="true" width={noMobile.w} height={noMobile.h} />
+    </a>
+    <nav class="navpill" aria-label="Principal">
+      <button id="solBtn" aria-expanded="false" aria-controls="mega" class:list={{ "is-active": ativo === "solucoes" }}>Soluções
+        <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <a href="/sobre-nos/" class:list={{ "is-active": ativo === "sobre" }} aria-current={ativo === "sobre" ? "page" : undefined}>Sobre nós</a>
+      <a href="/cases/" class:list={{ "is-active": ativo === "cases" }} aria-current={ativo === "cases" ? "page" : undefined}>Cases</a>
+      <a href="/blog/" class:list={{ "is-active": ativo === "blog" }} aria-current={ativo === "blog" ? "page" : undefined}>Blog e Pesquisa</a>
+      <button class="icon-btn" aria-label="Buscar"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></button>
+      <a href="/contato/" class:list={{ "is-active": ativo === "contato" }} aria-current={ativo === "contato" ? "page" : undefined}>Fale com a gente</a>
+      <a href={portalHref} class="pill-cta" rel="noopener" target="_blank">Login</a>
+    </nav>
+    <button class="hamburger" id="burger" aria-label="Abrir menu">Menu</button>
+  </div>
+  <div class="mega" id="mega" role="region" aria-label="Soluções">
+    <div class="mega-inner">
+      <div class="mcol">
+        <a class="mtitle" href="/contabilidade-beorange/">Contabilidade Beorange →</a>
+        <ul>
+          <li><a href="/contabilidade-beorange/contabil/">Contábil</a></li>
+          <li><a href="/contabilidade-beorange/fiscal/">Fiscal</a></li>
+          <li><a href="/contabilidade-beorange/departamento-pessoal/">Departamento Pessoal</a></li>
+          <li><a href="/contabilidade-beorange/tributario/">Tributário</a></li>
+          <li><a href="/contabilidade-beorange/societario/">Societário</a></li>
+          <li><a href="/contabilidade-beorange/assessoria/">Assessoria e Consultoria</a></li>
+        </ul>
+      </div>
+      <div class="mcol">
+        <a class="mtitle" href="/conta-beorange/">Conta Beorange →</a>
+        <ul>
+          <li><a href="/conta-beorange/conta-pj/">Conta PJ e movimentação</a></li>
+          <li><a href="/conta-beorange/cobrancas/">Cobranças e recebimentos</a></li>
+          <li><a href="/conta-beorange/portal/">Portal de gestão financeira</a></li>
+          <li><a href="/conta-beorange/bpo-financeiro/">BPO Financeiro</a></li>
+          <li><a href="/conta-beorange/bora-financeira/">Bora Financeira</a></li>
+        </ul>
+      </div>
+      <div class="mcol spec">
+        <span class="mtitle">Especialidades</span>
+        <ul>
+          <li><a href="/lucro-real/">Lucro Real e estratégia tributária</a></li>
+          <li><a href="/reforma-tributaria/">Reforma Tributária: IBS e CBS</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

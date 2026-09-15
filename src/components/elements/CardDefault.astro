@@ -1,0 +1,42 @@
+---
+// Elemento: Card/Default (Figma node 21:121)
+export interface Props {
+  title?: string;
+  description?: string;
+  class?: string;
+}
+const {
+  title = "Card Title",
+  description = "Descrição do card com informações relevantes para o usuário.",
+  class: className = "",
+} = Astro.props;
+---
+<div class={`card-default ${className}`}>
+  <p class="card-default__title">{title}</p>
+  <p class="card-default__description">{description}</p>
+</div>
+
+<style>
+  .card-default {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-16);
+    width: 340px;
+    background: var(--surface-card);
+    border-radius: var(--radius-xl);
+    padding: var(--space-24);
+  }
+  .card-default__title {
+    width: 100%;
+    margin: 0;
+    font: 600 19px/normal var(--font-family-base);
+    color: var(--text-primary);
+  }
+  .card-default__description {
+    width: 100%;
+    margin: 0;
+    font: 400 14px/normal var(--font-family-base);
+    color: var(--text-secondary);
+  }
+</style>
