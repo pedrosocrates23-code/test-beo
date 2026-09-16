@@ -433,6 +433,49 @@
   /* lista aninhada não leva o respiro de 22px do fim: ali ele vira buraco no meio do item */
   .prose ol>li>ul,.prose ul>li>ul{margin-bottom:0}
   .prose a.inl{color:var(--coral);font-weight:600;border-bottom:1px solid rgba(245,56,15,.32)}
+  /* ---------- TABELAS ----------
+     O corpo do artigo não tinha regra nenhuma para <table>: metade do acervo (112 tabelas em
+     76 dos 149 artigos) saía com o desenho padrão do navegador — sem borda, sem respiro, sem
+     distinção de cabeçalho, e com o <p> de dentro da célula carregando os 18px de margem de
+     parágrafo. O protótipo do designer não traz tabela em página nenhuma, então a moldura
+     abaixo é montada com o vocabulário que já existe aqui: a borda e o raio do .inline-cta,
+     a superfície do --surface e o corpo em 17px reduzido para 15, que é o que 5 colunas
+     cabem numa coluna de leitura de 720px.
+
+     O acervo é homogêneo e a regra se apoia nisso: todas as 112 tabelas têm <tbody>, todas
+     têm <th> só na primeira linha (nenhuma usa <thead>), nenhuma usa colspan ou rowspan, e
+     no blog o <figure> existe unicamente para envolver tabela — 111 das 112. A que sobra
+     está solta em /blog/esocial-2025-fim-da-consulta-online-...; por isso a moldura fica na
+     própria <table> e não no <figure>, senão aquela tabela ficaria sem desenho.
+
+     Raio: com border-collapse:collapse as células comem os cantos arredondados da tabela.
+     Daí o separate + border-spacing:0 e o raio devolvido nas quatro células de canto. */
+  .prose figure{margin:32px 0;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}
+  .prose table{
+    width:100%;border-collapse:separate;border-spacing:0;
+    font-size:15px;line-height:1.55;color:#4a423d;
+    background:var(--white);border:1px solid var(--border);border-radius:16px;
+  }
+  .prose th,.prose td{padding:13px 16px;text-align:left;vertical-align:top;max-width:34ch;border-top:1px solid var(--border)}
+  .prose tr:first-child th,.prose tr:first-child td{border-top:0}
+  .prose th{background:var(--surface-2);font-size:12px;font-weight:700;letter-spacing:.055em;text-transform:uppercase;color:var(--ink)}
+  /* a linha 1 é o cabeçalho e vive dentro do mesmo <tbody>, então nth-child(odd) pega a 3ª,
+     5ª e 7ª linhas — a primeira linha de dados fica branca, como deve */
+  .prose tr:nth-child(odd) td{background:var(--surface)}
+  /* em 110 das 112 a primeira coluna é rótulo e a segunda é a definição; o peso marca a
+     leitura vertical sem precisar de linha divisória entre as colunas */
+  .prose td:first-child{font-weight:600;color:var(--ink)}
+  /* o conteúdo de cada célula vem embrulhado em <p>: sem isto, 18px de margem por célula */
+  .prose th>p,.prose td>p{margin:0;font-size:inherit;line-height:inherit;color:inherit}
+  .prose td>p+p{margin-top:8px}
+  .prose td ul,.prose td ol{margin:0;font-size:inherit}
+  .prose td ul>li{font-size:inherit;line-height:1.5}
+  .prose td ul>li::before{margin-top:9px}
+  .prose tr:first-child th:first-child{border-top-left-radius:15px}
+  .prose tr:first-child th:last-child{border-top-right-radius:15px}
+  .prose tr:last-child td:first-child{border-bottom-left-radius:15px}
+  .prose tr:last-child td:last-child{border-bottom-right-radius:15px}
+
   .pullquote{border-left:3px solid var(--coral);padding:4px 0 4px 26px;margin:36px 0;font-size:23px;font-weight:600;line-height:1.38;letter-spacing:-.015em;color:var(--ink)}
   .inline-cta{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px 28px;margin:36px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .inline-cta .t{font-size:16px;font-weight:600;color:var(--ink);max-width:42ch}
@@ -519,6 +562,34 @@
      ("14 de novembro de 2025" sozinha pede 129px e "Departamento Pessoal" 122px) contra
      264px uteis a 320px. Manter a data inteira ali custa barra de rolagem na PAGINA, que e
      pior do que uma data em duas linhas. Acima de 400px nada muda. */
+  @media(max-width:560px){
+    /* A tabela do artigo tem de ROLAR no celular, não se espremer — e não rolava.
+       mobile.css declara `table{display:block;width:max-content;max-width:100%}`: o
+       `max-width:100%` capa a tabela na largura da coluna, e como a regra 6 do mesmo arquivo
+       põe `overflow-wrap:anywhere` nas células, o texto não estoura — ele se pica. Medido a
+       390px na tabela de 5 colunas de /blog/contabilidade-para-saas-...: tabela em 334px,
+       com "JANEIRO" quebrado em JAN/EIR/O e "R$ 12.000" em 12.0/00. O teste de largura não
+       pegava porque, picotado, nada estourava a página.
+
+       Aqui a trava sai: quem recorta é o <figure>, que já rola. A tabela volta a pedir a
+       largura do próprio conteúdo, com piso na largura da coluna para as pequenas não
+       ficarem soltas. `break-word` no lugar de `anywhere` quebra só a palavra que sozinha
+       não cabe na célula — o resto fica inteiro. O max-width por célula é o que impede uma
+       frase longa de esticar a tabela para muito além da tela. */
+    .prose table{display:table;width:max-content;max-width:none;min-width:100%;font-size:14px}
+    .prose th,.prose td{padding:11px 14px;max-width:26ch;overflow-wrap:break-word}
+    .prose figure{margin:26px 0}
+
+    /* A tabela SOLTA, sem <figure> em volta — hoje uma só, a de
+       /blog/esocial-2025-fim-da-consulta-online-e-a-obrigatoriedade-da-consulta-em-lote/.
+       Não tendo wrapper, não há quem recorte: com a trava de largura removida acima ela
+       estourava a página em 408px a 320px. Aqui ela mesma vira a caixa que rola. É remendo
+       de uma divergência de markup, não o desenho: se aquele artigo ganhar o <figure> que os
+       outros 111 têm, esta regra deixa de ter alvo e pode sair. */
+    .prose > table{display:block;width:auto;max-width:100%;overflow-x:auto}
+
+  }
+
   @media(max-width:400px){
     .art-meta .m .v{white-space:normal}
 

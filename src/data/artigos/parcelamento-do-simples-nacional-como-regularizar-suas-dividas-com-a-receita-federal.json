@@ -1,36 +1,36 @@
 {
-  "n": 19,
-  "slug": "parcelamento-do-simples-nacional-como-regularizar-suas-dividas-com-a-receita-federal",
-  "titulo": "Parcelamento do Simples Nacional: como regularizar suas dívidas com a Receita Federal",
-  "lead": "",
-  "dataIso": "2025-01-20",
-  "categoria": "Simples Nacional",
-  "autor": "Por Beorange",
-  "metaTitle": "Parcelamento do Simples Nacional: como regularizar suas... | Beorange",
-  "metaDescription": "",
-  "palavras": 534,
-  "hero": "/img/blog/parcelamento-do-simples-nacional-como-regularizar-suas-dividas-com-a-receita-federal/capa.webp",
-  "card": "/img/blog/parcelamento-do-simples-nacional-como-regularizar-suas-dividas-com-a-receita-federal/capa.webp",
-  "imagemAlt": "Imagem de destaque do artigo: Parcelamento do Simples Nacional",
-  "corpo": "<h2><strong>O que é o Parcelamento do Simples Nacional?</strong></h2>\n<p>O parcelamento do Simples Nacional é uma solução legal criada para ajudar micro e pequenas empresas a regularizarem suas dívidas tributárias junto à Receita Federal. Ele permite que essas empresas parcelem os débitos acumulados ao longo do tempo, reduzindo o impacto financeiro de uma quitação integral e prevenindo problemas como multas, juros elevados e a exclusão do regime do Simples Nacional.</p>\n<h2><strong>Por que o parcelamento é importante para as empresas?</strong></h2>\n<p>No dia a dia de uma micro ou pequena empresa, é comum que atrasos em pagamentos de tributos ocorram devido a imprevistos financeiros ou dificuldades de gestão. Esses atrasos geram encargos adicionais e podem colocar em risco a permanência no regime do Simples Nacional, que oferece benefícios como a unificação de tributos e redução de carga tributária.</p>\n<p>Para evitar esses problemas, o parcelamento das dívidas permite que as empresas quitem seus débitos em condições mais acessíveis, mantendo suas operações em conformidade com a Receita Federal.</p>\n<h2><strong>Quem pode aderir ao Parcelamento do Simples Nacional?</strong></h2>\n<p>O parcelamento está disponível para todas as empresas optantes pelo Simples Nacional que tenham débitos pendentes com a Receita Federal. Isso inclui empresas que já foram desenquadradas do regime ou até encerraram suas atividades, desde que as dívidas tenham sido geradas enquanto estavam cadastradas no Simples.</p>\n<h3><strong>Quais dívidas podem ser parceladas?</strong></h3>\n<p>Os débitos do Simples Nacional cobrados pela Receita Federal podem ser parcelados, mas existem exceções:</p>\n<ul><li><p>Multas por descumprimento de obrigação acessória;</p></li><li><p>ICMS e ISS inscritos em dívida ativa estadual, distrital ou municipal;</p></li><li><p>Tributos retidos na fonte ou de terceiros, não abrangidos pelo Simples Nacional;</p></li><li><p>Débitos de Microempreendedores Individuais (MEI), que possuem regras próprias de parcelamento.</p></li></ul>\n<h2><strong>Como funciona o Parcelamento do Simples Nacional?</strong></h2>\n<p>O modelo de parcelamento segue regras específicas:</p>\n<ul><li><p>Parcelamento em até 60 prestações mensais;</p></li><li><p>Valor mínimo de cada parcela: R$ 300;</p></li><li><p>O cálculo do número de parcelas é feito automaticamente pelo sistema, considerando o valor total da dívida e respeitando o limite mínimo por parcela;</p></li><li><p>As prestações são corrigidas mensalmente pela taxa Selic.</p></li></ul>\n<p>Após aderir ao parcelamento, a primeira parcela precisa ser quitada para que a empresa seja formalmente incluída no programa.</p>\n<h3><strong>E se a dívida estiver inscrita em Dívida Ativa?</strong></h3>\n<p>Para débitos inscritos em Dívida Ativa, o parcelamento deve ser solicitado à Procuradoria-Geral da Fazenda Nacional (PGFN). As condições são semelhantes às aplicadas pela Receita Federal, mas com a possibilidade de reparcelamento, exigindo:</p>\n<ul><li><p>Pagamento inicial de 10% do total da dívida para o primeiro reparcelamento;</p></li><li><p>Pagamento inicial de 20% para reparcelamentos subsequentes.</p></li></ul>\n<h3><strong>Quais os riscos de inadimplência no parcelamento?</strong></h3>\n<p>O parcelamento pode ser cancelado se:</p>\n<ul><li><p>A primeira parcela não for quitada;</p></li><li><p>Três parcelas, consecutivas ou não, não forem pagas;</p></li><li><p>Restar saldo devedor após o vencimento da última parcela.</p></li></ul>\n<p>Além disso, pagamentos parciais das prestações também são considerados inadimplência.</p>\n<h3><strong>Parcelar é sempre a melhor solução?</strong></h3>\n<p>O parcelamento pode aliviar o caixa da empresa e evitar complicações legais, mas nem sempre é a única solução. Antes de aderir, é importante analisar a situação financeira da empresa, avaliar os compromissos futuros e buscar orientação profissional, como a de um contador, para decidir a melhor estratégia para regularizar os débitos.</p>\n<p>Se a gestão financeira da sua empresa é um desafio, contar com serviços es</p>",
-  "cluster": "SIMPLES",
-  "relacionados": [
-    {
-      "slug": "como-funciona-o-reparcelamento-do-simples-nacional-saiba-mais",
-      "titulo": "Como Funciona o Reparcelamento do Simples Nacional? Saiba Mais",
-      "categoria": "Simples Nacional",
-      "palavras": 421
-    },
-    {
-      "slug": "mei-2025-nova-regra-soma-receitas-do-cpf-e-do-cnpj",
-      "titulo": "MEI 2025: nova regra soma receitas do CPF e do CNPJ",
-      "categoria": "Fiscal",
-      "palavras": 1014
-    }
-  ],
-  "urlAntiga": "https://beorange.app/blog/parcelamento-do-simples-nacional-como-regularizar-suas-d%C3%ADvidas-com-a-receita-federal",
-  "notasDaMigracao": [
-    "rebaixado 1 <h1> do corpo para <h2>",
-    "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
-  ]
+ "n": 19,
+ "slug": "parcelamento-do-simples-nacional-como-regularizar-suas-dividas-com-a-receita-federal",
+ "titulo": "Parcelamento do Simples Nacional: como regularizar suas dívidas com a Receita Federal",
+ "lead": "",
+ "dataIso": "2025-01-20",
+ "categoria": "Simples Nacional",
+ "autor": "Por Beorange",
+ "metaTitle": "Parcelamento do Simples Nacional: como regularizar suas... | Beorange",
+ "metaDescription": "",
+ "palavras": 534,
+ "hero": "/img/blog/parcelamento-do-simples-nacional-como-regularizar-suas-dividas-com-a-receita-federal/capa.webp",
+ "card": "/img/blog/parcelamento-do-simples-nacional-como-regularizar-suas-dividas-com-a-receita-federal/capa.webp",
+ "imagemAlt": "Imagem de destaque do artigo: Parcelamento do Simples Nacional",
+ "corpo": "<h2><strong>O que é o Parcelamento do Simples Nacional?</strong></h2>\n<p>O parcelamento do Simples Nacional é uma solução legal criada para ajudar micro e pequenas empresas a regularizarem suas dívidas tributárias junto à Receita Federal. Ele permite que essas empresas parcelem os débitos acumulados ao longo do tempo, reduzindo o impacto financeiro de uma quitação integral e prevenindo problemas como multas, juros elevados e a exclusão do regime do Simples Nacional.</p>\n<h2><strong>Por que o parcelamento é importante para as empresas?</strong></h2>\n<p>No dia a dia de uma micro ou pequena empresa, é comum que atrasos em pagamentos de tributos ocorram devido a imprevistos financeiros ou dificuldades de gestão. Esses atrasos geram encargos adicionais e podem colocar em risco a permanência no regime do Simples Nacional, que oferece benefícios como a unificação de tributos e redução de carga tributária.</p>\n<p>Para evitar esses problemas, o parcelamento das dívidas permite que as empresas quitem seus débitos em condições mais acessíveis, mantendo suas operações em conformidade com a Receita Federal.</p>\n<h2><strong>Quem pode aderir ao Parcelamento do Simples Nacional?</strong></h2>\n<p>O parcelamento está disponível para todas as empresas optantes pelo Simples Nacional que tenham débitos pendentes com a Receita Federal. Isso inclui empresas que já foram desenquadradas do regime ou até encerraram suas atividades, desde que as dívidas tenham sido geradas enquanto estavam cadastradas no Simples.</p>\n<h3><strong>Quais dívidas podem ser parceladas?</strong></h3>\n<p>Os débitos do Simples Nacional cobrados pela Receita Federal podem ser parcelados, mas existem exceções:</p>\n<ul><li><p>Multas por descumprimento de obrigação acessória;</p></li><li><p>ICMS e ISS inscritos em dívida ativa estadual, distrital ou municipal;</p></li><li><p>Tributos retidos na fonte ou de terceiros, não abrangidos pelo Simples Nacional;</p></li><li><p>Débitos de Microempreendedores Individuais (MEI), que possuem regras próprias de parcelamento.</p></li></ul>\n<h2><strong>Como funciona o Parcelamento do Simples Nacional?</strong></h2>\n<p>O modelo de parcelamento segue regras específicas:</p>\n<ul><li><p>Parcelamento em até 60 prestações mensais;</p></li><li><p>Valor mínimo de cada parcela: R$ 300;</p></li><li><p>O cálculo do número de parcelas é feito automaticamente pelo sistema, considerando o valor total da dívida e respeitando o limite mínimo por parcela;</p></li><li><p>As prestações são corrigidas mensalmente pela taxa Selic.</p></li></ul>\n<p>Após aderir ao parcelamento, a primeira parcela precisa ser quitada para que a empresa seja formalmente incluída no programa.</p>\n<h3><strong>E se a dívida estiver inscrita em Dívida Ativa?</strong></h3>\n<p>Para débitos inscritos em Dívida Ativa, o parcelamento deve ser solicitado à Procuradoria-Geral da Fazenda Nacional (PGFN). As condições são semelhantes às aplicadas pela Receita Federal, mas com a possibilidade de reparcelamento, exigindo:</p>\n<ul><li><p>Pagamento inicial de 10% do total da dívida para o primeiro reparcelamento;</p></li><li><p>Pagamento inicial de 20% para reparcelamentos subsequentes.</p></li></ul>\n<h3><strong>Quais os riscos de inadimplência no parcelamento?</strong></h3>\n<p>O parcelamento pode ser cancelado se:</p>\n<ul><li><p>A primeira parcela não for quitada;</p></li><li><p>Três parcelas, consecutivas ou não, não forem pagas;</p></li><li><p>Restar saldo devedor após o vencimento da última parcela.</p></li></ul>\n<p>Além disso, pagamentos parciais das prestações também são considerados inadimplência.</p>\n<h3><strong>Parcelar é sempre a melhor solução?</strong></h3>\n<p>O parcelamento pode aliviar o caixa da empresa e evitar complicações legais, mas nem sempre é a única solução. Antes de aderir, é importante analisar a situação financeira da empresa, avaliar os compromissos futuros e buscar orientação profissional, como a de um contador, para decidir a melhor estratégia para regularizar os débitos.</p>\n<p>Se a gestão financeira da sua empresa é um desafio, contar com serviços es</p>",
+ "cluster": "SIMPLES",
+ "relacionados": [
+  {
+   "slug": "como-funciona-o-reparcelamento-do-simples-nacional-saiba-mais",
+   "titulo": "Como Funciona o Reparcelamento do Simples Nacional? Saiba Mais",
+   "categoria": "Simples Nacional",
+   "palavras": 421
+  },
+  {
+   "slug": "reenquadramento-simples-nacional-o-que-e-e-como-fazer",
+   "titulo": "Reenquadramento Simples Nacional: o que é e como fazer",
+   "categoria": "Simples Nacional",
+   "palavras": 865
+  }
+ ],
+ "urlAntiga": "https://beorange.app/blog/parcelamento-do-simples-nacional-como-regularizar-suas-d%C3%ADvidas-com-a-receita-federal",
+ "notasDaMigracao": [
+  "rebaixado 1 <h1> do corpo para <h2>",
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
+ ]
 }

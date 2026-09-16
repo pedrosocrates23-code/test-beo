@@ -1,36 +1,36 @@
 {
-  "n": 18,
-  "slug": "pis-e-cofins-2025-obrigacoes-mudancas-e-novidades",
-  "titulo": "PIS e COFINS 2025: Obrigações, mudanças e novidades",
-  "lead": "",
-  "dataIso": "2025-01-17",
-  "categoria": "Tributação",
-  "autor": "Por Beorange",
-  "metaTitle": "PIS e COFINS 2025: Obrigações, mudanças e novidades | Beorange",
-  "metaDescription": "",
-  "palavras": 585,
-  "hero": "/img/blog/pis-e-cofins-2025-obrigacoes-mudancas-e-novidades/capa.webp",
-  "card": "/img/blog/pis-e-cofins-2025-obrigacoes-mudancas-e-novidades/capa.webp",
-  "imagemAlt": "Imagem de destaque do artigo: PIS e COFINS 2025",
-  "corpo": "<h2>PIS e COFINS 2025</h2>\n<p>O PIS (Programa de Integração Social) e a COFINS (Contribuição para o Financiamento da Seguridade Social) são dois dos tributos mais relevantes no sistema tributário brasileiro. Esses tributos possuem legislações complexas e regras específicas, o que torna o seu cumprimento um desafio constante para as empresas.</p>\n<p>Neste artigo, exploramos as principais obrigações e mudanças relacionadas ao PIS e à COFINS em 2025, além de discutir as alterações que virão com a reforma tributária.</p>\n<h2>O que é o PIS e a COFINS?</h2>\n<p>O PIS e a COFINS são contribuições sociais de competência da União, previstas no artigo 195 da Constituição Federal. Sua incidência principal ocorre sobre a receita ou faturamento das empresas, mas também pode atingir a folha de pagamento em casos específicos.</p>\n<p>PIS: Criado pela Lei Complementar n. 07/1970, visa integrar o empregado ao desenvolvimento das empresas.</p>\n<p>COFINS: Instituído pela Lei Complementar n. 70/1991, destina-se ao financiamento da seguridade social.</p>\n<h2>Quem precisa pagar o PIS e a COFINS em 2025?</h2>\n<p>Todas as empresas que auferirem receita ou faturamento mensal estão obrigadas a recolher o PIS e a COFINS. Além disso, algumas pessoas jurídicas específicas precisam pagar o PIS sobre a folha de salários, como instituições de ensino, associações e condomínios.</p>\n<h2>Alíquotas do PIS e da COFINS em 2025</h2>\n<p>O cálculo do PIS e da COFINS varia de acordo com o regime tributário da empresa:</p>\n<h3>Simples Nacional:</h3>\n<p>Empresas optantes pelo Simples recolhem os tributos de forma unificada, com alíquotas variáveis conforme o faturamento e a atividade econômica.</p>\n<h3>Lucro Presumido:</h3>\n<p>Apuração pelo regime cumulativo:</p>\n<p>PIS: 0,65%</p>\n<p>COFINS: 3,0%</p>\n<h3>Lucro Real:</h3>\n<p>Apuração pelo regime não cumulativo:</p>\n<p>PIS: 1,65%</p>\n<p>COFINS: 7,6%No regime não cumulativo, as empresas podem se apropriar de créditos fiscais para abater do total a pagar.</p>\n<h2>Como calcular o PIS e a COFINS?</h2>\n<p>Regime Cumulativo: Multiplica-se a alíquota pelo faturamento bruto mensal da empresa.</p>\n<p>Regime Não Cumulativo: Calcula-se o total devido e descontam-se os créditos fiscais obtidos na aquisição de insumos essenciais.</p>\n<p>Exemplo (Regime Não Cumulativo):</p>\n<p>- Faturamento mensal: R$200.000,00</p>\n<p>- Créditos fiscais: R$4.625,00</p>\n<p>- Débito total: R$18.500,00</p>\n<p>- Valor a recolher: R$13.875,00 (R$18.500,00 - R$4.625,00)</p>\n<h2>Prazos de recolhimento do PIS e da COFINS</h2>\n<p>O pagamento dessas contribuições deve ser realizado até o dia **25 do mês subsequente** à apuração, conforme disposto na Instrução Normativa n. 2.121/22.</p>\n<h2>PIS e COFINS na Reforma Tributária</h2>\n<p>Com a aprovação da Reforma Tributária, o PIS e a COFINS serão substituídos pela Contribuição sobre Bens e Serviços (CBS) em 2027. No entanto, já em 2026, haverá testes com alíquotas da CBS, que poderão ser compensadas com débitos de PIS e COFINS.</p>\n<p>A mudança promete simplificar a tributação, mas as empresas precisam estar preparadas para transições que envolvem novas regras e conceitos.</p>\n<h2>Como lidar com as mudanças no PIS e na COFINS?</h2>\n<p>Gerir tributos como o PIS e a COFINS exige atenção às constantes mudanças legislativas e compreensão detalhada das regras aplicáveis ao setor da empresa. Para garantir o cumprimento das obrigações e otimizar os recursos financeiros, é fundamental:</p>\n<p>- Realizar uma análise tributária detalhada;</p>\n<p>- Utilizar ferramentas tecnológicas para cálculo e apuração dos tributos;</p>\n<p>- Contar com profissionais especializados para suporte fiscal e estratégico.</p>\n<h6>Conclusão</h6>\n<p>Apesar de estarem com os dias contados, o PIS e a COFINS continuam sendo tributos fundamentais para a gestão tributária das empresas em 2025. Com a complexidade do sistema brasileiro, entender as regras e as mudanças é essencial para manter a conformidade e evitar problemas fiscais.</p>\n<p>Fique atento às novidades da reforma tributária e adapte-se às novas exigências com planejamento e suporte especializado.</p>",
-  "cluster": "ACESSORIAS",
-  "relacionados": [
-    {
-      "slug": "creditos-de-pis-e-cofins-no-lucro-real-como-aproveitar-ao-maximo",
-      "titulo": "Créditos de PIS e COFINS no Lucro Real: como aproveitar ao máximo",
-      "categoria": "Fiscal",
-      "palavras": 1294
-    },
-    {
-      "slug": "defis-2026-prazo-venceu-ontem-o-que-fazer-agora-se-sua-empresa-ainda-nao-entregou",
-      "titulo": "DEFIS 2026: prazo venceu ontem, o que fazer agora se sua empresa ainda não entregou",
-      "categoria": "Fiscal",
-      "palavras": 1768
-    }
-  ],
-  "urlAntiga": "https://beorange.app/blog/pis-e-cofins-2025-obriga%C3%A7%C3%B5es-mudan%C3%A7as-e-novidades",
-  "notasDaMigracao": [
-    "rebaixado 1 <h1> do corpo para <h2>",
-    "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
-  ]
+ "n": 18,
+ "slug": "pis-e-cofins-2025-obrigacoes-mudancas-e-novidades",
+ "titulo": "PIS e COFINS 2025: Obrigações, mudanças e novidades",
+ "lead": "",
+ "dataIso": "2025-01-17",
+ "categoria": "Tributação",
+ "autor": "Por Beorange",
+ "metaTitle": "PIS e COFINS 2025: Obrigações, mudanças e novidades | Beorange",
+ "metaDescription": "",
+ "palavras": 585,
+ "hero": "/img/blog/pis-e-cofins-2025-obrigacoes-mudancas-e-novidades/capa.webp",
+ "card": "/img/blog/pis-e-cofins-2025-obrigacoes-mudancas-e-novidades/capa.webp",
+ "imagemAlt": "Imagem de destaque do artigo: PIS e COFINS 2025",
+ "corpo": "<h2>PIS e COFINS 2025</h2>\n<p>O PIS (Programa de Integração Social) e a COFINS (Contribuição para o Financiamento da Seguridade Social) são dois dos tributos mais relevantes no sistema tributário brasileiro. Esses tributos possuem legislações complexas e regras específicas, o que torna o seu cumprimento um desafio constante para as empresas.</p>\n<p>Neste artigo, exploramos as principais obrigações e mudanças relacionadas ao PIS e à COFINS em 2025, além de discutir as alterações que virão com a reforma tributária.</p>\n<h2>O que é o PIS e a COFINS?</h2>\n<p>O PIS e a COFINS são contribuições sociais de competência da União, previstas no artigo 195 da Constituição Federal. Sua incidência principal ocorre sobre a receita ou faturamento das empresas, mas também pode atingir a folha de pagamento em casos específicos.</p>\n<p>PIS: Criado pela Lei Complementar n. 07/1970, visa integrar o empregado ao desenvolvimento das empresas.</p>\n<p>COFINS: Instituído pela Lei Complementar n. 70/1991, destina-se ao financiamento da seguridade social.</p>\n<h2>Quem precisa pagar o PIS e a COFINS em 2025?</h2>\n<p>Todas as empresas que auferirem receita ou faturamento mensal estão obrigadas a recolher o PIS e a COFINS. Além disso, algumas pessoas jurídicas específicas precisam pagar o PIS sobre a folha de salários, como instituições de ensino, associações e condomínios.</p>\n<h2>Alíquotas do PIS e da COFINS em 2025</h2>\n<p>O cálculo do PIS e da COFINS varia de acordo com o regime tributário da empresa:</p>\n<h3>Simples Nacional:</h3>\n<p>Empresas optantes pelo Simples recolhem os tributos de forma unificada, com alíquotas variáveis conforme o faturamento e a atividade econômica.</p>\n<h3>Lucro Presumido:</h3>\n<p>Apuração pelo regime cumulativo:</p>\n<p>PIS: 0,65%</p>\n<p>COFINS: 3,0%</p>\n<h3>Lucro Real:</h3>\n<p>Apuração pelo regime não cumulativo:</p>\n<p>PIS: 1,65%</p>\n<p>COFINS: 7,6%No regime não cumulativo, as empresas podem se apropriar de créditos fiscais para abater do total a pagar.</p>\n<h2>Como calcular o PIS e a COFINS?</h2>\n<p>Regime Cumulativo: Multiplica-se a alíquota pelo faturamento bruto mensal da empresa.</p>\n<p>Regime Não Cumulativo: Calcula-se o total devido e descontam-se os créditos fiscais obtidos na aquisição de insumos essenciais.</p>\n<p>Exemplo (Regime Não Cumulativo):</p>\n<p>- Faturamento mensal: R$200.000,00</p>\n<p>- Créditos fiscais: R$4.625,00</p>\n<p>- Débito total: R$18.500,00</p>\n<p>- Valor a recolher: R$13.875,00 (R$18.500,00 - R$4.625,00)</p>\n<h2>Prazos de recolhimento do PIS e da COFINS</h2>\n<p>O pagamento dessas contribuições deve ser realizado até o dia **25 do mês subsequente** à apuração, conforme disposto na Instrução Normativa n. 2.121/22.</p>\n<h2>PIS e COFINS na Reforma Tributária</h2>\n<p>Com a aprovação da Reforma Tributária, o PIS e a COFINS serão substituídos pela Contribuição sobre Bens e Serviços (CBS) em 2027. No entanto, já em 2026, haverá testes com alíquotas da CBS, que poderão ser compensadas com débitos de PIS e COFINS.</p>\n<p>A mudança promete simplificar a tributação, mas as empresas precisam estar preparadas para transições que envolvem novas regras e conceitos.</p>\n<h2>Como lidar com as mudanças no PIS e na COFINS?</h2>\n<p>Gerir tributos como o PIS e a COFINS exige atenção às constantes mudanças legislativas e compreensão detalhada das regras aplicáveis ao setor da empresa. Para garantir o cumprimento das obrigações e otimizar os recursos financeiros, é fundamental:</p>\n<p>- Realizar uma análise tributária detalhada;</p>\n<p>- Utilizar ferramentas tecnológicas para cálculo e apuração dos tributos;</p>\n<p>- Contar com profissionais especializados para suporte fiscal e estratégico.</p>\n<h6>Conclusão</h6>\n<p>Apesar de estarem com os dias contados, o PIS e a COFINS continuam sendo tributos fundamentais para a gestão tributária das empresas em 2025. Com a complexidade do sistema brasileiro, entender as regras e as mudanças é essencial para manter a conformidade e evitar problemas fiscais.</p>\n<p>Fique atento às novidades da reforma tributária e adapte-se às novas exigências com planejamento e suporte especializado.</p>",
+ "cluster": "ACESSORIAS",
+ "relacionados": [
+  {
+   "slug": "a-corrida-do-pis-e-cofins-como-recuperar-creditos-antes-que-a-reforma-tributaria-mude-tudo",
+   "titulo": "A corrida do PIS e COFINS: como recuperar créditos antes que a reforma tributária mude tudo",
+   "categoria": "Fiscal",
+   "palavras": 1479
+  },
+  {
+   "slug": "cbs-x-pis-cofins-o-que-muda-na-pratica-empresas-de-servicos",
+   "titulo": "CBS x PIS/Cofins: o que muda na prática para empresas de serviços",
+   "categoria": "Reforma Tributária",
+   "palavras": 1156
+  }
+ ],
+ "urlAntiga": "https://beorange.app/blog/pis-e-cofins-2025-obriga%C3%A7%C3%B5es-mudan%C3%A7as-e-novidades",
+ "notasDaMigracao": [
+  "rebaixado 1 <h1> do corpo para <h2>",
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
+ ]
 }

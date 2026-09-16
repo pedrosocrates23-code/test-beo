@@ -26,6 +26,25 @@ O sintoma é enganoso — a página monta inteira e só as imagens vêm quebrada
 problema fosse o arquivo de imagem. Já aconteceu: depois de converter as 149 capas para WebP,
 o cache ainda apontava para 86 `.png` e 52 `.jpg` que não existiam mais.
 
+## Regra do "Continue lendo" (rodapé de todo artigo)
+
+Os dois cartões no fim de cada artigo seguem esta ordem de escolha, nesta ordem:
+
+1. **Os dois textos mais próximos daquele artigo**, por proximidade de vocabulário
+   (TF-IDF sobre título, subtítulos e corpo). **Não é por categoria** — "Gestão
+   Empresarial" cabe tanto em razão social quanto em estrutura de grupo, e foi assim que o
+   artigo sobre subsidiárias e coligadas acabou fechando com "Razão Social" e "Indicadores
+   financeiros", que não continuam o assunto.
+2. **Piso de proximidade de 0,10.** Abaixo disso a ligação é ruído, e ruído no rodapé é
+   pior que nada: o bloco promete continuação do assunto.
+3. **Sem candidato acima do piso, completa com o artigo mais recente.**
+4. **Sempre exatamente dois.** Um cartão sozinho quebra a grade de duas colunas.
+
+O campo `relacionados` de cada `src/data/artigos/*.json` já chega resolvido; o componente
+`RelatedArticles.astro` só desenha. Depois de acrescentar ou reescrever artigos, rode de
+novo o script que recalcula esse campo — senão os artigos novos não entram no rodapé de
+ninguém, e os antigos seguem apontando para vizinhos que mudaram.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build

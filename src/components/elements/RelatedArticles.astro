@@ -2,13 +2,27 @@
 // Elemento: "Continue lendo" (protótipo do designer — beorange-artigo_2.html, section.related).
 // Sem <style>: o CSS é global, vindo de src/styles/prototype-artigo.css.
 //
-// Fecha o artigo com outras leituras. Parte do template de /blog/*: cada artigo novo passa
-// aqui os dois vizinhos que fazem sentido — a escolha é editorial, não cronológica, e por
-// isso a lista é explícita em vez de "os dois mais recentes".
+// Fecha o artigo com outras leituras.
+//
+// REGRA DO "CONTINUE LENDO" — vale para todo artigo do blog:
+//
+//   1. Mostra SEMPRE os dois textos mais próximos DESTE, por proximidade de vocabulário
+//      (TF-IDF sobre título, subtítulos e corpo). Não é por categoria: "Gestão
+//      Empresarial" cabe tanto em razão social quanto em estrutura de grupo, e foi
+//      exatamente assim que o artigo sobre subsidiárias e coligadas acabou fechando com
+//      "Razão Social" e "Indicadores financeiros", que não continuam o assunto.
+//   2. Só entra quem passa do piso de proximidade. Abaixo dele a ligação é ruído — e
+//      ruído aqui é pior que nada, porque o rodapé do artigo promete continuação.
+//   3. Sem candidato acima do piso, completa com o artigo MAIS RECENTE.
+//   4. Sempre exatamente DOIS. Um cartão sozinho quebra a grade de duas colunas.
+//
+// Quem aplica a regra é o script que monta src/data/artigos/*.json; o campo
+// `relacionados` de cada artigo já chega resolvido. Este componente só desenha.
 import ArticleCard from "./ArticleCard.astro";
 
 interface Props {
   titulo?: string;
+  /** Exatamente dois. A página de artigo garante isso a partir do campo `relacionados`. */
   artigos?: { categoria: string; titulo: string; resumo: string; meta: string }[];
 }
 
