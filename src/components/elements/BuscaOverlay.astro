@@ -81,8 +81,17 @@
   }
   .busca::backdrop{
     background:rgba(28,22,19,.28);
-    backdrop-filter:blur(10px) saturate(115%);
-    -webkit-backdrop-filter:blur(10px) saturate(115%);
+    /* O valor do desfoque mora numa custom property por um motivo concreto, não por estilo:
+       o minificador do build REMOVE o espaço entre as funções de filtro e entrega
+       `blur(10px)saturate(115%)`, que é sintaxe inválida — a gramática de filter exige o
+       espaço — e o navegador descarta a declaração inteira, em silêncio. O sintoma era o
+       fundo escurecer sem desfocar. Dentro de uma custom property o valor não é
+       reescrito, porque o minificador não sabe o tipo dela.
+       O prefixo -webkit- vem ANTES do padrão: quando o minificador mantém só uma das duas,
+       ele fica com a última, e a que precisa sobreviver é a sem prefixo. */
+    --desfoque:blur(10px) saturate(115%);
+    -webkit-backdrop-filter:var(--desfoque);
+    backdrop-filter:var(--desfoque);
   }
 
   /* Uma caixa só, em três faixas: campo, lista e filtro. As divisórias são bordas de 1px,
@@ -260,8 +269,10 @@
        opaco, que é o comportamento antigo, em vez de ficar sem fundo nenhum. */
     background:var(--bg-primary,#fff);
     background:color-mix(in srgb, var(--bg-primary,#fff) 80%, transparent);
-    -webkit-backdrop-filter:blur(16px) saturate(125%);
-    backdrop-filter:blur(16px) saturate(125%);
+    /* mesma armadilha do ::backdrop: ver a nota lá em cima */
+    --desfoque-menu:blur(16px) saturate(125%);
+    -webkit-backdrop-filter:var(--desfoque-menu);
+    backdrop-filter:var(--desfoque-menu);
     border:1px solid var(--border-subtle,#EFEAE6);
     border-radius:10px;box-shadow:0 16px 40px rgba(28,22,19,.18), 0 2px 6px rgba(28,22,19,.08);
   }

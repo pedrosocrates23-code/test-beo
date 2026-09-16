@@ -504,10 +504,38 @@ const {
   @media (max-width: 940px) {
     .depo-trilha { grid-auto-columns: calc((100% - 26px) / 2); }
   }
+  /* BOTÕES ABAIXO DA TRILHA QUANDO NÃO HÁ GUTTER
+     Medido: de 1180px para baixo o container perde a folga lateral e o botão, que é
+     absoluto, deixa de ficar ao lado do carrossel e passa a ficar EM CIMA dele — 44px
+     sobre o cartão e 21 a 27px sobre o texto da citação, tapando a primeira linha.
+     Empurrar o botão para dentro (left:4px) não resolvia: só escolhia qual parte do
+     depoimento seria coberta.
+     Aqui eles saem do posicionamento absoluto e viram uma dupla centralizada abaixo da
+     trilha. O grid é o que permite isso sem mexer na ordem do HTML, que precisa continuar
+     sendo trilha → anterior → próximo para quem navega por teclado. */
   @media (max-width: 1180px) {
-    /* sem folga fora da coluna de texto, os botoes passam a flutuar sobre as bordas */
-    .depo-nav--ant  { left: 4px; }
-    .depo-nav--prox { right: 4px; }
+    .depo-carrossel {
+      display: grid;
+      grid-template-columns: 1fr auto auto 1fr;
+      grid-template-areas:
+        "trilha trilha trilha trilha"
+        ".      ant    prox   .";
+      column-gap: 12px;
+      row-gap: 22px;
+    }
+    .depo-trilha    { grid-area: trilha; }
+    .depo-nav--ant  { grid-area: ant; }
+    .depo-nav--prox { grid-area: prox; }
+    .depo-nav {
+      position: static;
+      transform: none;
+      top: auto;
+      left: auto;
+      right: auto;
+    }
+    /* o hover herdava o translateY(-50%) do posicionamento absoluto, que aqui jogaria o
+       botão meio corpo para cima ao passar o mouse */
+    .depo-nav:hover { transform: scale(1.06); }
   }
   @media (max-width: 680px) {
     .depo { padding: 64px 0; }
