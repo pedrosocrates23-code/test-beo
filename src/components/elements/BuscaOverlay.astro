@@ -81,14 +81,19 @@
   }
   .busca::backdrop{
     background:rgba(28,22,19,.28);
-    /* O valor do desfoque mora numa custom property por um motivo concreto, não por estilo:
-       o minificador do build REMOVE o espaço entre as funções de filtro e entrega
-       `blur(10px)saturate(115%)`, que é sintaxe inválida — a gramática de filter exige o
-       espaço — e o navegador descarta a declaração inteira, em silêncio. O sintoma era o
-       fundo escurecer sem desfocar. Dentro de uma custom property o valor não é
-       reescrito, porque o minificador não sabe o tipo dela.
-       O prefixo -webkit- vem ANTES do padrão: quando o minificador mantém só uma das duas,
-       ele fica com a última, e a que precisa sobreviver é a sem prefixo. */
+    /* O valor do desfoque mora numa custom property e o -webkit- vem ANTES do padrão.
+       Os dois detalhes são por causa do minificador do build, verificado no CSS gerado:
+       ele descartava a declaração `backdrop-filter` sem prefixo e deixava só a `-webkit-`,
+       e colava as duas funções do valor em `blur(10px)saturate(115%)`. Dentro de uma
+       custom property o valor não é reescrito, porque o minificador não conhece o tipo
+       dela; e quando ele mantém só uma das duas declarações, fica com a última — por isso
+       a que precisa sobreviver é a sem prefixo, que vem por último.
+
+       Ressalva: isto conserta o que estava errado no CSS gerado, mas não está provado que
+       era a causa do desfoque não aparecer. O mesmo build tem `transform` com as funções
+       igualmente coladas e essas animam normalmente. Se o efeito continuar faltando, a
+       próxima suspeita é a aceleração de hardware do navegador: backdrop-filter depende de
+       composição por GPU e, sem ela, o fundo escurece sem desfocar. */
     --desfoque:blur(10px) saturate(115%);
     -webkit-backdrop-filter:var(--desfoque);
     backdrop-filter:var(--desfoque);

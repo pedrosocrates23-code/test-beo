@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# saida dos testes de largura (tests/largura.test.mjs grava aqui quando SAIDA nao e passado)
+achados.json
