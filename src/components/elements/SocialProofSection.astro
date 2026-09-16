@@ -6,10 +6,12 @@
 // omita `cases` e a fileira de cases desaparece, omita `avaliacoes` e o bloco do Google sai,
 // omita `reconhecimentos` e a coluna da direita não é renderizada.
 //
-// As marcas de "exemplo" (etiquetaExemplo, notaCases, notaAvaliacoes) existem porque o
-// conteúdo aqui é ILUSTRATIVO — foi o próprio designer quem marcou assim. Apague essas props
-// quando entrar dado real, e só então: case sem autorização por escrito e nota do Google
-// digitada à mão são os dois jeitos mais fáceis de transformar esta seção em problema.
+// ESTADO DO CONTEÚDO, por bloco:
+//   - avaliações do Google: REAL, lido no perfil da empresa em 16/09/2026. Ver a nota
+//     extensa junto dos dados, mais abaixo, antes de mudar qualquer número.
+//   - cases: ainda ILUSTRATIVOS, marcados como tal pelo próprio designer. Case sem
+//     autorização por escrito é o jeito mais fácil de transformar esta seção em problema.
+//   - reconhecimentos: prêmios e aporte, informados pela empresa.
 interface Props {
   titulo?: string;
   /** Etiqueta de aviso ao lado do título. Passe "" quando o conteúdo for real. */
@@ -22,6 +24,8 @@ interface Props {
     nota: string;
     estrelas: string;
     total: string;
+    /** Link de saída para o perfil real. Sem ele o número no site é só uma afirmação. */
+    link?: { texto: string; href: string };
     depoimentos: { texto: string; autor: string; quando: string }[];
     nota_rodape?: string;
   };
@@ -38,17 +42,35 @@ const {
   ],
   notaCases = "Cases ilustrativos por segmento — substituir pelos 3 cases reais, com resultado mensurável e autorização por escrito.",
   linkCases = { texto: "Ver todos os cases", href: "/cases/" },
+  // DADOS REAIS DO PERFIL DA EMPRESA NO GOOGLE — não edite nenhuma linha daqui sem voltar
+  // à fonte. Lidos no próprio perfil em 16/09/2026, pelo link que o cliente forneceu
+  // (share.google/ZJ1a0wlOXtjYTOzsQ), que resolve para o painel do negócio "Beorange",
+  // Av. Visc. de Guarapuava, 3263 - Centro, Curitiba - PR. Identificador do lugar:
+  // 0x94dce5ada3eb7c99:0xa52a627480cda01e (CID 11901433217796644894).
+  //
+  // Estado na data da leitura: nota 5,0 sobre 7 avaliações. Das 7, apenas QUATRO têm texto
+  // — as outras três (katherine_gonçalves, Gabriely Toth, Carolina Versetti) são só nota,
+  // sem comentário. As três exibidas abaixo são as três primeiras na ordem padrão do
+  // Google ("Mais relevantes"), copiadas literalmente, com o nome como o Google o mostra.
+  //
+  // Avaliação não se edita, não se resume e não se traduz: é declaração de terceiro e o
+  // número é auditável por qualquer visitante no link ao lado. Quando o total mudar, volte
+  // ao perfil e atualize os dois — nota e total — na mesma passada.
   avaliacoes = {
     titulo: "O que dizem no Google",
-    nota: "4,9",
+    nota: "5,0",
     estrelas: "★★★★★",
-    total: "63 avaliações no Google",
+    total: "7 avaliações no Google",
+    link: {
+      texto: "Ver no Google",
+      href: "https://www.google.com/maps?cid=11901433217796644894",
+    },
     depoimentos: [
-      { texto: '"Migramos para o Lucro Real no meio do ano e a virada de regime foi tranquila. O time responde rápido."', autor: "Marina A.", quando: "há 2 semanas" },
-      { texto: '"Finalmente contabilidade e conta no mesmo lugar. Parei de exportar planilha para conciliar."', autor: "Rafael T.", quando: "há 1 mês" },
-      { texto: '"O analista conhece a nossa operação. Não é atendimento genérico de fila."', autor: "Camila S.", quando: "há 1 mês" },
+      { texto: '"Muito atenciosos mesmo, atendimento é excelente!!"', autor: "Camila De Lima", quando: "há um ano" },
+      { texto: '"Experiência incrível, recomendo para todos."', autor: "paulaosiecki osieck", quando: "há um ano" },
+      { texto: '"Atendimento excepcional"', autor: "Matheus W.", quando: "há um ano" },
     ],
-    nota_rodape: "Nota, total e textos ilustrativos — puxar do Perfil da Empresa no Google. Avaliação não se edita.",
+    nota_rodape: "Nota e avaliações do Perfil da Empresa no Google, lidas em 16 de setembro de 2026.",
   },
   reconhecimentos = {
     titulo: "Reconhecimentos",
@@ -89,7 +111,17 @@ const {
         <div class="reviews-ph rv">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
             <strong style="font-size:15px;color:var(--ink)">{avaliacoes.titulo}</strong>
-            {etiquetaExemplo && <span class="ex-tag">Exemplo</span>}
+            {/* Sem etiqueta de exemplo: daqui para a frente este bloco só existe com dado
+                real, e o link ao lado deixa qualquer visitante conferir o número na fonte. */}
+            {avaliacoes.link && (
+              <a class="g-link" href={avaliacoes.link.href} target="_blank" rel="noopener">
+                {avaliacoes.link.texto}
+                <svg viewBox="0 0 24 24" aria-hidden="true" width="13" height="13" fill="none"
+                     stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17 17 7M9 7h8v8" />
+                </svg>
+              </a>
+            )}
           </div>
           <div class="g-head">
             <div class="g-score">{avaliacoes.nota}</div>
@@ -112,3 +144,19 @@ const {
     </div>
   </div>
 </section>
+
+<style>
+  /* Link para o perfil no Google. Fica no cabeçalho do bloco, no lugar onde antes estava a
+     etiqueta "Exemplo": é a troca de uma ressalva por uma prova — o visitante confere o
+     número na fonte em vez de confiar no site. */
+  .reviews-ph .g-link{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:12.5px;font-weight:600;
+    color:var(--action-primary,#F5380F);
+    text-decoration:none;white-space:nowrap;
+    padding:4px 2px;border-radius:6px;
+  }
+  .reviews-ph .g-link:hover{text-decoration:underline}
+  .reviews-ph .g-link:focus-visible{outline:2px solid var(--action-primary,#F5380F);outline-offset:2px}
+  .reviews-ph .g-link svg{flex:none}
+</style>

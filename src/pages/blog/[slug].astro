@@ -12,7 +12,7 @@
 // aviso em ArticleBody.astro — nunca digitado à mão, nunca herdado do exemplo.
 import type { GetStaticPaths } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
-import { contarPalavras, tempoDeLeitura } from "../../lib/artigo";
+import { contarPalavras, tempoDeLeitura, normalizarLinks } from "../../lib/artigo";
 import Layout from "../../layouts/Layout.astro";
 import "../../styles/prototype-artigo.css";
 import Header from "../../components/elements/Header.astro";
@@ -42,6 +42,10 @@ const { artigo } = Astro.props as Props;
 const minutos = tempoDeLeitura(
   contarPalavras(artigo.corpo) + contarPalavras(artigo.lead),
 );
+
+// Regra de target dos links do corpo: link da casa substitui a aba, link de fora abre outra.
+// Vale para todo artigo, inclusive os que entrarem depois — ver normalizarLinks() em lib/artigo.
+const corpo = normalizarLinks(artigo.corpo);
 
 const relacionados = artigo.relacionados.map((r) => ({
   categoria: r.categoria,
@@ -90,7 +94,7 @@ const relacionados = artigo.relacionados.map((r) => ({
     )}
 
     <ArticleBody>
-      <Fragment set:html={artigo.corpo} />
+      <Fragment set:html={corpo} />
     </ArticleBody>
 
     {relacionados.length > 0 && <RelatedArticles artigos={relacionados} />}

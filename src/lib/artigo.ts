@@ -54,3 +54,77 @@ export function formatarData(iso: string): string {
   }
   return `${dia} de ${MESES[mes - 1]} de ${ano}`;
 }
+
+/** O domínio da casa. Único — beorange.app. Qualquer outro host é link de fora. */
+export const DOMINIO = "beorange.app";
+
+/**
+ * Decide, para um href, se o link é da casa ou de fora.
+ *
+ *   "casa"       — fica na mesma aba: o visitante está navegando dentro do site.
+ *                  Cobre caminho absoluto (/blog/…), âncora (#secao), relativo (../)
+ *                  e o endereço completo do próprio domínio.
+ *   "protocolo"  — mailto:, tel:, whatsapp:. Quem abre é o sistema operacional,
+ *                  não o navegador; target aqui não significa nada.
+ *   "fora"       — qualquer outro host. Abre em aba nova.
+ */
+export function classificarHref(href: string): "casa" | "protocolo" | "fora" {
+  const h = href.trim();
+  if (!h) return "casa";
+  if (/^(mailto|tel|sms|whatsapp):/i.test(h)) return "protocolo";
+  if (/^(https?:)?\/\//i.test(h)) {
+    const host = h.replace(/^(https?:)?\/\//i, "").split(/[/?#]/)[0].toLowerCase();
+    return host === DOMINIO || host === `www.${DOMINIO}` ? "casa" : "fora";
+  }
+  return "casa"; // /caminho, #ancora, ../, caminho/relativo
+}
+
+/**
+ * Aplica a regra de target aos links do corpo de um artigo, em build time.
+ *
+ * A regra, em uma linha: link da casa SUBSTITUI a aba, link de fora ABRE outra.
+ *
+ * Por que aqui e não no conteúdo: o corpo dos 149 artigos veio da migração do Framer com o
+ * target decidido item a item, e decidido errado — dos 11 `target="_blank"` do acervo, 9
+ * eram links internos (/blog/…) e só 2 apontavam para fora. Havia ainda 96 `rel="noopener"`
+ * em links sem target nenhum, onde o atributo não faz absolutamente nada. Corrigir isso no
+ * JSON seria corrigir uma vez; aqui a regra vale também para todo artigo que entrar depois,
+ * sem depender de quem escreve lembrar dela.
+ *
+ * O que cada caso recebe:
+ *   casa       → sem target; o rel de segurança sai (sem target ele é ruído)
+ *   fora       → target="_blank" + rel="noopener noreferrer"
+ *   protocolo  → intocado
+ *
+ * `noreferrer` junto de `noopener` é intencional: `noopener` fecha o acesso da página de
+ * destino ao `window.opener`, e `noreferrer` impede que o endereço do artigo viaje no
+ * cabeçalho Referer. Os dois são o par recomendado para link de saída.
+ *
+ * rel que o autor tenha escrito por um motivo — nofollow, sponsored, ugc — é preservado.
+ */
+export function normalizarLinks(html: string): string {
+  const REL_SEGURANCA = new Set(["noopener", "noreferrer"]);
+
+  return html.replace(/<a\b([^>]*)>/gi, (tag, attrs: string) => {
+    const href = attrs.match(/\bhref\s*=\s*["']([^"']*)["']/i)?.[1];
+    if (href === undefined) return tag; // <a name="..."> antigo, sem destino
+
+    const destino = classificarHref(href);
+    if (destino === "protocolo") return tag;
+
+    // tira target e rel para reescrever do zero, preservando o resto dos atributos
+    let limpo = attrs
+      .replace(/\s*\btarget\s*=\s*["'][^"']*["']/gi, "")
+      .replace(/\s*\brel\s*=\s*["'][^"']*["']/gi, "");
+
+    const relAutor = (attrs.match(/\brel\s*=\s*["']([^"']*)["']/i)?.[1] ?? "")
+      .split(/\s+/)
+      .filter((t) => t && !REL_SEGURANCA.has(t.toLowerCase()));
+
+    const rel = destino === "fora" ? [...relAutor, "noopener", "noreferrer"] : relAutor;
+    const alvo = destino === "fora" ? ' target="_blank"' : "";
+    const relAttr = rel.length ? ` rel="${[...new Set(rel)].join(" ")}"` : "";
+
+    return `<a${limpo.trimEnd()}${alvo}${relAttr}>`;
+  });
+}

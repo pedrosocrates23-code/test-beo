@@ -8,6 +8,10 @@
 // Contabilidade, mas a lista é livre. Cada card puxa o desenho do catálogo compartilhado
 // (Icone.astro) em vez de trazer o próprio SVG.
 import Icone, { type NomeIcone } from "./Icone.astro";
+// Mesma régua de target do corpo dos artigos: link da casa substitui a aba, link de fora abre
+// outra. Aqui isso importa para o card do WhatsApp em /contato/ — os de e-mail e telefone são
+// protocolo (mailto:, tel:) e classificarHref os deixa intactos, porque quem abre é o sistema.
+import { classificarHref } from "../../lib/artigo";
 
 interface Props {
   id?: string;
@@ -45,7 +49,10 @@ const {
           {f.icone && <div class="ic"><Icone nome={f.icone} /></div>}
           <h3>{f.titulo}</h3>
           <p>{f.texto}</p>
-          {f.link && <div class="pfoot"><a href={f.link.href} class="link-cta">{f.link.texto} <Icone nome="seta-direita" /></a></div>}
+          {f.link && (() => {
+            const fora = classificarHref(f.link.href) === "fora";
+            return <div class="pfoot"><a href={f.link.href} class="link-cta" target={fora ? "_blank" : undefined} rel={fora ? "noopener noreferrer" : undefined}>{f.link.texto} <Icone nome="seta-direita" /></a></div>;
+          })()}
         </div>
       ))}
     </div>
