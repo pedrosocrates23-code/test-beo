@@ -16,8 +16,20 @@ import BuscaOverlay from "../components/elements/BuscaOverlay.astro";
 export interface Props {
   title: string;
   description?: string;
+  /** Sobrescreve a canonical desta página. Use só quando o endereço preferido for outro
+   *  que não o da própria página — numa versão paginada, por exemplo. */
+  canonical?: string;
 }
-const { title, description = "Contabilidade, operação financeira e tecnologia para empresas em crescimento." } = Astro.props;
+const {
+  title,
+  description = "Contabilidade, operação financeira e tecnologia para empresas em crescimento.",
+  canonical,
+} = Astro.props;
+
+// Endereço preferido desta página, sempre no domínio final (Astro.site vem de
+// astro.config.mjs). Enquanto o site vive numa URL de preview, é isto que diz ao buscador
+// qual é a versão que vale, caso o preview seja varrido apesar do robots.txt.
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
 ---
 <html lang="pt-BR">
   <head>
@@ -26,6 +38,8 @@ const { title, description = "Contabilidade, operação financeira e tecnologia 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
