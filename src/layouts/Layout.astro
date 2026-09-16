@@ -3,6 +3,11 @@ import "../styles/tokens.css";
 // Depois dos tokens e de propósito fora dos prototype-*.css: corrige a variante da logo do
 // header para toda página, presente ou futura. Ver o cabeçalho do arquivo.
 import "../styles/header-logo.css";
+// Barreiras de largura para celular: impedem que qualquer página role para o lado no
+// telefone. Atenção: esta folha sai no bundle do Layout e é carregada ANTES dos
+// prototype-*.css das páginas, então as regras que disputam com elas levam prefixo para
+// vencer por especificidade — ver o cabeçalho do arquivo.
+import "../styles/mobile.css";
 // A sobreposição de busca vive no Layout porque o gatilho dela — a lupa do header — está em
 // toda página. Sem JS ela não abre, e o site continua navegável pelo menu; com JS, a mesma
 // busca atende o header, o campo do blog e os atalhos de teclado.

@@ -452,6 +452,16 @@
   .esp{background:#fff;border:1px solid var(--border);border-radius:var(--r-card);padding:34px;display:flex;flex-direction:column}
   .esp .ptag{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--coral)}
   .esp h3{font-size:22px;margin:10px 0 18px}
+  /* TÍTULO BRANCO SOBRE CARTÃO BRANCO — 29 títulos invisíveis no site, em 14 páginas.
+     `section.dark h2,section.dark h3{color:#fff}` (logo acima, na seção de tema escuro) está
+     certo para o que fica direto sobre o fundo escuro. Só que os cartões .esp vivem dentro
+     dessa mesma seção e têm fundo branco próprio, e o h3 deles pegava o branco: contraste
+     medido de 1,00 contra 1 — não é texto de baixo contraste, é texto que não existe na tela.
+     O efeito visual engana: parece um buraco de espaçamento entre a etiqueta e a lista, e foi
+     assim que apareceu.
+     A especificidade é obrigatória aqui. `section.dark h3` pesa (0,1,2) e `.esp h3` sozinho
+     pesa (0,1,1) — perderia. Com `section.dark` na frente, (0,2,2) ganha. */
+  section.dark .esp h3{color:var(--ink)}
   .esp ul{list-style:none;display:grid;gap:12px;margin-bottom:26px}
   .esp li{font-size:14.5px;color:var(--ink-2);display:flex;gap:10px;align-items:flex-start}
   .esp li svg{width:16px;height:16px;stroke:var(--coral);fill:none;flex:none;margin-top:3px}

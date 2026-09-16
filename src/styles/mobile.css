@@ -1,0 +1,114 @@
+/* =============================================================================
+   BARREIRAS DE LARGURA PARA CELULAR
+   Carregada pelo Layout, ou seja, vale em toda página.
+
+   Por que existe uma folha só para isto, em vez de cada correção morar no seu
+   protótipo: as três folhas de protótipo (home, contabilidade, artigo) repetem as
+   MESMAS regras de base — .btn, .pcard, .field, tabelas. A causa do scroll lateral
+   também era a mesma nas três, e espalhar a correção em triplicata é o caminho mais
+   curto para ela voltar em uma delas.
+
+   O que cada bloco corrige foi MEDIDO num Chromium, de 320px a 430px, com
+   `width:min-content` aplicado elemento a elemento — não deduzido lendo CSS. Os
+   números nos comentários são o que o navegador respondeu.
+
+   ORDEM DE CARGA — leia antes de editar. O Astro NAO coloca esta folha depois das folhas de
+   protótipo. Medido no build: as regras daqui saem no bundle do Layout, que o HTML carrega
+   ANTES do prototype-*.css da página. Quer dizer: regra daqui com a mesma especificidade que
+   uma de lá PERDE, em silêncio. Foi o que aconteceu na primeira versão deste arquivo — o
+   bloco de padding ficou inerte e só apareceu na medição, não na leitura.
+   Por isso todo seletor que disputa com uma regra de protótipo leva o prefixo `html`, que
+   custa um (0,1,1) contra o (0,1,0) de lá e resolve a disputa por especificidade, não por
+   ordem. Onde não há disputa, o seletor fica simples — e está marcado como tal.
+
+   Uma nota sobre o header: nas medições ele aparecia com a largura da página
+   inteira (até 555px numa tela de 320px) e parecia ser o culpado. Não é. Ele é
+   `position:fixed` e o Chrome o estica até a largura de rolagem do documento; ele
+   encolhe sozinho assim que a página para de estourar. Não mexa nele por causa
+   disto.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   ATÉ 880px — as barreiras estruturais.
+   O limite é 880 e não 680 porque o estouro medido em /contabilidade-beorange/
+   /tributario/ ainda existia a 430px, e o botão que o causava continua grande
+   até o layout de duas colunas voltar.
+   --------------------------------------------------------------------------- */
+@media(max-width:880px){
+
+  /* 1. BOTÕES ---------------------------------------------------------------
+     Causa nº 1 do scroll lateral, em quase todas as páginas de produto e em todo
+     formulário. `.btn` carrega `white-space:nowrap`, que no desktop é correto:
+     rótulo de botão não deve quebrar. No celular o mesmo nowrap transforma um
+     rótulo comprido numa barra rígida mais larga que a tela.
+
+     Medido a 320px (viewport útil de 264px):
+       "Ver a preparação completa para a Reforma Tributária"   426px
+       "Conhecer a Contabilidade Beorange"                     301px
+       "Solicitar diagnóstico tributário" (botão do form)      262px
+
+     Com quebra liberada, a largura mínima passa a ser a da maior PALAVRA mais o
+     padding — 138px no pior caso. */
+  html .btn{white-space:normal;text-align:center;max-width:100%}
+
+  /* 2. TABELAS --------------------------------------------------------------
+     `display:block` faz a tabela virar uma caixa que rola sozinha em vez de
+     empurrar a página. As linhas continuam montando a grade normalmente — o que
+     se perde é o esticar até 100% do container, que no celular não acontecia de
+     qualquer forma.
+       /politica-de-cookies/   tabela de 4 colunas   min 371px
+       /politica-de-privacidade/                     min 318px
+       artigo com <figure><table>                    min 336px */
+  table{display:block;width:max-content;max-width:100%;overflow-x:auto}
+  figure{max-width:100%;overflow-x:auto}
+
+  /* 3. CAMPOS DE FORMULÁRIO -------------------------------------------------
+     Um <select> tem `white-space:pre` embutido e largura mínima igual à da opção
+     mais longa: em /contato/ isso dava 261px e estourava a página sozinho. O
+     `min-width:0` em cada nível é o que permite a trilha do grid encolher — sem
+     ele o mínimo automático da trilha é o min-content do campo. */
+  form,.form-grid,.field{min-width:0}
+  .field input,.field select,.field textarea{width:100%;min-width:0;max-width:100%}
+
+  /* 4. CAIXAS DENTRO DE GRIDS DE UMA COLUNA ---------------------------------
+     Rede de segurança, não a correção principal. Numa trilha `1fr` o mínimo
+     automático é o min-content do item, então um filho teimoso estica a trilha e
+     com ela a página. As correções de verdade são as de cima, nas folhas; isto
+     garante que um conteúdo novo e largo fique contido no próprio cartão em vez
+     de vazar para o documento. */
+  .pcard,.esp,.d2l,.d2r,.diag-l,.diag-r,.frente,.prose,.share,.prob{min-width:0}
+
+  /* 5. TRILHO DE MARCAS -----------------------------------------------------
+     `.marcas-trilho` é `width:max-content` de propósito — são as marcas
+     duplicadas para a animação correr sem emenda, 4.272px a 320px. Quem tinha de
+     recortar isso é a esteira, e ela não recortava. */
+  .marcas-esteira{overflow:hidden}
+
+  /* 6. PALAVRA SEM ESPAÇO ---------------------------------------------------
+     `anywhere` e não `break-word`: só `anywhere` entra no cálculo de min-content,
+     que é justamente o que estica a página. Vale para o corpo dos artigos e das
+     páginas legais, onde aparecem URLs, siglas coladas e — em alguns artigos
+     migrados — fórmulas que vieram do Framer com o LaTeX grudado no texto. */
+  .prose p,.prose li,.prose td,.prose th,.legal p,.legal li,.legal td{overflow-wrap:anywhere}
+
+  /* 7. IMAGENS DO CORPO -----------------------------------------------------
+     Medida: uma <img> dentro de .prose entrava com 450px de largura natural. */
+  .prose img,.legal img{max-width:100%;height:auto}
+}
+
+/* ---------------------------------------------------------------------------
+   ATÉ 680px — o respiro das caixas.
+   Não corrige estouro sozinho; devolve largura útil. Um cartão com 38px de
+   padding de cada lado consome 76 dos 264px disponíveis a 320px — quase um terço
+   da tela para moldura.
+   --------------------------------------------------------------------------- */
+@media(max-width:680px){
+  /* Prefixo `html` obrigatório aqui: os valores originais moram nos prototype-*.css com a
+     mesma especificidade e são carregados depois. Sem o prefixo este bloco inteiro não vale
+     nada — medido, era exatamente o que acontecia. */
+  html .pcard{padding:24px}
+  html .esp{padding:24px}
+  html .d2r{padding:24px}
+  html .diag-l{padding:40px 24px}
+  html .diag-r{margin:12px;padding:24px}
+}

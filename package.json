@@ -10,7 +10,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test:busca": "node tests/busca.test.mjs"
+    "test:busca": "node tests/busca.test.mjs",
+    "test:largura": "node tests/largura.test.mjs",
+    "test": "npm run test:busca && npm run test:largura && npm run test:contraste",
+    "test:contraste": "node tests/contraste.test.mjs"
   },
   "dependencies": {
     "astro": "^7.3.2"
@@ -21,6 +24,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "jsdom": "^29.1.1",
+    "playwright": "^1.63.0",
     "typescript": "^6.0.3"
   }
 }
