@@ -106,9 +106,14 @@ const {
       {texto && <p>{texto}</p>}
     </div>
 
-    <ul class="depo-grade">
-      {depoimentos.map((d) => (
-        <li class={`depo-card rv${d.destaque ? " depo-card--marca" : ""}`}>
+    <div class="depo-carrossel" data-depo-carrossel>
+      <ul class="depo-trilha">
+      {depoimentos.map((d, i) => (
+        <li
+          class={`depo-card${d.destaque ? " depo-card--marca" : ""}`}
+          aria-roledescription="depoimento"
+          aria-label={`${i + 1} de ${depoimentos.length}`}
+        >
           {d.foto && (
             <img
               class="depo-foto"
@@ -116,7 +121,7 @@ const {
               alt={`${d.nome}, ${d.cargo} da ${d.empresa}`}
               width="88"
               height="88"
-              loading="lazy"
+              loading={i < 3 ? "eager" : "lazy"}
               decoding="async"
             />
           )}
@@ -129,9 +134,105 @@ const {
           <blockquote class="depo-frase"><q>{d.texto}</q></blockquote>
         </li>
       ))}
-    </ul>
+      </ul>
+
+      {/* Controles escondidos por padrão e revelados pelo JS: sem script eles não fariam
+          nada, e botão morto é pior que botão ausente. Sem JS o carrossel continua
+          utilizável — a trilha é uma área de rolagem de verdade, que arrasta no celular e
+          rola com as setas do teclado no computador. */}
+      <div class="depo-controles" hidden>
+        <button type="button" class="depo-nav" data-depo-ant aria-label="Depoimento anterior">
+          <svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22" fill="none"
+               stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        <p class="depo-status" role="status" aria-live="polite">
+          Depoimento 1 de {depoimentos.length}
+        </p>
+        <button type="button" class="depo-nav" data-depo-prox aria-label="Próximo depoimento">
+          <svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22" fill="none"
+               stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+  // Carrossel de depoimentos.
+  //
+  // A rolagem é do navegador: a trilha é um contêiner com overflow-x e scroll-snap, então
+  // arrastar no celular e rolar com o teclado já funcionam sem uma linha de script. O JS
+  // acrescenta só o que não dá para fazer em CSS — os botões, a contagem falada e a
+  // desativação nas pontas.
+  //
+  // Não há avanço automático, de propósito: um carrossel que troca sozinho tira do leitor
+  // o controle do tempo de leitura, e aqui cada slide é uma citação inteira.
+  document.querySelectorAll<HTMLElement>("[data-depo-carrossel]").forEach((raiz) => {
+    const trilha = raiz.querySelector<HTMLElement>(".depo-trilha");
+    const controles = raiz.querySelector<HTMLElement>(".depo-controles");
+    const ant = raiz.querySelector<HTMLButtonElement>("[data-depo-ant]");
+    const prox = raiz.querySelector<HTMLButtonElement>("[data-depo-prox]");
+    const status = raiz.querySelector<HTMLElement>(".depo-status");
+    if (!trilha || !controles || !ant || !prox || !status) return;
+
+    const cards = Array.from(trilha.querySelectorAll<HTMLElement>(".depo-card"));
+    if (cards.length < 2) return;
+    controles.hidden = false;
+
+    /** Índice do card mais próximo da borda esquerda da área visível. */
+    const atual = () => {
+      const x = trilha.scrollLeft;
+      let melhor = 0;
+      let menor = Infinity;
+      cards.forEach((c, i) => {
+        const d = Math.abs(c.offsetLeft - trilha.offsetLeft - x);
+        if (d < menor) {
+          menor = d;
+          melhor = i;
+        }
+      });
+      return melhor;
+    };
+
+    const irPara = (i: number) => {
+      const alvo = cards[Math.max(0, Math.min(cards.length - 1, i))];
+      trilha.scrollTo({
+        left: alvo.offsetLeft - trilha.offsetLeft,
+        // respeita quem pediu menos movimento no sistema
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
+    };
+
+    const atualizar = () => {
+      const i = atual();
+      status.textContent = `Depoimento ${i + 1} de ${cards.length}`;
+      // 1px de folga: a posição de rolagem é fracionária e raramente bate no valor exato
+      ant.disabled = trilha.scrollLeft <= 1;
+      prox.disabled = trilha.scrollLeft >= trilha.scrollWidth - trilha.clientWidth - 1;
+    };
+
+    ant.addEventListener("click", () => irPara(atual() - 1));
+    prox.addEventListener("click", () => irPara(atual() + 1));
+
+    let pendente = 0;
+    trilha.addEventListener(
+      "scroll",
+      () => {
+        window.clearTimeout(pendente);
+        pendente = window.setTimeout(atualizar, 120);
+      },
+      { passive: true },
+    );
+    window.addEventListener("resize", atualizar, { passive: true });
+    atualizar();
+  });
+</script>
 
 <style>
   /* Estilo próprio, e não no prototype-*.css, porque esta peça não existe no HTML do designer:
@@ -141,16 +242,30 @@ const {
   .depo { padding: 104px 0; background: var(--bg-primary, #fff); }
   .depo.alt { background: var(--bg-secondary, #FBF9F7); }
 
-  .depo-grade {
+  /* CARROSSEL
+     A rolagem é nativa: overflow-x + scroll-snap. Sai de graça o arrasto no celular, a
+     inércia do sistema e a navegação por teclado; o JS só acrescenta os botões e a
+     contagem falada.
+
+     O padding-top de 50px não é estética: a foto de cada cartão é absoluta em top:-44px,
+     ou seja, sobe para FORA do cartão. Num contêiner com overflow-x, o que sai da caixa é
+     cortado — sem essa folga, as cinco fotos apareceriam decepadas ao meio. */
+  .depo-trilha {
     list-style: none;
     margin: 56px 0 0;
-    padding: 0;
+    padding: 50px 0 4px;
     display: grid;
-    /* minmax(0,1fr) e não 1fr: numa trilha 1fr o mínimo automático é o min-content do
-       cartão, e uma citação longa sem espaço esticaria a grade e a página junto. */
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 62px 26px;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 52px) / 3);
+    gap: 26px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* a barra de rolagem fica escondida: quem navega com mouse usa os botões, e no
+       celular o gesto já é o modo natural. A área continua rolável. */
+    scrollbar-width: none;
   }
+  .depo-trilha::-webkit-scrollbar { display: none; }
+  .depo-trilha > .depo-card { scroll-snap-align: start; }
 
   .depo-card {
     position: relative;
@@ -220,12 +335,63 @@ const {
   .depo-card--marca .depo-cargo strong,
   .depo-card--marca .depo-frase q { color: #fff; }
 
+  /* CONTROLES */
+  .depo-controles {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 28px;
+  }
+  .depo-nav {
+    /* 44px é o alvo mínimo de toque confortável no celular */
+    width: 44px;
+    height: 44px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-default, #DDD5CE);
+    border-radius: 50%;
+    background: var(--bg-primary, #fff);
+    color: var(--text-primary, #2B2320);
+    cursor: pointer;
+    transition: .2s;
+  }
+  .depo-nav:hover:not(:disabled) {
+    background: var(--action-primary, #F5380F);
+    border-color: transparent;
+    color: #fff;
+  }
+  .depo-nav:focus-visible {
+    outline: 2px solid var(--action-primary, #F5380F);
+    outline-offset: 2px;
+  }
+  /* Desabilitado em vez de escondido: o botão que some faz os outros pularem de lugar,
+     e a posição do controle é o que o dedo já memorizou. */
+  .depo-nav:disabled { opacity: .35; cursor: default; }
+
+  .depo-status {
+    margin: 0;
+    min-width: 15ch;
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--text-secondary, #5B534E);
+    font-variant-numeric: tabular-nums;
+  }
+
   @media (max-width: 940px) {
-    .depo-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .depo-trilha { grid-auto-columns: calc((100% - 26px) / 2); }
   }
   @media (max-width: 680px) {
     .depo { padding: 64px 0; }
-    .depo-grade { grid-template-columns: minmax(0, 1fr); gap: 62px; margin-top: 44px; }
+    .depo-trilha {
+      grid-auto-columns: 100%;
+      margin-top: 44px;
+    }
     .depo-card { padding: 58px 20px 26px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .depo-trilha { scroll-behavior: auto; }
   }
 </style>

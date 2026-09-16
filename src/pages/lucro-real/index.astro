@@ -27,6 +27,13 @@ import DiagnosticoEntrada from "../../components/elements/DiagnosticoEntrada.ast
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
+  schema={{
+    tipo: "servico",
+    nome: "Lucro Real e estratégia tributária",
+    descricao: "Revisão de bases, créditos, recuperação e planejamento tributário no Lucro Real.",
+    servico: "Estratégia tributária no Lucro Real",
+    migalhas: [{ nome: "Home", url: "/" }, { nome: "Lucro Real", url: "/lucro-real/" }],
+  }}
   title="Contabilidade para Lucro Real | Estratégia tributária Beorange"
   description="Revisão de bases, aproveitamento de créditos, recuperação de valores e planejamento tributário para empresas no Lucro Real. Comece por um diagnóstico."
 >

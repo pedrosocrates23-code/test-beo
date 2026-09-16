@@ -41,6 +41,12 @@ const EMAIL = "contato@beorange.app";
 const ENDERECO = "Av. Visc. de Guarapuava, 3263 - Centro, Curitiba - PR, 80010-100";
 ---
 <Layout
+  schema={{
+    tipo: "contato",
+    nome: "Contato",
+    descricao: "Fale com quem vai ler os seus números.",
+    migalhas: [{ nome: "Home", url: "/" }, { nome: "Contato", url: "/contato/" }],
+  }}
   title="Contato | Beorange"
   description="Fale com um especialista da Beorange. Diagnóstico contábil, fiscal, societário e tributário para empresas em crescimento."
 >

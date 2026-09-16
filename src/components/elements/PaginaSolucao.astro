@@ -60,7 +60,21 @@ const {
   problema, escopo = [], escopoTitulo, atuacao, beneficios, integracao, irmas = [], ctaFinal,
 } = Astro.props;
 ---
-<Layout title={metaTitle} description={metaDescription}>
+<Layout
+  title={metaTitle}
+  description={metaDescription}
+  schema={{
+    tipo: "servico",
+    nome: frente,
+    descricao: lead,
+    servico: frente,
+    migalhas: [
+      { nome: "Home", url: "/" },
+      { nome: produto, url: produtoHref },
+      { nome: frente, url: Astro.url.pathname.endsWith("/") ? Astro.url.pathname : Astro.url.pathname + "/" },
+    ],
+  }}
+>
   <Header ativo="solucoes" />
   <MobileMenu />
 

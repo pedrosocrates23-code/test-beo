@@ -23,6 +23,12 @@ import PaginaLegal from "../../components/elements/PaginaLegal.astro";
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
+  schema={{
+    tipo: "pagina",
+    nome: "LGPD",
+    descricao: "Como exercer os direitos previstos na Lei Geral de Proteção de Dados junto à Beorange.",
+    migalhas: [{ nome: "Home", url: "/" }, { nome: "LGPD", url: "/lgpd/" }],
+  }}
   title="LGPD | Beorange"
   description="Como exercer os direitos previstos na Lei Geral de Proteção de Dados junto à Beorange."
 >

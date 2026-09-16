@@ -12,8 +12,9 @@
     "astro": "astro",
     "test:busca": "node tests/busca.test.mjs",
     "test:largura": "node tests/largura.test.mjs",
-    "test": "npm run test:busca && npm run test:largura && npm run test:contraste",
-    "test:contraste": "node tests/contraste.test.mjs"
+    "test": "npm run test:busca && npm run test:largura && npm run test:contraste && npm run test:schema",
+    "test:contraste": "node tests/contraste.test.mjs",
+    "test:schema": "node tests/schema.test.mjs"
   },
   "dependencies": {
     "astro": "^7.3.2"

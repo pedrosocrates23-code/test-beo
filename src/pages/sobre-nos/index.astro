@@ -23,6 +23,12 @@ import SeisFrentes from "../../components/elements/SeisFrentes.astro";
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
+  schema={{
+    tipo: "sobre",
+    nome: "Sobre a Beorange",
+    descricao: "Quem somos, como trabalhamos e por que a Beorange existe.",
+    migalhas: [{ nome: "Home", url: "/" }, { nome: "Sobre nós", url: "/sobre-nos/" }],
+  }}
   title="Sobre a Beorange | Contabilidade, tecnologia e leitura dos números"
   description="Quem somos, como trabalhamos e por que a Beorange existe. Contabilidade consultiva e infraestrutura financeira para empresas em crescimento."
 >

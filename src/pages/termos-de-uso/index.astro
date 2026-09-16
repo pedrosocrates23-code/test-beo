@@ -23,6 +23,12 @@ import PaginaLegal from "../../components/elements/PaginaLegal.astro";
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
+  schema={{
+    tipo: "pagina",
+    nome: "Termos de Uso",
+    descricao: "Condições para utilizar o site, o portal e as soluções da Beorange.",
+    migalhas: [{ nome: "Home", url: "/" }, { nome: "Termos de Uso", url: "/termos-de-uso/" }],
+  }}
   title="Termos de Uso | Beorange"
   description="As condições para utilizar o site, o portal e as soluções da Beorange."
 >

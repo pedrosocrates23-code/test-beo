@@ -55,6 +55,12 @@ const destaques = [...pilares.values()]
 const todos = artigos.map(paraCard);
 ---
 <Layout
+  schema={{
+    tipo: "blog",
+    nome: "Blog Beorange",
+    descricao: "Conteúdo sobre Lucro Real, Reforma Tributária, departamento pessoal, societário e gestão financeira.",
+    migalhas: [{ nome: "Home", url: "/" }, { nome: "Blog", url: "/blog/" }],
+  }}
   title="Blog Beorange | Contabilidade, tributário e gestão financeira"
   description="Conteúdo sobre Lucro Real, Reforma Tributária, departamento pessoal, societário e gestão financeira para empresas em crescimento."
 >

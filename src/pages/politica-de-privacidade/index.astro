@@ -30,6 +30,12 @@ import PaginaLegal from "../../components/elements/PaginaLegal.astro";
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
+  schema={{
+    tipo: "pagina",
+    nome: "Política de Privacidade",
+    descricao: "Como a Beorange coleta, usa, armazena e protege dados pessoais.",
+    migalhas: [{ nome: "Home", url: "/" }, { nome: "Política de Privacidade", url: "/politica-de-privacidade/" }],
+  }}
   title="Política de Privacidade | Beorange"
   description="Como a Beorange coleta, usa, armazena e protege os dados pessoais de clientes e visitantes."
 >

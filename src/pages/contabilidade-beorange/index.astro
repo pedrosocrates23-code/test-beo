@@ -16,6 +16,13 @@ import DiagnosticoEntrada from "../../components/elements/DiagnosticoEntrada.ast
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
+  schema={{
+    tipo: "servico",
+    nome: "Contabilidade Beorange",
+    descricao: "Contábil, fiscal, departamento pessoal, tributário, societário e assessoria.",
+    servico: "Contabilidade consultiva",
+    migalhas: [{ nome: "Home", url: "/" }, { nome: "Contabilidade Beorange", url: "/contabilidade-beorange/" }],
+  }}
   title="Contabilidade Beorange | Contabilidade consultiva para empresas em crescimento"
   description="Contábil, fiscal, DP, tributário, societário e assessoria recorrente em uma estrutura só. Profundidade em Lucro Real e preparação para IBS e CBS."
 >

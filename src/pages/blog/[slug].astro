@@ -51,7 +51,26 @@ const relacionados = artigo.relacionados.map((r) => ({
   href: `/blog/${r.slug}/`,
 }));
 ---
-<Layout title={artigo.metaTitle} description={artigo.metaDescription}>
+<Layout
+  title={artigo.metaTitle}
+  description={artigo.metaDescription}
+  schema={{
+    tipo: "artigo",
+    nome: artigo.metaTitle,
+    descricao: artigo.metaDescription || artigo.lead,
+    titulo: artigo.titulo,
+    dataIso: artigo.dataIso,
+    categoria: artigo.categoria,
+    palavras: contarPalavras(artigo.corpo) + contarPalavras(artigo.lead),
+    minutos,
+    imagem: artigo.hero,
+    migalhas: [
+      { nome: "Home", url: "/" },
+      { nome: "Blog", url: "/blog/" },
+      { nome: artigo.titulo, url: `/blog/${artigo.slug}/` },
+    ],
+  }}
+>
   <Header ativo="blog" tema="claro" />
   <MobileMenu />
 

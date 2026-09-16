@@ -26,6 +26,12 @@ import PaginaLegal from "../../components/elements/PaginaLegal.astro";
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
+  schema={{
+    tipo: "pagina",
+    nome: "Política de Cookies",
+    descricao: "Quais cookies o site usa, para quê, e como você controla.",
+    migalhas: [{ nome: "Home", url: "/" }, { nome: "Política de Cookies", url: "/politica-de-cookies/" }],
+  }}
   title="Política de Cookies | Beorange"
   description="Quais cookies o site da Beorange usa, para quê, e como você controla cada categoria."
 >

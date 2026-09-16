@@ -32,6 +32,13 @@ import DiagnosticoEntrada from "../../components/elements/DiagnosticoEntrada.ast
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
+  schema={{
+    tipo: "servico",
+    nome: "Reforma Tributária: IBS e CBS",
+    descricao: "Análise de impacto da Reforma Tributária sobre preços, margens, contratos e créditos.",
+    servico: "Preparação para IBS e CBS",
+    migalhas: [{ nome: "Home", url: "/" }, { nome: "Reforma Tributária", url: "/reforma-tributaria/" }],
+  }}
   title="Reforma Tributária para empresas | Preparação para IBS e CBS"
   description="Análise de impacto sobre preços, margens, contratos e créditos, revisão de cadastros e simulações comparativas. Prepare a operação antes que a mudança seja obrigatória."
 >

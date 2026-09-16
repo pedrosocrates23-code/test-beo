@@ -36,6 +36,12 @@ import Depoimentos from "../../components/elements/Depoimentos.astro";
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
+  schema={{
+    tipo: "colecao",
+    nome: "Cases",
+    descricao: "Empresas que reorganizaram a estrutura administrativa e passaram a decidir com número.",
+    migalhas: [{ nome: "Home", url: "/" }, { nome: "Cases", url: "/cases/" }],
+  }}
   title="Cases | Beorange"
   description="Cada case mostra a situação encontrada, o que foi feito e o que mudou. Sem promessa de resultado repetível."
 >

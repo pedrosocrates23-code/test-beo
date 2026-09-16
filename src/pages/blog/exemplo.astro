@@ -32,7 +32,25 @@ const artigo = {
 // só a origem da string: contarPalavras e tempoDeLeitura seguem iguais.
 const minutos = tempoDeLeitura(contarPalavras(fonteDoCorpo) + contarPalavras(artigo.lead));
 ---
-<Layout title={artigo.metaTitle} description={artigo.metaDescription}>
+<Layout
+  title={artigo.metaTitle}
+  description={artigo.metaDescription}
+  schema={{
+    tipo: "artigo",
+    nome: artigo.metaTitle,
+    descricao: artigo.metaDescription,
+    titulo: artigo.titulo,
+    dataIso: artigo.dataIso,
+    categoria: artigo.categoria,
+    palavras: contarPalavras(fonteDoCorpo) + contarPalavras(artigo.lead),
+    minutos,
+    migalhas: [
+      { nome: "Home", url: "/" },
+      { nome: "Blog", url: "/blog/" },
+      { nome: artigo.titulo, url: "/blog/exemplo/" },
+    ],
+  }}
+>
   <Header ativo="blog" tema="claro" />
 <MobileMenu />
 

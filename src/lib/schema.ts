@@ -50,6 +50,8 @@ export const SITE = "https://beorange.app";
 export const ID_SITE = `${SITE}/#website`;
 /** Entity home. Ver a nota 1 do cabeçalho: este valor é imutável. */
 export const ID_ORG = `${SITE}/sobre-nos/#organization`;
+const ID_LOGO = `${SITE}/#logo`;
+const ID_BLOG = `${SITE}/blog/#blog`;
 
 const abs = (caminho: string) => new URL(caminho, SITE + "/").href;
 
@@ -63,14 +65,8 @@ const ORGANIZACAO = {
   url: `${SITE}/`,
   description:
     "Contabilidade, operação financeira e tecnologia para empresas em crescimento.",
-  logo: {
-    "@type": "ImageObject",
-    "@id": `${SITE}/#logo`,
-    url: abs("/img/blog/logo-header.svg"),
-    contentUrl: abs("/img/blog/logo-header.svg"),
-    caption: "Beorange",
-  },
-  image: { "@id": `${SITE}/#logo` },
+  logo: { "@id": ID_LOGO },
+  image: { "@id": ID_LOGO },
   email: "contato@beorange.app",
   telephone: "+55 41 9644-0060",
   address: {
@@ -97,6 +93,29 @@ const ORGANIZACAO = {
     "Planejamento tributário",
     "Gestão financeira",
   ],
+} as const;
+
+/** O logo é nó de primeiro nível, não objeto aninhado dentro de `logo`. Aninhado, o @id
+ *  dele não existe no grafo, e a referência de `image` fica pendurada — apontando para um
+ *  nó que nenhum consumidor encontra. Como nó próprio, os dois campos apontam para a mesma
+ *  imagem e ela é declarada uma vez. */
+const LOGO_NODE = {
+  "@type": "ImageObject",
+  "@id": ID_LOGO,
+  url: abs("/img/blog/logo-header.svg"),
+  contentUrl: abs("/img/blog/logo-header.svg"),
+  caption: "Beorange",
+} as const;
+
+const BLOG_NODE = {
+  "@type": "Blog",
+  "@id": ID_BLOG,
+  name: "Blog Beorange",
+  description:
+    "Conteúdo sobre Lucro Real, Reforma Tributária, departamento pessoal, societário e gestão financeira.",
+  url: abs("/blog/"),
+  publisher: { "@id": ID_ORG },
+  inLanguage: "pt-BR",
 } as const;
 
 const SITE_NODE = {
@@ -187,7 +206,7 @@ export function montarGrafo(dados: DadosDaPagina, caminho: string): object[] {
   };
   if (temMigalhas) pagina.breadcrumb = { "@id": `${url}#breadcrumb` };
 
-  const grafo: object[] = [SITE_NODE, ORGANIZACAO, pagina];
+  const grafo: object[] = [SITE_NODE, ORGANIZACAO, LOGO_NODE, pagina];
   if (temMigalhas) grafo.push(migalhasNode(url, dados.migalhas));
 
   if (dados.tipo === "servico") {
@@ -207,18 +226,10 @@ export function montarGrafo(dados: DadosDaPagina, caminho: string): object[] {
     pagina.mainEntity = { "@id": `${url}#service` };
   }
 
-  if (dados.tipo === "blog") {
-    grafo.push({
-      "@type": "Blog",
-      "@id": `${SITE}/blog/#blog`,
-      name: dados.nome,
-      description: dados.descricao,
-      url: abs("/blog/"),
-      publisher: { "@id": ID_ORG },
-      inLanguage: "pt-BR",
-    });
-    pagina.mainEntity = { "@id": `${SITE}/blog/#blog` };
-  }
+  // O nó do Blog acompanha a listagem E cada artigo. Só na listagem, o `isPartOf` de cada
+  // BlogPosting apontaria para um nó ausente daquela página — de novo a referência pendurada.
+  if (dados.tipo === "blog" || dados.tipo === "artigo") grafo.push(BLOG_NODE);
+  if (dados.tipo === "blog") pagina.mainEntity = { "@id": ID_BLOG };
 
   if (dados.tipo === "artigo") {
     const artigo: Record<string, unknown> = {
@@ -236,7 +247,7 @@ export function montarGrafo(dados: DadosDaPagina, caminho: string): object[] {
       author: { "@id": ID_ORG },
       publisher: { "@id": ID_ORG },
       mainEntityOfPage: { "@id": `${url}#webpage` },
-      isPartOf: { "@id": `${SITE}/blog/#blog` },
+      isPartOf: { "@id": ID_BLOG },
       articleSection: dados.categoria,
       wordCount: dados.palavras,
       timeRequired: `PT${dados.minutos}M`,

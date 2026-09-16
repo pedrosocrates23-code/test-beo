@@ -25,6 +25,13 @@ import ContaBeorangeCta from "../../components/elements/ContaBeorangeCta.astro";
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
+  schema={{
+    tipo: "servico",
+    nome: "Conta Beorange",
+    descricao: "Conta PJ, cobranças, portal de gestão, BPO Financeiro e Bora Financeira.",
+    servico: "Infraestrutura financeira para empresas",
+    migalhas: [{ nome: "Home", url: "/" }, { nome: "Conta Beorange", url: "/conta-beorange/" }],
+  }}
   title="Conta Beorange | A infraestrutura financeira da sua empresa"
   description="Conta PJ com múltiplos usuários, limites e alçadas, cobranças automatizadas, portal de gestão e BPO Financeiro. Sem mensalidade fixa, com custo apresentado antes da operação."
 >
