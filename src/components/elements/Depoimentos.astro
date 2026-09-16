@@ -1,0 +1,231 @@
+---
+// Elemento: depoimentos de clientes, com foto, atribuição e a frase literal.
+//
+// PROCEDÊNCIA DO TEXTO — leia antes de editar qualquer frase daqui.
+// Os cinco depoimentos não foram escritos: foram extraídos do HTML que https://beorange.app/
+// servia em 16/09/2026, o site que ainda está no ar. Nada foi reescrito, resumido nem
+// "melhorado". O Framer quebra cada frase em vários nós por causa dos trechos em negrito, e a
+// remontagem foi conferida trecho a trecho contra o arquivo servido — as 152 palavras das
+// cinco frases existem, literalmente, na fonte.
+//
+// Por isso: se precisar mexer no texto, volte à fonte. Depoimento é declaração de terceiro;
+// editar por estilo transforma citação em paráfrase assinada por outra pessoa.
+//
+// O QUE AINDA FALTA, e não depende de código:
+//   - autorização POR ESCRITO de cada um para uso de nome, cargo, marca e resultado. As
+//     frases já estão públicas no site atual da Beorange, mas o documento de tom exige
+//     autorização documentada, e é ela que sustenta o uso se alguém pedir para sair;
+//   - o período de apuração de cada número citado ("meio milhão por ano", "R$ 400 mil",
+//     "300 mil reais"). Depoimento não é case: aqui o número é fala do cliente, não medição
+//     apresentada pela Beorange. É essa a diferença que o subtítulo desta seção marca.
+//
+// As fotos vieram do mesmo lugar e estão em public/img/cases/, em WebP de 240px. Não são
+// hotlink do CDN do Framer de propósito: quando o site antigo sair do ar, a foto sairia junto.
+import type { HTMLAttributes } from "astro/types";
+
+export interface Depoimento {
+  nome: string;
+  cargo: string;
+  empresa: string;
+  /** A frase, literal, sem aspas: elas entram na marcação, como <q>. */
+  texto: string;
+  foto?: string;
+  /** Inverte o cartão para a cor da marca. Usado para dar ritmo à grade, um por linha. */
+  destaque?: boolean;
+}
+
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  titulo?: string;
+  texto?: string;
+  depoimentos?: Depoimento[];
+  /** "clara" (padrão) ou "alternada" (fundo bege). */
+  variante?: "clara" | "alternada";
+}
+
+const PADRAO: Depoimento[] = [
+  {
+    nome: "Jorge Abussamra",
+    cargo: "COO",
+    empresa: "Zeta Dados",
+    foto: "/img/cases/jorge-abussamra.webp",
+    texto:
+      "A Beorange tem sido ótima e sempre com atenção. O time puxou uma revisão tributária, comparou faturamento e alíquotas e, juntos, vimos que migrar para o Lucro Real pode gerar economia de quase meio milhão por ano.",
+  },
+  {
+    nome: "Marivaldo Júnior",
+    cargo: "CoFounder",
+    empresa: "Escavador",
+    foto: "/img/cases/marivaldo-junior.webp",
+    destaque: true,
+    texto:
+      "Gostamos da Beorange pelo atendimento próximo e consultivo. Na transição do Simples, reduziram PIS/Cofins e impostos, gerando quase R$ 400 mil de economia para reinvestir no crescimento.",
+  },
+  {
+    nome: "Rafael Rodeiro",
+    cargo: "Founder",
+    empresa: "Ribon App",
+    foto: "/img/cases/rafael-rodeiro.webp",
+    texto:
+      "Gostamos da Beorange pelo contato próximo, mas também por, surpreendentemente, eles terem encontrado furos na contabilidade anterior que geraram uma economia de 300 mil reais, além de abaixarem nossos impostos.",
+  },
+  {
+    nome: "Higino Mandaji",
+    cargo: "Founder",
+    empresa: "B2Bhotel",
+    foto: "/img/cases/higino-mandaji.webp",
+    texto:
+      "A Beorange transformou nossa gestão contábil: reduziu impostos, organizou as finanças e nos deu a segurança necessária para tomar decisões estratégicas e impulsionar o crescimento da empresa",
+  },
+  {
+    nome: "Laura Mitterer",
+    cargo: "Founder",
+    empresa: "Agada Digital",
+    foto: "/img/cases/laura-mitterer.webp",
+    destaque: true,
+    texto:
+      "Nunca encontrei nada igual no mercado: contábil, tributário e financeiro tudo integrado. Obrigações em dia, impostos sob controle, tranquilidade garantida e uma empresa de total confiança. Não tem como não gostar",
+  },
+];
+
+const {
+  id,
+  eyebrow,
+  titulo = "O que os clientes dizem",
+  texto,
+  depoimentos = PADRAO,
+  variante = "clara",
+} = Astro.props as Props;
+---
+<section class={`depo${variante === "alternada" ? " alt" : ""}`} id={id}>
+  <div class="wrap">
+    <div class="sec-head rv">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h2>{titulo}</h2>
+      {texto && <p>{texto}</p>}
+    </div>
+
+    <ul class="depo-grade">
+      {depoimentos.map((d) => (
+        <li class={`depo-card rv${d.destaque ? " depo-card--marca" : ""}`}>
+          {d.foto && (
+            <img
+              class="depo-foto"
+              src={d.foto}
+              alt={`${d.nome}, ${d.cargo} da ${d.empresa}`}
+              width="88"
+              height="88"
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+          {/* As cinco estrelas reproduzem o que a fonte exibe para cada um destes
+              depoimentos. aria-hidden porque a informação já está no texto: uma leitura
+              "estrela estrela estrela..." não acrescenta nada a quem ouve a página. */}
+          <span class="depo-estrelas" aria-hidden="true">★★★★★</span>
+          <p class="depo-nome">{d.nome}</p>
+          <p class="depo-cargo">{d.cargo} da <strong>{d.empresa}</strong></p>
+          <blockquote class="depo-frase"><q>{d.texto}</q></blockquote>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Estilo próprio, e não no prototype-*.css, porque esta peça não existe no HTML do designer:
+     nasceu do site antigo. Assim ela funciona em qualquer página, independente de qual
+     protótipo de CSS a página carrega. As cores vêm dos tokens, com o mesmo fallback que as
+     outras folhas usam. */
+  .depo { padding: 104px 0; background: var(--bg-primary, #fff); }
+  .depo.alt { background: var(--bg-secondary, #FBF9F7); }
+
+  .depo-grade {
+    list-style: none;
+    margin: 56px 0 0;
+    padding: 0;
+    display: grid;
+    /* minmax(0,1fr) e não 1fr: numa trilha 1fr o mínimo automático é o min-content do
+       cartão, e uma citação longa sem espaço esticaria a grade e a página junto. */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 62px 26px;
+  }
+
+  .depo-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* O topo generoso abre espaço para a foto, que sobe metade da própria altura. */
+    padding: 62px 26px 30px;
+    border: 1px solid var(--border-default, #DDD5CE);
+    border-radius: var(--radius-lg, 16px);
+    background: var(--bg-primary, #fff);
+  }
+  /* Um cartão por linha na cor da marca, como no site atual. É ritmo, não hierarquia:
+     nenhum depoimento vale mais que outro. */
+  .depo-card--marca {
+    background: var(--action-primary, #F5380F);
+    border-color: transparent;
+  }
+
+  .depo-foto {
+    position: absolute;
+    top: -44px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--action-primary, #F5380F);
+    background: var(--bg-primary, #fff);
+  }
+  .depo-card--marca .depo-foto { border-color: var(--bg-primary, #fff); }
+
+  .depo-estrelas {
+    font-size: 17px;
+    letter-spacing: 3px;
+    color: var(--action-primary, #F5380F);
+    line-height: 1;
+  }
+  .depo-card--marca .depo-estrelas { color: #fff; }
+
+  .depo-nome {
+    margin: 12px 0 2px;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    color: var(--text-primary, #2B2320);
+  }
+  .depo-cargo {
+    margin: 0 0 16px;
+    font-size: 13.5px;
+    color: var(--text-secondary, #5B534E);
+  }
+  .depo-cargo strong { font-weight: 600; color: var(--text-primary, #2B2320); }
+
+  .depo-frase { margin: 0; }
+  /* <q> põe as aspas sozinho, pelo idioma da página — por isso elas não estão no texto. */
+  .depo-frase q {
+    font-size: 15px;
+    line-height: 1.62;
+    color: var(--text-secondary, #5B534E);
+  }
+
+  .depo-card--marca .depo-nome,
+  .depo-card--marca .depo-cargo,
+  .depo-card--marca .depo-cargo strong,
+  .depo-card--marca .depo-frase q { color: #fff; }
+
+  @media (max-width: 940px) {
+    .depo-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 680px) {
+    .depo { padding: 64px 0; }
+    .depo-grade { grid-template-columns: minmax(0, 1fr); gap: 62px; margin-top: 44px; }
+    .depo-card { padding: 58px 20px 26px; }
+  }
+</style>

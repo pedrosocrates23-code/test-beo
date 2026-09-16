@@ -12,6 +12,7 @@ import "../styles/mobile.css";
 // toda página. Sem JS ela não abre, e o site continua navegável pelo menu; com JS, a mesma
 // busca atende o header, o campo do blog e os atalhos de teclado.
 import BuscaOverlay from "../components/elements/BuscaOverlay.astro";
+import { montarGrafo, type DadosDaPagina } from "../lib/schema";
 
 export interface Props {
   title: string;
@@ -19,17 +20,29 @@ export interface Props {
   /** Sobrescreve a canonical desta página. Use só quando o endereço preferido for outro
    *  que não o da própria página — numa versão paginada, por exemplo. */
   canonical?: string;
+  /** O que esta página é, para os dados estruturados. Omitir só em página que não deve
+   *  aparecer em buscador nenhum — e hoje não existe nenhuma assim. Ver src/lib/schema.ts. */
+  schema?: DadosDaPagina;
 }
 const {
   title,
   description = "Contabilidade, operação financeira e tecnologia para empresas em crescimento.",
   canonical,
+  schema,
 } = Astro.props;
 
 // Endereço preferido desta página, sempre no domínio final (Astro.site vem de
 // astro.config.mjs). Enquanto o site vive numa URL de preview, é isto que diz ao buscador
 // qual é a versão que vale, caso o preview seja varrido apesar do robots.txt.
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
+
+// Um único <script> de JSON-LD por página, com um @graph dentro. Dois blocos separados
+// obrigam o consumidor a costurar os nós por conta própria, e é assim que nascem duas
+// Organization com @ids diferentes — a fragmentação que o entity-ops manda evitar.
+// O caminho sempre com barra no fim: é o formato que o site publica e o que o @id precisa
+// casar, senão a mesma página vira dois nós.
+const caminho = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : Astro.url.pathname + "/";
+const grafo = schema ? montarGrafo(schema, caminho) : null;
 ---
 <html lang="pt-BR">
   <head>
@@ -44,6 +57,13 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
     <title>{title}</title>
+    {grafo && (
+      <script
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify({ "@context": "https://schema.org", "@graph": grafo })}
+      />
+    )}
   </head>
   <body>
     <slot />

@@ -32,6 +32,7 @@ import Header from "../../components/elements/Header.astro";
 import MobileMenu from "../../components/elements/MobileMenu.astro";
 import HeroIndice from "../../components/elements/HeroIndice.astro";
 import SecaoLista from "../../components/elements/SecaoLista.astro";
+import Depoimentos from "../../components/elements/Depoimentos.astro";
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
@@ -54,6 +55,19 @@ import Footer from "../../components/elements/Footer.astro";
     titulo="Cases"
     texto="Estamos preparando os primeiros cases com autorização dos clientes envolvidos. Enquanto isso, fale com um especialista e conheça a estrutura na prática."
     cta={{ texto: "Falar com um especialista", href: "/contato/" }}
+  />
+
+  <!-- DOBRA 3.5 — Depoimentos.
+       Entra aqui, e não no lugar dos cases, porque não é a mesma coisa. Case é medição
+       apresentada pela Beorange, com indicador, período e método. Depoimento é fala do
+       cliente: os números que aparecem nas frases são dele, não medição nossa — e é por isso
+       que o subtítulo diz exatamente isso, em vez de deixar a página sugerir o contrário.
+       Enquanto não houver case aprovado, esta é a prova real que existe hoje. Os cinco textos
+       saíram do HTML de beorange.app, literalmente; ver o cabeçalho de Depoimentos.astro. -->
+  <Depoimentos
+    variante="alternada"
+    titulo="O que os clientes dizem"
+    texto="Depoimentos publicados pelos próprios clientes. Os valores citados são a leitura de cada um sobre o próprio resultado, no contexto da empresa dele — não são projeção para outra operação, e não substituem os cases, que trazem indicador, período de apuração e método."
   />
 
   <!-- DOBRA 4 — Como medimos resultado -->

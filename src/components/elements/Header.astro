@@ -84,36 +84,31 @@ const noMobile = LOGOS.light;
     </nav>
     <button class="hamburger" id="burger" aria-label="Abrir menu">Menu</button>
   </div>
-  <div class="mega" id="mega" role="region" aria-label="Soluções">
+  <!-- Mega-dropdown "Soluções" — enxuto a pedido (16/09/2026).
+       Só os dois produtos, sem a lista de frentes e sem a coluna Especialidades.
+       As 11 frentes continuam alcançáveis pela página de cada produto, umas pelas outras
+       e pelo rodapé; Lucro Real e Reforma Tributária, pelo menu do celular e pelo corpo
+       das páginas. Nenhuma ficou sem link — foi conferido no build antes de cortar. -->
+  <div class="mega mega--enxuto" id="mega" role="region" aria-label="Soluções">
     <div class="mega-inner">
       <div class="mcol">
-        <a class="mtitle" href="/contabilidade-beorange/">Contabilidade Beorange →</a>
-        <ul>
-          <li><a href="/contabilidade-beorange/contabil/">Contábil</a></li>
-          <li><a href="/contabilidade-beorange/fiscal/">Fiscal</a></li>
-          <li><a href="/contabilidade-beorange/departamento-pessoal/">Departamento Pessoal</a></li>
-          <li><a href="/contabilidade-beorange/tributario/">Tributário</a></li>
-          <li><a href="/contabilidade-beorange/societario/">Societário</a></li>
-          <li><a href="/contabilidade-beorange/assessoria/">Assessoria e Consultoria</a></li>
-        </ul>
+        <a class="mtitle" href="/contabilidade-beorange/">Contabilidade Beorange</a>
       </div>
       <div class="mcol">
-        <a class="mtitle" href="/conta-beorange/">Conta Beorange →</a>
-        <ul>
-          <li><a href="/conta-beorange/conta-pj/">Conta PJ e movimentação</a></li>
-          <li><a href="/conta-beorange/cobrancas/">Cobranças e recebimentos</a></li>
-          <li><a href="/conta-beorange/portal/">Portal de gestão financeira</a></li>
-          <li><a href="/conta-beorange/bpo-financeiro/">BPO Financeiro</a></li>
-          <li><a href="/conta-beorange/bora-financeira/">Bora Financeira</a></li>
-        </ul>
-      </div>
-      <div class="mcol spec">
-        <span class="mtitle">Especialidades</span>
-        <ul>
-          <li><a href="/lucro-real/">Lucro Real e estratégia tributária</a></li>
-          <li><a href="/reforma-tributaria/">Reforma Tributária: IBS e CBS</a></li>
-        </ul>
+        <a class="mtitle" href="/conta-beorange/">Conta Beorange</a>
       </div>
     </div>
   </div>
 </header>
+
+<style is:global>
+  /* O mega-dropdown do protótipo tinha três colunas e 880px de largura para caber as duas
+     listas de frentes mais a coluna Especialidades. Com só dois links, aquela medida deixa
+     um painel quase todo vazio. Estas regras moram aqui, e não nos prototype-*.css, porque
+     as três folhas repetem o mesmo bloco de .mega — a correção em triplicata é o caminho
+     curto para ela voltar em uma delas. */
+  .mega--enxuto{width:min(420px,calc(100vw - 32px))}
+  .mega--enxuto .mega-inner{grid-template-columns:1fr 1fr;gap:20px;padding:22px}
+  /* sem lista embaixo, a margem do título só abriria um vão */
+  .mega--enxuto .mcol > a.mtitle{margin-bottom:0}
+</style>
