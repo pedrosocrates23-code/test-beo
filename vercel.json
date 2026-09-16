@@ -1,0 +1,880 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/blog/como-garantir-o-cumprimento-das-obriga%C3%A7%C3%B5es-fiscais-e-tribut%C3%A1rias-da-sua-empresa",
+      "destination": "/blog/como-garantir-o-cumprimento-das-obrigacoes-fiscais-e-tributarias-da-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/como-garantir-o-cumprimento-das-obrigações-fiscais-e-tributárias-da-sua-empresa",
+      "destination": "/blog/como-garantir-o-cumprimento-das-obrigacoes-fiscais-e-tributarias-da-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/financeiro-como-otimizar-a-gestão-financeira-da-sua-empresa-para-maximizar-lucros",
+      "destination": "/blog/financeiro-como-otimizar-a-gestao-financeira-da-sua-empresa-para-maximizar-lucros/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/financeiro-como-otimizar-a-gest%C3%A3o-financeira-da-sua-empresa-para-maximizar-lucros",
+      "destination": "/blog/financeiro-como-otimizar-a-gestao-financeira-da-sua-empresa-para-maximizar-lucros/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/principais-desafios-contábeis-enfrentados-por-pequenas-empresas-e-como-superá-los",
+      "destination": "/blog/principais-desafios-contabeis-enfrentados-por-pequenas-empresas-e-como-supera-los/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/principais-desafios-cont%C3%A1beis-enfrentados-por-pequenas-empresas-e-como-super%C3%A1-los",
+      "destination": "/blog/principais-desafios-contabeis-enfrentados-por-pequenas-empresas-e-como-supera-los/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/beorange-recebe-aporte-pré-seed-com-valuation-de-10mi",
+      "destination": "/blog/beorange-recebe-aporte-pre-seed-com-valuation-de-10mi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/beorange-recebe-aporte-pr%C3%A9-seed-com-valuation-de-10mi",
+      "destination": "/blog/beorange-recebe-aporte-pre-seed-com-valuation-de-10mi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/gest%C3%A3o-financeira-para-pequenas-empresas",
+      "destination": "/blog/gestao-financeira-para-pequenas-empresas/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/gestão-financeira-para-pequenas-empresas",
+      "destination": "/blog/gestao-financeira-para-pequenas-empresas/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/estrutura-societ%C3%A1ria-ao-abrir-uma-startup",
+      "destination": "/blog/estrutura-societaria-ao-abrir-uma-startup/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/estrutura-societária-ao-abrir-uma-startup",
+      "destination": "/blog/estrutura-societaria-ao-abrir-uma-startup/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/beorange-revoluciona-a-contabilidade-com-inteligência-artificial-na-aya",
+      "destination": "/blog/beorange-revoluciona-a-contabilidade-com-inteligencia-artificial-na-aya/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/beorange-revoluciona-a-contabilidade-com-intelig%C3%AAncia-artificial-na-aya",
+      "destination": "/blog/beorange-revoluciona-a-contabilidade-com-inteligencia-artificial-na-aya/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/beorange-na-vanguarda-da-inovação",
+      "destination": "/blog/beorange-na-vanguarda-da-inovacao/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/beorange-na-vanguarda-da-inova%C3%A7%C3%A3o",
+      "destination": "/blog/beorange-na-vanguarda-da-inovacao/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/somos-top-1-000-pelo-prêmio-sebrae-startups",
+      "destination": "/blog/somos-top-1-000-pelo-premio-sebrae-startups/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/somos-top-1-000-pelo-pr%C3%AAmio-sebrae-startups",
+      "destination": "/blog/somos-top-1-000-pelo-premio-sebrae-startups/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/imposto-de-renda-2025-tudo-o-que-você-precisa-saber",
+      "destination": "/blog/imposto-de-renda-2025-tudo-o-que-voce-precisa-saber/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/imposto-de-renda-2025-tudo-o-que-voc%C3%AA-precisa-saber",
+      "destination": "/blog/imposto-de-renda-2025-tudo-o-que-voce-precisa-saber/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reenquadramento-simples-nacional-o-que-%C3%A9-e-como-fazer",
+      "destination": "/blog/reenquadramento-simples-nacional-o-que-e-e-como-fazer/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reenquadramento-simples-nacional-o-que-é-e-como-fazer",
+      "destination": "/blog/reenquadramento-simples-nacional-o-que-e-e-como-fazer/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/mudan%C3%A7as-no-pix-em-2025-entenda-as-novas-regras-para-pagamentos-acima-de-r-200",
+      "destination": "/blog/mudancas-no-pix-em-2025-entenda-as-novas-regras-para-pagamentos-acima-de-r-200/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/mudanças-no-pix-em-2025-entenda-as-novas-regras-para-pagamentos-acima-de-r-200",
+      "destination": "/blog/mudancas-no-pix-em-2025-entenda-as-novas-regras-para-pagamentos-acima-de-r-200/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/como-a-reforma-tributária-de-2025-vai-impactar-o-fluxo-de-caixa-das-empresas",
+      "destination": "/blog/como-a-reforma-tributaria-de-2025-vai-impactar-o-fluxo-de-caixa-das-empresas/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/como-a-reforma-tribut%C3%A1ria-de-2025-vai-impactar-o-fluxo-de-caixa-das-empresas",
+      "destination": "/blog/como-a-reforma-tributaria-de-2025-vai-impactar-o-fluxo-de-caixa-das-empresas/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/a-importância-da-análise-tributária-para-as-empresas",
+      "destination": "/blog/a-importancia-da-analise-tributaria-para-as-empresas/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/a-import%C3%A2ncia-da-an%C3%A1lise-tribut%C3%A1ria-para-as-empresas",
+      "destination": "/blog/a-importancia-da-analise-tributaria-para-as-empresas/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/beorange-é-indicada-para-fintech-do-ano-no-brasil-pela-global-startups-awards",
+      "destination": "/blog/beorange-e-indicada-para-fintech-do-ano-no-brasil-pela-global-startups-awards/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/beorange-%C3%A9-indicada-para-fintech-do-ano-no-brasil-pela-global-startups-awards",
+      "destination": "/blog/beorange-e-indicada-para-fintech-do-ano-no-brasil-pela-global-startups-awards/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/pis-e-cofins-2025-obriga%C3%A7%C3%B5es-mudan%C3%A7as-e-novidades",
+      "destination": "/blog/pis-e-cofins-2025-obrigacoes-mudancas-e-novidades/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/pis-e-cofins-2025-obrigações-mudanças-e-novidades",
+      "destination": "/blog/pis-e-cofins-2025-obrigacoes-mudancas-e-novidades/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/parcelamento-do-simples-nacional-como-regularizar-suas-d%C3%ADvidas-com-a-receita-federal",
+      "destination": "/blog/parcelamento-do-simples-nacional-como-regularizar-suas-dividas-com-a-receita-federal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/parcelamento-do-simples-nacional-como-regularizar-suas-dívidas-com-a-receita-federal",
+      "destination": "/blog/parcelamento-do-simples-nacional-como-regularizar-suas-dividas-com-a-receita-federal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/golpes-no-pix-podem-ultrapassar-r-11-bilh%C3%B5es-at%C3%A9-2028-como-proteger-sua-empresa",
+      "destination": "/blog/golpes-no-pix-podem-ultrapassar-r-11-bilhoes-ate-2028-como-proteger-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/golpes-no-pix-podem-ultrapassar-r-11-bilhões-até-2028-como-proteger-sua-empresa",
+      "destination": "/blog/golpes-no-pix-podem-ultrapassar-r-11-bilhoes-ate-2028-como-proteger-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/o-que-%C3%A9-irpj-imposto-de-renda-de-pessoa-jur%C3%ADdica-2025",
+      "destination": "/blog/o-que-e-irpj-imposto-de-renda-de-pessoa-juridica-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/o-que-é-irpj-imposto-de-renda-de-pessoa-jurídica-2025",
+      "destination": "/blog/o-que-e-irpj-imposto-de-renda-de-pessoa-juridica-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/automa%C3%A7%C3%A3o-empresarial-como-saber-se-sua-empresa-est%C3%A1-pronta-para-dar-esse-passo",
+      "destination": "/blog/automacao-empresarial-como-saber-se-sua-empresa-esta-pronta-para-dar-esse-passo/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/automação-empresarial-como-saber-se-sua-empresa-está-pronta-para-dar-esse-passo",
+      "destination": "/blog/automacao-empresarial-como-saber-se-sua-empresa-esta-pronta-para-dar-esse-passo/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/terceirização-administrativa-como-essa-estratégia-pode-beneficiar-sua-empresa",
+      "destination": "/blog/terceirizacao-administrativa-como-essa-estrategia-pode-beneficiar-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/terceiriza%C3%A7%C3%A3o-administrativa-como-essa-estrat%C3%A9gia-pode-beneficiar-sua-empresa",
+      "destination": "/blog/terceirizacao-administrativa-como-essa-estrategia-pode-beneficiar-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/deepseek-a-nova-revolução-da-inteligência-artificial-que-abalou-o-mercado-tecnológico",
+      "destination": "/blog/deepseek-a-nova-revolucao-da-inteligencia-artificial-que-abalou-o-mercado-tecnologico/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/deepseek-a-nova-revolu%C3%A7%C3%A3o-da-intelig%C3%AAncia-artificial-que-abalou-o-mercado-tecnol%C3%B3gico",
+      "destination": "/blog/deepseek-a-nova-revolucao-da-inteligencia-artificial-que-abalou-o-mercado-tecnologico/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/mudanças-no-inss-pró-labore-em-2025-entenda-o-impacto-para-sua-empresa",
+      "destination": "/blog/mudancas-no-inss-pro-labore-em-2025-entenda-o-impacto-para-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/mudan%C3%A7as-no-inss-pr%C3%B3-labore-em-2025-entenda-o-impacto-para-sua-empresa",
+      "destination": "/blog/mudancas-no-inss-pro-labore-em-2025-entenda-o-impacto-para-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/salário-mínimo-e-calendário-inss-2025-impactos-para-sua-empresa",
+      "destination": "/blog/salario-minimo-e-calendario-inss-2025-impactos-para-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/sal%C3%A1rio-m%C3%ADnimo-e-calend%C3%A1rio-inss-2025-impactos-para-sua-empresa",
+      "destination": "/blog/salario-minimo-e-calendario-inss-2025-impactos-para-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/consultoria-financeira-para-startups-e-pequenas-empresas-estrat%C3%A9gias-para-crescimento-e-sustentabilidade",
+      "destination": "/blog/consultoria-financeira-para-startups-e-pequenas-empresas-estrategias-para-crescimento-e-sustentabilidade/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/consultoria-financeira-para-startups-e-pequenas-empresas-estratégias-para-crescimento-e-sustentabilidade",
+      "destination": "/blog/consultoria-financeira-para-startups-e-pequenas-empresas-estrategias-para-crescimento-e-sustentabilidade/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/quando-come%C3%A7a-a-declara%C3%A7%C3%A3o-do-imposto-de-renda-2025-saiba-como-se-preparar",
+      "destination": "/blog/quando-comeca-a-declaracao-do-imposto-de-renda-2025-saiba-como-se-preparar/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/quando-começa-a-declaração-do-imposto-de-renda-2025-saiba-como-se-preparar",
+      "destination": "/blog/quando-comeca-a-declaracao-do-imposto-de-renda-2025-saiba-como-se-preparar/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/como-organizar-suas-finanças-guia-de-gestão-financeira-para-autônomos-e-pequenos-negócios",
+      "destination": "/blog/como-organizar-suas-financas-guia-de-gestao-financeira-para-autonomos-e-pequenos-negocios/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/como-organizar-suas-finan%C3%A7as-guia-de-gest%C3%A3o-financeira-para-aut%C3%B4nomos-e-pequenos-neg%C3%B3cios",
+      "destination": "/blog/como-organizar-suas-financas-guia-de-gestao-financeira-para-autonomos-e-pequenos-negocios/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/fique-de-olho-as-obriga%C3%A7%C3%B5es-fiscais-que-sua-empresa-n%C3%A3o-pode-deixar-passar",
+      "destination": "/blog/fique-de-olho-as-obrigacoes-fiscais-que-sua-empresa-nao-pode-deixar-passar/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/fique-de-olho-as-obrigações-fiscais-que-sua-empresa-não-pode-deixar-passar",
+      "destination": "/blog/fique-de-olho-as-obrigacoes-fiscais-que-sua-empresa-nao-pode-deixar-passar/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/guia-completo-do-imposto-de-renda-2025-entenda-como-declarar-com-seguran%C3%A7a",
+      "destination": "/blog/guia-completo-do-imposto-de-renda-2025-entenda-como-declarar-com-seguranca/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/guia-completo-do-imposto-de-renda-2025-entenda-como-declarar-com-segurança",
+      "destination": "/blog/guia-completo-do-imposto-de-renda-2025-entenda-como-declarar-com-seguranca/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/saiba-como-consultar-se-você-caiu-na-malha-fina-do-imposto-de-renda",
+      "destination": "/blog/saiba-como-consultar-se-voce-caiu-na-malha-fina-do-imposto-de-renda/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/saiba-como-consultar-se-voc%C3%AA-caiu-na-malha-fina-do-imposto-de-renda",
+      "destination": "/blog/saiba-como-consultar-se-voce-caiu-na-malha-fina-do-imposto-de-renda/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/mudanças-no-esocial-em-2025-saiba-tudo-sobre-as-novas-regras",
+      "destination": "/blog/mudancas-no-esocial-em-2025-saiba-tudo-sobre-as-novas-regras/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/mudan%C3%A7as-no-esocial-em-2025-saiba-tudo-sobre-as-novas-regras",
+      "destination": "/blog/mudancas-no-esocial-em-2025-saiba-tudo-sobre-as-novas-regras/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/dirf-2025-por-que-foi-mantida-e-como-as-empresas-devem-se-preparar-para-a-transição",
+      "destination": "/blog/dirf-2025-por-que-foi-mantida-e-como-as-empresas-devem-se-preparar-para-a-transicao/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/dirf-2025-por-que-foi-mantida-e-como-as-empresas-devem-se-preparar-para-a-transi%C3%A7%C3%A3o",
+      "destination": "/blog/dirf-2025-por-que-foi-mantida-e-como-as-empresas-devem-se-preparar-para-a-transicao/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/pró-labore-o-que-é-como-funciona-e-qual-a-sua-importância",
+      "destination": "/blog/pro-labore-o-que-e-como-funciona-e-qual-a-sua-importancia/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/pr%C3%B3-labore-o-que-%C3%A9-como-funciona-e-qual-a-sua-import%C3%A2ncia",
+      "destination": "/blog/pro-labore-o-que-e-como-funciona-e-qual-a-sua-importancia/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/autoriza%C3%A7%C3%A3o-de-acesso-no-imposto-de-renda-2025-como-permitir-que-outra-pessoa-declare-por-voc%C3%AA",
+      "destination": "/blog/autorizacao-de-acesso-no-imposto-de-renda-2025-como-permitir-que-outra-pessoa-declare-por-voce/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/autorização-de-acesso-no-imposto-de-renda-2025-como-permitir-que-outra-pessoa-declare-por-você",
+      "destination": "/blog/autorizacao-de-acesso-no-imposto-de-renda-2025-como-permitir-que-outra-pessoa-declare-por-voce/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/informe-de-rendimentos-2025-prazo-final-para-entrega-termina-nesta-sexta-feira-(28)",
+      "destination": "/blog/informe-de-rendimentos-2025-prazo-final-para-entrega-termina-nesta-sexta-feira-28/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reajuste-no-simples-nacional-em-2025-veja-os-novos-valores-e-como-manter-sua-contribui%C3%A7%C3%A3o-em-dia",
+      "destination": "/blog/reajuste-no-simples-nacional-em-2025-veja-os-novos-valores-e-como-manter-sua-contribuicao-em-dia/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reajuste-no-simples-nacional-em-2025-veja-os-novos-valores-e-como-manter-sua-contribuição-em-dia",
+      "destination": "/blog/reajuste-no-simples-nacional-em-2025-veja-os-novos-valores-e-como-manter-sua-contribuicao-em-dia/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/imposto-de-renda-2025-receita-federal-libera-consulta-ao-lote-de-restituição-da-malha-fina",
+      "destination": "/blog/imposto-de-renda-2025-receita-federal-libera-consulta-ao-lote-de-restituicao-da-malha-fina/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/imposto-de-renda-2025-receita-federal-libera-consulta-ao-lote-de-restitui%C3%A7%C3%A3o-da-malha-fina",
+      "destination": "/blog/imposto-de-renda-2025-receita-federal-libera-consulta-ao-lote-de-restituicao-da-malha-fina/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/mitos-sobre-cibersegurança-que-podem-colocar-sua-empresa-em-risco",
+      "destination": "/blog/mitos-sobre-ciberseguranca-que-podem-colocar-sua-empresa-em-risco/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/mitos-sobre-ciberseguran%C3%A7a-que-podem-colocar-sua-empresa-em-risco",
+      "destination": "/blog/mitos-sobre-ciberseguranca-que-podem-colocar-sua-empresa-em-risco/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/fator-r-do-simples-nacional-estrat%C3%A9gia-para-reduzir-impostos-e-impulsionar-seu-neg%C3%B3cio",
+      "destination": "/blog/fator-r-do-simples-nacional-estrategia-para-reduzir-impostos-e-impulsionar-seu-negocio/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/fator-r-do-simples-nacional-estratégia-para-reduzir-impostos-e-impulsionar-seu-negócio",
+      "destination": "/blog/fator-r-do-simples-nacional-estrategia-para-reduzir-impostos-e-impulsionar-seu-negocio/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/venda-sem-nota-fiscal-os-riscos-e-prejuízos-para-o-seu-negócio",
+      "destination": "/blog/venda-sem-nota-fiscal-os-riscos-e-prejuizos-para-o-seu-negocio/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/venda-sem-nota-fiscal-os-riscos-e-preju%C3%ADzos-para-o-seu-neg%C3%B3cio",
+      "destination": "/blog/venda-sem-nota-fiscal-os-riscos-e-prejuizos-para-o-seu-negocio/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/raz%C3%A3o-social-o-que-%C3%A9-por-que-%C3%A9-importante-e-como-definir-a-da-sua-empresa",
+      "destination": "/blog/razao-social-o-que-e-por-que-e-importante-e-como-definir-a-da-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/razão-social-o-que-é-por-que-é-importante-e-como-definir-a-da-sua-empresa",
+      "destination": "/blog/razao-social-o-que-e-por-que-e-importante-e-como-definir-a-da-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/declara%C3%A7%C3%A3o-do-imposto-de-renda-2025-confira-regras-prazos-e-novidades",
+      "destination": "/blog/declaracao-do-imposto-de-renda-2025-confira-regras-prazos-e-novidades/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/declaração-do-imposto-de-renda-2025-confira-regras-prazos-e-novidades",
+      "destination": "/blog/declaracao-do-imposto-de-renda-2025-confira-regras-prazos-e-novidades/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/pr%C3%B3-labore-entenda-o-que-%C3%A9-como-definir-e-a-diferen%C3%A7a-para-o-sal%C3%A1rio",
+      "destination": "/blog/pro-labore-entenda-o-que-e-como-definir-e-a-diferenca-para-o-salario/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/pró-labore-entenda-o-que-é-como-definir-e-a-diferença-para-o-salário",
+      "destination": "/blog/pro-labore-entenda-o-que-e-como-definir-e-a-diferenca-para-o-salario/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indicadores-financeiros-quais-s%C3%A3o-os-principais-e-como-utiliz%C3%A1-los-para-impulsionar-o-seu-neg%C3%B3cio",
+      "destination": "/blog/indicadores-financeiros-quais-sao-os-principais-e-como-utiliza-los-para-impulsionar-o-seu-negocio/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indicadores-financeiros-quais-são-os-principais-e-como-utilizá-los-para-impulsionar-o-seu-negócio",
+      "destination": "/blog/indicadores-financeiros-quais-sao-os-principais-e-como-utiliza-los-para-impulsionar-o-seu-negocio/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/prazo-para-entrega-da-defis-2025-termina-em-31-de-mar%C3%A7o-veja-como-evitar-problemas-fiscais",
+      "destination": "/blog/prazo-para-entrega-da-defis-2025-termina-em-31-de-marco-veja-como-evitar-problemas-fiscais/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/prazo-para-entrega-da-defis-2025-termina-em-31-de-março-veja-como-evitar-problemas-fiscais",
+      "destination": "/blog/prazo-para-entrega-da-defis-2025-termina-em-31-de-marco-veja-como-evitar-problemas-fiscais/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/fraude-contra-meis-como-evitar-golpes-e-proteger-seu-neg%C3%B3cio",
+      "destination": "/blog/fraude-contra-meis-como-evitar-golpes-e-proteger-seu-negocio/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/fraude-contra-meis-como-evitar-golpes-e-proteger-seu-negócio",
+      "destination": "/blog/fraude-contra-meis-como-evitar-golpes-e-proteger-seu-negocio/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/como-calcular-corretamente-as-férias-dos-seus-colaboradores",
+      "destination": "/blog/como-calcular-corretamente-as-ferias-dos-seus-colaboradores/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/como-calcular-corretamente-as-f%C3%A9rias-dos-seus-colaboradores",
+      "destination": "/blog/como-calcular-corretamente-as-ferias-dos-seus-colaboradores/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/como-declarar-o-imposto-de-renda-de-forma-simples-e-r%C3%A1pida",
+      "destination": "/blog/como-declarar-o-imposto-de-renda-de-forma-simples-e-rapida/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/como-declarar-o-imposto-de-renda-de-forma-simples-e-rápida",
+      "destination": "/blog/como-declarar-o-imposto-de-renda-de-forma-simples-e-rapida/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/terceirização-inteligente-como-reduzir-custos-operacionais-sem-perder-eficiência",
+      "destination": "/blog/terceirizacao-inteligente-como-reduzir-custos-operacionais-sem-perder-eficiencia/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/terceiriza%C3%A7%C3%A3o-inteligente-como-reduzir-custos-operacionais-sem-perder-efici%C3%AAncia",
+      "destination": "/blog/terceirizacao-inteligente-como-reduzir-custos-operacionais-sem-perder-eficiencia/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nova-nota-fiscal-2026-como-a-reforma-tribut%C3%A1ria-vai-mudar-sua-rotina-empresarial",
+      "destination": "/blog/nova-nota-fiscal-2026-como-a-reforma-tributaria-vai-mudar-sua-rotina-empresarial/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nova-nota-fiscal-2026-como-a-reforma-tributária-vai-mudar-sua-rotina-empresarial",
+      "destination": "/blog/nova-nota-fiscal-2026-como-a-reforma-tributaria-vai-mudar-sua-rotina-empresarial/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reforma-tributária-para-prestadores-de-serviços-impactos-alíquotas-e-regimes-tributários",
+      "destination": "/blog/reforma-tributaria-para-prestadores-de-servicos-impactos-aliquotas-e-regimes-tributarios/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reforma-tribut%C3%A1ria-para-prestadores-de-servi%C3%A7os-impactos-al%C3%ADquotas-e-regimes-tribut%C3%A1rios",
+      "destination": "/blog/reforma-tributaria-para-prestadores-de-servicos-impactos-aliquotas-e-regimes-tributarios/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/quando-começa-a-reforma-tributária-veja-as-principais-datas-até-2033",
+      "destination": "/blog/quando-comeca-a-reforma-tributaria-veja-as-principais-datas-ate-2033/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/quando-come%C3%A7a-a-reforma-tribut%C3%A1ria-veja-as-principais-datas-at%C3%A9-2033",
+      "destination": "/blog/quando-comeca-a-reforma-tributaria-veja-as-principais-datas-ate-2033/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/por-que-vender-sem-nota-fiscal-pode-acabar-com-o-seu-negócio",
+      "destination": "/blog/por-que-vender-sem-nota-fiscal-pode-acabar-com-o-seu-negocio/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/por-que-vender-sem-nota-fiscal-pode-acabar-com-o-seu-neg%C3%B3cio",
+      "destination": "/blog/por-que-vender-sem-nota-fiscal-pode-acabar-com-o-seu-negocio/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reforma-tributária-pode-disparar-preços-ao-consumidor-final",
+      "destination": "/blog/reforma-tributaria-pode-disparar-precos-ao-consumidor-final/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reforma-tribut%C3%A1ria-pode-disparar-pre%C3%A7os-ao-consumidor-final",
+      "destination": "/blog/reforma-tributaria-pode-disparar-precos-ao-consumidor-final/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reforma-tributária-2026-como-a-apuração-assistida-do-ibs-e-da-cbs-vai-transformar-a-gestão-fiscal-das-empresas",
+      "destination": "/blog/reforma-tributaria-2026-como-a-apuracao-assistida-do-ibs-e-da-cbs-vai-transformar-a-gestao-fiscal-das-empresas/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reforma-tribut%C3%A1ria-2026-como-a-apura%C3%A7%C3%A3o-assistida-do-ibs-e-da-cbs-vai-transformar-a-gest%C3%A3o-fiscal-das-empresas",
+      "destination": "/blog/reforma-tributaria-2026-como-a-apuracao-assistida-do-ibs-e-da-cbs-vai-transformar-a-gestao-fiscal-das-empresas/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/simulador-da-reforma-tributária-2026-como-antecipar-impactos-e-transformar-dados-fiscais-em-estratégia-para-seus-clientes",
+      "destination": "/blog/simulador-da-reforma-tributaria-2026-como-antecipar-impactos-e-transformar-dados-fiscais-em-estrategia-para-seus-cliente/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/simulador-da-reforma-tribut%C3%A1ria-2026-como-antecipar-impactos-e-transformar-dados-fiscais-em-estrat%C3%A9gia-para-seus-clientes",
+      "destination": "/blog/simulador-da-reforma-tributaria-2026-como-antecipar-impactos-e-transformar-dados-fiscais-em-estrategia-para-seus-cliente/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/pix-autom%C3%A1tico-a-revolu%C3%A7%C3%A3o-dos-pagamentos-recorrentes-que-traz-total-controle-para-voc%C3%AA-e-sua-empresa",
+      "destination": "/blog/pix-automatico-a-revolucao-dos-pagamentos-recorrentes-que-traz-total-controle-para-voce-e-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/pix-automático-a-revolução-dos-pagamentos-recorrentes-que-traz-total-controle-para-você-e-sua-empresa",
+      "destination": "/blog/pix-automatico-a-revolucao-dos-pagamentos-recorrentes-que-traz-total-controle-para-voce-e-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reforma-tribut%C3%A1ria-os-grandes-desafios-e-as-oportunidades-que-est%C3%A3o-em-jogo",
+      "destination": "/blog/reforma-tributaria-os-grandes-desafios-e-as-oportunidades-que-estao-em-jogo/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reforma-tributária-os-grandes-desafios-e-as-oportunidades-que-estão-em-jogo",
+      "destination": "/blog/reforma-tributaria-os-grandes-desafios-e-as-oportunidades-que-estao-em-jogo/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reforma-tributária-2026-guia-completo-para-preparar-seu-erp-e-garantir-o-crédito-pleno-no-novo-sistema-ibs-cbs",
+      "destination": "/blog/reforma-tributaria-2026-guia-completo-para-preparar-seu-erp-e-garantir-o-credito-pleno-no-novo-sistema-ibs-cbs/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reforma-tribut%C3%A1ria-2026-guia-completo-para-preparar-seu-erp-e-garantir-o-cr%C3%A9dito-pleno-no-novo-sistema-ibs-cbs",
+      "destination": "/blog/reforma-tributaria-2026-guia-completo-para-preparar-seu-erp-e-garantir-o-credito-pleno-no-novo-sistema-ibs-cbs/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ibs-e-cbs-2026-o-que-muda-na-pr%C3%A1tica-e-como-se-preparar",
+      "destination": "/blog/ibs-e-cbs-2026-o-que-muda-na-pratica-e-como-se-preparar/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ibs-e-cbs-2026-o-que-muda-na-prática-e-como-se-preparar",
+      "destination": "/blog/ibs-e-cbs-2026-o-que-muda-na-pratica-e-como-se-preparar/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/iva-dual-2026-como-precificar-produtos-e-servi%C3%A7os-com-seguran%C3%A7a",
+      "destination": "/blog/iva-dual-2026-como-precificar-produtos-e-servicos-com-seguranca/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/iva-dual-2026-como-precificar-produtos-e-serviços-com-segurança",
+      "destination": "/blog/iva-dual-2026-como-precificar-produtos-e-servicos-com-seguranca/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/fechamento-fiscal-2025-guia-pr%C3%A1tico-para-sua-empresa",
+      "destination": "/blog/fechamento-fiscal-2025-guia-pratico-para-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/fechamento-fiscal-2025-guia-prático-para-sua-empresa",
+      "destination": "/blog/fechamento-fiscal-2025-guia-pratico-para-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/13%C2%BA-sal%C3%A1rio-2025-prazos-c%C3%A1lculo-e-como-organizar-o-pagamento",
+      "destination": "/blog/13o-salario-2025-prazos-calculo-e-como-organizar-o-pagamento/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/13º-salário-2025-prazos-cálculo-e-como-organizar-o-pagamento",
+      "destination": "/blog/13o-salario-2025-prazos-calculo-e-como-organizar-o-pagamento/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/prepara%C3%A7%C3%A3o-2026-plano-pr%C3%A1tico-para-a-reforma-tribut%C3%A1ria",
+      "destination": "/blog/preparacao-2026-plano-pratico-para-a-reforma-tributaria/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/preparação-2026-plano-prático-para-a-reforma-tributária",
+      "destination": "/blog/preparacao-2026-plano-pratico-para-a-reforma-tributaria/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lucro-real-em-2026-quando-ele-passa-a-ser-a-melhor-op%C3%A7%C3%A3o",
+      "destination": "/blog/lucro-real-em-2026-quando-ele-passa-a-ser-a-melhor-opcao/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lucro-real-em-2026-quando-ele-passa-a-ser-a-melhor-opção",
+      "destination": "/blog/lucro-real-em-2026-quando-ele-passa-a-ser-a-melhor-opcao/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/esocial-2026-mudanças-na-folha-de-pagamento-e-como-se-preparar",
+      "destination": "/blog/esocial-2026-mudancas-na-folha-de-pagamento-e-como-se-preparar/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/esocial-2026-mudan%C3%A7as-na-folha-de-pagamento-e-como-se-preparar",
+      "destination": "/blog/esocial-2026-mudancas-na-folha-de-pagamento-e-como-se-preparar/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/créditos-de-pis-e-cofins-no-lucro-real-como-aproveitar-ao-máximo",
+      "destination": "/blog/creditos-de-pis-e-cofins-no-lucro-real-como-aproveitar-ao-maximo/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/cr%C3%A9ditos-de-pis-e-cofins-no-lucro-real-como-aproveitar-ao-m%C3%A1ximo",
+      "destination": "/blog/creditos-de-pis-e-cofins-no-lucro-real-como-aproveitar-ao-maximo/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/dctf-e-dctfweb-diferen%C3%A7as-prazos-e-como-evitar-erros",
+      "destination": "/blog/dctf-e-dctfweb-diferencas-prazos-e-como-evitar-erros/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/dctf-e-dctfweb-diferenças-prazos-e-como-evitar-erros",
+      "destination": "/blog/dctf-e-dctfweb-diferencas-prazos-e-como-evitar-erros/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/equity-para-funcion%C3%A1rios-o-que-%C3%A9-legal-no-brasil-em-2026",
+      "destination": "/blog/equity-para-funcionarios-o-que-e-legal-no-brasil-em-2026/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/equity-para-funcionários-o-que-é-legal-no-brasil-em-2026",
+      "destination": "/blog/equity-para-funcionarios-o-que-e-legal-no-brasil-em-2026/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/efd-contribui%C3%A7%C3%B5es-2026-quem-deve-entregar-e-como-evitar-erros",
+      "destination": "/blog/efd-contribuicoes-2026-quem-deve-entregar-e-como-evitar-erros/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/efd-contribuições-2026-quem-deve-entregar-e-como-evitar-erros",
+      "destination": "/blog/efd-contribuicoes-2026-quem-deve-entregar-e-como-evitar-erros/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/calendário-fiscal-2026-obrigações-essenciais-para-sua-empresa",
+      "destination": "/blog/calendario-fiscal-2026-obrigacoes-essenciais-para-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/calend%C3%A1rio-fiscal-2026-obriga%C3%A7%C3%B5es-essenciais-para-sua-empresa",
+      "destination": "/blog/calendario-fiscal-2026-obrigacoes-essenciais-para-sua-empresa/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/autorização-de-acesso-imposto-de-renda-2026-como-autorizar-o-acesso-para-o-meu-contador",
+      "destination": "/blog/autorizacao-de-acesso-imposto-de-renda-2026-como-autorizar-o-acesso-para-o-meu-contador/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/autoriza%C3%A7%C3%A3o-de-acesso-imposto-de-renda-2026-como-autorizar-o-acesso-para-o-meu-contador",
+      "destination": "/blog/autorizacao-de-acesso-imposto-de-renda-2026-como-autorizar-o-acesso-para-o-meu-contador/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/tributa%C3%A7%C3%A3o-para-empresas-de-tecnologia-como-reduzir-custos-fiscais",
+      "destination": "/blog/tributacao-para-empresas-de-tecnologia-como-reduzir-custos-fiscais/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/tributação-para-empresas-de-tecnologia-como-reduzir-custos-fiscais",
+      "destination": "/blog/tributacao-para-empresas-de-tecnologia-como-reduzir-custos-fiscais/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reforma-tributária-e-o-setor-de-serviços-impacto-nos-preços-e-contratos",
+      "destination": "/blog/reforma-tributaria-e-o-setor-de-servicos-impacto-nos-precos-e-contratos/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/reforma-tribut%C3%A1ria-e-o-setor-de-servi%C3%A7os-impacto-nos-pre%C3%A7os-e-contratos",
+      "destination": "/blog/reforma-tributaria-e-o-setor-de-servicos-impacto-nos-precos-e-contratos/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/irpf-2026-o-que-mudou-e-como-o-sócio-de-empresa-deve-se-preparar",
+      "destination": "/blog/irpf-2026-o-que-mudou-e-como-o-socio-de-empresa-deve-se-preparar/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/irpf-2026-o-que-mudou-e-como-o-s%C3%B3cio-de-empresa-deve-se-preparar",
+      "destination": "/blog/irpf-2026-o-que-mudou-e-como-o-socio-de-empresa-deve-se-preparar/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/pr%C3%B3-labore-vs-dividendos-qual-a-estrat%C3%A9gia-mais-eficiente-para-o-s%C3%B3cio-em-2026",
+      "destination": "/blog/pro-labore-vs-dividendos-qual-a-estrategia-mais-eficiente-para-o-socio-em-2026/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/pró-labore-vs-dividendos-qual-a-estratégia-mais-eficiente-para-o-sócio-em-2026",
+      "destination": "/blog/pro-labore-vs-dividendos-qual-a-estrategia-mais-eficiente-para-o-socio-em-2026/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/tributação-de-software-e-saas-no-brasil-guia-para-empresas-de-tecnologia",
+      "destination": "/blog/tributacao-de-software-e-saas-no-brasil-guia-para-empresas-de-tecnologia/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/tributa%C3%A7%C3%A3o-de-software-e-saas-no-brasil-guia-para-empresas-de-tecnologia",
+      "destination": "/blog/tributacao-de-software-e-saas-no-brasil-guia-para-empresas-de-tecnologia/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/cap-table-e-impostos-como-a-estrutura-societ%C3%A1ria-afeta-a-tributa%C3%A7%C3%A3o-e-a-distribui%C3%A7%C3%A3o-de-lucros",
+      "destination": "/blog/cap-table-e-impostos-como-a-estrutura-societaria-afeta-a-tributacao-e-a-distribuicao-de-lucros/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/cap-table-e-impostos-como-a-estrutura-societária-afeta-a-tributação-e-a-distribuição-de-lucros",
+      "destination": "/blog/cap-table-e-impostos-como-a-estrutura-societaria-afeta-a-tributacao-e-a-distribuicao-de-lucros/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/contabilidade-para-startups-estrutura-mínima-para-crescer-com-segurança",
+      "destination": "/blog/contabilidade-para-startups-estrutura-minima-para-crescer-com-seguranca/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/contabilidade-para-startups-estrutura-m%C3%ADnima-para-crescer-com-seguran%C3%A7a",
+      "destination": "/blog/contabilidade-para-startups-estrutura-minima-para-crescer-com-seguranca/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/deduções-no-irpf-2026-limites-o-que-pode-abater-e-o-que-mudou-este-ano",
+      "destination": "/blog/deducoes-no-irpf-2026-limites-o-que-pode-abater-e-o-que-mudou-este-ano/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/dedu%C3%A7%C3%B5es-no-irpf-2026-limites-o-que-pode-abater-e-o-que-mudou-este-ano",
+      "destination": "/blog/deducoes-no-irpf-2026-limites-o-que-pode-abater-e-o-que-mudou-este-ano/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/defis-2026-prazo-venceu-ontem-o-que-fazer-agora-se-sua-empresa-ainda-n%C3%A3o-entregou",
+      "destination": "/blog/defis-2026-prazo-venceu-ontem-o-que-fazer-agora-se-sua-empresa-ainda-nao-entregou/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/defis-2026-prazo-venceu-ontem-o-que-fazer-agora-se-sua-empresa-ainda-não-entregou",
+      "destination": "/blog/defis-2026-prazo-venceu-ontem-o-que-fazer-agora-se-sua-empresa-ainda-nao-entregou/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/irpf-m%C3%ADnimo-2026-quem-%C3%A9-atingido-como-%C3%A9-calculado-e-como-planejar-a-remunera%C3%A7%C3%A3o-dos-s%C3%B3cios",
+      "destination": "/blog/irpf-minimo-2026-quem-e-atingido-como-e-calculado-e-como-planejar-a-remuneracao-dos-socios/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/irpf-mínimo-2026-quem-é-atingido-como-é-calculado-e-como-planejar-a-remuneração-dos-sócios",
+      "destination": "/blog/irpf-minimo-2026-quem-e-atingido-como-e-calculado-e-como-planejar-a-remuneracao-dos-socios/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/irpj-no-lucro-real-o-que-apurar-no-fechamento-do-1º-trimestre-de-2026",
+      "destination": "/blog/irpj-no-lucro-real-o-que-apurar-no-fechamento-do-1o-trimestre-de-2026/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/irpj-no-lucro-real-o-que-apurar-no-fechamento-do-1%C2%BA-trimestre-de-2026",
+      "destination": "/blog/irpj-no-lucro-real-o-que-apurar-no-fechamento-do-1o-trimestre-de-2026/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/cr%C3%A9ditos-tribut%C3%A1rios-como-identificar-e-recuperar-valores-pagos-a-mais",
+      "destination": "/blog/creditos-tributarios-como-identificar-e-recuperar-valores-pagos-a-mais/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/créditos-tributários-como-identificar-e-recuperar-valores-pagos-a-mais",
+      "destination": "/blog/creditos-tributarios-como-identificar-e-recuperar-valores-pagos-a-mais/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/a-corrida-do-pis-e-cofins-como-recuperar-créditos-antes-que-a-reforma-tributária-mude-tudo",
+      "destination": "/blog/a-corrida-do-pis-e-cofins-como-recuperar-creditos-antes-que-a-reforma-tributaria-mude-tudo/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/a-corrida-do-pis-e-cofins-como-recuperar-cr%C3%A9ditos-antes-que-a-reforma-tribut%C3%A1ria-mude-tudo",
+      "destination": "/blog/a-corrida-do-pis-e-cofins-como-recuperar-creditos-antes-que-a-reforma-tributaria-mude-tudo/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/sua-empresa-pode-ter-cr%C3%A9dito-tribut%C3%A1rio-parado-sem-usar.-veja-como-identificar-e-recuperar-antes-que-prescreva",
+      "destination": "/blog/sua-empresa-pode-ter-credito-tributario-parado-sem-usar-veja-como-identificar-e-recuperar-antes-que-prescreva/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/sua-empresa-pode-ter-crédito-tributário-parado-sem-usar.-veja-como-identificar-e-recuperar-antes-que-prescreva",
+      "destination": "/blog/sua-empresa-pode-ter-credito-tributario-parado-sem-usar-veja-como-identificar-e-recuperar-antes-que-prescreva/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nota-fiscal-para-clientes-no-exterior-como-emitir-corretamente-e-garantir-a-isenção-de-iss",
+      "destination": "/blog/nota-fiscal-para-clientes-no-exterior-como-emitir-corretamente-e-garantir-a-isencao-de-iss/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nota-fiscal-para-clientes-no-exterior-como-emitir-corretamente-e-garantir-a-isen%C3%A7%C3%A3o-de-iss",
+      "destination": "/blog/nota-fiscal-para-clientes-no-exterior-como-emitir-corretamente-e-garantir-a-isencao-de-iss/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/revisão-tributária-do-1º-trimestre-5-indicadores-para-monitorar-agora",
+      "destination": "/blog/revisao-tributaria-do-1o-trimestre-5-indicadores-para-monitorar-agora/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/revis%C3%A3o-tribut%C3%A1ria-do-1%C2%BA-trimestre-5-indicadores-para-monitorar-agora",
+      "destination": "/blog/revisao-tributaria-do-1o-trimestre-5-indicadores-para-monitorar-agora/",
+      "statusCode": 301
+    }
+  ]
+}
