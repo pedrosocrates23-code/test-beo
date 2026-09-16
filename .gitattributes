@@ -1,0 +1,14 @@
+# Este projeto e mantido com fim de linha LF, inclusive no Windows. Sem esta regra o Git
+# converte para CRLF ao gravar na arvore de trabalho (core.autocrlf), e os scripts Python que
+# geram conteudo aqui passam a produzir diffs de arquivo inteiro por causa da quebra de linha.
+* text=auto eol=lf
+
+# Binarios: nada de conversao.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.svg text eol=lf
+*.woff2 binary
+*.ico binary
+*.pdf binary

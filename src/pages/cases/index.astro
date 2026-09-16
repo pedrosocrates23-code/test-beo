@@ -30,9 +30,10 @@ import Layout from "../../layouts/Layout.astro";
 import "../../styles/prototype-contabilidade.css";
 import Header from "../../components/elements/Header.astro";
 import MobileMenu from "../../components/elements/MobileMenu.astro";
-import HeroIndice from "../../components/elements/HeroIndice.astro";
+import HeroContabilidade from "../../components/elements/HeroContabilidade.astro";
 import SecaoLista from "../../components/elements/SecaoLista.astro";
 import Depoimentos from "../../components/elements/Depoimentos.astro";
+import TrustBanner from "../../components/elements/TrustBanner.astro";
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
@@ -45,16 +46,37 @@ import Footer from "../../components/elements/Footer.astro";
   title="Cases | Beorange"
   description="Cada case mostra a situação encontrada, o que foi feito e o que mudou. Sem promessa de resultado repetível."
 >
-  <Header ativo="cases" tema="claro" />
+  {/* tema="escuro" e não "claro": a dobra 1 passou a ser o hero de fundo escuro, e no tema
+      claro a logo sobe na variante escura — preta sobre a foto preta do escritório. É o
+      mesmo tema das páginas de solução, que usam este mesmo hero. */}
+  <Header ativo="cases" tema="escuro" />
   <MobileMenu />
 
-  <!-- DOBRA 1 — Abertura do índice -->
-  <HeroIndice
+  <!-- DOBRA 1 — Abertura, no padrão do hero escuro (Figma 47:936), a pedido (16/09/2026).
+       Mesmo elemento das páginas de solução, não uma cópia parecida: foto de fundo full-bleed,
+       texto centralizado em branco, padding 148/90.
+       O TEXTO NÃO MUDA — é o mesmo que já estava aqui. Sem etiqueta e sem botões: a página
+       não tinha nenhum dos dois, e acrescentá-los seria escrever texto novo, não aplicar um
+       padrão visual. Os dois pontos de conversão da página continuam onde estavam, nas
+       dobras 3 e 5. -->
+  <HeroContabilidade
+    eyebrow={null}
     titulo="Empresas que reorganizaram a estrutura administrativa e passaram a decidir com número"
     lead="Cada case mostra a situação encontrada, o que foi feito e o que mudou. Sem promessa de resultado repetível: o efeito depende do regime, do setor e do ponto de partida de cada empresa."
+    ctaPrimario={null}
+    ctaSecundario={null}
+    foto="/img/cases/hero-bg.webp"
   />
 
   <!-- DOBRA 2 — Filtros: omitida de propósito até existirem 6 cases. Ver o cabeçalho. -->
+
+  <!-- DOBRA 2.5 — Faixa de marcas, a pedido (16/09/2026).
+       Entra ANTES da grade vazia de propósito: numa página cujo conteúdo principal ainda não
+       existe, a primeira coisa depois da abertura passa a ser prova que existe hoje — as
+       empresas atendidas — em vez do aviso de que os cases estão sendo preparados.
+       Mesmo elemento da home, sem cópia: o estilo dele mora no componente desde que esta
+       segunda página passou a usá-lo. -->
+  <TrustBanner />
 
   <!-- DOBRA 3 — Grade de cases, hoje no estado vazio -->
   <SecaoLista

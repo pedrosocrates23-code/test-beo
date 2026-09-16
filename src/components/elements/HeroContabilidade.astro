@@ -11,11 +11,18 @@
 import Icone from "./Icone.astro";
 
 interface Props {
-  eyebrow?: string;
+  /** `null` remove a etiqueta. `undefined` mantém o padrão da Contabilidade. */
+  eyebrow?: string | null;
   titulo?: string;
   lead?: string;
-  ctaPrimario?: { texto: string; href: string };
-  ctaSecundario?: { texto: string; href: string };
+  /** `null` remove o botão. A distinção importa: `undefined` cai no valor padrão, `null`
+   *  diz explicitamente "esta página não tem CTA aqui" — é o caso da /cases/, cujo hero é
+   *  só título e lead. */
+  ctaPrimario?: { texto: string; href: string } | null;
+  ctaSecundario?: { texto: string; href: string } | null;
+  /** Foto de fundo desta página, a partir de public/. Sem isto vale a foto padrão, definida
+   *  em --hero-photo no prototype-contabilidade.css. */
+  foto?: string;
   /** Faixa de uma linha abaixo dos botões. Na Conta Beorange carrega o modelo de cobrança,
    *  que o documento manda expor já na primeira dobra por ser argumento comercial. */
   destaque?: string;
@@ -28,18 +35,21 @@ const {
   ctaPrimario = { texto: "Solicitar diagnóstico", href: "#diagnostico" },
   ctaSecundario = { texto: "Ver as seis frentes", href: "#frentes" },
   destaque,
+  foto,
 } = Astro.props;
 ---
-<section class="hero">
+<section class="hero" style={foto ? `--hero-photo:url('${foto}')` : undefined}>
   <div class="wrap">
     <div class="hero-inner rv in">
       {eyebrow && <span class="eyebrow">{eyebrow}</span>}
       <h1>{titulo}</h1>
       <p class="lead">{lead}</p>
-      <div class="hero-cta">
-        <a href={ctaPrimario.href} class="btn btn-primary">{ctaPrimario.texto}</a>
-        {ctaSecundario && <a href={ctaSecundario.href} class="btn btn-ghost">{ctaSecundario.texto}</a>}
-      </div>
+      {(ctaPrimario || ctaSecundario) && (
+        <div class="hero-cta">
+          {ctaPrimario && <a href={ctaPrimario.href} class="btn btn-primary">{ctaPrimario.texto}</a>}
+          {ctaSecundario && <a href={ctaSecundario.href} class="btn btn-ghost">{ctaSecundario.texto}</a>}
+        </div>
+      )}
       {destaque && <p class="hero-destaque">{destaque}</p>}
     </div>
   </div>
