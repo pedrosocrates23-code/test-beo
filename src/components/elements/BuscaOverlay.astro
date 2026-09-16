@@ -81,8 +81,9 @@
   }
   .busca::backdrop{
     background:rgba(28,22,19,.28);
-    backdrop-filter:blur(10px) saturate(115%);
-    -webkit-backdrop-filter:blur(10px) saturate(115%);
+    --desfoque:blur(10px) saturate(115%);
+    backdrop-filter:var(--desfoque);
+    -webkit-backdrop-filter:var(--desfoque);
   }
 
   /* Uma caixa só, em três faixas: campo, lista e filtro. As divisórias são bordas de 1px,

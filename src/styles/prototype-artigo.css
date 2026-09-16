@@ -394,8 +394,44 @@
   .prose h3{font-size:19px;font-weight:600;margin:30px 0 10px;color:var(--ink)}
   .prose p{font-size:17px;line-height:1.78;color:#4a423d;margin-bottom:18px}
   .prose ul{margin:0 0 22px;padding:0;list-style:none;display:grid;gap:11px}
-  .prose ul li{font-size:17px;line-height:1.6;color:#4a423d;display:flex;gap:12px;align-items:flex-start}
-  .prose ul li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--coral);margin-top:11px;flex:none}
+  .prose ul>li{font-size:17px;line-height:1.6;color:#4a423d;display:flex;gap:12px;align-items:flex-start}
+  .prose ul>li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--coral);margin-top:11px;flex:none}
+
+  /* ---------- LISTAS NUMERADAS ----------
+     O <ol> não tinha regra nenhuma. Herdava o `padding:0` do reset lá de cima e, com
+     list-style-position:outside, o número é desenhado FORA da caixa do elemento — à esquerda
+     da coluna de texto, desalinhado de todo o resto do artigo. Medido antes da correção: o
+     <li> começava no mesmo x do <ol> (370px nos dois), ou seja, o número ficava em terreno de
+     ninguém; num recorte apertado ele sumia de vez.
+     E o <ol> não acompanhava o <ul> em nada: 16px contra 17px, cor --ink contra --ink-2, e
+     nenhum ritmo próprio — o espaço entre itens vinha da margem do <p> de dentro.
+
+     Aqui o número passa a ser desenhado por counter(), com a mesma linguagem do <ul>.
+     A caixa é grid, e não flex como a do <ul>, por causa de um detalhe do acervo: 29 itens
+     numerados têm uma lista aninhada dentro. Em flex, o <p> e essa <ul> viram itens lado a
+     lado, na mesma linha. No grid, o marcador ocupa a coluna 1 e TODO filho vai para a
+     coluna 2, então eles empilham e ficam alinhados com a primeira linha do texto.
+     min-width de 1.75em: a maior lista do acervo hoje tem 9 itens diretos, mas a medida
+     cabe dois dígitos, então uma lista de 12 passos não desalinha o texto na primeira vez
+     que alguém escrever uma. tabular-nums garante que 1 e 4 ocupem a mesma largura. */
+  .prose ol{margin:0 0 22px;padding:0;list-style:none;display:grid;gap:11px;counter-reset:passo}
+  .prose ol>li{
+    display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:start;
+    font-size:17px;line-height:1.6;color:#4a423d;counter-increment:passo;
+  }
+  .prose ol>li::before{
+    content:counter(passo) ".";grid-column:1;grid-row:1;min-width:1.75em;
+    font-weight:600;color:var(--coral);font-variant-numeric:tabular-nums;
+  }
+  .prose ol>li>*{grid-column:2}
+
+  /* O <p> dentro do item carrega a margem de parágrafo (18px), que somava ao gap da lista:
+     o gap declarado era 11px e o real, 29px. Dentro de um item de lista quem manda no ritmo
+     é a lista, não o parágrafo. Vale para as duas, numerada e com marcador. */
+  .prose li>p{margin:0}
+  .prose li>*+*{margin-top:10px}
+  /* lista aninhada não leva o respiro de 22px do fim: ali ele vira buraco no meio do item */
+  .prose ol>li>ul,.prose ul>li>ul{margin-bottom:0}
   .prose a.inl{color:var(--coral);font-weight:600;border-bottom:1px solid rgba(245,56,15,.32)}
   .pullquote{border-left:3px solid var(--coral);padding:4px 0 4px 26px;margin:36px 0;font-size:23px;font-weight:600;line-height:1.38;letter-spacing:-.015em;color:var(--ink)}
   .inline-cta{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px 28px;margin:36px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
@@ -488,6 +524,13 @@
 
     /* a imagem encosta menos no topo, já que agora é ela que segue o lead */
     .feature{margin-top:32px}
+
+    /* O recuo da lista numerada é de 42px no desktop (1,75em do marcador + 12 de gap). Numa
+       coluna de 264px isso é um sexto da largura, e a linha fica curta demais. Aqui o
+       marcador encolhe para o que basta a dois dígitos na fonte menor, e o recuo cai para
+       ~32px. O alinhamento das linhas quebradas não muda: quem o mantém é o grid. */
+    .prose ol>li{column-gap:9px}
+    .prose ol>li::before{min-width:1.35em}
   }
 
   /* ---------- IMAGENS PLUGADAS NO CARD ----------
