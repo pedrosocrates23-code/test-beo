@@ -136,60 +136,104 @@ const {
       ))}
       </ul>
 
-      {/* Controles escondidos por padrão e revelados pelo JS: sem script eles não fariam
-          nada, e botão morto é pior que botão ausente. Sem JS o carrossel continua
+      {/* Botões nas laterais, escondidos por padrão e revelados pelo JS: sem script eles não
+          fariam nada, e botão morto é pior que botão ausente. Sem JS o carrossel continua
           utilizável — a trilha é uma área de rolagem de verdade, que arrasta no celular e
           rola com as setas do teclado no computador. */}
-      <div class="depo-controles" hidden>
-        <button type="button" class="depo-nav" data-depo-ant aria-label="Depoimento anterior">
-          <svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22" fill="none"
-               stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-        <p class="depo-status" role="status" aria-live="polite">
-          Depoimento 1 de {depoimentos.length}
-        </p>
-        <button type="button" class="depo-nav" data-depo-prox aria-label="Próximo depoimento">
-          <svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22" fill="none"
-               stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 6l6 6-6 6" />
-          </svg>
-        </button>
-      </div>
+      <button type="button" class="depo-nav depo-nav--ant" data-depo-ant
+              aria-label="Depoimento anterior" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22" fill="none"
+             stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+      <button type="button" class="depo-nav depo-nav--prox" data-depo-prox
+              aria-label="Próximo depoimento" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22" fill="none"
+             stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 6l6 6-6 6" />
+        </svg>
+      </button>
+
+      {/* A contagem sai do desenho mas continua existindo para quem ouve a página: sem ela,
+          avançar o carrossel com o leitor de tela não anuncia nada. */}
+      <p class="depo-status" role="status" aria-live="polite">
+        Depoimento 1 de {depoimentos.length}
+      </p>
     </div>
   </div>
 </section>
 
 <script>
-  // Carrossel de depoimentos.
+  // Carrossel de depoimentos: laço infinito, botões nas laterais e arrasto com o mouse.
   //
-  // A rolagem é do navegador: a trilha é um contêiner com overflow-x e scroll-snap, então
-  // arrastar no celular e rolar com o teclado já funcionam sem uma linha de script. O JS
-  // acrescenta só o que não dá para fazer em CSS — os botões, a contagem falada e a
-  // desativação nas pontas.
+  // A rolagem continua sendo a do navegador — overflow-x com scroll-snap. O script
+  // acrescenta três coisas que o CSS não faz: o laço, o arrasto com mouse e o anúncio
+  // para leitor de tela.
   //
-  // Não há avanço automático, de propósito: um carrossel que troca sozinho tira do leitor
-  // o controle do tempo de leitura, e aqui cada slide é uma citação inteira.
+  // COMO O LAÇO FUNCIONA, e por que os clones nascem aqui e não no HTML.
+  // A trilha vira [clones do fim][originais][clones do início]. Quando a rolagem entra na
+  // faixa dos clones, o script devolve a posição para o bloco original — sem animação e
+  // sem snap, num piscar que o olho não pega, porque o conteúdo nos dois pontos é
+  // idêntico. Os clones são criados por JS de propósito: no HTML servido eles seriam
+  // texto repetido, que o buscador leria como conteúdo duplicado e o leitor de tela
+  // anunciaria três vezes. Por isso também levam aria-hidden e ficam fora da ordem de
+  // tabulação.
   document.querySelectorAll<HTMLElement>("[data-depo-carrossel]").forEach((raiz) => {
     const trilha = raiz.querySelector<HTMLElement>(".depo-trilha");
-    const controles = raiz.querySelector<HTMLElement>(".depo-controles");
     const ant = raiz.querySelector<HTMLButtonElement>("[data-depo-ant]");
     const prox = raiz.querySelector<HTMLButtonElement>("[data-depo-prox]");
     const status = raiz.querySelector<HTMLElement>(".depo-status");
-    if (!trilha || !controles || !ant || !prox || !status) return;
+    if (!trilha || !ant || !prox || !status) return;
 
-    const cards = Array.from(trilha.querySelectorAll<HTMLElement>(".depo-card"));
-    if (cards.length < 2) return;
-    controles.hidden = false;
+    const originais = Array.from(trilha.querySelectorAll<HTMLElement>(".depo-card"));
+    const total = originais.length;
+    if (total < 2) return;
+
+    ant.hidden = false;
+    prox.hidden = false;
+
+    // ---- clones ----
+    const clonar = (fonte: HTMLElement[], ondePor: "antes" | "depois") => {
+      const frag = document.createDocumentFragment();
+      for (const c of fonte) {
+        const copia = c.cloneNode(true) as HTMLElement;
+        copia.setAttribute("aria-hidden", "true");
+        copia.dataset.clone = "1";
+        copia.querySelectorAll("a, button").forEach((e) => e.setAttribute("tabindex", "-1"));
+        frag.appendChild(copia);
+      }
+      if (ondePor === "antes") trilha.insertBefore(frag, trilha.firstChild);
+      else trilha.appendChild(frag);
+    };
+    clonar(originais, "depois");
+    clonar(originais, "antes");
+
+    const todos = () => Array.from(trilha.querySelectorAll<HTMLElement>(".depo-card"));
+    const esq = (el: HTMLElement) => el.offsetLeft - trilha.offsetLeft;
+
+    const suave = () =>
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+
+    /** Põe a rolagem no primeiro card original, sem animação. */
+    const ancorar = () => {
+      trilha.style.scrollSnapType = "none";
+      trilha.scrollLeft = esq(todos()[total]);
+      trilha.style.scrollSnapType = "";
+    };
+
+    // Espera o layout assentar antes de medir: fonte e imagem mudam a largura do cartão.
+    requestAnimationFrame(ancorar);
+    window.addEventListener("load", ancorar, { once: true });
 
     /** Índice do card mais próximo da borda esquerda da área visível. */
-    const atual = () => {
+    const indiceAtual = () => {
       const x = trilha.scrollLeft;
+      const lista = todos();
       let melhor = 0;
       let menor = Infinity;
-      cards.forEach((c, i) => {
-        const d = Math.abs(c.offsetLeft - trilha.offsetLeft - x);
+      lista.forEach((c, i) => {
+        const d = Math.abs(esq(c) - x);
         if (d < menor) {
           menor = d;
           melhor = i;
@@ -199,38 +243,96 @@ const {
     };
 
     const irPara = (i: number) => {
-      const alvo = cards[Math.max(0, Math.min(cards.length - 1, i))];
-      trilha.scrollTo({
-        left: alvo.offsetLeft - trilha.offsetLeft,
-        // respeita quem pediu menos movimento no sistema
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "auto"
-          : "smooth",
-      });
+      const lista = todos();
+      const alvo = lista[Math.max(0, Math.min(lista.length - 1, i))];
+      trilha.scrollTo({ left: esq(alvo), behavior: suave() });
     };
 
-    const atualizar = () => {
-      const i = atual();
-      status.textContent = `Depoimento ${i + 1} de ${cards.length}`;
-      // 1px de folga: a posição de rolagem é fracionária e raramente bate no valor exato
-      ant.disabled = trilha.scrollLeft <= 1;
-      prox.disabled = trilha.scrollLeft >= trilha.scrollWidth - trilha.clientWidth - 1;
-    };
+    ant.addEventListener("click", () => irPara(indiceAtual() - 1));
+    prox.addEventListener("click", () => irPara(indiceAtual() + 1));
 
-    ant.addEventListener("click", () => irPara(atual() - 1));
-    prox.addEventListener("click", () => irPara(atual() + 1));
-
+    // ---- recentragem e anúncio ----
     let pendente = 0;
+    const aoParar = () => {
+      const lista = todos();
+      const i = indiceAtual();
+      // fora do bloco do meio: devolve para a posição equivalente, sem animação
+      if (i < total || i >= total * 2) {
+        const equivalente = ((i % total) + total) % total;
+        trilha.style.scrollSnapType = "none";
+        trilha.scrollLeft = esq(lista[total + equivalente]);
+        trilha.style.scrollSnapType = "";
+      }
+      const visivel = (((indiceAtual() % total) + total) % total) + 1;
+      status.textContent = `Depoimento ${visivel} de ${total}`;
+    };
     trilha.addEventListener(
       "scroll",
       () => {
         window.clearTimeout(pendente);
-        pendente = window.setTimeout(atualizar, 120);
+        pendente = window.setTimeout(aoParar, 140);
       },
       { passive: true },
     );
-    window.addEventListener("resize", atualizar, { passive: true });
-    atualizar();
+    window.addEventListener("resize", ancorar, { passive: true });
+
+    // ---- arrastar com o mouse ----
+    // O toque já arrasta sozinho: quem não arrasta é o ponteiro de mouse, e é só para ele
+    // que este trecho existe. Um arrasto curto é clique, e precisa continuar clicando o
+    // link de dentro do cartão; por isso o bloqueio de clique só entra depois de 6px.
+    const LIMIAR = 6;
+    let arrastando = false;
+    let partiuEm = 0;
+    let rolagemInicial = 0;
+    let andou = 0;
+
+    trilha.addEventListener("pointerdown", (e) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
+      arrastando = true;
+      andou = 0;
+      partiuEm = e.clientX;
+      rolagemInicial = trilha.scrollLeft;
+      trilha.style.scrollSnapType = "none";
+      trilha.classList.add("esta-arrastando");
+    });
+
+    trilha.addEventListener("pointermove", (e) => {
+      if (!arrastando) return;
+      const d = e.clientX - partiuEm;
+      andou = Math.abs(d);
+      if (andou > LIMIAR) {
+        // só captura o ponteiro depois do limiar, senão um clique simples no link
+        // seria engolido pelo arrasto
+        trilha.setPointerCapture(e.pointerId);
+        e.preventDefault();
+      }
+      trilha.scrollLeft = rolagemInicial - d;
+    });
+
+    const soltar = (e: PointerEvent) => {
+      if (!arrastando) return;
+      arrastando = false;
+      trilha.classList.remove("esta-arrastando");
+      trilha.style.scrollSnapType = "";
+      if (trilha.hasPointerCapture?.(e.pointerId)) trilha.releasePointerCapture(e.pointerId);
+      if (andou > LIMIAR) irPara(indiceAtual());
+    };
+    trilha.addEventListener("pointerup", soltar);
+    trilha.addEventListener("pointercancel", soltar);
+
+    // Depois de um arrasto de verdade, engole o clique que o navegador dispara em
+    // seguida — senão soltar o mouse em cima de um cartão navegaria para o link dele.
+    trilha.addEventListener(
+      "click",
+      (e) => {
+        if (andou > LIMIAR) {
+          e.preventDefault();
+          e.stopPropagation();
+          andou = 0;
+        }
+      },
+      true,
+    );
   });
 </script>
 
@@ -335,19 +437,19 @@ const {
   .depo-card--marca .depo-cargo strong,
   .depo-card--marca .depo-frase q { color: #fff; }
 
-  /* CONTROLES */
-  .depo-controles {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    margin-top: 28px;
-  }
+  /* CONTROLES NAS LATERAIS
+     O carrossel vira o bloco de referencia para posicionar os dois botoes, que ficam
+     colados nas bordas, na altura do meio do cartao. */
+  .depo-carrossel { position: relative; }
+
   .depo-nav {
-    /* 44px é o alvo mínimo de toque confortável no celular */
+    position: absolute;
+    top: calc(50% + 25px);          /* +25 compensa o padding-top da trilha, que existe por causa da foto */
+    transform: translateY(-50%);
+    z-index: 2;
+    /* 44px e o alvo minimo de toque confortavel no celular */
     width: 44px;
     height: 44px;
-    flex: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -356,32 +458,56 @@ const {
     background: var(--bg-primary, #fff);
     color: var(--text-primary, #2B2320);
     cursor: pointer;
-    transition: .2s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .09);
+    transition: background .2s, color .2s, border-color .2s, transform .2s;
   }
-  .depo-nav:hover:not(:disabled) {
+  .depo-nav--ant  { left: -22px; }
+  .depo-nav--prox { right: -22px; }
+
+  .depo-nav:hover {
     background: var(--action-primary, #F5380F);
     border-color: transparent;
     color: #fff;
+    transform: translateY(-50%) scale(1.06);
   }
   .depo-nav:focus-visible {
     outline: 2px solid var(--action-primary, #F5380F);
     outline-offset: 2px;
   }
-  /* Desabilitado em vez de escondido: o botão que some faz os outros pularem de lugar,
-     e a posição do controle é o que o dedo já memorizou. */
-  .depo-nav:disabled { opacity: .35; cursor: default; }
+  /* Nao ha botao desabilitado: o carrossel da a volta, entao sempre existe um proximo. */
 
+  /* A contagem sai do desenho mas continua no documento, para leitor de tela. Nao usa
+     display:none nem visibility:hidden: os dois tirariam o texto da leitura, que e
+     justamente o que ele existe para fazer. */
   .depo-status {
-    margin: 0;
-    min-width: 15ch;
-    text-align: center;
-    font-size: 13.5px;
-    color: var(--text-secondary, #5B534E);
-    font-variant-numeric: tabular-nums;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
   }
+
+  /* Arrastar com o mouse: o cursor conta o que da para fazer, e durante o arrasto o texto
+     nao pode ser selecionado, senao o gesto vira selecao de paragrafo. */
+  .depo-trilha { cursor: grab; }
+  .depo-trilha.esta-arrastando {
+    cursor: grabbing;
+    user-select: none;
+    scroll-behavior: auto;
+  }
+  .depo-trilha.esta-arrastando .depo-card { pointer-events: none; }
 
   @media (max-width: 940px) {
     .depo-trilha { grid-auto-columns: calc((100% - 26px) / 2); }
+  }
+  @media (max-width: 1180px) {
+    /* sem folga fora da coluna de texto, os botoes passam a flutuar sobre as bordas */
+    .depo-nav--ant  { left: 4px; }
+    .depo-nav--prox { right: 4px; }
   }
   @media (max-width: 680px) {
     .depo { padding: 64px 0; }
