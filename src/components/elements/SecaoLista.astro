@@ -29,6 +29,10 @@ interface Props {
   cta?: { texto: string; href: string };
   /** "clara" (padrão), "alternada" (fundo bege) ou "escura" (banda escura). */
   variante?: "clara" | "alternada" | "escura";
+  /** Põe os itens lado a lado numa linha só, em vez das duas colunas do padrão. Para
+   *  listas curtas — endereço, telefone e e-mail — em que duas colunas quebram o conjunto
+   *  no meio e deixam um item órfão embaixo. */
+  itensEmLinha?: boolean;
 }
 
 const {
@@ -43,6 +47,7 @@ const {
   bloco,
   cta,
   variante = "clara",
+  itensEmLinha = false,
 } = Astro.props;
 
 const classe = variante === "alternada" ? "alt" : variante === "escura" ? "dark" : undefined;
@@ -57,11 +62,15 @@ const classe = variante === "alternada" ? "alt" : variante === "escura" ? "dark"
     {itens.length > 0 && (
       <div class="rv">
         {subtitulo && <div class="an-sub-h">{subtitulo}</div>}
-        <ul class="an-list">
+        <ul class:list={["an-list", { "an-list--linha": itensEmLinha }]}>
           {itens.map((item) => <li><Icone nome="check" />{item}</li>)}
         </ul>
       </div>
     )}
+    {/* Espaço para o que a seção precisar depois da lista — na página de contato, o mapa
+        da sede. Fica antes do CTA de propósito: o endereço é referência, e o botão continua
+        sendo a última coisa da dobra. */}
+    <slot />
     {bloco && (
       <div class="plan rv">
         <h3>{bloco.titulo}</h3>
@@ -77,3 +86,20 @@ const classe = variante === "alternada" ? "alt" : variante === "escura" ? "dark"
     {destaque && <p class="destaque rv"><span class="bar"></span>{destaque}</p>}
   </div>
 </section>
+
+<style is:global>
+  /* A .an-list do protótipo usa `columns:2`, que reparte os itens em duas colunas de cima
+     para baixo: com três itens, dois ficam à esquerda e um sozinho à direita. Para listas
+     curtas de contato o conjunto lê melhor numa linha só.
+     `columns:auto` precisa vir antes do flex: sem zerar, o valor herdado continua valendo e
+     o flex não se estabelece. */
+  .an-list.an-list--linha{
+    columns:auto;
+    display:flex;flex-wrap:wrap;gap:8px 36px;
+  }
+  .an-list.an-list--linha li{padding:4px 0}
+  @media (max-width: 680px){
+    /* no celular volta a empilhar: três itens lado a lado não cabem */
+    .an-list.an-list--linha{display:block}
+  }
+</style>

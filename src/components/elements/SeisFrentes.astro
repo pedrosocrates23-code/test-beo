@@ -21,6 +21,10 @@ interface Props {
    *  Figma ainda não definiu um símbolo para aquela frente — melhor sem ícone do que com
    *  um emprestado de outro significado. */
   frentes?: { icone?: NomeIcone; titulo: string; texto: string; link?: { texto: string; href: string } }[];
+  /** Colunas no computador. 3 é o padrão do desenho; 2 serve quando há quatro cards e a
+   *  terceira coluna sobraria vazia na segunda linha. Vale só de 941px para cima — no
+   *  tablet a grade já cai para 2 e no celular para 1, como sempre. */
+  colunas?: 2 | 3;
 }
 
 const {
@@ -35,6 +39,7 @@ const {
     { icone: "societario", titulo: "Societário", texto: "Estrutura jurídica alinhada ao modelo de negócio e ao crescimento.", link: { texto: "Ver Societário", href: "/contabilidade-beorange/societario/" } },
     { icone: "assessoria", titulo: "Assessoria e Consultoria", texto: "Análise recorrente dos números com um analista dedicado.", link: { texto: "Ver Assessoria", href: "/contabilidade-beorange/assessoria/" } },
   ],
+  colunas = 3,
 } = Astro.props;
 ---
 <section class="alt" id={id}>
@@ -43,7 +48,7 @@ const {
       <h2>{titulo}</h2>
       {intro && <p>{intro}</p>}
     </div>
-    <div class="frentes">
+    <div class:list={["frentes", { "frentes--2col": colunas === 2 }]}>
       {frentes.map((f) => (
         <div class="frente rv">
           {f.icone && <div class="ic"><Icone nome={f.icone} /></div>}
@@ -58,3 +63,14 @@ const {
     </div>
   </div>
 </section>
+
+<style is:global>
+  /* Quatro cards em três colunas deixam a segunda linha com um card e dois vazios — foi o
+     que acontecia nos canais de contato. Em duas colunas o conjunto fecha 2x2 e cada card
+     fica mais largo, ocupando a mesma medida total do bloco.
+     Só no computador: o CSS do protótipo já leva a grade para 2 colunas até 940px e para 1
+     até 680px, e essas quebras continuam valendo. */
+  @media (min-width: 941px) {
+    .frentes.frentes--2col{grid-template-columns:repeat(2,1fr)}
+  }
+</style>

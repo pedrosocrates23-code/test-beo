@@ -31,6 +31,7 @@ import DiagnosticoEntrada from "../../components/elements/DiagnosticoEntrada.ast
 import SeisFrentes from "../../components/elements/SeisFrentes.astro";
 import StagesSection from "../../components/elements/StagesSection.astro";
 import SecaoLista from "../../components/elements/SecaoLista.astro";
+import MapaGoogle from "../../components/elements/MapaGoogle.astro";
 import Footer from "../../components/elements/Footer.astro";
 
 const WHATSAPP =
@@ -106,6 +107,7 @@ const ENDERECO = "Av. Visc. de Guarapuava, 3263 - Centro, Curitiba - PR, 80010-1
        O bloco de cliente atual existe para não misturar suporte com comercial no mesmo funil. -->
   <SeisFrentes
     id="canais"
+    colunas={2}
     titulo="Prefere falar direto"
     intro=""
     frentes={[
@@ -147,14 +149,22 @@ const ENDERECO = "Av. Visc. de Guarapuava, 3263 - Centro, Curitiba - PR, 80010-1
   <!-- DOBRA 4 — Onde estamos.
        [FALTA] horário exato de atendimento, CNPJ, URLs das redes sociais e endereços de
        eventuais filiais. Sem eles os dados estruturados de organização ficam incompletos —
-       ver o cabeçalho do arquivo. O mapa é opcional no documento e, se entrar, deve carregar
-       sob clique: esta é página de conversão e um iframe de mapa custa caro no carregamento. -->
+       ver o cabeçalho do arquivo.
+       O mapa entrou, e respeitando o que o documento pedia: carrega SOB CLIQUE. Até lá a
+       dobra é só HTML e CSS. Ele aponta para o CID do Perfil da Empresa no Google, o mesmo
+       identificador usado no link das avaliações, e não para o endereço em texto — assim o
+       cartão que abre é a ficha real da Beorange, com nome, nota e horário.
+       Os três dados de contato ficam numa linha só: em duas colunas, o e-mail subia para a
+       direita e o telefone ficava sozinho embaixo. -->
   <SecaoLista
     variante="alternada"
     titulo="Onde estamos"
     subtitulo="Sede"
     itens={[ENDERECO, TELEFONE, EMAIL]}
-  />
+    itensEmLinha
+  >
+    <MapaGoogle endereco={ENDERECO} />
+  </SecaoLista>
 
   <Footer />
 

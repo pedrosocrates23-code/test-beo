@@ -1,0 +1,118 @@
+---
+// Elemento: mapa da sede, ligado ao Perfil da Empresa no Google.
+//
+// CARREGA SÓ SOB CLIQUE, e isso não é preferência: o aviso está escrito na própria página de
+// contato — "o mapa é opcional no documento e, se entrar, deve carregar sob clique: esta é
+// página de conversão e um iframe de mapa custa caro no carregamento". Um embed do Google
+// Maps traz megabytes de script de terceiro e cookies antes de qualquer interação. Até o
+// clique, o que existe aqui é HTML e CSS.
+//
+// O endereço do embed usa o CID do negócio — 11901433217796644894, o mesmo identificador do
+// link das avaliações em SocialProofSection — e não o endereço em texto. É o que amarra o
+// mapa à ficha real da Beorange no Google: o cartão que abre é o do perfil, com nome, nota e
+// horário, em vez de um alfinete solto numa coordenada.
+interface Props {
+  /** Endereço por extenso, mostrado antes de o mapa carregar. */
+  endereco: string;
+  /** Nome que aparece no cartão do Google. Só para o texto dos rótulos. */
+  nome?: string;
+  /** CID do Perfil da Empresa no Google. */
+  cid?: string;
+  /** Altura do mapa. */
+  altura?: number;
+}
+
+const {
+  endereco,
+  nome = "Beorange",
+  cid = "11901433217796644894",
+  altura = 320,
+} = Astro.props;
+
+const src = `https://maps.google.com/maps?cid=${cid}&hl=pt-BR&z=16&output=embed`;
+const verNoGoogle = `https://www.google.com/maps?cid=${cid}`;
+---
+<div class="mapa" style={`--mapa-altura:${altura}px`}>
+  <div class="mapa__capa" data-mapa-capa>
+    <svg class="mapa__pino" viewBox="0 0 24 24" aria-hidden="true" fill="none"
+         stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z" /><circle cx="12" cy="10" r="3" />
+    </svg>
+    <p class="mapa__end">{endereco}</p>
+    <button type="button" class="mapa__botao" data-mapa-abrir aria-describedby="mapa-aviso">
+      Ver o mapa
+    </button>
+    {/* Dito antes do clique, não depois: quem se importa com rastreamento decide sem
+        precisar carregar o mapa para descobrir. */}
+    <p class="mapa__aviso" id="mapa-aviso">
+      O mapa é carregado pelo Google e só é acionado quando você clica.
+      <a href={verNoGoogle} target="_blank" rel="noopener">Abrir no Google Maps</a>
+    </p>
+  </div>
+
+  {/* O <template> não é renderizado nem baixado pelo navegador: o iframe só existe no
+      documento quando o script move este conteúdo para fora dele. */}
+  <template data-mapa-fonte>
+    <iframe
+      src={src}
+      title={`Mapa com a localização da ${nome}: ${endereco}`}
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen
+    ></iframe>
+  </template>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".mapa").forEach((raiz) => {
+    const botao = raiz.querySelector<HTMLButtonElement>("[data-mapa-abrir]");
+    const capa = raiz.querySelector<HTMLElement>("[data-mapa-capa]");
+    const fonte = raiz.querySelector<HTMLTemplateElement>("[data-mapa-fonte]");
+    if (!botao || !capa || !fonte) return;
+
+    botao.addEventListener("click", () => {
+      raiz.appendChild(fonte.content.cloneNode(true));
+      capa.remove();
+      // O foco estava no botão que acabou de sair do documento; sem isto ele volta para o
+      // início da página e quem navega por teclado perde o lugar.
+      raiz.querySelector("iframe")?.focus();
+    }, { once: true });
+  });
+</script>
+
+<style>
+  .mapa{
+    position:relative;
+    height:var(--mapa-altura,320px);
+    border:1px solid var(--border-default,#DDD5CE);
+    border-radius:var(--radius-lg,16px);
+    overflow:hidden;
+    background:var(--bg-secondary,#FBF9F7);
+  }
+  .mapa iframe{width:100%;height:100%;border:0;display:block}
+
+  .mapa__capa{
+    height:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:10px;padding:24px;text-align:center;
+  }
+  .mapa__pino{width:30px;height:30px;color:var(--action-primary,#F5380F)}
+  .mapa__end{
+    margin:0;max-width:44ch;
+    font-size:14.5px;line-height:1.5;color:var(--text-primary,#2B2320);
+  }
+  .mapa__botao{
+    margin-top:2px;padding:10px 20px;
+    border:1px solid var(--action-primary,#F5380F);border-radius:999px;
+    background:var(--action-primary,#F5380F);color:#fff;
+    font:inherit;font-size:14px;font-weight:600;cursor:pointer;
+    transition:.2s;
+  }
+  .mapa__botao:hover{filter:brightness(1.06)}
+  .mapa__botao:focus-visible{outline:2px solid var(--action-primary,#F5380F);outline-offset:3px}
+  .mapa__aviso{
+    margin:2px 0 0;max-width:46ch;
+    font-size:11.5px;line-height:1.45;color:var(--text-secondary,#5B534E);
+  }
+  .mapa__aviso a{color:inherit;text-decoration:underline}
+</style>
