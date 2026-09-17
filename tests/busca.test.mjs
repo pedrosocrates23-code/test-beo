@@ -138,7 +138,23 @@ const main = async () => {
   const painel = regra(".busca__menu", "position:absolute");
   checar("a caixa nao recorta o menu", !!caixa && !/overflow:hidden/.test(caixa));
   checar("o menu abre para baixo", /top:calc\(100%/.test(painel) && !/bottom:calc\(100%/.test(painel));
-  checar("o menu e translucido", /color-mix/.test(painel) && /backdrop-filter:blur/.test(painel));
+  // O que interessa é o COMPORTAMENTO — o painel é translúcido e desfoca o que está atrás —
+  // e não a forma como o valor foi escrito. A primeira versão desta checagem procurava a
+  // string `backdrop-filter:blur`, e reprovou sozinha no dia em que o valor passou a morar
+  // numa custom property. Agora ela resolve o var() antes de julgar.
+  //
+  // E confere a armadilha que motivou aquela mudança: o minificador do build remove o espaço
+  // entre as funções de filtro e entrega `blur(16px)saturate(125%)`, sintaxe invalida que o
+  // navegador descarta em silencio — o fundo escurece e nao desfoca.
+  const valorDe = (regra, prop) => (regra.match(new RegExp(`(?:^|[;{])${prop}:([^;}]+)`)) ?? [])[1]?.trim();
+  const resolver = (regra, v) => {
+    const m = v?.match(/^var\(\s*(--[\w-]+)\s*\)$/);
+    return m ? valorDe(regra, m[1]) : v;
+  };
+  const desfoque = resolver(painel, valorDe(painel, "backdrop-filter"));
+  checar("o menu e translucido", /color-mix/.test(painel) && !!desfoque && /blur\(/.test(desfoque), desfoque);
+  checar("o filtro nao perdeu o espaco entre as funcoes",
+         !!desfoque && !/\)[a-z]/i.test(desfoque), desfoque);
 
   clicar(nomeFiltro);
   await espera(10);

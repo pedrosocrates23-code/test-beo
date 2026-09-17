@@ -12,7 +12,7 @@
 // aviso em ArticleBody.astro — nunca digitado à mão, nunca herdado do exemplo.
 import type { GetStaticPaths } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
-import { contarPalavras, tempoDeLeitura, normalizarLinks } from "../../lib/artigo";
+import { contarPalavras, tempoDeLeitura, normalizarLinks, resumoDeCard } from "../../lib/artigo";
 import Layout from "../../layouts/Layout.astro";
 import "../../styles/prototype-artigo.css";
 import Header from "../../components/elements/Header.astro";
@@ -25,9 +25,23 @@ import Footer from "../../components/elements/Footer.astro";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const artigos = await getCollection("artigos");
+
+  // O campo `relacionados` do JSON guarda só slug, título, categoria e palavras — o
+  // suficiente para a REGRA de escolha, não para desenhar o card. Capa e lead ficam no
+  // artigo relacionado, não no que aponta para ele. A resolução acontece aqui, no build,
+  // porque é o único lugar com a coleção inteira à mão: dentro do componente cada card
+  // teria de abrir a coleção de novo, 300 vezes.
+  const porSlug = new Map(artigos.map((e) => [e.data.slug, e.data]));
+
   return artigos.map((entry) => ({
     params: { slug: entry.data.slug },
-    props: { artigo: entry.data },
+    props: {
+      artigo: entry.data,
+      relacionados: entry.data.relacionados.map((r) => {
+        const alvo = porSlug.get(r.slug);
+        return { ...r, lead: alvo?.lead ?? "", capa: alvo?.card ?? null };
+      }),
+    },
   }));
 };
 
@@ -35,9 +49,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 // verificado: um campo renomeado no schema passaria batido no build e só apareceria na página.
 interface Props {
   artigo: CollectionEntry<"artigos">["data"];
+  /** Os dois relacionados, já com o lead e a capa buscados no artigo de destino. */
+  relacionados: (CollectionEntry<"artigos">["data"]["relacionados"][number] & {
+    lead: string;
+    capa: string | null;
+  })[];
 }
 
-const { artigo } = Astro.props as Props;
+const { artigo, relacionados: relacionadosCrus } = Astro.props as Props;
 
 const minutos = tempoDeLeitura(
   contarPalavras(artigo.corpo) + contarPalavras(artigo.lead),
@@ -47,12 +66,13 @@ const minutos = tempoDeLeitura(
 // Vale para todo artigo, inclusive os que entrarem depois — ver normalizarLinks() em lib/artigo.
 const corpo = normalizarLinks(artigo.corpo);
 
-const relacionados = artigo.relacionados.map((r) => ({
+const relacionados = relacionadosCrus.map((r) => ({
   categoria: r.categoria,
   titulo: r.titulo,
-  resumo: "",
+  resumo: resumoDeCard(r.lead),
   meta: `${tempoDeLeitura(r.palavras)} min de leitura`,
   href: `/blog/${r.slug}/`,
+  imagem: r.capa,
 }));
 ---
 <Layout

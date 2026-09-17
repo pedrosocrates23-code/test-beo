@@ -1,21 +1,47 @@
 ---
-// Elemento: Card de artigo relacionado (protótipo do designer — beorange-artigo_2.html, article.art-ph)
+// Elemento: card de artigo (protótipo do designer — beorange-artigo_2.html, article.art-ph).
 // Sem <style>: o CSS é global, vindo de src/styles/prototype-artigo.css.
+//
+// Usado em dois lugares com dados de origens diferentes: a vitrine do blog e o "Continue
+// lendo" no rodapé de cada artigo. Por isso capa, link e resumo são OPCIONAIS — o exemplo do
+// designer não tem nenhum dos três, e ele continua sendo a referência estática da peça.
+//
+// A CAPA. Quando há, entra como <img>; quando não há, o card cai no rótulo de texto, que é
+// o que o protótipo do designer desenhou. 63 dos 149 artigos migrados não têm capa, então o
+// caminho de reserva não é detalhe: é o que acontece em 4 de cada 10 cards.
+//
+// O LINK. Envolve só o título, e não o card inteiro, de propósito: é o título que dá o texto
+// do link para o leitor de tela e que recebe o foco do teclado. Quem estica a área de clique
+// até as bordas é a regra `.art-ph .abody h3 a::after{inset:0}`, no CSS do protótipo. Card
+// inteiro dentro de uma <a> daria um link cujo texto é o card todo, lido em voz alta inteiro.
 export interface Props {
+  /** Rótulo de reserva no lugar da capa, quando o artigo não tem imagem. */
   thumb: string;
+  /** Capa do artigo, a partir de public/. Sem ela, vale o rótulo. */
+  imagem?: string | null;
   cat: string;
   title: string;
-  excerpt: string;
+  excerpt?: string;
   meta: string;
+  /** Endereço do artigo. Sem ele o card não é clicável — é o caso do exemplo do designer. */
+  href?: string;
+  /** `eager` no que já está na primeira tela; `lazy` no resto. */
+  prioridade?: "eager" | "lazy";
 }
-const { thumb, cat, title, excerpt, meta } = Astro.props;
+const { thumb, imagem, cat, title, excerpt, meta, href, prioridade = "lazy" } = Astro.props;
 ---
 <article class="art-ph">
-  <div class="thumb"><span>{thumb}</span></div>
+  <div class="thumb">
+    {imagem
+      ? <img src={imagem} alt="" loading={prioridade} decoding="async" />
+      : <span>{thumb}</span>}
+  </div>
   <div class="abody">
     <div class="cat">{cat}</div>
-    <h3 style="font-size:17px;font-weight:600;margin:10px 0 8px;line-height:1.3">{title}</h3>
-    <p style="font-size:14px">{excerpt}</p>
+    <h3 style="font-size:17px;font-weight:600;margin:10px 0 8px;line-height:1.3">
+      {href ? <a href={href}>{title}</a> : title}
+    </h3>
+    {excerpt && <p style="font-size:14px">{excerpt}</p>}
     <div class="meta">{meta}</div>
   </div>
 </article>

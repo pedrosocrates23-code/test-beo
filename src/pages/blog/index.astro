@@ -14,7 +14,7 @@
 // ainda não existe, e listar 12 deixaria 137 artigos sem nenhum link apontando para eles —
 // órfãos no site inteiro. Lista completa agora, paginação quando houver a rota /blog/2/.
 import { getCollection } from "astro:content";
-import { tempoDeLeitura, formatarData } from "../../lib/artigo";
+import { tempoDeLeitura, formatarData, resumoDeCard } from "../../lib/artigo";
 import Layout from "../../layouts/Layout.astro";
 import "../../styles/prototype-contabilidade.css";
 import Header from "../../components/elements/Header.astro";
@@ -34,7 +34,7 @@ const paraCard = (a: (typeof artigos)[number]) => ({
   imagem: a.card ?? "/img/blog/hero-image.webp",
   categoria: a.categoria,
   titulo: a.titulo,
-  resumo: a.lead.length > 150 ? a.lead.slice(0, 147).replace(/\s+\S*$/, "") + "…" : a.lead,
+  resumo: resumoDeCard(a.lead),
   meta: `${formatarData(a.dataIso)} · ${tempoDeLeitura(a.palavras)} min de leitura`,
   href: `/blog/${a.slug}/`,
 });
