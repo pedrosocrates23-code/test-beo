@@ -266,6 +266,17 @@
        static devolve a referencia para o .wrap. */
     .diff .row-visual{position:static}
     .diff .row-img{position:absolute;left:43.42%;top:-140px;width:61.58%;max-width:none}
+    /* O TRANCO AO ROLAR MORAVA AQUI.
+       .rv anima `transform: translateY(16px)` -> `none`, e a .row que carrega a classe fica
+       ENTRE o .wrap e esta imagem. Um elemento com transform diferente de none vira bloco de
+       referencia para os descendentes position:absolute — entao, enquanto a animacao roda, a
+       imagem se posiciona pela .row; no frame em que o transform vira `none`, a referencia
+       volta para o .wrap de uma vez e a imagem salta. Era o pulo para cima no fim da entrada.
+       Nesta secao, e so no desktop (onde a imagem e absoluta), a entrada passa a ser por
+       opacidade. Sem transform no caminho, nao ha troca de referencia e nao ha salto.
+       No celular a imagem volta ao fluxo normal e a animacao do designer segue inteira. */
+    .diff .row.rv{transform:none;transition:opacity .7s ease}
+    .diff .row.rv.in{transform:none}
   }
 
   /* small delicate visual panels */
