@@ -252,10 +252,21 @@
      tributaria") ficou vazio no Figma, e por isso a coluna da direita da linha 1 nao tem nada.
      Percentuais calculados sobre os mesmos 1140px: 495/1140 = 43.42% e 702/1140 = 61.58%.
      No mobile ela volta para o fluxo normal, embaixo do texto. */
-  /* mix-blend-mode:multiply vem do Figma (o proprio no 15:2116 exporta assim). Com ele o
-     fundo branco da foto some contra qualquer fundo claro — e o que resolve o transbordo de
-     36px sobre a secao anterior, que e #FBF9F7. */
-  .row-visual .row-img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
+  /* O TRANSBORDO DE 36px SOBRE A SECAO ANTERIOR, e por que aqui NAO ha mix-blend-mode.
+     O Figma exporta o no 15:2116 com multiply, e ate 17/09/2026 a regra estava aqui: o
+     branco da foto sumia contra o bege da secao de cima. So que modo de mesclagem atravessa
+     apenas o que esta no MESMO contexto de empilhamento. Basta um ancestral com opacity < 1,
+     transform, filter ou will-change para o blend deixar de alcancar o fundo da pagina — e a
+     animacao de entrada (.rv) anima justamente a opacidade. Durante os 0,7s da transicao o
+     ancestral virava contexto, o blend era isolado, e os 63% de branco da imagem apareciam
+     como um retangulo branco por cima do bege. Reproduzido forcando opacity:0.99 no
+     ancestral: o retangulo aparece, com a borda dura na direita.
+     A correcao foi na IMAGEM, nao no CSS: app-beorange.webp passou a ter alfa de verdade
+     (recorte por inundacao a partir das bordas, que preserva o branco DENTRO das telas dos
+     celulares). Com transparencia real ela compoe sobre qualquer coisa — bege, branco ou a
+     foto do time — e nenhum contexto de empilhamento tem como atrapalhar.
+     Se um dia voltar a por multiply aqui, o defeito volta junto. */
+  .row-visual .row-img{display:block;width:100%;height:auto}
   @media(min-width:941px){
     /* overflow-x:clip contem o sangramento lateral sem criar barra de rolagem e, ao contrario
        de hidden, preserva o transbordo vertical que o desenho pede. */
