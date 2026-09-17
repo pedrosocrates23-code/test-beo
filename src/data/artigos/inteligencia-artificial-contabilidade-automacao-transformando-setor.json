@@ -5,7 +5,7 @@
  "lead": "A contabilidade foi por muito tempo uma área de processo manual intensivo. Lançamentos, conciliações, classificação de despesas, verificação de notas fiscais: tudo feito por pessoas, linha por linha, documento por documento. O volume de trabalho operacional limitava o tempo disponível para análise, planejamento e orientação estratégica.",
  "dataIso": "2026-05-18",
  "categoria": "Contábil",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Inteligência artificial na contabilidade: como a automação... | Beorange",
  "metaDescription": "A contabilidade foi por muito tempo uma área de processo manual intensivo. Lançamentos, conciliações, classificação de despesas, verificação de notas...",
  "palavras": 1044,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/inteligencia-artificial-contabilidade-automacao-transformando-setor",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

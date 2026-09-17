@@ -5,7 +5,7 @@
  "lead": "O Lucro Presumido é o regime tributário mais usado por empresas de médio porte no Brasil, e também um dos mais mal compreendidos. Muitas empresas continuam nele por inabilidade de decidir, não por convicção. Outras migram cedo demais, antes de entender o que estão deixando para trás.",
  "dataIso": "2026-05-04",
  "categoria": "Contábil",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Lucro Presumido: como funciona, quando é vantajoso e os... | Beorange",
  "metaDescription": "O Lucro Presumido é o regime tributário mais usado por empresas de médio porte no Brasil, e também um dos mais mal compreendidos. Muitas empresas...",
  "palavras": 1471,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/lucro-presumido-como-funciona-vantagens-desvantagens-quando-sair",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

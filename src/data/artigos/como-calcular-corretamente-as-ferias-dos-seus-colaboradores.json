@@ -5,7 +5,7 @@
  "lead": "O cálculo de férias dos colaboradores é uma obrigação essencial para qualquer empresa que deseja manter a conformidade com a legislação trabalhista e garantir a satisfação da equipe. No entanto, muitos gestores ainda possuem dúvidas sobre como realizar esse processo corretamente.",
  "dataIso": "2025-04-01",
  "categoria": "Recursos Humanos",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Como calcular corretamente as férias dos seus colaboradores? | Beorange",
  "metaDescription": "O cálculo de férias dos colaboradores é uma obrigação essencial para qualquer empresa que deseja manter a conformidade com a legislação trabalhista e...",
  "palavras": 681,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/como-calcular-corretamente-as-f%C3%A9rias-dos-seus-colaboradores",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

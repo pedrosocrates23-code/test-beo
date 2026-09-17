@@ -5,7 +5,7 @@
  "lead": "A partir de janeiro de 2026, lucros e dividendos distribuídos a sócios pessoas físicas acima de R$ 50.000 por mês passaram a ter retenção de 10% de Imposto de Renda na fonte. A mudança, instituída pela Lei nº 15.270/2025, encerrou quase 30 anos de isenção total sobre distribuição de lucros no Brasil.",
  "dataIso": "2026-03-25",
  "categoria": "Investimento",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Cap table e impostos: como a estrutura societária afeta a... | Beorange",
  "metaDescription": "A partir de janeiro de 2026, lucros e dividendos distribuídos a sócios pessoas físicas acima de R$ 50.000 por mês passaram a ter retenção de 10% de...",
  "palavras": 1581,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/cap-table-e-impostos-como-a-estrutura-societ%C3%A1ria-afeta-a-tributa%C3%A7%C3%A3o-e-a-distribui%C3%A7%C3%A3o-de-lucros",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

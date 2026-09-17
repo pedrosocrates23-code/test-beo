@@ -5,7 +5,7 @@
  "lead": "Setembro de 2026 marca uma virada para milhões de empresas brasileiras. Quem está no Simples Nacional precisará, pela primeira vez, tomar uma decisão ativa sobre o seu regime tributário dentro da Reforma Tributária: manter a apuração simplificada do Simples ou optar pela apuração separada de IBS e CBS.",
  "dataIso": "2026-06-25",
  "categoria": "Reforma Tributária",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Empresas do Simples Nacional precisam tomar uma decisão até... | Beorange",
  "metaDescription": "Setembro de 2026 marca uma virada para milhões de empresas brasileiras. Quem está no Simples Nacional precisará, pela primeira vez, tomar uma decisão...",
  "palavras": 844,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/simples-nacional-reforma-tributaria-opcao-ibs-cbs-setembro-2026",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

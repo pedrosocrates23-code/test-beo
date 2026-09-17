@@ -5,7 +5,7 @@
  "lead": "O prazo para entregar o IRPF 2026 vai de 23 de março a 29 de maio. A declaração é referente ao ano-calendário de 2025, e os limites de dedução não tiveram alteração em relação ao ano anterior. Mas há uma mudança operacional que afeta diretamente quem declara gastos com saúde: pela primeira vez, a Receita Federal consegue cruzar 100% das despesas médicas declaradas com os dados enviados via Receita Saúde, o recibo eletrônico obrigatório para prestadores de serviços de saúde.",
  "dataIso": "2026-03-30",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Deduções no IRPF 2026: limites, o que pode abater e o que... | Beorange",
  "metaDescription": "O prazo para entregar o IRPF 2026 vai de 23 de março a 29 de maio. A declaração é referente ao ano-calendário de 2025, e os limites de dedução não tiveram...",
  "palavras": 1305,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/dedu%C3%A7%C3%B5es-no-irpf-2026-limites-o-que-pode-abater-e-o-que-mudou-este-ano",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

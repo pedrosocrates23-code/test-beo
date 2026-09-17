@@ -5,7 +5,7 @@
  "lead": "A entrega da declaração do Imposto de Renda é um dos compromissos fiscais mais importantes do ano. No entanto, mesmo quem faz tudo com atenção pode acabar enfrentando um problema temido por muitos contribuintes: cair na malha fina.",
  "dataIso": "2025-02-09",
  "categoria": "Tributação",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Saiba Como Consultar se Você Caiu na Malha Fina do Imposto... | Beorange",
  "metaDescription": "A entrega da declaração do Imposto de Renda é um dos compromissos fiscais mais importantes do ano. No entanto, mesmo quem faz tudo com atenção pode acabar...",
  "palavras": 947,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/saiba-como-consultar-se-voc%C3%AA-caiu-na-malha-fina-do-imposto-de-renda",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

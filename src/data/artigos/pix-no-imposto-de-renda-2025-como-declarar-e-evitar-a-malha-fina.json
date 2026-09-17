@@ -5,7 +5,7 @@
  "lead": "O PIX se tornou um dos meios de pagamento mais utilizados no Brasil, tanto para transações pessoais quanto para recebimentos de serviços prestados. Mas surge uma dúvida comum entre muitos contribuintes: é preciso declarar PIX no Imposto de Renda 2025? A resposta depende de alguns fatores.",
  "dataIso": "2025-03-03",
  "categoria": "Tributação",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "PIX no Imposto de Renda 2025: Como Declarar e Evitar a... | Beorange",
  "metaDescription": "O PIX se tornou um dos meios de pagamento mais utilizados no Brasil, tanto para transações pessoais quanto para recebimentos de serviços prestados. Mas...",
  "palavras": 865,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/pix-no-imposto-de-renda-2025-como-declarar-e-evitar-a-malha-fina",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

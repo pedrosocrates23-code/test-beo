@@ -5,7 +5,7 @@
  "lead": "O primeiro trimestre encerrou em 31 de março. Balanços foram feitos, DARFs foram pagos, obrigacões acessórias foram entregues. Mas uma pergunta poucos fazem nesse momento: a empresa pagou o imposto certo?",
  "dataIso": "2026-04-20",
  "categoria": "Contábil",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Revisão tributária do 1º trimestre: 5 indicadores para... | Beorange",
  "metaDescription": "O primeiro trimestre encerrou em 31 de março. Balanços foram feitos, DARFs foram pagos, obrigacões acessórias foram entregues. Mas uma pergunta poucos...",
  "palavras": 1403,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/revis%C3%A3o-tribut%C3%A1ria-do-1%C2%BA-trimestre-5-indicadores-para-monitorar-agora",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

@@ -13,6 +13,7 @@
 import type { GetStaticPaths } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { contarPalavras, tempoDeLeitura, normalizarLinks, resumoDeCard } from "../../lib/artigo";
+import { autorPorSlug, caminhoDoAutor } from "../../lib/autores";
 import Layout from "../../layouts/Layout.astro";
 import "../../styles/prototype-artigo.css";
 import Header from "../../components/elements/Header.astro";
@@ -66,6 +67,10 @@ const minutos = tempoDeLeitura(
 // Vale para todo artigo, inclusive os que entrarem depois — ver normalizarLinks() em lib/artigo.
 const corpo = normalizarLinks(artigo.corpo);
 
+// Quem assina. O campo do JSON guarda o slug; o nome, o cargo e a URL saem do registro, que é
+// a mesma fonte do nó Person do JSON-LD. Byline e dado estruturado não têm como divergir.
+const autor = autorPorSlug(artigo.autor);
+
 const relacionados = relacionadosCrus.map((r) => ({
   categoria: r.categoria,
   titulo: r.titulo,
@@ -107,8 +112,9 @@ const relacionados = relacionadosCrus.map((r) => ({
       dataIso={artigo.dataIso}
       categoria={artigo.categoria}
       minutos={minutos}
-      autor={artigo.autor}
-      autorCargo="Conteúdo Beorange"
+      autor={autor.nome}
+      autorCargo={autor.cargo}
+      autorHref={caminhoDoAutor(autor)}
     />
 
     {artigo.hero && (

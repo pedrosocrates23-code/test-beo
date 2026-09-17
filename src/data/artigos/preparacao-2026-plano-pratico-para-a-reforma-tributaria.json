@@ -5,7 +5,7 @@
  "lead": "",
  "dataIso": "2025-11-17",
  "categoria": "Reforma Tributária",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Preparação 2026: plano prático para a Reforma Tributária | Beorange",
  "metaDescription": "",
  "palavras": 1151,
@@ -30,6 +30,7 @@
  ],
  "urlAntiga": "https://beorange.app/blog/prepara%C3%A7%C3%A3o-2026-plano-pr%C3%A1tico-para-a-reforma-tribut%C3%A1ria",
  "notasDaMigracao": [
-  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito",
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
  ]
 }

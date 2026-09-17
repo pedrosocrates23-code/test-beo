@@ -5,7 +5,7 @@
  "lead": "As pequenas empresas enfrentam diversos desafios contábeis que podem impactar sua saúde financeira e seu crescimento. É fundamental reconhecer esses obstáculos e buscar soluções para superá-los. Neste artigo, discutiremos alguns dos principais desafios contábeis enfrentados por pequenas empresas e compartilharemos estratégias para superá-los com sucesso.",
  "dataIso": "2023-05-27",
  "categoria": "Contabilidade",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Principais desafios contábeis enfrentados por pequenas... | Beorange",
  "metaDescription": "As pequenas empresas enfrentam diversos desafios contábeis que podem impactar sua saúde financeira e seu crescimento. É fundamental reconhecer esses...",
  "palavras": 478,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/principais-desafios-cont%C3%A1beis-enfrentados-por-pequenas-empresas-e-como-super%C3%A1-los",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

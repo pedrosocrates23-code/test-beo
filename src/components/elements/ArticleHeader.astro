@@ -19,6 +19,11 @@ interface Props {
   minutos: number;
   autor?: string;
   autorCargo?: string;
+  /** Entity home de quem assina. Com ela o byline vira link; sem ela, continua texto.
+   *  O link existe por dois motivos que andam juntos: o leitor consegue conferir quem
+   *  escreveu, e o `author` do JSON-LD deixa de ser uma afirmação que a página não sustenta,
+   *  porque o caminho até a pessoa está ali, visível, na mesma tela. */
+  autorHref?: string;
   /** Faixa de aviso de rascunho. Omita numa publicação real. */
   aviso?: string;
 }
@@ -31,6 +36,7 @@ const {
   minutos,
   autor = "Time Tributário Beorange",
   autorCargo = "Especialistas em Lucro Real",
+  autorHref,
   aviso,
 } = Astro.props;
 ---
@@ -55,7 +61,20 @@ const {
   {lead && <p class="art-lead">{lead}</p>}
   <div class="byline">
     <span class="av"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M57.3 8.6 A42 42 0 1 1 42.7 8.6" fill="none" stroke="#FF6A14" stroke-width="14"/></svg></span>
-    <div><div class="bn">{autor}</div><div class="bs">{autorCargo}</div></div>
+    <div>
+      <div class="bn">
+        {autorHref ? <a class="bn-link" href={autorHref} rel="author">{autor}</a> : autor}
+      </div>
+      <div class="bs">{autorCargo}</div>
+    </div>
   </div>
   {aviso && <div class="ex-ribbon">{aviso}</div>}
 </div>
+
+<style>
+  /* O nome do autor vira link sem perder o desenho do byline: mesma cor, mesmo peso, e o
+     sublinhado só no hover e no foco. Um link azul de navegador no meio da assinatura
+     chamaria mais atenção que o título do artigo. */
+  .bn-link{color:inherit;text-decoration:none}
+  .bn-link:hover,.bn-link:focus-visible{text-decoration:underline}
+</style>

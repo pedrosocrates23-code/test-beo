@@ -5,7 +5,7 @@
  "lead": "",
  "dataIso": "2025-01-28",
  "categoria": "Tecnologia",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "DeepSeek: A Nova Revolução da Inteligência Artificial que... | Beorange",
  "metaDescription": "",
  "palavras": 661,
@@ -31,6 +31,7 @@
  "urlAntiga": "https://beorange.app/blog/deepseek-a-nova-revolu%C3%A7%C3%A3o-da-intelig%C3%AAncia-artificial-que-abalou-o-mercado-tecnol%C3%B3gico",
  "notasDaMigracao": [
   "rebaixado 1 <h1> do corpo para <h2>",
-  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito",
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
  ]
 }

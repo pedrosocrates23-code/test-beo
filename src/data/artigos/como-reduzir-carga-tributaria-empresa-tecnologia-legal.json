@@ -5,7 +5,7 @@
  "lead": "Pagar menos imposto é o objetivo de toda empresa. O problema é que muitos gestores ou não conhecem os mecanismos legais disponíveis, ou ficam com medo de parecer que estão \"sonegando\", e aí acabam pagando mais do que precisariam.",
  "dataIso": "2026-06-05",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Como reduzir a carga tributária da sua empresa de... | Beorange",
  "metaDescription": "Pagar menos imposto é o objetivo de toda empresa. O problema é que muitos gestores ou não conhecem os mecanismos legais disponíveis, ou ficam com medo de...",
  "palavras": 1119,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/como-reduzir-carga-tributaria-empresa-tecnologia-legal",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

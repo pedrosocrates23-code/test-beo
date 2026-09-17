@@ -5,7 +5,7 @@
  "lead": "A Receita Federal liberou a consulta ao lote da restituição da malha fina do Imposto de Renda 2025. Milhares de contribuintes que regularizaram suas pendências junto ao Fisco poderão verificar se receberão a restituição neste mês. Se você caiu na malha fina e acertou suas contas, confira agora como consultar e garantir o recebimento do valor.",
  "dataIso": "2025-02-28",
  "categoria": "Tributação",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Imposto de Renda 2025: Receita Federal Libera Consulta ao... | Beorange",
  "metaDescription": "A Receita Federal liberou a consulta ao lote da restituição da malha fina do Imposto de Renda 2025. Milhares de contribuintes que regularizaram suas...",
  "palavras": 669,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/imposto-de-renda-2025-receita-federal-libera-consulta-ao-lote-de-restitui%C3%A7%C3%A3o-da-malha-fina",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

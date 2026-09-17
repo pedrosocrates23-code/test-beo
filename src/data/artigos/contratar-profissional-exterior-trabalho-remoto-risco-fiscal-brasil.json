@@ -5,7 +5,7 @@
  "lead": "Contratar um desenvolvedor na Argentina, um designer em Portugal ou um especialista em marketing nos Estados Unidos virou rotina para empresas de tecnologia brasileiras. O trabalho remoto derrubou fronteiras — mas não derrubou a legislação fiscal.",
  "dataIso": "2026-06-02",
  "categoria": "Departamento Pessoal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Contratar profissional no exterior: o que a sua empresa de... | Beorange",
  "metaDescription": "Contratar um desenvolvedor na Argentina, um designer em Portugal ou um especialista em marketing nos Estados Unidos virou rotina para empresas de...",
  "palavras": 1163,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/contratar-profissional-exterior-trabalho-remoto-risco-fiscal-brasil",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

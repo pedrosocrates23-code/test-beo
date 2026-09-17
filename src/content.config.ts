@@ -28,7 +28,12 @@ const artigos = defineCollection({
     /** AAAA-MM-DD. formatarData() em lib/artigo.ts monta a data por extenso sem new Date. */
     dataIso: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "use AAAA-MM-DD"),
     categoria: z.string().min(1),
-    autor: z.string().min(1),
+    /** Slug do autor, resolvido em src/lib/autores.ts. Era texto livre ("Por Beorange") e
+     *  virou enum quando a assinatura passou a ser uma entidade com página e @id próprios:
+     *  slug desconhecido quebra o build, em vez de publicar um byline que aponta para uma
+     *  pessoa que não existe no grafo. Para acrescentar um autor, siga a receita do topo de
+     *  src/lib/autores.ts — o enum é o passo 3 dela. */
+    autor: z.enum(["myle-pontes"]),
     metaTitle: z.string().min(1),
     metaDescription: z.string(),
     palavras: z.number().int().nonnegative(),

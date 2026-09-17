@@ -5,7 +5,7 @@
  "lead": "O eSocial segue como uma das obrigações acessórias mais abrangentes do sistema tributário brasileiro. Em 2026, o ambiente já está consolidado para a maioria das empresas, mas as atualizações de layout, os novos eventos e as exigências de qualidade nos dados continuam exigindo atenção do time de RH e da contabilidade. Quem ainda não revisou seus processos de folha de pagamento à luz das mudanças recentes pode estar transmitindo dados com inconsistências sem saber.",
  "dataIso": "2026-02-09",
  "categoria": "Departamento Pessoal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "eSocial 2026: mudanças na folha de pagamento e como se... | Beorange",
  "metaDescription": "O eSocial segue como uma das obrigações acessórias mais abrangentes do sistema tributário brasileiro. Em 2026, o ambiente já está consolidado para a...",
  "palavras": 1250,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/esocial-2026-mudan%C3%A7as-na-folha-de-pagamento-e-como-se-preparar",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

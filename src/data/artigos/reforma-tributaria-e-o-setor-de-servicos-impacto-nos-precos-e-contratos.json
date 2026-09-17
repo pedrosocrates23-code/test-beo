@@ -5,7 +5,7 @@
  "lead": "A Reforma Tributária aprovada pela Emenda Constitucional nº 132/2023 representa a mudança mais profunda no sistema tributário brasileiro em décadas. Para o setor de serviços, o impacto é particularmente relevante: a alíquota efetiva da CBS e do IBS combinados tende a ser significativamente maior do que a carga atual do ISS e do PIS/COFINS para muitas atividades. Entender como essa transição funciona, quando entra em vigor e o que muda nos contratos é essencial para qualquer empresa do setor que queira se planejar com antecedência.",
  "dataIso": "2026-03-09",
  "categoria": "Reforma Tributária",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Reforma Tributária e o setor de serviços: impacto nos... | Beorange",
  "metaDescription": "A Reforma Tributária aprovada pela Emenda Constitucional nº 132/2023 representa a mudança mais profunda no sistema tributário brasileiro em décadas. Para...",
  "palavras": 1432,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/reforma-tribut%C3%A1ria-e-o-setor-de-servi%C3%A7os-impacto-nos-pre%C3%A7os-e-contratos",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

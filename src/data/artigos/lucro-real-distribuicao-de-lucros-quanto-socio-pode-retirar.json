@@ -5,7 +5,7 @@
  "lead": "Distribuir lucros sem pagar imposto é um dos maiores benefícios para sócios de empresas no Lucro Real. Mas esse benefício tem uma condição: a empresa precisa ter lucro apurado de forma correta, com contabilidade em dia e demonstrações financeiras dentro da legislação.",
  "dataIso": "2026-06-01",
  "categoria": "Contábil",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Lucro Real e distribuição de lucros: quanto o sócio pode... | Beorange",
  "metaDescription": "Distribuir lucros sem pagar imposto é um dos maiores benefícios para sócios de empresas no Lucro Real. Mas esse benefício tem uma condição: a empresa...",
  "palavras": 923,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/lucro-real-distribuicao-de-lucros-quanto-socio-pode-retirar",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

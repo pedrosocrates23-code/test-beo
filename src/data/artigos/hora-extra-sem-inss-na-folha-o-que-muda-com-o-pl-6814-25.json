@@ -5,7 +5,7 @@
  "lead": "O Projeto de Lei 6814/25, em tramitação na Câmara dos Deputados, reacendeu uma discussão recorrente na gestão de folha: as horas extras deveriam ou não compor a base de cálculo de contribuições previdenciárias e outros encargos sociais.",
  "dataIso": "2026-02-24",
  "categoria": "Departamento Pessoal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Hora extra sem INSS na folha: o que muda com o PL 6814/25 | Beorange",
  "metaDescription": "O Projeto de Lei 6814/25, em tramitação na Câmara dos Deputados, reacendeu uma discussão recorrente na gestão de folha: as horas extras deveriam ou não...",
  "palavras": 1228,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/hora-extra-sem-inss-na-folha-o-que-muda-com-o-pl-6814-25",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

@@ -5,7 +5,7 @@
  "lead": "A gestão financeira de um negócio exige organização e conhecimento sobre os diferentes tipos de remuneração. Para empresários e sócios-administradores, um dos conceitos mais importantes a se entender é o pró-labore. Muitas dúvidas surgem sobre como defini-lo corretamente e como ele se diferencia do salário. Além disso, é essencial saber quais são os tributos incidentes e a melhor forma de administrá-lo para evitar problemas fiscais.",
  "dataIso": "2025-03-24",
  "categoria": "Tributação",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Pró-labore: Entenda o que é, como definir e a diferença... | Beorange",
  "metaDescription": "A gestão financeira de um negócio exige organização e conhecimento sobre os diferentes tipos de remuneração. Para empresários e sócios-administradores, um...",
  "palavras": 783,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/pr%C3%B3-labore-entenda-o-que-%C3%A9-como-definir-e-a-diferen%C3%A7a-para-o-sal%C3%A1rio",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

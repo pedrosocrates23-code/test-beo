@@ -5,7 +5,7 @@
  "lead": "Uma gestão financeira eficiente é essencial para o sucesso de qualquer empresa. A capacidade de gerenciar os recursos financeiros de forma estratégica não apenas garante a saúde financeira do negócio, mas também possibilita a maximização dos lucros. Neste artigo, discutiremos algumas estratégias que você pode implementar para otimizar a gestão financeira da sua empresa e impulsionar os resultados financeiros.",
  "dataIso": "2023-05-27",
  "categoria": "Financeiro",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Financeiro Como otimizar a gestão financeira da sua empresa... | Beorange",
  "metaDescription": "Uma gestão financeira eficiente é essencial para o sucesso de qualquer empresa. A capacidade de gerenciar os recursos financeiros de forma estratégica não...",
  "palavras": 490,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/financeiro-como-otimizar-a-gest%C3%A3o-financeira-da-sua-empresa-para-maximizar-lucros",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

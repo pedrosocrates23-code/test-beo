@@ -5,7 +5,7 @@
  "lead": "A carga tributária é um dos principais desafios para empresas brasileiras, especialmente para aquelas que atuam no setor de serviços. No entanto, existe uma estratégia eficiente que pode reduzir impostos e aumentar a competitividade do seu negócio: o Fator R do Simples Nacional.",
  "dataIso": "2025-03-06",
  "categoria": "Simples Nacional",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Fator R do Simples Nacional: Estratégia para reduzir... | Beorange",
  "metaDescription": "A carga tributária é um dos principais desafios para empresas brasileiras, especialmente para aquelas que atuam no setor de serviços. No entanto, existe...",
  "palavras": 849,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/fator-r-do-simples-nacional-estrat%C3%A9gia-para-reduzir-impostos-e-impulsionar-seu-neg%C3%B3cio",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

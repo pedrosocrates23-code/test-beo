@@ -5,7 +5,7 @@
  "lead": "Founder de SaaS conhece MRR. Sabe calcular, acompanhar no dashboard, apresentar para investidores. Mas quando pergunta para o contador qual é a receita do mês no DRE, o número geralmente não bate com o MRR e ninguém explica direito por quê.",
  "dataIso": "2026-04-14",
  "categoria": "Contábil",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Contabilidade para SaaS: como registrar contratos anuais,... | Beorange",
  "metaDescription": "Founder de SaaS conhece MRR. Sabe calcular, acompanhar no dashboard, apresentar para investidores. Mas quando pergunta para o contador qual é a receita do...",
  "palavras": 1627,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/contabilidade-para-saas-como-registrar-contratos-anuais-receita-recorrente-e-churn-corretamente",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

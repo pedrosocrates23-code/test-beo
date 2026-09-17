@@ -5,7 +5,7 @@
  "lead": "A Reforma Tributária vai transformar não apenas a forma de cobrança de impostos, mas também a emissão da nota fiscal eletrônica em todo o país. A partir de janeiro de 2026, entra em vigor um padrão nacional de NFS-e (Nota Fiscal de Serviço Eletrônica), com regras unificadas para estados e municípios.",
  "dataIso": "2025-09-19",
  "categoria": "Reforma Tributária",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Nova Nota Fiscal 2026: como a Reforma Tributária vai mudar... | Beorange",
  "metaDescription": "A Reforma Tributária vai transformar não apenas a forma de cobrança de impostos, mas também a emissão da nota fiscal eletrônica em todo o país. A partir...",
  "palavras": 696,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/nova-nota-fiscal-2026-como-a-reforma-tribut%C3%A1ria-vai-mudar-sua-rotina-empresarial",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

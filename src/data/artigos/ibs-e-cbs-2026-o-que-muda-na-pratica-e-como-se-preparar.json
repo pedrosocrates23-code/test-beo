@@ -5,7 +5,7 @@
  "lead": "A Reforma Tributária brasileira está prestes a transformar radicalmente a forma como empresas calculam, recolhem e gerenciam impostos sobre consumo. A partir de 2026, inicia-se o período de transição que substituirá PIS, COFINS, ICMS, ISS e IPI pelo IVA Dual, composto por CBS (federal) e IBS (estadual e municipal). Essa mudança não é apenas legislativa: ela afeta preços, contratos, fluxo de caixa, sistemas de gestão e a estratégia competitiva de milhares de empresas.",
  "dataIso": "2025-11-11",
  "categoria": "Reforma Tributária",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "IBS e CBS 2026: o que muda na prática e como se preparar | Beorange",
  "metaDescription": "A Reforma Tributária brasileira está prestes a transformar radicalmente a forma como empresas calculam, recolhem e gerenciam impostos sobre consumo. A...",
  "palavras": 2238,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/ibs-e-cbs-2026-o-que-muda-na-pr%C3%A1tica-e-como-se-preparar",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

@@ -5,7 +5,7 @@
  "lead": "A Reforma Tributária traz uma mudança estrutural na forma como empresas calculam e repassam impostos: a substituição de PIS, COFINS, ICMS e ISS pelo IVA Dual, composto por CBS (federal) e IBS (estadual e municipal). A partir de 2026, o sistema de não-cumulatividade ampla e crédito integral exigirá revisão completa de políticas de precificação, gestão de custos e estratégias comerciais.",
  "dataIso": "2025-11-12",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "IVA Dual 2026: como precificar produtos e serviços com... | Beorange",
  "metaDescription": "A Reforma Tributária traz uma mudança estrutural na forma como empresas calculam e repassam impostos: a substituição de PIS, COFINS, ICMS e ISS pelo IVA...",
  "palavras": 2143,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/iva-dual-2026-como-precificar-produtos-e-servi%C3%A7os-com-seguran%C3%A7a",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

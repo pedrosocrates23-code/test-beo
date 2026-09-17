@@ -5,7 +5,7 @@
  "lead": "A emissão de nota fiscal é uma obrigação legal para qualquer empresa que realize vendas de produtos ou prestação de serviços no Brasil. No entanto, muitos empreendedores, principalmente pequenos negócios, acabam vendendo sem nota fiscal para evitar impostos ou reduzir burocracias. O que muitos não percebem é que essa prática pode trazer sérios prejuízos, tanto financeiros quanto jurídicos.",
  "dataIso": "2025-03-12",
  "categoria": "Obrigações Fiscais",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Venda sem nota fiscal: os riscos e prejuízos para o seu... | Beorange",
  "metaDescription": "A emissão de nota fiscal é uma obrigação legal para qualquer empresa que realize vendas de produtos ou prestação de serviços no Brasil. No entanto, muitos...",
  "palavras": 818,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/venda-sem-nota-fiscal-os-riscos-e-preju%C3%ADzos-para-o-seu-neg%C3%B3cio",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

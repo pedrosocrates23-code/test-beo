@@ -1,0 +1,162 @@
+---
+// Página: Myle Pontes (/sobre-nos/myle-pontes/).
+//
+// O QUE ESTA PÁGINA É
+// A entity home da pessoa. É o endereço que o grafo aponta como versão canônica da Myle, e é
+// para cá que o byline dos 149 artigos manda o leitor. Ela fica sob /sobre-nos/ de propósito:
+// a entity home da organização é /sobre-nos/#organization, e pessoa e empresa nascem no mesmo
+// ramo de URL, o que deixa a relação legível antes mesmo de alguém ler o JSON-LD.
+//
+// DE ONDE VEM CADA AFIRMAÇÃO
+// Todo fato afirmado aqui está no board do entity-ops, em
+// outputs/entity-ops/beorange-app/entity-home/board-myle-pontes.md, com o trecho literal da
+// fonte e a data. As duas fontes de cobertura editorial independente são a Gazz Conecta
+// (Gazeta do Povo, 10/04/2024, por Maria Clara Dias) e o TI Inside (29/01/2026, por Bruno
+// Lauterjung). O que a imprensa cita sem detalhar não entrou.
+//
+// O QUE FOI DEIXADO DE FORA, DE PROPÓSITO
+// • As sete especializações. A imprensa repete o número, nenhuma fonte diz quais são. Número
+//   solto não sustenta autoridade, e numa página de autoria de conteúdo fiscal isso importa.
+// • Número do CRC, graduação e datas dos cargos. Faltam em fonte verificável.
+// • Foto. Sem foto oficial com direito de uso confirmado. É a lacuna mais visível da página, e
+//   preencher com banco de imagens seria pior do que a ausência.
+// • Atributos pessoais que ela deu à imprensa em 2024. São declaração dela, não dado nosso, e
+//   não entram numa página institucional sem que ela autorize.
+// Cada um deles entra assim que o dado vier: o texto já está desenhado para recebê-los.
+//
+// TEXTO
+// Esta é a versão de lastro, escrita a partir dos fatos verificados. Antes de ir ao ar no
+// domínio oficial, ela passa pelo gate de voz do entity-ops (QG-EO-3).
+import Layout from "../../../layouts/Layout.astro";
+import "../../../styles/prototype-contabilidade.css";
+import Header from "../../../components/elements/Header.astro";
+import MobileMenu from "../../../components/elements/MobileMenu.astro";
+import HeroIndice from "../../../components/elements/HeroIndice.astro";
+import SecaoLista from "../../../components/elements/SecaoLista.astro";
+import Footer from "../../../components/elements/Footer.astro";
+import { AUTORES } from "../../../lib/autores";
+
+const myle = AUTORES["myle-pontes"];
+---
+<Layout
+  schema={{
+    tipo: "perfil",
+    autor: myle.slug,
+    nome: "Myle Pontes",
+    descricao:
+      "Fundadora e CEO da Beorange. Contadora especializada em contabilidade internacional, com passagens por Grant Thornton, Deloitte e Ernst & Young.",
+    migalhas: [
+      { nome: "Home", url: "/" },
+      { nome: "Sobre nós", url: "/sobre-nos/" },
+      { nome: "Myle Pontes", url: "/sobre-nos/myle-pontes/" },
+    ],
+  }}
+  title="Myle Pontes | Fundadora e CEO da Beorange"
+  description="Fundadora e CEO da Beorange. Contadora especializada em contabilidade internacional, com passagens por Grant Thornton, Deloitte e Ernst & Young. Assina o conteúdo publicado no blog."
+>
+  <Header ativo="sobre" tema="claro" />
+  <MobileMenu />
+
+  <HeroIndice
+    titulo="Myle Pontes"
+    lead="Fundadora e CEO da Beorange. Contadora de formação, especializada em contabilidade internacional. É ela quem assina o conteúdo publicado aqui."
+  />
+
+  <!-- Trajetória. Cada item tem fonte no board; nenhum traz data que a fonte não dê. -->
+  <SecaoLista
+    titulo="De auditoria internacional a uma empresa de contabilidade"
+    texto="A formação de Myle é contábil, e a especialização veio pela contabilidade internacional, em passagens por Grant Thornton, Deloitte e Ernst & Young. Foi trabalhando com normas internacionais e com investigação de fraudes corporativas que ela se acostumou a ler demonstração financeira procurando o que não fecha."
+    itens={[
+      "Contabilidade internacional em três consultorias globais",
+      "Investigação de fraudes corporativas",
+      "Due diligence de startups em uma venture builder",
+      "Um escritório de contabilidade próprio, que dois anos depois deu lugar à Beorange",
+    ]}
+  />
+
+  <!-- A virada de 2020. A citação é da Gazz Conecta e está no board com o trecho literal.
+       A atribuição vai DENTRO do destaque, e não na prop `ressalva`, porque o componente
+       desenha a ressalva acima do destaque: a fonte apareceria antes da citação que atribui.
+       Citação sem fonte colada não sai desta página. -->
+  <SecaoLista
+    variante="alternada"
+    titulo="O problema que ela viu antes de fundar a empresa"
+    texto="Em meados de 2020, ao passar a trabalhar em um escritório no Brasil, Myle encontrou um cenário diferente do que conhecia lá fora: empresas com pouco ou nenhum controle sobre a própria situação fiscal. A percepção se confirmou quando ela passou a avaliar startups em uma venture builder."
+    destaque="“Lembro de ter analisado 30 startups e reprovar 29.” Declaração à Gazz Conecta (Gazeta do Povo), em 10 de abril de 2024."
+    bloco={{
+      titulo: "O que isso virou",
+      texto: "A Beorange nasceu dessa leitura: em vez de entregar obrigação cumprida no prazo, entregar informação antes da decisão. A empresa reúne contabilidade, operação financeira e tecnologia em um mesmo ambiente, e Myle coordenou a equipe que desenvolveu a Aya, a plataforma de contabilidade com inteligência artificial da casa.",
+    }}
+  />
+
+  <!-- Temas: a mesma lista que alimenta knowsAbout no Person. Uma fonte, duas superfícies. -->
+  <SecaoLista
+    titulo="Os assuntos que ela acompanha de perto"
+    texto="São os temas sobre os quais Myle escreve e responde, aqui no blog e nos eventos de que participa."
+    itens={[...myle.temas]}
+  />
+
+  <!-- Presença pública. Só o que ela controla e o que tem fonte datada.
+       Os perfis são LINKS de verdade, com rel="me": é o par visível do `sameAs` do Person.
+       Declarar no JSON-LD um perfil que a página não linka é pedir para o consumidor acreditar
+       numa afirmação que o documento não sustenta. Com o link, a verificação é um clique. -->
+  <section class="alt">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <h2>Onde encontrá-la</h2>
+        <p>
+          Myle participa de painéis e eventos do setor financeiro e de tecnologia. Em janeiro de
+          2026, debateu inovação aberta e inteligência artificial no Torq Play, evento do hub de
+          inovação da Evertec, em São Paulo.
+        </p>
+      </div>
+      <ul class="perfis">
+        <li>
+          <a href={myle.perfis[0]} rel="me noopener" target="_blank">LinkedIn</a>
+          <span>linkedin.com/in/myle-pontes</span>
+        </li>
+        <li>
+          <a href={myle.perfis[1]} rel="me noopener" target="_blank">Instagram</a>
+          <span>@mylepontes</span>
+        </li>
+        <li>
+          <a href="/blog/">Blog da Beorange</a>
+          <span>o que ela publica aqui</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <SecaoLista
+    titulo="Precisa de uma leitura da sua operação?"
+    texto="O time que Myle dirige faz diagnóstico contábil, fiscal, societário e tributário na entrada de todo cliente. É ele que define o escopo do trabalho."
+    cta={{ texto: "Solicitar diagnóstico", href: "/contato/" }}
+  />
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>
+
+<style>
+  /* Três cartões de perfil na mesma medida das listas do prototype-contabilidade, sem depender
+     de nenhuma classe dele: a página carrega aquele CSS pela moldura, e o que é só desta
+     página fica aqui, escopado. */
+  .perfis{
+    list-style:none;margin:36px 0 0;padding:0;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  }
+  .perfis li{
+    display:flex;flex-direction:column;gap:4px;
+    padding:18px 20px;background:#fff;
+    border:1px solid var(--border-subtle,#EFEAE6);border-radius:var(--radius-md,12px);
+  }
+  .perfis a{
+    font-size:16px;font-weight:600;color:var(--text-brand,#F5380F);text-decoration:none;
+  }
+  .perfis a:hover,.perfis a:focus-visible{text-decoration:underline}
+  .perfis span{font-size:14px;color:var(--text-secondary,#5B534E)}
+  @media(max-width:880px){
+    .perfis{grid-template-columns:1fr}
+  }
+</style>

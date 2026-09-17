@@ -5,7 +5,7 @@
  "lead": "A declaração do Imposto de Renda Pessoa Física de 2026 traz novidades relevantes para sócios de empresas. Com o fim da DIRF, novas regras de atualização de bens e a discussão sobre tributação de dividendos no horizonte, o sócio que não se organiza com antecedência corre o risco de declarar com inconsistências ou perder oportunidades legítimas de planejamento. Este guia reúne os principais pontos de atenção para quem, além de pessoa física, também é empresário.",
  "dataIso": "2026-03-10",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "IRPF 2026: o que mudou e como o sócio de empresa deve se... | Beorange",
  "metaDescription": "A declaração do Imposto de Renda Pessoa Física de 2026 traz novidades relevantes para sócios de empresas. Com o fim da DIRF, novas regras de atualização...",
  "palavras": 1162,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/irpf-2026-o-que-mudou-e-como-o-s%C3%B3cio-de-empresa-deve-se-preparar",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

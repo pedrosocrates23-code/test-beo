@@ -5,7 +5,7 @@
  "lead": "O final do ano é um dos períodos mais críticos para a gestão fiscal e contábil das empresas brasileiras. Entre novembro e janeiro, os negócios precisam organizar documentos, revisar lançamentos, cumprir obrigações acessórias e preparar demonstrativos que impactam diretamente a saúde financeira e a conformidade legal da operação. Um fechamento bem-feito evita multas, garante créditos tributários e oferece dados confiáveis para o planejamento estratégico de 2026.",
  "dataIso": "2025-11-13",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Fechamento fiscal 2025: guia prático para sua empresa | Beorange",
  "metaDescription": "O final do ano é um dos períodos mais críticos para a gestão fiscal e contábil das empresas brasileiras. Entre novembro e janeiro, os negócios precisam...",
  "palavras": 1376,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/fechamento-fiscal-2025-guia-pr%C3%A1tico-para-sua-empresa",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

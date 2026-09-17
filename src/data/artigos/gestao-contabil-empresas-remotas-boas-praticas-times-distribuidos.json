@@ -5,7 +5,7 @@
  "lead": "Empresa remota resolve muitos problemas — aluguel, deslocamento, estrutura física. Mas cria outros que poucos gestores antecipam, especialmente na área contábil.",
  "dataIso": "2026-06-11",
  "categoria": "Contábil",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Gestão contábil em empresas remotas: boas práticas para... | Beorange",
  "metaDescription": "Empresa remota resolve muitos problemas — aluguel, deslocamento, estrutura física. Mas cria outros que poucos gestores antecipam, especialmente na área...",
  "palavras": 1099,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/gestao-contabil-empresas-remotas-boas-praticas-times-distribuidos",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

@@ -5,7 +5,7 @@
  "lead": "Se você é MEI, 2025 trouxe uma mudança relevante para a sua rotina: além do faturamento do CNPJ, as receitas recebidas no CPF, quando relacionadas à mesma atividade, agora entram no cálculo do limite do regime. Isso reduz brechas de separação artificial de receitas e exige controle mais fino do teto anual. Neste artigo, você verá o que mudou, os impactos financeiros e operacionais e como se organizar para manter previsibilidade e conformidade.",
  "dataIso": "2025-11-10",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "MEI 2025: nova regra soma receitas do CPF e do CNPJ | Beorange",
  "metaDescription": "Se você é MEI, 2025 trouxe uma mudança relevante para a sua rotina: além do faturamento do CNPJ, as receitas recebidas no CPF, quando relacionadas à mesma...",
  "palavras": 1014,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/mei-2025-nova-regra-soma-receitas-do-cpf-e-do-cnpj",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

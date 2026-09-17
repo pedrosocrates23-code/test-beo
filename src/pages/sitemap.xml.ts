@@ -37,6 +37,10 @@ const PAGINAS: { caminho: string; priority: number; changefreq: string }[] = [
   { caminho: "/conta-beorange/bpo-financeiro/", priority: 0.8, changefreq: "monthly" },
   { caminho: "/conta-beorange/bora-financeira/", priority: 0.8, changefreq: "monthly" },
   { caminho: "/sobre-nos/", priority: 0.6, changefreq: "yearly" },
+  // A entity home da pessoa que assina os 149 artigos. Prioridade acima da /sobre-nos/ porque
+  // é a página que o `author` de todo BlogPosting referencia: se ela não for varrida, a
+  // referência existe no dado estruturado e não existe no índice.
+  { caminho: "/sobre-nos/myle-pontes/", priority: 0.7, changefreq: "monthly" },
   { caminho: "/cases/", priority: 0.6, changefreq: "monthly" },
   { caminho: "/contato/", priority: 0.6, changefreq: "yearly" },
   { caminho: "/politica-de-privacidade/", priority: 0.2, changefreq: "yearly" },
