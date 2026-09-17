@@ -5,7 +5,7 @@
  "lead": "",
  "dataIso": "2025-01-22",
  "categoria": "Tributação",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "O que é IRPJ: Imposto de Renda de Pessoa Jurídica 2025 | Beorange",
  "metaDescription": "",
  "palavras": 656,
@@ -31,7 +31,6 @@
  "urlAntiga": "https://beorange.app/blog/o-que-%C3%A9-irpj-imposto-de-renda-de-pessoa-jur%C3%ADdica-2025",
  "notasDaMigracao": [
   "rebaixado 1 <h1> do corpo para <h2>",
-  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito",
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
  ]
 }

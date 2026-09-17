@@ -37,29 +37,11 @@
  * • openingHoursSpecification e taxID — os dados existem, mas não em fonte primária que eu
  *   tenha conseguido ler. Campo sem lastro não entra. Ver PENDENTE, no fim do arquivo.
  *
- * ── 5. Autoria: quem escreve é uma pessoa, quem publica é a empresa ──────────────────
- * Os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, com entity home
- * em /sobre-nos/myle-pontes/. `author` deixou de apontar para a organização e passou a
- * apontar para o Person; `publisher` continua sendo a organização. A separação é o ponto:
- * schema.org distingue quem redige de quem edita e distribui, e colapsar os dois num nó só
- * desperdiça a única chance de o site dizer que existe uma especialista por trás do texto.
- *
- * ── 6. Por que o Person aparece em TODA página ───────────────────────────────────────
- * A organização declara `founder` apontando para o @id da pessoa, e essa declaração vive no
- * nó ORGANIZACAO, que vai em toda página. Se o Person só entrasse nas páginas de artigo, o
- * `founder` das outras apontaria para um nó ausente do grafo daquela página: a referência
- * pendurada que a nota do LOGO_NODE já explica. Então ele entra sempre. O custo é um nó
- * pequeno repetido; o ganho é pessoa e empresa aparecerem ligadas em todo documento do site,
- * que é o que "unir as duas entidades" quer dizer na prática.
- *
- * ── 7. O que a pessoa NÃO declara, e por quê ─────────────────────────────────────────
- * • alumniOf e hasCredential — a formação, o CRC e as sete especializações citadas pela
- *   imprensa não têm nome de instituição nem data em fonte que dê para checar. Campo sem
- *   lastro não entra, aqui como no resto do arquivo.
- * • jobTitle vem do registro de autores, não daqui: é a mesma string que o byline mostra.
+ * ── 5. Autoria ───────────────────────────────────────────────────────────────────────
+ * Os 149 artigos assinam "Por Beorange", então `author` é a própria organização — que é o
+ * que a página diz. No dia em que houver assinatura por área, o author vira Person com @id
+ * próprio, e é só aqui que muda.
  */
-
-import { AUTORES } from "./autores";
 
 /** Domínio final. O mesmo de astro.config.mjs e do sitemap: as URLs do grafo já nascem
  *  definitivas, mesmo enquanto o site vive numa URL de preview. */
@@ -70,13 +52,6 @@ export const ID_SITE = `${SITE}/#website`;
 export const ID_ORG = `${SITE}/sobre-nos/#organization`;
 const ID_LOGO = `${SITE}/#logo`;
 const ID_BLOG = `${SITE}/blog/#blog`;
-/** Entity home da pessoa. Vem do registro de autores para existir num lugar só: o byline da
- *  página e o nó Person leem a mesma fonte, e assim não há como um dizer uma coisa e o outro
- *  dizer outra. Imutável pelo mesmo motivo que o @id da organização é. */
-export const ID_MYLE = AUTORES["myle-pontes"].id;
-/** A foto dela é nó próprio, pelo mesmo motivo que o logo é: aninhada dentro de `image`, o
- *  @id não existiria no grafo e a referência ficaria pendurada. */
-const ID_FOTO_MYLE = `${SITE}/sobre-nos/myle-pontes/#foto`;
 
 const abs = (caminho: string) => new URL(caminho, SITE + "/").href;
 
@@ -118,61 +93,6 @@ const ORGANIZACAO = {
     "Planejamento tributário",
     "Gestão financeira",
   ],
-  /** A ligação empresa → pessoa. `founder` é o predicado exato: ela fundou e dirige. Os dois
-   *  nós carregam a ligação, cada um do seu lado (aqui `founder`, no Person `worksFor`), o
-   *  que deixa o par legível para quem entrar no grafo por qualquer um dos dois. */
-  founder: { "@id": ID_MYLE },
-} as const;
-
-/** A pessoa por trás da marca.
- *
- *  Todo campo aqui tem fonte verificada e registrada em
- *  outputs/entity-ops/beorange-app/entity-home/board-myle-pontes.md. O que não tinha fonte
- *  ficou de fora, e a nota 7 do cabeçalho lista o que falta e por quê.
- *
- *  `worksFor` fecha o par com o `founder` da organização, e `url` aponta para a entity home
- *  dela: é o campo que diz ao consumidor QUAL página é a versão canônica desta pessoa, em vez
- *  de deixar o buscador escolher entre o LinkedIn, o Instagram e a ficha dela num programa de
- *  mentoria de terceiro.
- *
- *  Sem `mainEntityOfPage`, e o motivo é a nota 6: como este nó vai em TODA página, um
- *  `mainEntityOfPage` apontando para /sobre-nos/myle-pontes/#webpage ficaria pendurado nas
- *  outras 174, porque aquele nó WebPage só existe no grafo da página dela. A ligação nos dois
- *  sentidos já está feita onde ela cabe: lá, o ProfilePage declara `mainEntity` e `about`
- *  apontando para este Person. */
-const PESSOA = {
-  "@type": "Person",
-  "@id": ID_MYLE,
-  name: AUTORES["myle-pontes"].nome,
-  jobTitle: AUTORES["myle-pontes"].cargo,
-  description: AUTORES["myle-pontes"].resumo,
-  url: AUTORES["myle-pontes"].url,
-  worksFor: { "@id": ID_ORG },
-  image: { "@id": ID_FOTO_MYLE },
-  knowsAbout: AUTORES["myle-pontes"].temas,
-  sameAs: AUTORES["myle-pontes"].perfis,
-  /** Cidade declarada por ela nos dois perfis ("Curitiba, Paraná, Brasil" no LinkedIn,
-   *  "Curitiba" no Instagram). Sem rua nem número: o endereço de uma pessoa física não é dado
-   *  de site institucional, e a localidade já basta para desambiguar homônimos. */
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Curitiba",
-    addressRegion: "PR",
-    addressCountry: "BR",
-  },
-} as const;
-
-/** Retrato oficial da Myle. Acompanha o Person em toda página, como o LOGO_NODE acompanha a
- *  organização, e pelo mesmo motivo. É o mesmo arquivo que a entity home dela exibe: o que o
- *  dado estruturado afirma, a página mostra. */
-const FOTO_MYLE = {
-  "@type": "ImageObject",
-  "@id": ID_FOTO_MYLE,
-  url: abs(AUTORES["myle-pontes"].foto),
-  contentUrl: abs(AUTORES["myle-pontes"].foto),
-  caption: AUTORES["myle-pontes"].fotoAlt,
-  width: 720,
-  height: 900,
 } as const;
 
 /** O logo é nó de primeiro nível, não objeto aninhado dentro de `logo`. Aninhado, o @id
@@ -229,16 +149,6 @@ export type DadosDaPagina =
       servico: string;
     }
   | { tipo: "blog"; nome: string; descricao: string; migalhas: Migalha[] }
-  /** Entity home de uma pessoa. Vira ProfilePage, que é o tipo que o Google documenta para
-   *  página de perfil de autor, e o mainEntity dela é o Person. */
-  | {
-      tipo: "perfil";
-      nome: string;
-      descricao: string;
-      migalhas: Migalha[];
-      /** Slug do autor no registro de src/lib/autores.ts. */
-      autor: string;
-    }
   | {
       tipo: "artigo";
       nome: string;
@@ -281,7 +191,6 @@ export function montarGrafo(dados: DadosDaPagina, caminho: string): object[] {
     dados.tipo === "sobre" ? "AboutPage"
     : dados.tipo === "contato" ? "ContactPage"
     : dados.tipo === "colecao" || dados.tipo === "blog" ? "CollectionPage"
-    : dados.tipo === "perfil" ? "ProfilePage"
     : dados.tipo === "artigo" ? "WebPage"
     : "WebPage";
 
@@ -292,20 +201,13 @@ export function montarGrafo(dados: DadosDaPagina, caminho: string): object[] {
     name: dados.tipo === "home" ? "Beorange" : dados.nome,
     description: dados.tipo === "home" ? ORGANIZACAO.description : dados.descricao,
     isPartOf: { "@id": ID_SITE },
-    // Do que esta página trata. Em toda página do site é a organização; na entity home de uma
-    // pessoa é a pessoa, senão a página que existe para falar dela declararia falar de outra
-    // entidade.
-    about: { "@id": dados.tipo === "perfil" ? ID_MYLE : ID_ORG },
+    about: { "@id": ID_ORG },
     inLanguage: "pt-BR",
   };
   if (temMigalhas) pagina.breadcrumb = { "@id": `${url}#breadcrumb` };
 
-  // Ver a nota 6 do cabeçalho: o Person acompanha o nó da organização em toda página, porque
-  // é para ele que o `founder` dela aponta.
-  const grafo: object[] = [SITE_NODE, ORGANIZACAO, PESSOA, LOGO_NODE, FOTO_MYLE, pagina];
+  const grafo: object[] = [SITE_NODE, ORGANIZACAO, LOGO_NODE, pagina];
   if (temMigalhas) grafo.push(migalhasNode(url, dados.migalhas));
-
-  if (dados.tipo === "perfil") pagina.mainEntity = { "@id": ID_MYLE };
 
   if (dados.tipo === "servico") {
     // Service não gera cartão no SERP, e não é por isso que está aqui: é o que diz ao
@@ -342,8 +244,7 @@ export function montarGrafo(dados: DadosDaPagina, caminho: string): object[] {
       // Sem histórico de edição por artigo, dateModified seria a data do build — que diz
       // que os 149 mudaram toda vez que um muda. A data de publicação é o que se sabe.
       dateModified: dados.dataIso,
-      // Quem escreve e quem publica são nós diferentes. Ver a nota 5 do cabeçalho.
-      author: { "@id": ID_MYLE },
+      author: { "@id": ID_ORG },
       publisher: { "@id": ID_ORG },
       mainEntityOfPage: { "@id": `${url}#webpage` },
       isPartOf: { "@id": ID_BLOG },
@@ -384,13 +285,7 @@ export function montarGrafo(dados: DadosDaPagina, caminho: string): object[] {
  *   assim que a URL canônica for confirmada. Item no Wikidata exige o gate QG-EO-2 do
  *   entity-ops: sem a decisão registrada, não se cria item nem se inventa QID.
  *
- * Person → foto, formação e credenciais
- *   O nó da Myle está no ar sem `image`, `alumniOf` e `hasCredential`. Os três dependem de
- *   dado que só ela confirma: foto oficial com direito de uso, instituição e ano da graduação,
- *   número do CRC e o nome das sete especializações que a imprensa cita sem detalhar. Assim
- *   que vierem, entram no registro de src/lib/autores.ts e no nó PESSOA, nesta ordem.
- *
- * Person → sameAs do perfil no programa de mentoria
- *   A ficha dela em hotmilk.pucpr.br é de terceiro, não de perfil que ela controla, então não
- *   entra em `sameAs`. Vale como corroboração externa da entidade, não como identidade.
+ * author → Person
+ *   Quando houver assinatura por área, trocar author de { "@id": ID_ORG } por um Person com
+ *   @id próprio em /sobre-nos/#<slug>. É a única linha que muda.
  */

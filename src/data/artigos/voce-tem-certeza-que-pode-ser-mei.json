@@ -5,7 +5,7 @@
  "lead": "O Microempreendedor Individual (MEI) é uma opção acessível para quem deseja formalizar um pequeno negócio e obter vantagens como a cobertura previdenciária e a redução da carga tributária. No entanto, muitas pessoas se registram como MEI sem conhecer todas as regras, o que pode gerar problemas fiscais e financeiros.",
  "dataIso": "2025-03-20",
  "categoria": "Empreendedorismo",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Você tem certeza de que pode ser MEI? Conheça 5... | Beorange",
  "metaDescription": "O Microempreendedor Individual (MEI) é uma opção acessível para quem deseja formalizar um pequeno negócio e obter vantagens como a cobertura...",
  "palavras": 727,
@@ -29,7 +29,5 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/voce-tem-certeza-que-pode-ser-mei",
- "notasDaMigracao": [
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
- ]
+ "notasDaMigracao": []
 }

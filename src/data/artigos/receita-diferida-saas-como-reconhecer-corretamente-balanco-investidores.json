@@ -5,7 +5,7 @@
  "lead": "Um cliente assina um plano anual do seu SaaS e paga R$ 12.000 à vista. O dinheiro cai na conta. É tentador registrar tudo como receita de janeiro e seguir em frente.",
  "dataIso": "2026-04-28",
  "categoria": "Contábil",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Receita diferida: o erro contábil silencioso que distorce o... | Beorange",
  "metaDescription": "Um cliente assina um plano anual do seu SaaS e paga R$ 12.000 à vista. O dinheiro cai na conta. É tentador registrar tudo como receita de janeiro e seguir...",
  "palavras": 1167,
@@ -30,7 +30,6 @@
  ],
  "urlAntiga": "https://beorange.app/blog/receita-diferida-saas-como-reconhecer-corretamente-balanco-investidores",
  "notasDaMigracao": [
-  "removido 8 bloco <style> inline",
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+  "removido 8 bloco <style> inline"
  ]
 }

@@ -5,7 +5,7 @@
  "lead": "",
  "dataIso": "2025-01-20",
  "categoria": "Simples Nacional",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Parcelamento do Simples Nacional: como regularizar suas... | Beorange",
  "metaDescription": "",
  "palavras": 534,
@@ -31,7 +31,6 @@
  "urlAntiga": "https://beorange.app/blog/parcelamento-do-simples-nacional-como-regularizar-suas-d%C3%ADvidas-com-a-receita-federal",
  "notasDaMigracao": [
   "rebaixado 1 <h1> do corpo para <h2>",
-  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito",
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
  ]
 }

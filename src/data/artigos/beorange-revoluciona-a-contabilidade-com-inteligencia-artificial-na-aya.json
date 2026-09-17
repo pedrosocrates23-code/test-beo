@@ -5,7 +5,7 @@
  "lead": "Nossa plataforma de contabilidade com inteligência artificial, Aya, já está em operação experimental em nossas operações. Desenvolvida por equipe coordenada pela nossa fundadora e CEO, Myle Pontes, a Aya visa simplificar a gestão financeira das empresas, automatizando processos e eliminando a necessidade de entrada manual de dados.",
  "dataIso": "2024-04-03",
  "categoria": "Notícias",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Beorange Revoluciona a Contabilidade com Inteligência... | Beorange",
  "metaDescription": "Nossa plataforma de contabilidade com inteligência artificial, Aya, já está em operação experimental em nossas operações. Desenvolvida por equipe...",
  "palavras": 369,
@@ -29,7 +29,5 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/beorange-revoluciona-a-contabilidade-com-intelig%C3%AAncia-artificial-na-aya",
- "notasDaMigracao": [
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
- ]
+ "notasDaMigracao": []
 }

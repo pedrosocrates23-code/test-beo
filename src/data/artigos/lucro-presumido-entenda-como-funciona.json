@@ -5,7 +5,7 @@
  "lead": "A escolha do regime tributário é uma das decisões mais estratégicas para qualquer empresa. Entre as opções disponíveis no Brasil, o Lucro Presumido é uma das mais adotadas, especialmente por negócios que buscam um sistema tributário simplificado e têm margens de lucro elevadas.",
  "dataIso": "2025-01-31",
  "categoria": "Lucro Presumido",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Lucro Presumido: Entenda Como Funciona e Se É a Melhor... | Beorange",
  "metaDescription": "A escolha do regime tributário é uma das decisões mais estratégicas para qualquer empresa. Entre as opções disponíveis no Brasil, o Lucro Presumido é uma...",
  "palavras": 752,
@@ -30,7 +30,6 @@
  ],
  "urlAntiga": "https://beorange.app/blog/lucro-presumido-entenda-como-funciona",
  "notasDaMigracao": [
-  "rebaixado 1 <h1> do corpo para <h2>",
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+  "rebaixado 1 <h1> do corpo para <h2>"
  ]
 }

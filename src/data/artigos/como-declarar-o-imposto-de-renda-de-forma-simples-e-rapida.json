@@ -5,7 +5,7 @@
  "lead": "A temporada de declaração do Imposto de Renda já começou, e muitos contribuintes estão buscando a melhor forma de enviar seus dados corretamente para a Receita Federal. Com a possibilidade de utilizar a declaração pré-preenchida, o processo se tornou mais ágil e seguro, reduzindo as chances de erros e inconsistências. Neste artigo, vamos mostrar como funciona essa modalidade e como você pode fazer a sua declaração de forma simples e rápida.",
  "dataIso": "2025-04-02",
  "categoria": "Tributação",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Como Declarar o Imposto de Renda de Forma Simples e Rápida | Beorange",
  "metaDescription": "A temporada de declaração do Imposto de Renda já começou, e muitos contribuintes estão buscando a melhor forma de enviar seus dados corretamente para a...",
  "palavras": 497,
@@ -29,7 +29,5 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/como-declarar-o-imposto-de-renda-de-forma-simples-e-r%C3%A1pida",
- "notasDaMigracao": [
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
- ]
+ "notasDaMigracao": []
 }

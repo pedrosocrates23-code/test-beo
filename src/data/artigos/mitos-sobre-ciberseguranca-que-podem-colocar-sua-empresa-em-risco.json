@@ -5,7 +5,7 @@
  "lead": "A transformação digital trouxe inúmeros benefícios para as empresas, mas também abriu portas para novas ameaças cibernéticas. Muitos empreendedores subestimam os riscos, acreditando em mitos que podem comprometer seriamente seus negócios.",
  "dataIso": "2025-03-05",
  "categoria": "Tributação",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Mitos sobre cibersegurança que podem colocar sua empresa em... | Beorange",
  "metaDescription": "A transformação digital trouxe inúmeros benefícios para as empresas, mas também abriu portas para novas ameaças cibernéticas. Muitos empreendedores...",
  "palavras": 686,
@@ -30,7 +30,6 @@
  ],
  "urlAntiga": "https://beorange.app/blog/mitos-sobre-ciberseguran%C3%A7a-que-podem-colocar-sua-empresa-em-risco",
  "notasDaMigracao": [
-  "rebaixado 2 <h1> do corpo para <h2>",
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+  "rebaixado 2 <h1> do corpo para <h2>"
  ]
 }

@@ -5,7 +5,7 @@
  "lead": "Empresas no Lucro Real têm acesso a um benefício tributário que muitas subutilizam: o direito de abater créditos de PIS e COFINS sobre insumos, despesas e bens adquiridos na operação. No regime não cumulativo, a alíquota do PIS sobe para 1,65% e a da COFINS para 7,6%, mas o sistema de créditos é justamente o mecanismo que equilibra essa carga. Quem não aproveita os créditos de forma completa acaba pagando mais tributo do que a legislação exige.",
  "dataIso": "2026-02-10",
  "categoria": "Fiscal",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Créditos de PIS e COFINS no Lucro Real: como aproveitar ao... | Beorange",
  "metaDescription": "Empresas no Lucro Real têm acesso a um benefício tributário que muitas subutilizam: o direito de abater créditos de PIS e COFINS sobre insumos, despesas e...",
  "palavras": 1294,
@@ -29,7 +29,5 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/cr%C3%A9ditos-de-pis-e-cofins-no-lucro-real-como-aproveitar-ao-m%C3%A1ximo",
- "notasDaMigracao": [
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
- ]
+ "notasDaMigracao": []
 }

@@ -5,7 +5,7 @@
  "lead": "Quando você emite uma nota fiscal para um cliente pessoa jurídica hoje, ele não ganha nada automaticamente com isso. O crédito de PIS e COFINS que ele pode aproveitar depende do regime tributário dele, do tipo de serviço contratado e de uma série de regras que mudam conforme a situação.",
  "dataIso": "2026-04-24",
  "categoria": "Reforma Tributária",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "A nota fiscal que você emite para seu cliente B2B vai virar... | Beorange",
  "metaDescription": "Quando você emite uma nota fiscal para um cliente pessoa jurídica hoje, ele não ganha nada automaticamente com isso. O crédito de PIS e COFINS que ele...",
  "palavras": 1306,
@@ -29,7 +29,5 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/nota-fiscal-credito-imposto-cliente-b2b-2027-cbs-ibs-reforma-tributaria",
- "notasDaMigracao": [
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
- ]
+ "notasDaMigracao": []
 }

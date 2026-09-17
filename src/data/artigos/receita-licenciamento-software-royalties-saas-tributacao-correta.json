@@ -5,7 +5,7 @@
  "lead": "Poucas discussões fiscais geram tanta incerteza para empresas de tecnologia quanto a tributação de receitas de licenciamento de software. O debate entre ISS e ICMS arrasta-se por décadas nos tribunais, a distinção entre licenciamento e prestação de serviço ainda gera autuações, e o tratamento de royalties pagos ao exterior tem regras próprias que muita gente desconhece.",
  "dataIso": "2026-05-06",
  "categoria": "Tecnologia",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Receita de licenciamento de software: como tributar... | Beorange",
  "metaDescription": "Poucas discussões fiscais geram tanta incerteza para empresas de tecnologia quanto a tributação de receitas de licenciamento de software. O debate entre...",
  "palavras": 1265,
@@ -29,7 +29,5 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/receita-licenciamento-software-royalties-saas-tributacao-correta",
- "notasDaMigracao": [
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
- ]
+ "notasDaMigracao": []
 }

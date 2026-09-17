@@ -5,7 +5,7 @@
  "lead": "A gestão financeira de uma empresa envolve diversas obrigações, e uma das mais importantes para sócios que atuam no dia a dia do negócio é a definição do pró-labore. Esse conceito, muitas vezes confundido com salário, tem regras próprias e impacta diretamente na estrutura tributária e previdenciária de uma empresa.",
  "dataIso": "2025-02-17",
  "categoria": "Tributação",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Pró-Labore: O que é, Como Funciona e Qual a sua Importância? | Beorange",
  "metaDescription": "A gestão financeira de uma empresa envolve diversas obrigações, e uma das mais importantes para sócios que atuam no dia a dia do negócio é a definição do...",
  "palavras": 811,
@@ -30,7 +30,6 @@
  ],
  "urlAntiga": "https://beorange.app/blog/pr%C3%B3-labore-o-que-%C3%A9-como-funciona-e-qual-a-sua-import%C3%A2ncia",
  "notasDaMigracao": [
-  "rebaixado 1 <h1> do corpo para <h2>",
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+  "rebaixado 1 <h1> do corpo para <h2>"
  ]
 }

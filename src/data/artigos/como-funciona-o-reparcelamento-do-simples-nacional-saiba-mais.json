@@ -5,7 +5,7 @@
  "lead": "",
  "dataIso": "2025-01-29",
  "categoria": "Simples Nacional",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Como Funciona o Reparcelamento do Simples Nacional? Saiba... | Beorange",
  "metaDescription": "",
  "palavras": 421,
@@ -30,7 +30,6 @@
  ],
  "urlAntiga": "https://beorange.app/blog/como-funciona-o-reparcelamento-do-simples-nacional-saiba-mais",
  "notasDaMigracao": [
-  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito",
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
  ]
 }

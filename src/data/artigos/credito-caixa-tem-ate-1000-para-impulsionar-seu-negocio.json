@@ -5,7 +5,7 @@
  "lead": "Você é um pequeno empreendedor ou está pensando em começar seu próprio negócio? A Caixa Econômica Federal lançou uma solução que pode ser o empurrãozinho que você precisa: o Crédito CAIXA Tem para Empreendedores. Com até R$ 1.000 disponíveis, essa linha de crédito é ideal para quem quer iniciar ou expandir um negócio de forma simples, rápida e sem burocracia.",
  "dataIso": "2025-02-06",
  "categoria": "Notícias",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Crédito CAIXA Tem: Até R$ 1.000 para impulsionar seu... | Beorange",
  "metaDescription": "Você é um pequeno empreendedor ou está pensando em começar seu próprio negócio? A Caixa Econômica Federal lançou uma solução que pode ser o empurrãozinho...",
  "palavras": 644,
@@ -30,7 +30,6 @@
  ],
  "urlAntiga": "https://beorange.app/blog/credito-caixa-tem-ate-1000-para-impulsionar-seu-negocio",
  "notasDaMigracao": [
-  "rebaixado 1 <h1> do corpo para <h2>",
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+  "rebaixado 1 <h1> do corpo para <h2>"
  ]
 }

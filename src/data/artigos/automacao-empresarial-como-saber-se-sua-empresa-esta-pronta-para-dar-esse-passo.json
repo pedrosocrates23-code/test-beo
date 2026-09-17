@@ -5,7 +5,7 @@
  "lead": "",
  "dataIso": "2025-01-23",
  "categoria": "Tecnologia",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Automação Empresarial: Como Saber se Sua Empresa Está... | Beorange",
  "metaDescription": "",
  "palavras": 587,
@@ -30,7 +30,6 @@
  ],
  "urlAntiga": "https://beorange.app/blog/automa%C3%A7%C3%A3o-empresarial-como-saber-se-sua-empresa-est%C3%A1-pronta-para-dar-esse-passo",
  "notasDaMigracao": [
-  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito",
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
  ]
 }

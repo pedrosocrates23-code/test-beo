@@ -5,7 +5,7 @@
  "lead": "Por décadas, PIS e COFINS foram duas das contribuições mais presentes — e mais complexas — do sistema tributário brasileiro. A Reforma Tributária (EC 132/2023) as extingue e as substitui por um único tributo: a CBS, a Contribuição sobre Bens e Serviços.",
  "dataIso": "2026-06-08",
  "categoria": "Reforma Tributária",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "CBS x PIS/Cofins: o que muda na prática para empresas de... | Beorange",
  "metaDescription": "Por décadas, PIS e COFINS foram duas das contribuições mais presentes — e mais complexas — do sistema tributário brasileiro. A Reforma Tributária (EC...",
  "palavras": 1156,
@@ -30,7 +30,6 @@
  ],
  "urlAntiga": "https://beorange.app/blog/cbs-x-pis-cofins-o-que-muda-na-pratica-empresas-de-servicos",
  "notasDaMigracao": [
-  "titulo cortado de 7568 para 65 caracteres: o campo trazia o artigo inteiro",
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+  "titulo cortado de 7568 para 65 caracteres: o campo trazia o artigo inteiro"
  ]
 }

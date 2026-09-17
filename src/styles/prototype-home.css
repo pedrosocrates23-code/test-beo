@@ -261,7 +261,7 @@
      ancestral virava contexto, o blend era isolado, e os 63% de branco da imagem apareciam
      como um retangulo branco por cima do bege. Reproduzido forcando opacity:0.99 no
      ancestral: o retangulo aparece, com a borda dura na direita.
-     A correcao foi na IMAGEM, nao no CSS: app-beorange.webp passou a ter alfa de verdade
+     A correcao foi na imagem, nao no CSS: app-beorange.webp passou a ter alfa de verdade
      (recorte por inundacao a partir das bordas, que preserva o branco DENTRO das telas dos
      celulares). Com transparencia real ela compoe sobre qualquer coisa — bege, branco ou a
      foto do time — e nenhum contexto de empilhamento tem como atrapalhar.

@@ -5,7 +5,7 @@
  "lead": "A temporada do Imposto de Renda 2025 está prestes a começar, e muitos contribuintes precisam de auxílio para preencher a declaração corretamente. Pensando nisso, a Receita Federal mantém a funcionalidade de autorização de acesso, que permite que outra pessoa visualize e edite a declaração do IRPF diretamente no portal e-CAC ou no aplicativo Meu Imposto de Renda.",
  "dataIso": "2025-02-18",
  "categoria": "Tributação",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Autorização de Acesso no Imposto de Renda 2025: Como... | Beorange",
  "metaDescription": "A temporada do Imposto de Renda 2025 está prestes a começar, e muitos contribuintes precisam de auxílio para preencher a declaração corretamente. Pensando...",
  "palavras": 803,
@@ -29,7 +29,5 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/autoriza%C3%A7%C3%A3o-de-acesso-no-imposto-de-renda-2025-como-permitir-que-outra-pessoa-declare-por-voc%C3%AA",
- "notasDaMigracao": [
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
- ]
+ "notasDaMigracao": []
 }

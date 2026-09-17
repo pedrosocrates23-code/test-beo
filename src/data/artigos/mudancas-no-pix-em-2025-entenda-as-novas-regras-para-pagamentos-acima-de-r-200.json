@@ -5,7 +5,7 @@
  "lead": "",
  "dataIso": "2025-01-09",
  "categoria": "Financeiro",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Mudanças no PIX em 2025: entenda as novas regras para... | Beorange",
  "metaDescription": "",
  "palavras": 564,
@@ -31,7 +31,6 @@
  "urlAntiga": "https://beorange.app/blog/mudan%C3%A7as-no-pix-em-2025-entenda-as-novas-regras-para-pagamentos-acima-de-r-200",
  "notasDaMigracao": [
   "rebaixado 1 <h1> do corpo para <h2>",
-  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito",
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
  ]
 }

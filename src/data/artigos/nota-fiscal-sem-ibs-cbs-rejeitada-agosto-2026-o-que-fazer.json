@@ -5,7 +5,7 @@
  "lead": "O prazo está chegando e muitas empresas ainda não se prepararam. A partir de agosto de 2026, notas fiscais eletrônicas (NF-e e NFC-e) emitidas sem os novos campos obrigatórios do IBS e da CBS começarão a ser rejeitadas pela SEFAZ.",
  "dataIso": "2026-05-29",
  "categoria": "Reforma Tributária",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Nota fiscal sem IBS e CBS será rejeitada a partir de... | Beorange",
  "metaDescription": "O prazo está chegando e muitas empresas ainda não se prepararam. A partir de agosto de 2026, notas fiscais eletrônicas (NF-e e NFC-e) emitidas sem os...",
  "palavras": 979,
@@ -29,7 +29,5 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/nota-fiscal-sem-ibs-cbs-rejeitada-agosto-2026-o-que-fazer",
- "notasDaMigracao": [
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
- ]
+ "notasDaMigracao": []
 }

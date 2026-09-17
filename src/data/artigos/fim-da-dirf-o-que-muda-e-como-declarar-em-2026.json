@@ -5,7 +5,7 @@
  "lead": "A DIRF, Declaração do Imposto de Renda Retido na Fonte, foi extinta a partir do ano-calendário 2024. As informações que antes eram prestadas por meio dela agora precisam ser comunicadas à Receita Federal por outros canais, principalmente o eSocial e a EFD-Reinf. Para as empresas, isso significa que o processo de declarar retenções de IRRF mudou de forma definitiva, e quem ainda não ajustou os processos internos pode estar com inconsistências acumuladas.",
  "dataIso": "2026-02-12",
  "categoria": "Fiscal",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "Fim da DIRF: o que muda e como declarar em 2026 | Beorange",
  "metaDescription": "A DIRF, Declaração do Imposto de Renda Retido na Fonte, foi extinta a partir do ano-calendário 2024. As informações que antes eram prestadas por meio dela...",
  "palavras": 1063,
@@ -29,7 +29,5 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/fim-da-dirf-o-que-muda-e-como-declarar-em-2026",
- "notasDaMigracao": [
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
- ]
+ "notasDaMigracao": []
 }

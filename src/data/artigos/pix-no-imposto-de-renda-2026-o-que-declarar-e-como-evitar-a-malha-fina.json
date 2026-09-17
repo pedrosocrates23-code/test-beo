@@ -5,7 +5,7 @@
  "lead": "A temporada do Imposto de Renda 2026 começa em 17 de março e, com ela, volta uma das dúvidas mais buscadas pelos brasileiros: preciso declarar o PIX? A resposta é sim e não ao mesmo tempo, e entender essa diferença é fundamental para quem não quer cair na malha fina. O PIX não é um tributo novo nem um rendimento novo, mas a Receita Federal usa os dados das movimentações financeiras para cruzar informações e identificar inconsistências entre o que você declarou e o que passou pela sua conta.",
  "dataIso": "2026-03-11",
  "categoria": "Fiscal",
- "autor": "myle-pontes",
+ "autor": "Por Beorange",
  "metaTitle": "PIX no Imposto de Renda 2026: o que declarar e como evitar... | Beorange",
  "metaDescription": "A temporada do Imposto de Renda 2026 começa em 17 de março e, com ela, volta uma das dúvidas mais buscadas pelos brasileiros: preciso declarar o PIX? A...",
  "palavras": 1082,
@@ -29,7 +29,5 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/pix-no-imposto-de-renda-2026-o-que-declarar-e-como-evitar-a-malha-fina",
- "notasDaMigracao": [
-  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
- ]
+ "notasDaMigracao": []
 }
