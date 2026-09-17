@@ -18,12 +18,27 @@
 //
 // Quem aplica a regra é o script que monta src/data/artigos/*.json; o campo
 // `relacionados` de cada artigo já chega resolvido. Este componente só desenha.
+//
+// O QUE O CARD PRECISA RECEBER, e por que isso não é opcional aqui:
+// capa, resumo e ENDEREÇO. Até 16/09/2026 a seção subia sem os três — dois cards com o nome
+// da categoria escrito no lugar da foto, um parágrafo vazio e nenhum link. Uma dobra que
+// promete continuação e não leva a lugar nenhum é pior que não existir: ocupa a saída do
+// artigo, que é onde o leitor decide se fica.
 import ArticleCard from "./ArticleCard.astro";
 
 interface Props {
   titulo?: string;
   /** Exatamente dois. A página de artigo garante isso a partir do campo `relacionados`. */
-  artigos?: { categoria: string; titulo: string; resumo: string; meta: string }[];
+  artigos?: {
+    categoria: string;
+    titulo: string;
+    resumo: string;
+    meta: string;
+    /** Endereço do artigo. Sem ele o card não leva a lugar nenhum — ver o cabeçalho. */
+    href?: string;
+    /** Capa. Sem ela o card cai no rótulo de texto do protótipo. */
+    imagem?: string | null;
+  }[];
 }
 
 const {
@@ -48,7 +63,15 @@ const {
   <div class="rh"><h2>{titulo}</h2></div>
   <div class="rg">
     {artigos.map((a) => (
-      <ArticleCard thumb={a.categoria} cat={a.categoria} title={a.titulo} excerpt={a.resumo} meta={a.meta} />
+      <ArticleCard
+        thumb={a.categoria}
+        imagem={a.imagem}
+        cat={a.categoria}
+        title={a.titulo}
+        excerpt={a.resumo}
+        meta={a.meta}
+        href={a.href}
+      />
     ))}
   </div>
 </section>

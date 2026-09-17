@@ -1,38 +1,130 @@
 ---
 // Elemento: Barra de compartilhamento do artigo (protótipo do designer — beorange-artigo_2.html).
-// Sem <style>: o CSS é global, vindo de src/styles/prototype-artigo.css.
+// Sem <style> para a barra: o CSS é global, vindo de src/styles/prototype-artigo.css. O bloco
+// de estilo no fim deste arquivo cobre só o aviso de "link copiado", que não existe no protótipo.
 //
 // Os SVGs seguem inline e NÃO foram para o catálogo do Icone.astro de propósito: são
 // logotipos de terceiros, path preenchido, e não peças do desenho da Beorange — não devem
 // herdar traço nem cor do sistema, nem ser "ajustados" junto com os ícones da casa.
 //
-// Os links nascem "#", como no protótipo. Passando `url` e `titulo`, viram endereços reais de
-// compartilhamento; o "copiar link" continua inerte até existir o script que o atenda.
+// O TEXTO QUE VAI JUNTO
+// Cada rede aceita uma coisa diferente, e mandar o mesmo texto para todas é o jeito mais
+// rápido de publicar algo truncado ou duplicado:
+//   WhatsApp  aceita UM campo de texto livre — título, resumo e link vão juntos, em linhas.
+//   X         tem campos separados para texto e link, e corta em 280 caracteres contando o
+//             link como 23. Por isso o resumo é encurtado aqui, e não lá.
+//   LinkedIn  ignora qualquer texto enviado: ele lê título, descrição e imagem das metatags
+//             og: da própria página. Mandar texto na URL não faz nada.
+//   Instagram NÃO tem endereço de compartilhamento na web. Nenhum. O ícone dele saiu da
+//             barra e entrou o WhatsApp, que no Brasil é por onde artigo de fato circula —
+//             um ícone que não faz nada ocupa o lugar de um que faria.
 interface Props {
   rotulo?: string;
   /** URL absoluta do artigo. Sem ela os links ficam em "#", como no protótipo. */
   url?: string;
-  /** Título do artigo, usado no texto do compartilhamento. */
+  /** Título do artigo. Abre o texto pronto do compartilhamento. */
   titulo?: string;
+  /** Uma ou duas linhas sobre o artigo — normalmente o lead. Entra depois do título. */
+  resumo?: string;
 }
 
-const { rotulo = "Compartilhar", url, titulo = "" } = Astro.props;
+const { rotulo = "Compartilhar", url, titulo = "", resumo = "" } = Astro.props;
+
+/** Corta na palavra, nunca no meio dela, e só quando passa do limite. */
+function encurtar(texto: string, limite: number): string {
+  const t = texto.trim();
+  if (t.length <= limite) return t;
+  return t.slice(0, limite).replace(/\s+\S*$/, "") + "…";
+}
+
+// O texto do X é o que sobra de 280 depois do link (que conta como 23) e das quebras de linha.
+const resumoX = encurtar(resumo, Math.max(0, 280 - 23 - titulo.length - 6));
+const textoX = resumo ? `${titulo}\n\n${resumoX}` : titulo;
+
+// No WhatsApp o link vai DENTRO do texto, porque é o único campo que existe.
+const textoWhatsApp = [titulo, resumo ? encurtar(resumo, 220) : "", url]
+  .filter(Boolean)
+  .join("\n\n");
 
 const u = url ? encodeURIComponent(url) : "";
-const t = encodeURIComponent(titulo);
 const destino = {
-  // O Instagram não tem endpoint de compartilhamento na web: link direto para o perfil seria
-  // enganoso, então ele fica inerte mesmo quando os outros funcionam.
-  instagram: "#",
-  x: url ? `https://twitter.com/intent/tweet?url=${u}&text=${t}` : "#",
+  whatsapp: url ? `https://wa.me/?text=${encodeURIComponent(textoWhatsApp)}` : "#",
+  x: url ? `https://twitter.com/intent/tweet?url=${u}&text=${encodeURIComponent(textoX)}` : "#",
   linkedin: url ? `https://www.linkedin.com/sharing/share-offsite/?url=${u}` : "#",
-  copiar: "#",
 };
 ---
 <aside class="share" aria-label="Compartilhar">
   <span class="sl">{rotulo}</span>
-  <a href={destino.instagram} aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.1.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.1-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.1-.4-.3-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.1 1-.3 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 5.6A4.2 4.2 0 1016.2 12 4.2 4.2 0 0012 7.8m0 6.9A2.7 2.7 0 1114.7 12 2.7 2.7 0 0112 14.7m5.3-7.1a1 1 0 10-1-1 1 1 0 001 1"/></svg></a>
-  <a href={destino.x} aria-label="X"><svg viewBox="0 0 24 24"><path d="M17.5 3h3l-6.6 7.6L21.7 21h-5.9l-4.2-5.5L6.7 21H3.6l7.1-8.1L2.7 3h6l3.8 5 4.9-5z"/></svg></a>
-  <a href={destino.linkedin} aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5M3 8.98h4V21H3zM9 8.98h3.8v1.64h.05c.53-1 1.83-2.05 3.76-2.05 4 0 4.74 2.64 4.74 6.07V21H17V15.3c0-1.36-.02-3.1-1.9-3.1s-2.18 1.47-2.18 3v5.8H9z"/></svg></a>
-  <a href={destino.copiar} aria-label="Copiar link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg></a>
+
+  <a href={destino.whatsapp} aria-label="Compartilhar no WhatsApp" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2m.01 1.67c2.2 0 4.27.86 5.82 2.42a8.19 8.19 0 012.42 5.83c0 4.54-3.7 8.24-8.25 8.24a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.25 8.24-8.25M8.53 7.33c-.16 0-.43.06-.65.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.72 2.62 4.16 3.68.58.25 1.04.4 1.39.51.58.19 1.12.16 1.54.1.47-.07 1.44-.59 1.65-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.47-.28-.24-.12-1.44-.71-1.67-.79-.22-.08-.38-.12-.54.12-.16.25-.62.79-.76.95-.14.17-.28.19-.52.07-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.24-.02-.38.11-.5.11-.11.25-.29.37-.43s.16-.25.24-.41c.08-.17.04-.31-.02-.43-.06-.12-.54-1.34-.76-1.83-.19-.44-.39-.43-.54-.44h-.44"/></svg>
+  </a>
+
+  <a href={destino.x} aria-label="Compartilhar no X" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M17.5 3h3l-6.6 7.6L21.7 21h-5.9l-4.2-5.5L6.7 21H3.6l7.1-8.1L2.7 3h6l3.8 5 4.9-5z"/></svg>
+  </a>
+
+  <a href={destino.linkedin} aria-label="Compartilhar no LinkedIn" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5M3 8.98h4V21H3zM9 8.98h3.8v1.64h.05c.53-1 1.83-2.05 3.76-2.05 4 0 4.74 2.64 4.74 6.07V21H17V15.3c0-1.36-.02-3.1-1.9-3.1s-2.18 1.47-2.18 3v5.8H9z"/></svg>
+  </a>
+
+  {/* Botão, não link: copiar não é navegar. Nasce como <a href="#"> no protótipo, e um
+      href="#" que não navega manda o teclado para o topo da página ao ser acionado. */}
+  <button type="button" class="share-copiar" aria-label="Copiar link do artigo" data-copiar={url}>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg>
+  </button>
+
+  {/* A confirmação precisa ser lida em voz alta por quem não vê o aviso aparecer. */}
+  <span class="share-aviso" role="status" aria-live="polite" hidden></span>
 </aside>
+
+<script>
+  // Copiar o link do artigo. A API de área de transferência só existe em contexto seguro
+  // (https ou localhost); fora dele o catch cai no seletor de texto, que funciona em
+  // qualquer lugar e é o que sobra quando o navegador recusa o acesso.
+  document.querySelectorAll<HTMLButtonElement>(".share-copiar").forEach((botao) => {
+    const endereco = botao.dataset.copiar;
+    if (!endereco) {
+      botao.hidden = true;   // sem URL não há o que copiar
+      return;
+    }
+    const aviso = botao.parentElement?.querySelector<HTMLElement>(".share-aviso");
+
+    const mostrar = (texto: string) => {
+      if (!aviso) return;
+      aviso.textContent = texto;
+      aviso.hidden = false;
+      window.setTimeout(() => { aviso.hidden = true; }, 2600);
+    };
+
+    botao.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(endereco);
+        mostrar("Link copiado");
+      } catch {
+        const campo = document.createElement("textarea");
+        campo.value = endereco;
+        campo.setAttribute("readonly", "");
+        campo.style.cssText = "position:fixed;top:-1000px;opacity:0";
+        document.body.appendChild(campo);
+        campo.select();
+        const deu = document.execCommand("copy");
+        campo.remove();
+        mostrar(deu ? "Link copiado" : "Não foi possível copiar");
+      }
+    });
+  });
+</script>
+
+<style>
+  /* O botão de copiar herda a aparência dos links irmãos da barra: no protótipo os quatro
+     eram <a>, e aqui um deles virou <button> por ser ação, não navegação. */
+  .share .share-copiar{
+    padding:0;border:0;background:none;color:inherit;font:inherit;cursor:pointer;
+  }
+  .share .share-aviso{
+    font-size:11px;line-height:1.3;text-align:center;
+    color:var(--text-secondary,#5B534E);
+    max-width:9ch;
+  }
+</style>

@@ -17,10 +17,21 @@
 // o texto novo com contarPalavras() e passe o resultado — senão o artigo anuncia os minutos
 // de um texto que não é o dele.
 import ArticleShare from "./ArticleShare.astro";
+
+// Repassados inteiros para a barra de compartilhamento, que é quem monta o texto pronto de
+// cada rede. Sem eles a barra sobe com os links em "#" e não compartilha nada.
+interface Props {
+  /** URL absoluta do artigo. */
+  url?: string;
+  titulo?: string;
+  /** Uma ou duas linhas sobre o artigo — normalmente o lead. */
+  resumo?: string;
+}
+const { url, titulo, resumo } = Astro.props;
 ---
 <div class="art-main">
   <div class="art-layout">
-    <ArticleShare />
+    <ArticleShare url={url} titulo={titulo} resumo={resumo} />
 
     <div class="prose">
       <slot>

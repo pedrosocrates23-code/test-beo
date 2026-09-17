@@ -23,18 +23,34 @@ export interface Props {
   /** O que esta página é, para os dados estruturados. Omitir só em página que não deve
    *  aparecer em buscador nenhum — e hoje não existe nenhuma assim. Ver src/lib/schema.ts. */
   schema?: DadosDaPagina;
+  /** Imagem da prévia ao compartilhar. Caminho a partir de public/. Sem ela entra a
+   *  imagem padrão do site. */
+  imagem?: string | null;
+  /** "website" para as páginas do site, "article" para post de blog. */
+  tipoOg?: "website" | "article";
 }
 const {
   title,
   description = "Contabilidade, operação financeira e tecnologia para empresas em crescimento.",
   canonical,
   schema,
+  imagem,
+  tipoOg = "website",
 } = Astro.props;
 
 // Endereço preferido desta página, sempre no domínio final (Astro.site vem de
 // astro.config.mjs). Enquanto o site vive numa URL de preview, é isto que diz ao buscador
 // qual é a versão que vale, caso o preview seja varrido apesar do robots.txt.
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
+
+// PRÉVIA AO COMPARTILHAR (Open Graph e Twitter Card)
+// É daqui que WhatsApp, LinkedIn e X tiram título, descrição e imagem do cartão. O texto
+// pronto que a barra de compartilhamento monta acompanha o link, mas quem desenha o cartão
+// é a página: sem estas tags o link aparece cru, e no LinkedIn — que ignora qualquer texto
+// enviado na URL e lê só as og: — o compartilhamento sai sem nada.
+// A imagem precisa ser ABSOLUTA: caminho relativo não é resolvido por nenhuma das três.
+const IMAGEM_PADRAO = "/img/home/hero-desktop.webp";
+const imagemOg = new URL(imagem || IMAGEM_PADRAO, Astro.site).href;
 
 // Um único <script> de JSON-LD por página, com um @graph dentro. Dois blocos separados
 // obrigam o consumidor a costurar os nós por conta própria, e é assim que nascem duas
@@ -43,15 +59,44 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
 // casar, senão a mesma página vira dois nós.
 const caminho = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : Astro.url.pathname + "/";
 const grafo = schema ? montarGrafo(schema, caminho) : null;
+
+// ÍCONES DA MARCA
+// O que havia no <head> era o favicon.svg do template do Astro — o logo do Astro, não o da
+// Beorange, servido em produção desde o primeiro deploy. Os arquivos abaixo saem todos de
+// "beorange.app - favicon.webp" (1020x1020), o original entregue:
+//   favicon.ico            16/32/48 no mesmo arquivo — aba, favoritos e histórico
+//   favicon-96.png         tela de alta densidade
+//   apple-touch-icon.png   180x180 e OPACO de propósito: o iOS achata transparência sobre
+//                          preto e aplica a máscara arredondada dele por cima, então o canto
+//                          transparente do original viraria uma quina preta
+//   site.webmanifest       192/512 mais o maskable do Android, com a arte nos 80% centrais
+// theme-color usa --orange-500 (#F5380F), a cor da marca no design system. O gradiente do
+// ícone é mais claro (#FF3028 → #FF6A32); quem manda na barra do navegador é o token.
 ---
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon-96.png" sizes="96x96" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#F5380F" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:type" content={tipoOg} />
+    <meta property="og:site_name" content="Beorange" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imagemOg} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imagemOg} />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

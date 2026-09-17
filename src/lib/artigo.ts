@@ -128,3 +128,19 @@ export function normalizarLinks(html: string): string {
     return `<a${limpo.trimEnd()}${alvo}${relAttr}>`;
   });
 }
+
+/**
+ * Resumo de card a partir do lead do artigo.
+ *
+ * Corta na palavra, nunca no meio dela. O teto de 150 caracteres é o que cabe em três
+ * linhas do card sem empurrar a data para fora — o lead mediano do acervo tem 301.
+ *
+ * Vive aqui, e não na página da vitrine, porque o mesmo card aparece em dois lugares com
+ * origens diferentes: a listagem do blog e o "Continue lendo" do rodapé de cada artigo.
+ * Duas cópias da mesma regra é como elas passam a divergir.
+ */
+export function resumoDeCard(lead: string, teto = 150): string {
+  if (!lead) return "";
+  if (lead.length <= teto) return lead;
+  return lead.slice(0, teto - 3).replace(/\s+\S*$/, "") + "…";
+}
