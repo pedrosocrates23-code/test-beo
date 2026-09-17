@@ -11,6 +11,10 @@ interface Props {
   estagios?: { rotulo: string; titulo: string; resumo: string; pontos: string[]; atual?: boolean }[];
   /** Frase de fecho com a barrinha laranja. Omita para não renderizar. */
   destaque?: string;
+  /** Foto de fundo, ancorada à direita, a partir de public/. Omita e a seção fica lisa.
+   *  A foto precisa vir com o fundo já tingido na cor da seção (#FBF9F7) — ver o comentário
+   *  da regra em prototype-contabilidade.css. */
+  foto?: string;
 }
 
 const {
@@ -38,9 +42,13 @@ const {
     },
   ],
   destaque = "Empresa em crescimento precisa que os números cheguem a tempo de mudar a decisão.",
+  foto,
 } = Astro.props;
 ---
-<section class="alt stages-sec">
+<section
+  class:list={["alt", "stages-sec", { "stages-sec--foto": !!foto }]}
+  style={foto ? `--stages-foto:url('${foto}')` : undefined}
+>
   <div class="wrap">
     <div class="sec-head rv">
       <h2>{titulo.forte && <b>{titulo.forte}</b>} {titulo.resto}</h2>

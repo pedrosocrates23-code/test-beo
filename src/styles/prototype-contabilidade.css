@@ -205,6 +205,45 @@
   .ressalva{margin-top:56px;font-size:13.5px;color:var(--muted);border-left:2px solid var(--coral);padding:4px 0 4px 16px;max-width:76ch}
 
   /* ---------- STAGES (dobra 2) delicate ---------- */
+  /* ---------- FOTO AO FUNDO DA DOBRA DE ETAPAS ----------
+     Mesmo tratamento da foto do time na home (prototype-home.css, 3a DOBRA), e pelos mesmos
+     motivos: a foto é ancorada à DIREITA e dimensionada pela ALTURA da seção, não pela
+     largura, então a pessoa mantém proporção e posição em qualquer monitor. O fundo da foto
+     foi tingido em #FBF9F7, a cor da própria seção, para que onde a foto acaba não exista
+     emenda — a original vinha em #FEFEFE, 4 pontos mais clara, o bastante para desenhar um
+     retângulo visível.
+     A foto entra por variável, e não direto na regra, porque esta folha serve também a
+     /lucro-real/, que usa a mesma dobra sem foto. Quem define a variável é o `foto` do
+     StagesSection.
+     Abaixo de 940px ela sai: no celular o texto ocupa a largura toda e a pessoa ficaria
+     atrás das palavras. */
+  section.alt.stages-sec{
+    background-color:#FBF9F7;
+    background-image:var(--stages-foto,none);
+    /* -24px à direita: a pessoa sangra um pouco pela borda, como o homem sangra na home.
+       Figura inteira e centrada dentro da seção lê como foto colada; sangrando, lê como
+       fundo. */
+    background-repeat:no-repeat;background-position:right -24px center;background-size:auto 100%;
+  }
+  .stages-sec .wrap{position:relative;z-index:1}
+  /* O cartão em destaque cai sobre a foto, e é assim na home também (nó 18:2180): o card
+     translúcido deixa a pessoa aparecer atrás do texto em vez de tapá-la com um retângulo
+     branco. Sem isto, o "ETAPA 03" vira um adesivo opaco colado no tronco dela.
+     Só vale onde HÁ foto: em /lucro-real/, que usa a mesma dobra sem foto, o cartão opaco
+     com borda continua sendo o certo — translúcido sobre fundo liso não significa nada. */
+  .stages-sec--foto .stage.on{
+    background:rgba(251,249,247,.82);
+    border-color:rgba(43,35,32,.06);
+    -webkit-backdrop-filter:var(--desfoque-cartao);
+    backdrop-filter:var(--desfoque-cartao);
+    --desfoque-cartao:blur(3px);
+  }
+  @media(max-width:940px){
+    section.alt.stages-sec{background-image:none}
+    /* sem foto atrás, o cartão volta a ser sólido */
+    .stages-sec--foto .stage.on{background:var(--surface);backdrop-filter:none}
+  }
+
   .stages{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:60px;align-items:stretch}
   .stage{padding:30px 26px;border-radius:16px;position:relative}
   .stage .num{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.12em}

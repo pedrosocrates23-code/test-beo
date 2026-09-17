@@ -135,7 +135,10 @@ const ENDERECO = "Av. Visc. de Guarapuava, 3263 - Centro, Curitiba - PR, 80010-1
   />
 
   <!-- DOBRA 3 — O que acontece depois -->
+  {/* A foto entra por prop, não por regra de página: esta folha serve também a /lucro-real/,
+      que usa a mesma dobra sem foto. Ver o comentário da regra em prototype-contabilidade.css. */}
   <StagesSection
+    foto="/img/contato/atendimento.webp"
     titulo={{ resto: "O que acontece depois que você envia" }}
     intro=""
     estagios={[
