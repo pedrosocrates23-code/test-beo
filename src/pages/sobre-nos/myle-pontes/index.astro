@@ -18,10 +18,15 @@
 // • As sete especializações. A imprensa repete o número, nenhuma fonte diz quais são. Número
 //   solto não sustenta autoridade, e numa página de autoria de conteúdo fiscal isso importa.
 // • Número do CRC, graduação e datas dos cargos. Faltam em fonte verificável.
-// • Foto. Sem foto oficial com direito de uso confirmado. É a lacuna mais visível da página, e
-//   preencher com banco de imagens seria pior do que a ausência.
 // • Atributos pessoais que ela deu à imprensa em 2024. São declaração dela, não dado nosso, e
 //   não entram numa página institucional sem que ela autorize.
+//
+// FOTO
+// O retrato é a foto oficial entregue pela própria Beorange, a mesma de fundo branco que a
+// empresa usa na home. Os três recortes (retrato, avatar do byline e cartão de
+// compartilhamento) saem desse único arquivo. Nenhuma imagem foi buscada em banco nem na web:
+// numa página que existe para dizer quem é a pessoa, foto de procedência incerta derruba a
+// página inteira.
 // Cada um deles entra assim que o dado vier: o texto já está desenhado para recebê-los.
 //
 // TEXTO
@@ -31,7 +36,6 @@ import Layout from "../../../layouts/Layout.astro";
 import "../../../styles/prototype-contabilidade.css";
 import Header from "../../../components/elements/Header.astro";
 import MobileMenu from "../../../components/elements/MobileMenu.astro";
-import HeroIndice from "../../../components/elements/HeroIndice.astro";
 import SecaoLista from "../../../components/elements/SecaoLista.astro";
 import Footer from "../../../components/elements/Footer.astro";
 import { AUTORES } from "../../../lib/autores";
@@ -53,14 +57,36 @@ const myle = AUTORES["myle-pontes"];
   }}
   title="Myle Pontes | Fundadora e CEO da Beorange"
   description="Fundadora e CEO da Beorange. Contadora especializada em contabilidade internacional, com passagens por Grant Thornton, Deloitte e Ernst & Young. Assina o conteúdo publicado no blog."
+  imagem={myle.og}
 >
   <Header ativo="sobre" tema="claro" />
   <MobileMenu />
 
-  <HeroIndice
-    titulo="Myle Pontes"
-    lead="Fundadora e CEO da Beorange. Contadora de formação, especializada em contabilidade internacional. É ela quem assina o conteúdo publicado aqui."
-  />
+  <!-- Abertura em duas colunas: o texto de identificação e o retrato. É a única dobra da
+       página com foto, e ela fica aqui de propósito. O `image` do nó Person aponta para este
+       mesmo arquivo, então o que o dado estruturado afirma está visível na primeira tela. -->
+  <section class="perfil-hero">
+    <div class="wrap perfil-hero__inner">
+      <div class="perfil-hero__texto">
+        <h1>Myle Pontes</h1>
+        <p class="perfil-hero__cargo">Fundadora e CEO da Beorange</p>
+        <p class="perfil-hero__lead">
+          Contadora de formação, especializada em contabilidade internacional. É ela quem assina
+          o conteúdo publicado aqui.
+        </p>
+      </div>
+      <figure class="perfil-hero__foto">
+        <img
+          src={myle.foto}
+          alt={myle.fotoAlt}
+          width="720"
+          height="900"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
 
   <!-- Trajetória. Cada item tem fonte no board; nenhum traz data que a fonte não dê. -->
   <SecaoLista
@@ -139,6 +165,36 @@ const myle = AUTORES["myle-pontes"];
 </Layout>
 
 <style>
+  /* ABERTURA
+     O recuo de topo cobre o header fixo, como o .article e o .indice fazem. No celular a foto
+     vem DEPOIS do texto: quem abre no telefone precisa ler o nome e o cargo antes de rolar
+     por um retrato de tela inteira. */
+  .perfil-hero{padding:150px 0 44px;background:var(--bg-primary,#fff)}
+  .perfil-hero__inner{
+    display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:center;
+  }
+  .perfil-hero h1{
+    margin:0;font-size:clamp(34px,5vw,56px);font-weight:700;line-height:1.05;
+    letter-spacing:-.025em;color:var(--text-primary,#2B2320);
+  }
+  .perfil-hero__cargo{
+    margin:10px 0 0;font-size:17px;font-weight:600;color:var(--text-brand,#F5380F);
+  }
+  .perfil-hero__lead{
+    margin:20px 0 0;max-width:46ch;
+    font-size:clamp(16.5px,1.5vw,19px);line-height:1.6;color:var(--text-secondary,#5B534E);
+  }
+  .perfil-hero__foto{margin:0}
+  .perfil-hero__foto img{
+    width:100%;height:auto;border-radius:var(--radius-lg,20px);
+    background:var(--bg-secondary,#FBF9F7);
+  }
+  @media(max-width:880px){
+    .perfil-hero{padding:120px 0 32px}
+    .perfil-hero__inner{grid-template-columns:1fr;gap:28px}
+    .perfil-hero__foto{order:2;max-width:380px}
+  }
+
   /* Três cartões de perfil na mesma medida das listas do prototype-contabilidade, sem depender
      de nenhuma classe dele: a página carrega aquele CSS pela moldura, e o que é só desta
      página fica aqui, escopado. */

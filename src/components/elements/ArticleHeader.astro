@@ -24,6 +24,10 @@ interface Props {
    *  escreveu, e o `author` do JSON-LD deixa de ser uma afirmação que a página não sustenta,
    *  porque o caminho até a pessoa está ali, visível, na mesma tela. */
   autorHref?: string;
+  /** Recorte quadrado do rosto de quem assina. Sem ele, fica o desenho genérico do protótipo.
+   *  Rosto de verdade no byline é o que separa "assinado por alguém" de "assinado por uma
+   *  pessoa", e é o par visível do `image` do Person no JSON-LD. */
+  autorFoto?: string;
   /** Faixa de aviso de rascunho. Omita numa publicação real. */
   aviso?: string;
 }
@@ -37,6 +41,7 @@ const {
   autor = "Time Tributário Beorange",
   autorCargo = "Especialistas em Lucro Real",
   autorHref,
+  autorFoto,
   aviso,
 } = Astro.props;
 ---
@@ -60,7 +65,11 @@ const {
   <h1 class="art-h1">{titulo}</h1>
   {lead && <p class="art-lead">{lead}</p>}
   <div class="byline">
-    <span class="av"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M57.3 8.6 A42 42 0 1 1 42.7 8.6" fill="none" stroke="#FF6A14" stroke-width="14"/></svg></span>
+    <span class="av">
+      {autorFoto
+        ? <img class="av-foto" src={autorFoto} alt="" width="48" height="48" loading="lazy" decoding="async" />
+        : <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M57.3 8.6 A42 42 0 1 1 42.7 8.6" fill="none" stroke="#FF6A14" stroke-width="14"/></svg>}
+    </span>
     <div>
       <div class="bn">
         {autorHref ? <a class="bn-link" href={autorHref} rel="author">{autor}</a> : autor}
@@ -76,5 +85,8 @@ const {
      sublinhado só no hover e no foco. Um link azul de navegador no meio da assinatura
      chamaria mais atenção que o título do artigo. */
   .bn-link{color:inherit;text-decoration:none}
+  /* A foto ocupa o mesmo espaço do desenho que ela substitui, então a faixa do byline não
+     muda de altura nos artigos com foto e sem foto. */
+  .av-foto{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
   .bn-link:hover,.bn-link:focus-visible{text-decoration:underline}
 </style>

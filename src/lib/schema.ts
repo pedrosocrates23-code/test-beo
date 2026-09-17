@@ -53,8 +53,6 @@
  * que é o que "unir as duas entidades" quer dizer na prática.
  *
  * ── 7. O que a pessoa NÃO declara, e por quê ─────────────────────────────────────────
- * • image — não há foto oficial com direito de uso confirmado. Person sem foto é incompleto;
- *   Person com foto errada é problema de imagem de terceiro. Fica de fora até a foto vir.
  * • alumniOf e hasCredential — a formação, o CRC e as sete especializações citadas pela
  *   imprensa não têm nome de instituição nem data em fonte que dê para checar. Campo sem
  *   lastro não entra, aqui como no resto do arquivo.
@@ -76,6 +74,9 @@ const ID_BLOG = `${SITE}/blog/#blog`;
  *  página e o nó Person leem a mesma fonte, e assim não há como um dizer uma coisa e o outro
  *  dizer outra. Imutável pelo mesmo motivo que o @id da organização é. */
 export const ID_MYLE = AUTORES["myle-pontes"].id;
+/** A foto dela é nó próprio, pelo mesmo motivo que o logo é: aninhada dentro de `image`, o
+ *  @id não existiria no grafo e a referência ficaria pendurada. */
+const ID_FOTO_MYLE = `${SITE}/sobre-nos/myle-pontes/#foto`;
 
 const abs = (caminho: string) => new URL(caminho, SITE + "/").href;
 
@@ -147,6 +148,7 @@ const PESSOA = {
   description: AUTORES["myle-pontes"].resumo,
   url: AUTORES["myle-pontes"].url,
   worksFor: { "@id": ID_ORG },
+  image: { "@id": ID_FOTO_MYLE },
   knowsAbout: AUTORES["myle-pontes"].temas,
   sameAs: AUTORES["myle-pontes"].perfis,
   /** Cidade declarada por ela nos dois perfis ("Curitiba, Paraná, Brasil" no LinkedIn,
@@ -158,6 +160,19 @@ const PESSOA = {
     addressRegion: "PR",
     addressCountry: "BR",
   },
+} as const;
+
+/** Retrato oficial da Myle. Acompanha o Person em toda página, como o LOGO_NODE acompanha a
+ *  organização, e pelo mesmo motivo. É o mesmo arquivo que a entity home dela exibe: o que o
+ *  dado estruturado afirma, a página mostra. */
+const FOTO_MYLE = {
+  "@type": "ImageObject",
+  "@id": ID_FOTO_MYLE,
+  url: abs(AUTORES["myle-pontes"].foto),
+  contentUrl: abs(AUTORES["myle-pontes"].foto),
+  caption: AUTORES["myle-pontes"].fotoAlt,
+  width: 720,
+  height: 900,
 } as const;
 
 /** O logo é nó de primeiro nível, não objeto aninhado dentro de `logo`. Aninhado, o @id
@@ -287,7 +302,7 @@ export function montarGrafo(dados: DadosDaPagina, caminho: string): object[] {
 
   // Ver a nota 6 do cabeçalho: o Person acompanha o nó da organização em toda página, porque
   // é para ele que o `founder` dela aponta.
-  const grafo: object[] = [SITE_NODE, ORGANIZACAO, PESSOA, LOGO_NODE, pagina];
+  const grafo: object[] = [SITE_NODE, ORGANIZACAO, PESSOA, LOGO_NODE, FOTO_MYLE, pagina];
   if (temMigalhas) grafo.push(migalhasNode(url, dados.migalhas));
 
   if (dados.tipo === "perfil") pagina.mainEntity = { "@id": ID_MYLE };

@@ -43,6 +43,15 @@ export interface Autor {
   /** Assuntos que a pessoa domina, para `knowsAbout`. Cada um precisa se sustentar no que a
    *  trajetória dela mostra: lista de tema que ninguém consegue verificar é ruído. */
   temas: string[];
+  /** Retrato, em 4:5, para a entity home. Também é o `image` do nó Person, e é por isso que
+   *  precisa ser a foto oficial: o campo afirma ao buscador que aquela é a cara da entidade. */
+  foto: string;
+  /** Texto alternativo do retrato. Descreve a pessoa, não o arquivo. */
+  fotoAlt: string;
+  /** Recorte quadrado do rosto, para o byline dos artigos. */
+  avatar: string;
+  /** Cartão de compartilhamento, 1200x630. Em JPEG de propósito: ver o comentário na página. */
+  og: string;
   /** Perfis que a própria pessoa controla e que foram confirmados um a um. Vira `sameAs`.
    *  Perfil de terceiro, diretório e agregador não entram. */
   perfis: string[];
@@ -68,6 +77,14 @@ export const AUTORES = {
       "Automação de rotinas administrativas",
       "Inteligência artificial aplicada à contabilidade",
     ],
+    /** Os três recortes saem da MESMA foto oficial entregue pela Beorange, o retrato de fundo
+     *  branco que a empresa já usa na home. Nada foi buscado em banco de imagens nem em busca:
+     *  numa página que existe para dizer quem é a pessoa, foto de procedência incerta é o tipo
+     *  de detalhe que derruba a página inteira. */
+    foto: "/img/sobre-nos/myle-pontes.webp",
+    fotoAlt: "Myle Pontes, fundadora e CEO da Beorange, de blazer laranja, sorrindo",
+    avatar: "/img/sobre-nos/myle-pontes-avatar.webp",
+    og: "/img/sobre-nos/myle-pontes-og.jpg",
     perfis: [
       "https://www.linkedin.com/in/myle-pontes/",
       "https://www.instagram.com/mylepontes/",
