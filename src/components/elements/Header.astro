@@ -91,24 +91,44 @@ const noMobile = LOGOS.light;
        das páginas. Nenhuma ficou sem link — foi conferido no build antes de cortar. -->
   <div class="mega mega--enxuto" id="mega" role="region" aria-label="Soluções">
     <div class="mega-inner">
-      <div class="mcol">
-        <a class="mtitle" href="/contabilidade-beorange/">Contabilidade Beorange</a>
-      </div>
-      <div class="mcol">
-        <a class="mtitle" href="/conta-beorange/">Conta Beorange</a>
-      </div>
+      {/* O texto de apoio de cada produto e o escopo que a propria pagina anuncia na
+          descricao dela — nao foi escrito aqui. Contabilidade: "Contabil, fiscal, DP,
+          tributario, societario e assessoria recorrente em uma estrutura so". Conta:
+          "Conta PJ (...), cobrancas automatizadas, portal de gestao e BPO Financeiro". */}
+      <a class="mitem" href="/contabilidade-beorange/">
+        <span class="mitem__nome">Contabilidade Beorange</span>
+        <span class="mitem__desc">Contábil, fiscal, departamento pessoal, tributário e societário na mesma estrutura</span>
+      </a>
+      <a class="mitem" href="/conta-beorange/">
+        <span class="mitem__nome">Conta Beorange</span>
+        <span class="mitem__desc">Conta PJ, cobranças automatizadas, portal de gestão e BPO Financeiro</span>
+      </a>
     </div>
   </div>
 </header>
 
 <style is:global>
   /* O mega-dropdown do protótipo tinha três colunas e 880px de largura para caber as duas
-     listas de frentes mais a coluna Especialidades. Com só dois links, aquela medida deixa
-     um painel quase todo vazio. Estas regras moram aqui, e não nos prototype-*.css, porque
-     as três folhas repetem o mesmo bloco de .mega — a correção em triplicata é o caminho
-     curto para ela voltar em uma delas. */
-  .mega--enxuto{width:min(420px,calc(100vw - 32px))}
-  .mega--enxuto .mega-inner{grid-template-columns:1fr 1fr;gap:20px;padding:22px}
-  /* sem lista embaixo, a margem do título só abriria um vão */
-  .mega--enxuto .mcol > a.mtitle{margin-bottom:0}
+     listas de frentes mais a coluna Especialidades. Agora são dois produtos, um embaixo do
+     outro, cada um com o nome e o escopo em uma linha de apoio. Estas regras moram aqui, e
+     não nos prototype-*.css, porque as três folhas repetem o mesmo bloco de .mega — a
+     correção em triplicata é o caminho curto para ela voltar em uma delas. */
+  .mega--enxuto{width:min(360px,calc(100vw - 32px))}
+  .mega--enxuto .mega-inner{display:block;padding:10px}
+
+  .mega--enxuto .mitem{
+    display:block;padding:12px 14px;border-radius:12px;
+    text-decoration:none;transition:background .18s;
+  }
+  .mega--enxuto .mitem:hover{background:var(--surface)}
+  .mega--enxuto .mitem:focus-visible{outline:2px solid var(--coral);outline-offset:-2px}
+
+  .mega--enxuto .mitem__nome{
+    display:block;font-size:15.5px;font-weight:600;color:var(--ink);line-height:1.3;
+  }
+  .mega--enxuto .mitem:hover .mitem__nome{color:var(--coral)}
+  .mega--enxuto .mitem__desc{
+    display:block;margin-top:3px;
+    font-size:13px;line-height:1.45;color:var(--ink-2);
+  }
 </style>
