@@ -1,11 +1,14 @@
 ---
 // Elemento: mapa da sede, ligado ao Perfil da Empresa no Google.
 //
-// CARREGA SÓ SOB CLIQUE, e isso não é preferência: o aviso está escrito na própria página de
-// contato — "o mapa é opcional no documento e, se entrar, deve carregar sob clique: esta é
-// página de conversão e um iframe de mapa custa caro no carregamento". Um embed do Google
-// Maps traz megabytes de script de terceiro e cookies antes de qualquer interação. Até o
-// clique, o que existe aqui é HTML e CSS.
+// POR PADRÃO O MAPA JÁ APARECE, com `loading="lazy"` no iframe.
+// A página de contato trazia em comentário o pedido de carregar sob clique, porque um embed
+// do Google traz megabytes de script de terceiro. O cliente decidiu ver o mapa direto
+// (17/09/2026), e o lazy resolve boa parte do custo: o navegador só busca o iframe quando
+// ele se aproxima da tela, e esta é a última dobra da página — na prática o download não
+// entra no carregamento inicial, que era a preocupação original.
+// Quem quiser o comportamento antigo passa `sobClique`: aí nada do Google é tocado antes de
+// o visitante pedir, e o iframe fica guardado num <template>, que o navegador não baixa.
 //
 // O endereço do embed usa o CID do negócio — 11901433217796644894, o mesmo identificador do
 // link das avaliações em SocialProofSection — e não o endereço em texto. É o que amarra o
@@ -20,6 +23,9 @@ interface Props {
   cid?: string;
   /** Altura do mapa. */
   altura?: number;
+  /** Só carrega o mapa depois de um clique. Troca o mapa por um cartão com o endereço e um
+   *  botão — nada do Google é tocado antes disso. */
+  sobClique?: boolean;
 }
 
 const {
@@ -27,12 +33,24 @@ const {
   nome = "Beorange",
   cid = "11901433217796644894",
   altura = 320,
+  sobClique = false,
 } = Astro.props;
 
 const src = `https://maps.google.com/maps?cid=${cid}&hl=pt-BR&z=16&output=embed`;
 const verNoGoogle = `https://www.google.com/maps?cid=${cid}`;
 ---
 <div class="mapa" style={`--mapa-altura:${altura}px`}>
+  {!sobClique && (
+    <iframe
+      src={src}
+      title={`Mapa com a localização da ${nome}: ${endereco}`}
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen
+    ></iframe>
+  )}
+
+  {sobClique && (
   <div class="mapa__capa" data-mapa-capa>
     <svg class="mapa__pino" viewBox="0 0 24 24" aria-hidden="true" fill="none"
          stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -49,9 +67,11 @@ const verNoGoogle = `https://www.google.com/maps?cid=${cid}`;
       <a href={verNoGoogle} target="_blank" rel="noopener">Abrir no Google Maps</a>
     </p>
   </div>
+  )}
 
   {/* O <template> não é renderizado nem baixado pelo navegador: o iframe só existe no
       documento quando o script move este conteúdo para fora dele. */}
+  {sobClique && (
   <template data-mapa-fonte>
     <iframe
       src={src}
@@ -61,7 +81,13 @@ const verNoGoogle = `https://www.google.com/maps?cid=${cid}`;
       allowfullscreen
     ></iframe>
   </template>
+  )}
 </div>
+
+<p class="mapa__legenda">
+  {endereco}
+  <a href={verNoGoogle} target="_blank" rel="noopener">Ver no Google Maps</a>
+</p>
 
 <script>
   document.querySelectorAll<HTMLElement>(".mapa").forEach((raiz) => {
@@ -115,4 +141,16 @@ const verNoGoogle = `https://www.google.com/maps?cid=${cid}`;
     font-size:11.5px;line-height:1.45;color:var(--text-secondary,#5B534E);
   }
   .mapa__aviso a{color:inherit;text-decoration:underline}
+
+  /* O endereço fica FORA do mapa, embaixo: dentro do iframe ele é conteúdo do Google, que
+     leitor de tela não alcança e busca não indexa. */
+  .mapa__legenda{
+    margin:10px 0 0;
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;
+    font-size:13px;line-height:1.5;color:var(--text-secondary,#5B534E);
+  }
+  .mapa__legenda a{
+    color:var(--action-primary,#F5380F);font-weight:600;text-decoration:none;white-space:nowrap;
+  }
+  .mapa__legenda a:hover{text-decoration:underline}
 </style>
