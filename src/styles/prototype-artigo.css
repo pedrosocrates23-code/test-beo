@@ -386,9 +386,17 @@
   .art-layout{max-width:940px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:48px;align-items:start}
   .share{position:sticky;top:110px;display:flex;flex-direction:column;gap:12px}
   .share .sl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);writing-mode:vertical-rl;margin-bottom:6px}
-  .share a{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--ink-2);transition:.2s}
-  .share a:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
-  .share a svg{width:16px;height:16px;fill:currentColor}
+  /* O seletor cobre <a> E <button>: o copiar-link deixou de ser <a href="#"> e virou botao,
+     porque copiar e acao e nao navegacao. Enquanto a regra falava so de `a`, o botao subia
+     sem medida, sem borda e com o SVG no tamanho natural — o icone aparecia deformado. */
+  .share a,
+  .share .share-copiar{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--ink-2);transition:.2s;flex:none}
+  .share a:hover,
+  .share .share-copiar:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .share a svg,
+  .share .share-copiar svg{width:16px;height:16px;fill:currentColor}
+  /* o icone de copiar e desenhado com traco, nao preenchido: fill anularia o desenho */
+  .share .share-copiar svg{fill:none}
   .prose{max-width:720px}
   .prose h2{font-size:26px;font-weight:600;letter-spacing:-.02em;margin:40px 0 14px;color:var(--ink)}
   .prose h3{font-size:19px;font-weight:600;margin:30px 0 10px;color:var(--ink)}
