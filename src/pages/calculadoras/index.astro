@@ -1,0 +1,90 @@
+---
+// Página: hub da seção Calculadoras.
+//
+// Vem do projeto calculadoras-fiscais (calculadoras-fiscais.vercel.app), onde as três
+// ferramentas viviam num site próprio. Aqui elas passam a ser uma seção do beorange.app, com
+// o Header, o Footer e o Layout do site, e, com isso, canonical no domínio certo, entrada no
+// sitemap e o @graph que liga cada ferramenta à organização.
+//
+// A listagem sai de src/lib/calc/rotas.ts, a mesma fonte que alimenta o seletor das páginas e
+// a coluna do rodapé. Acrescentar uma quarta calculadora é acrescentar uma linha lá.
+import "../../styles/prototype-contabilidade.css";
+import "../../styles/calculadoras.css";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/elements/Header.astro";
+import MobileMenu from "../../components/elements/MobileMenu.astro";
+import HeroIndice from "../../components/elements/HeroIndice.astro";
+import Footer from "../../components/elements/Footer.astro";
+import { CALCULADORAS, caminhoDe } from "../../lib/calc/rotas";
+import { VIGENCIA } from "../../lib/calc/tabelas-2026";
+
+const titulo = "Calculadoras fiscais e trabalhistas | Beorange";
+const descricao =
+  "Três calculadoras gratuitas com as tabelas de 2026: tributária (INSS, IRRF, Simples e Lucro Presumido), CLT × PJ com ponto de equilíbrio, e IBS e CBS da Reforma Tributária.";
+
+const verificadoEm = new Date(VIGENCIA.verificadoEm).toLocaleDateString("pt-BR", {
+  timeZone: "UTC",
+});
+---
+<Layout
+  title={titulo}
+  description={descricao}
+  schema={{
+    tipo: "colecao",
+    nome: "Calculadoras fiscais e trabalhistas",
+    descricao,
+    migalhas: [
+      { nome: "Home", url: "/" },
+      { nome: "Calculadoras", url: "/calculadoras/" },
+    ],
+  }}
+>
+  <Header tema="claro" />
+  <MobileMenu />
+
+  <HeroIndice
+    titulo="Calculadoras"
+    lead="Três ferramentas que respondem com número, não com 'depende'. Rodam no seu navegador, não pedem cadastro e não guardam nada do que você digita. Os parâmetros legais de cada uma estão citados norma por norma dentro da própria página."
+  />
+
+  <div class="calc">
+    <div class="wrap">
+      <div class="grid-2">
+        {CALCULADORAS.map((c) => (
+          <a class="cartao-link" href={caminhoDe(c.slug)}>
+            <h2>{c.nome}</h2>
+            <p>{c.resumo}</p>
+          </a>
+        ))}
+      </div>
+
+      <p class="calc-vigencia">
+        Parâmetros legais verificados em {verificadoEm}. Os resultados são simulações
+        informativas e não substituem a análise de um contador ou advogado sobre o caso
+        concreto. <a href="/contato/">Fale com a gente</a> para uma análise do seu caso.
+      </p>
+    </div>
+  </div>
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>
+
+<style>
+  /* Mesma nota de rodapé do CalculadoraShell. Repetida aqui, e não extraída para um
+     elemento, porque são duas ocorrências de três linhas: um componente para isto custaria
+     mais leitura do que economiza. Se aparecer uma terceira, vira elemento. */
+  .calc-vigencia {
+    margin: 48px 0 0;
+    padding-top: 22px;
+    border-top: 1px solid var(--border-subtle, #EFEAE6);
+    max-width: 78ch;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-tertiary, #948B85);
+  }
+  .calc-vigencia a {
+    color: var(--text-secondary, #5B534E);
+  }
+</style>

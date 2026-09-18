@@ -1,0 +1,94 @@
+/* =============================================================================
+   ESCALA PARA MONITOR LARGO — trava a viewport útil do site em 2100px
+   =============================================================================
+
+   O PROBLEMA
+
+   A foto do hero da home entra por `background-size: auto 100%` (ver o bloco HERO
+   em prototype-home.css). Escalar pela ALTURA, e não pela largura, é deliberado:
+   é o que mantém a razão entre o tablet da foto e o container de 1140px igual em
+   qualquer monitor. Com `cover`, a foto crescia junto com a viewport e essa razão
+   ia de 0,47 para 0,78 num monitor de 2560px.
+
+   O preço dessa escolha é aritmético. O hero mede 839,5px de altura no desktop
+   (medido; quem manda é o conteúdo, não o `min-height`), e hero-desktop.webp tem
+   proporção 4052/1540 = 2,6312. Logo a foto pinta 839,5 x 2,6312 = 2209px de
+   largura, sempre — e numa tela mais larga que isso sobra fundo nas laterais:
+
+       viewport 2560  ->  sobra 176px de cada lado   (86,3% coberto)
+       viewport 3440  ->  sobra 616px de cada lado   (64,2% coberto)
+
+   Números medidos pixel a pixel em tests/escala-larga.test.mjs, isolando a foto
+   por diferença contra o hero pintado só com o gradiente de fundo.
+
+   A SAÍDA
+
+   Aumentar a foto resolveria a sobra e quebraria a composição. O que resolve os
+   dois é escalar o site INTEIRO — container, tipografia e foto juntos — que é
+   exatamente o que o zoom de 125% do Chrome fazia quando a página era conferida
+   num monitor de 27". Aqui isso vira regra de CSS em vez de ajuste manual do
+   usuário: acima de 2100px de largura real, o site passa a se comportar como se
+   a tela tivesse 2100px, e o zoom absorve a diferença.
+
+   Como o fator é calculado sem degraus:
+
+       tan(atan2(100vw, 2100px))  ==  100vw / 2100px
+
+   `atan2()` aceita dois comprimentos e devolve um ângulo; a tangente desse ângulo
+   é a razão entre eles, adimensional — que é o que `zoom` exige. É a única forma
+   portátil de dividir comprimento por comprimento hoje: `calc(100vw / 2100px)`
+   ainda não é aceito. Funções trigonométricas em CSS são baseline desde 2023.
+
+   Sem degraus de media query o crescimento é contínuo: em 2100px o fator vale
+   exatamente 1,000 e sobe a partir dali, então não há salto na transição.
+
+   POR QUE 2100 E NÃO 2209
+
+   2209 é o limite exato onde a foto ainda cobre. Os 109px de folga existem porque
+   a altura do hero depende do texto — HeroSection.astro recebe título e lead por
+   props, e uma frase mais curta encolhe o hero e, com ele, a largura da foto.
+
+   O QUE FOI MEDIDO ANTES DE CONFIAR NISTO
+
+   O CSSWG não especifica como `zoom` interage com unidades de viewport, com
+   `position:fixed` nem com media queries, então nada aqui vem de suposição — tudo
+   foi medido num Chromium de verdade:
+
+     - `vw` e `vh` NÃO são compensados pelo zoom: `100vw` sob zoom 1,25 pinta 125%
+       da tela e estoura a página para o lado. O site escapa porque todo uso de
+       `100vw` está dentro de um `min()` com teto menor, e todo `vw` tipográfico
+       está em `clamp()` já saturado no teto nessas larguras. Ao escrever CSS novo,
+       um `100vw` ou `100vh` cru aqui para cima passa a ser um bug — divida por
+       `var(--zoom)`, que é para isso que ela está exposta.
+     - `position:fixed` com `left:0;right:0` continua com a largura exata da tela;
+       o header não se deforma.
+     - Media queries são avaliadas na largura REAL da janela, não na escalada, o
+       que evita realimentação. Consequência a ter em mente: um `min-width` novo
+       acima de 2100px compara com a tela física, não com os 2100px úteis.
+     - O layout em px CSS fica idêntico ao de uma janela de 2100px sem zoom em
+       todas as 28 rotas fixas: nenhuma divergência de largura, e só arredondamento
+       de subpixel na altura. O zoom é escala pura, não um relayout.
+
+   Num navegador sem suporte a `tan()`/`atan2()` a declaração inteira é descartada
+   e o site volta ao comportamento atual — a sobra lateral, não um layout quebrado.
+
+   EFEITO COLATERAL CONHECIDO
+
+   Em telas muito largas e baixas (21:9 de 3440x1440) o fator chega a 1,64 e o hero
+   passa a ocupar 95% da altura da janela, contra 58% antes. É o preço de cobrir os
+   616px de sobra daquele formato: com esta foto não dá para ter as duas coisas.
+   Para limitar, acrescente um teto por altura ao `max()` abaixo:
+       min(tan(atan2(100vw,2100px)), tan(atan2(100vh,1050px)))
+   — mas saiba que isso devolve parte da sobra lateral no ultrawide.
+   ============================================================================= */
+
+/* Fora da media query o fator é 1, para que `calc(… / var(--zoom))` seja válido em
+   qualquer largura e não precise de fallback em cada uso. */
+:root{ --zoom:1 }
+
+@media (min-width:2100px){
+  :root{
+    --zoom: max(1, tan(atan2(100vw, 2100px)));
+    zoom: var(--zoom);
+  }
+}

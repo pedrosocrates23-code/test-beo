@@ -532,6 +532,68 @@
       background-position:center,center;
     }
   }
+  /* ---------- TABLET EM PAISAGEM, E QUALQUER JANELA BAIXA ----------
+     O hero da home é o único do site que não cabe na dobra de um tablet deitado. Medido:
+
+         iPad mini paisagem  1133x744   830px de hero = 112% da tela
+         Galaxy Tab paisagem 1280x800   839px          = 105%
+         iPad Pro 11 paisag. 1194x834   839px          = 101%
+         iPad Pro 13 paisag. 1366x1024  839px          =  82%   (cabe)
+
+     Estourar a dobra aqui não é detalhe estético: os dois CTAs e a faixa de selos caem
+     abaixo da linha d'água numa tela em que não há nada indicando que exista mais coisa.
+     As outras 11 páginas com hero ficam entre 41% e 95% nas mesmas telas e não são tocadas.
+
+     A causa é o padding, não o texto: o conteúdo do hero mede 590-599px em qualquer largura
+     de desktop, e os 150+90 de padding somam outros 240px — 29% do bloco. Esse par foi
+     desenhado para a tela de 1440x900 do Figma, onde sobra altura.
+
+     A escala é linear entre duas âncoras medidas, e não um degrau: 90+50 numa janela de
+     744px de altura, 150+90 a partir de 900px, interpolando no meio. De 900px para cima o
+     clamp trava nos valores originais, então NADA muda no desktop. O piso de 90px no topo é
+     o header, que é fixo e ocupa 84px: abaixo disso o olho do texto entraria debaixo dele.
+
+     Os outros 28px vêm do respiro entre os blocos, não da tipografia — que fica intacta.
+
+     A divisão por `--zoom` existe porque acima de 2100px de largura o site roda escalado
+     (ver escala-larga.css) e `vh` não é compensado pelo zoom: sem ela, a conta mediria a
+     janela num espaço e aplicaria o resultado noutro.
+
+     Esta faixa não existe no Figma — o arquivo tem 1440 desktop e 390 mobile, e nada entre
+     os dois. Os números acima são, portanto, decisão nossa sobre uma lacuna do desenho, não
+     leitura de um nó. Travados em tests/escala-larga.test.mjs. */
+  @media (min-width:681px) and (max-height:900px){
+    .hero{
+      /* --aperto vai de 0 numa janela de 744px de altura a 1 em 900px, e é o único ponto de
+         calibração deste bloco: cada medida abaixo é só "valor apertado + sobra x --aperto".
+         Em 900px ele vale exatamente 1 e devolve 150/90/34/40/16 — os valores originais, ao
+         pixel —, que é o que garante que o desktop não sinta esta regra. Com a interpolação
+         escrita em cada linha, os valores não chegavam juntos a 1 e o hero encolhia 19px já
+         em 1440x900.
+         `tan(atan2(a,b))` é `a / b` — a divisão de comprimento por comprimento que o `calc()`
+         ainda não aceita. Mesma técnica de escala-larga.css. */
+      --aperto:clamp(0, tan(atan2(calc(100vh / var(--zoom) - 744px), 156px)), 1);
+      padding-top:calc(90px + 60px * var(--aperto));
+      padding-bottom:calc(50px + 40px * var(--aperto));
+      /* PISO, e o motivo dele: encolher o hero encolhe a FOTO junto, porque ela escala pela
+         altura (`background-size: auto 100%`). Numa janela larga e baixa o aperto reabria a
+         sobra lateral que escala-larga.css acabou de fechar — medido: 1920x744 voltava a
+         deixar 49px de fundo à mostra, e 2100x744, 229px.
+         O piso é a altura mínima para a foto ainda alcançar as duas bordas: largura dividida
+         pela proporção do arquivo (4052/1540 = 2,631, arredondado para baixo para sobrar
+         cerca de 1% de margem). Em tablet ele nunca pega — a 1133x744 pede 436px e o
+         conteúdo já tem 702 —, então só age onde a janela é desproporcionalmente larga.
+         Onde os dois objetivos não cabem juntos, a foto ganha: sobra lateral salta aos olhos,
+         um hero que passa da dobra, não. */
+      min-height:max(min(94vh, 820px), calc(100vw / var(--zoom) / 2.6));
+    }
+    .hero-cta{margin-top:calc(24px + 10px * var(--aperto))}
+    .creds{
+      margin-top:calc(26px + 14px * var(--aperto));
+      padding-top:calc(12px + 4px * var(--aperto));
+    }
+  }
+
   @media(prefers-reduced-motion:reduce){.rv{transition:none;opacity:1;transform:none}*{scroll-behavior:auto}}
 
   /* ---------- IMAGENS PLUGADAS (unico acrescimo ao CSS do prototipo) ---------- */

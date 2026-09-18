@@ -12,44 +12,15 @@
 // estiver numa URL de preview. Quem segura a indexação do preview é o robots.txt.
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
+import { PAGINAS_FIXAS, ROTAS_FORA } from "../lib/paginas";
 
 const SITE = "https://beorange.app";
 
-/** Páginas fora do blog, na ordem em que importam. Mantidas à mão porque prioridade e
- *  frequência são decisão editorial: não há como deduzir do sistema de arquivos que
- *  /contabilidade-beorange/ vale mais que /termos-de-uso/. */
-const PAGINAS: { caminho: string; priority: number; changefreq: string }[] = [
-  { caminho: "/", priority: 1.0, changefreq: "weekly" },
-  { caminho: "/contabilidade-beorange/", priority: 0.9, changefreq: "monthly" },
-  { caminho: "/conta-beorange/", priority: 0.9, changefreq: "monthly" },
-  { caminho: "/lucro-real/", priority: 0.9, changefreq: "monthly" },
-  { caminho: "/reforma-tributaria/", priority: 0.9, changefreq: "weekly" },
-  { caminho: "/blog/", priority: 0.8, changefreq: "daily" },
-  { caminho: "/contabilidade-beorange/contabil/", priority: 0.8, changefreq: "monthly" },
-  { caminho: "/contabilidade-beorange/fiscal/", priority: 0.8, changefreq: "monthly" },
-  { caminho: "/contabilidade-beorange/tributario/", priority: 0.8, changefreq: "monthly" },
-  { caminho: "/contabilidade-beorange/departamento-pessoal/", priority: 0.8, changefreq: "monthly" },
-  { caminho: "/contabilidade-beorange/societario/", priority: 0.8, changefreq: "monthly" },
-  { caminho: "/contabilidade-beorange/assessoria/", priority: 0.8, changefreq: "monthly" },
-  { caminho: "/conta-beorange/conta-pj/", priority: 0.8, changefreq: "monthly" },
-  { caminho: "/conta-beorange/cobrancas/", priority: 0.8, changefreq: "monthly" },
-  { caminho: "/conta-beorange/portal/", priority: 0.8, changefreq: "monthly" },
-  { caminho: "/conta-beorange/bpo-financeiro/", priority: 0.8, changefreq: "monthly" },
-  { caminho: "/conta-beorange/bora-financeira/", priority: 0.8, changefreq: "monthly" },
-  { caminho: "/sobre-nos/", priority: 0.6, changefreq: "yearly" },
-  { caminho: "/cases/", priority: 0.6, changefreq: "monthly" },
-  { caminho: "/contato/", priority: 0.6, changefreq: "yearly" },
-  { caminho: "/politica-de-privacidade/", priority: 0.2, changefreq: "yearly" },
-  { caminho: "/politica-de-cookies/", priority: 0.2, changefreq: "yearly" },
-  { caminho: "/termos-de-uso/", priority: 0.2, changefreq: "yearly" },
-  { caminho: "/lgpd/", priority: 0.2, changefreq: "yearly" },
-];
-
-/** /blog/exemplo/ NÃO entra: é o rascunho editorial do designer, e a própria página se
- *  declara "conteúdo de exemplo, a revisar antes de publicar". Sitemap é a lista do que
- *  você quer que seja indexado — pedir indexação de um rascunho é pedir para ser julgado
- *  por ele. */
-const FORA = new Set(["/blog/exemplo/"]);
+/** A lista de páginas fixas e o que fica fora vivem em src/lib/paginas.ts, compartilhados
+ *  com o índice de busca. Emitidas aqui ordenadas por `priority` — a ordem daquele array é a
+ *  da busca, que agrupa os resultados pela primeira aparição, e não teria sentido aqui. */
+const PAGINAS = [...PAGINAS_FIXAS].sort((a, b) => b.priority - a.priority);
+const FORA = ROTAS_FORA;
 
 function entrada(loc: string, lastmod: string | null, changefreq: string, priority: number) {
   const partes = [

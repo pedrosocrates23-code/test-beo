@@ -5,6 +5,11 @@
 // ATENÇÃO: este componente também é usado por /contabilidade e /blog/exemplo. O CSS que o
 // estiliza é global (prototype-*.css), importado pela página que o renderiza.
 // Único ponto variável entre páginas: a home aponta o logo para "#top", as demais para "/".
+// A coluna Calculadoras sai da mesma lista que alimenta o seletor das páginas e o hub.
+// É a exceção ao aviso do MobileMenu ("enquanto forem três listas, mudar uma rota exige
+// mudar as três"): esta não é uma quarta cópia.
+import { CALCULADORAS, caminhoDe } from "../../lib/calc/rotas";
+
 export interface Props {
   logoHref?: string;
   endereco?: string;
@@ -84,6 +89,15 @@ const ano = new Date().getFullYear();
         </ul>
       </div>
       <div class="foot-col">
+        <h4>Calculadoras</h4>
+        <ul>
+          {CALCULADORAS.map((c) => (
+            <li><a href={caminhoDe(c.slug)}>{c.curto}</a></li>
+          ))}
+          <li><a href="/calculadoras/">Ver todas</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
         <h4>Beorange</h4>
         <ul>
           <li><a href="/sobre-nos/">Sobre nós</a></li>
@@ -114,3 +128,19 @@ const ano = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<style is:global>
+  /* O rodapé nasceu com cinco colunas (marca + 3 listas + contato), e as três folhas
+     prototype-*.css repetem `grid-template-columns:1.4fr 1fr 1fr 1fr 1.1fr` — a mesma
+     triplicata que o mega-menu do Header tinha. A coluna Calculadoras faz a sexta, e a
+     regra mora aqui pelo mesmo motivo que a do Header: corrigir em triplicata é o caminho
+     curto para a correção voltar em uma delas.
+
+     O gap cai de 36px para 26px porque 1140px de container menos 56px de padding não
+     comportam seis colunas com 36px de respiro: a coluna de contato, que é a mais larga,
+     começava a quebrar o endereço em quatro linhas. Abaixo de 1040px o rodapé já cai para
+     duas colunas pelas folhas existentes, e nada disto se aplica. */
+  @media (min-width: 1041px) {
+    .foot-grid { grid-template-columns: 1.4fr 1fr 1fr .9fr 1fr 1.1fr; gap: 26px; }
+  }
+</style>

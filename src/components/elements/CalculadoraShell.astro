@@ -1,0 +1,244 @@
+---
+// Elemento: moldura das páginas de calculadora.
+//
+// Ocupa o lugar do Base.astro do projeto de origem (calculadoras-fiscais). O que era um
+// site inteiro, <html>, <head>, topo e rodapé próprios, vira uma página do Beorange:
+// Layout, Header, MobileMenu e Footer, como qualquer outra.
+//
+// Três coisas que o Base.astro fazia e continuam aqui, porque as páginas dependem delas:
+//
+//   1. O script de máscara, na fase de CAPTURA. Ele precisa rodar ANTES do listener de
+//      cada calculadora, para que o campo já chegue formatado ao cálculo. Trocar a captura
+//      por borbulhamento faz a conta ler o texto cru do campo.
+//   2. O selo de "campo preenchido", que vale para qualquer .controle da página.
+//   3. A nota de vigência dos parâmetros legais, que o rodapé de origem carregava. Ela não
+//      é decoração: é a ressalva de que o resultado é simulação. Some daqui e a página passa
+//      a dar a entender que substitui a análise de um contador.
+//
+// O CSS é importado por CADA PÁGINA, não aqui, e isso não é estilo, é obrigatório.
+// O Layout avisa: mobile.css sai no bundle DELE e é carregado antes dos prototype-*.css das
+// páginas, e são as regras do prototype que escondem a barra de navegação do desktop no
+// celular. Importando as folhas daqui, o Astro as trata como CSS de componente e as coloca
+// em outra posição da cascata: o resultado foi o header desktop inteiro renderizando no
+// telefone e estourando a página em 179px a 320px de largura. Quem pegou foi o
+// tests/largura.test.mjs, nas três páginas de uma vez, o hub, que já importava na página,
+// passava.
+import Layout from "../../layouts/Layout.astro";
+import Header from "./Header.astro";
+import MobileMenu from "./MobileMenu.astro";
+import HeroIndice from "./HeroIndice.astro";
+import Footer from "./Footer.astro";
+import { CALCULADORAS, caminhoDe } from "../../lib/calc/rotas";
+import { VIGENCIA } from "../../lib/calc/tabelas-2026";
+
+export interface Props {
+  /** Slug da calculadora aberta. Marca o seletor e monta a migalha. */
+  ativa: string;
+  title: string;
+  description: string;
+  /** H1 da página. */
+  titulo: string;
+  lead: string;
+  /** Nome da ferramenta nos dados estruturados. */
+  ferramenta: string;
+  /** Pares pergunta/resposta. UMA fonte alimenta duas saídas: o FAQPage do @graph e a
+   *  seção "Perguntas frequentes" visível no fim da página.
+   *
+   *  Isso não é conveniência, é conformidade. No projeto de origem o FAQPage existia só
+   *  dentro do JSON-LD, as perguntas não apareciam em lugar nenhum da página, e os H3 do
+   *  corpo tratavam dos mesmos temas com outra redação. O Google exige que o conteúdo
+   *  marcado como FAQ esteja visível ao usuário na mesma forma; marcação sem texto
+   *  correspondente é motivo de ação manual por spam de dados estruturados. Ligando os
+   *  dois na mesma prop, publicar um sem o outro deixa de ser possível. */
+  faq: { pergunta: string; resposta: string }[];
+}
+
+const { ativa, title, description, titulo, lead, ferramenta, faq } = Astro.props;
+
+const verificadoEm = new Date(VIGENCIA.verificadoEm).toLocaleDateString("pt-BR", {
+  timeZone: "UTC",
+});
+---
+<Layout
+  title={title}
+  description={description}
+  schema={{
+    tipo: "calculadora",
+    nome: title,
+    descricao: description,
+    ferramenta,
+    faq,
+    migalhas: [
+      { nome: "Home", url: "/" },
+      { nome: "Calculadoras", url: "/calculadoras/" },
+      { nome: ferramenta, url: caminhoDe(ativa) },
+    ],
+  }}
+>
+  <Header tema="claro" />
+  <MobileMenu />
+
+  <HeroIndice titulo={titulo} lead={lead} />
+
+  <nav class="calc-seletor" aria-label="Calculadoras">
+    <div class="wrap">
+      <ul>
+        {CALCULADORAS.map((c) => (
+          <li>
+            <a
+              href={caminhoDe(c.slug)}
+              class:list={{ "is-ativa": c.slug === ativa }}
+              aria-current={c.slug === ativa ? "page" : undefined}
+            >{c.curto}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+
+  <div class="calc">
+    <slot />
+
+    {faq.length > 0 && (
+      <section class="wrap calc-faq" aria-labelledby="faq-titulo">
+        <h2 id="faq-titulo">Perguntas frequentes</h2>
+        <dl>
+          {faq.map((f) => (
+            <>
+              <dt>{f.pergunta}</dt>
+              <dd>{f.resposta}</dd>
+            </>
+          ))}
+        </dl>
+      </section>
+    )}
+
+    <div class="wrap">
+      <p class="calc-vigencia">
+        Parâmetros legais verificados em {verificadoEm}. O resultado é uma simulação
+        informativa: ele não considera as particularidades do seu contrato, da sua operação
+        nem do seu município, e não substitui a análise de um contador ou advogado sobre o
+        caso concreto. <a href="/contato/">Fale com a gente</a> para uma análise do seu caso.
+      </p>
+    </div>
+  </div>
+
+  <Footer />
+
+  <script is:inline src="/js/site.js"></script>
+</Layout>
+
+<script>
+  import { aplicarMascara, type TipoMascara } from "../../lib/calc/mascara";
+
+  // Máscara de entrada. Roda na fase de CAPTURA para que, quando o listener da calculadora
+  // receber o mesmo evento, o campo já esteja formatado. Em borbulhamento, a conta leria o
+  // texto cru, "1500" em vez de "1.500,00", e o parse devolveria outro número.
+  document.addEventListener(
+    "input",
+    (evento) => {
+      const alvo = evento.target as HTMLInputElement | null;
+      const tipo = alvo?.dataset?.mascara as TipoMascara | undefined;
+      if (!alvo || !tipo) return;
+      const formatado = aplicarMascara(tipo, alvo.value);
+      if (alvo.value !== formatado) alvo.value = formatado;
+    },
+    true,
+  );
+
+  // Selo de "campo preenchido", válido para qualquer .controle da página.
+  function marcarPreenchidos(raiz: ParentNode = document) {
+    for (const controle of raiz.querySelectorAll<HTMLElement>(".controle")) {
+      const input = controle.querySelector("input");
+      if (!input) continue;
+      const bruto = input.value.replace(/[^\d,.-]/g, "");
+      const numero = Number.parseFloat(bruto.replace(/\./g, "").replace(",", "."));
+      controle.classList.toggle("preenchido", Number.isFinite(numero) && numero > 0);
+    }
+  }
+
+  document.addEventListener("input", () => marcarPreenchidos());
+  document.addEventListener("change", () => marcarPreenchidos());
+  marcarPreenchidos();
+</script>
+
+<style>
+  /* O seletor entre as três calculadoras. Estilo próprio, e de propósito diferente das
+     abas internas (.calc .aba, que separam PF de PJ dentro de uma calculadora): duas
+     fileiras de pílulas idênticas, uma embaixo da outra, não deixariam claro qual delas
+     troca de página e qual troca de painel. Aqui são links sublinhados na ativa; lá são
+     pílulas preenchidas. */
+  .calc-seletor {
+    background: var(--bg-primary, #fff);
+    border-bottom: 1px solid var(--border-subtle, #EFEAE6);
+  }
+  .calc-seletor ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 28px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .calc-seletor a {
+    display: inline-block;
+    padding: 14px 0 12px;
+    border-bottom: 2px solid transparent;
+    font: 600 15px var(--font-family-base, 'Outfit', sans-serif);
+    color: var(--text-tertiary, #948B85);
+    text-decoration: none;
+    transition: color .15s, border-color .15s;
+  }
+  .calc-seletor a:hover {
+    color: var(--text-primary, #2B2320);
+  }
+  .calc-seletor a.is-ativa {
+    color: var(--text-primary, #2B2320);
+    border-bottom-color: var(--action-primary, #F5380F);
+  }
+  .calc-seletor a:focus-visible {
+    outline: 2px solid var(--action-primary, #F5380F);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Perguntas frequentes. <dl> e não <details>: o conteúdo precisa estar visível sem
+     interação para casar com o FAQPage, ver a nota da prop `faq`. */
+  .calc-faq {
+    margin-top: 60px;
+  }
+  .calc-faq dl {
+    margin: 0;
+    border-top: 1px solid var(--border-subtle, #EFEAE6);
+  }
+  .calc-faq dt {
+    margin: 0;
+    padding: 22px 0 6px;
+    font: 600 17px/1.4 var(--font-family-base, 'Outfit', sans-serif);
+    color: var(--text-primary, #2B2320);
+  }
+  .calc-faq dd {
+    margin: 0 0 22px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--border-subtle, #EFEAE6);
+    max-width: 78ch;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--text-secondary, #5B534E);
+  }
+
+  /* A ressalva fecha a página, alinhada com o conteúdo e visivelmente mais baixa que ele:
+     é nota de rodapé, não parágrafo do texto. */
+  .calc-vigencia {
+    margin: 48px 0 0;
+    padding-top: 22px;
+    border-top: 1px solid var(--border-subtle, #EFEAE6);
+    max-width: 78ch;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-tertiary, #948B85);
+  }
+  .calc-vigencia a {
+    color: var(--text-secondary, #5B534E);
+  }
+</style>

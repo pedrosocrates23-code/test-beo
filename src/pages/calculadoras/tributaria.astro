@@ -1,0 +1,592 @@
+---
+// As folhas vao aqui, e nao dentro do CalculadoraShell: a ordem da cascata depende
+// disso. Ver o cabecalho do shell.
+import "../../styles/prototype-contabilidade.css";
+import "../../styles/calculadoras.css";
+import CalculadoraShell from '../../components/elements/CalculadoraShell.astro';
+import Campo from '../../components/elements/Campo.astro';
+import {
+  DIVIDENDOS,
+  IRRF_MENSAL,
+  INSS_EMPREGADO,
+  LUCRO_PRESUMIDO,
+  REDUTOR_IRRF,
+  SIMPLES,
+  VIGENCIA,
+} from '../../lib/calc/tabelas-2026';
+
+const titulo = 'Calculadora Tributária 2026: Pessoa Física e Pessoa Jurídica';
+const descricao =
+  'Calcule INSS, IRRF com o redutor da Lei 15.270/2025, DAS do Simples Nacional (Anexos III e V com Fator R) e Lucro Presumido. Tabelas oficiais de 2026 com memória de cálculo.';
+
+const atualizadoEm = new Date(VIGENCIA.verificadoEm).toLocaleDateString('pt-BR', {
+  timeZone: 'UTC',
+});
+
+const faq = [
+  {
+    pergunta: "Quem ganha até R$ 5.000 está isento de Imposto de Renda em 2026?",
+    resposta:
+      "Sim, na prática. A Lei 15.270/2025 não zerou a tabela progressiva: criou um redutor aplicado sobre o imposto apurado. Até R$ 5.000 de rendimento bruto mensal, o redutor anula integralmente o imposto. Entre R$ 5.000,01 e R$ 7.350,00 o redutor decresce; acima de R$ 7.350,00 ele é zero e vale a tabela cheia.",
+  },
+  {
+    pergunta: "Como funciona o Fator R do Simples Nacional?",
+    resposta:
+      "O Fator R divide a folha de pagamento dos últimos 12 meses (incluindo pró-labore e encargos) pela receita bruta do mesmo período. Resultado igual ou superior a 28% enquadra a empresa no Anexo III, com alíquota inicial de 6%. Abaixo de 28%, aplica-se o Anexo V, cuja alíquota inicial é 15,5%.",
+  },
+  {
+    pergunta: "Dividendos passaram a ser tributados em 2026?",
+    resposta:
+      "Parcialmente. A Lei 15.270/2025 instituiu IRRF de 10% quando uma mesma pessoa jurídica paga a uma mesma pessoa física residente mais de R$ 50.000 em lucros no mês. Ultrapassado o limite, os 10% incidem sobre o total pago no mês, sem dedução da base de cálculo.",
+  },
+];
+---
+
+<CalculadoraShell
+  ativa="tributaria"
+  title={titulo}
+  description={descricao}
+  titulo="Calculadora tributária"
+  lead="O que sai do seu salário como pessoa física e o que sai do faturamento da sua empresa. Só o primeiro campo de cada aba é obrigatório: o resto refina o resultado."
+  ferramenta="Calculadora tributária"
+  faq={faq}
+>
+  <div class="wrap">
+    <div class="abas" role="tablist" aria-label="Escolha o tipo de cálculo">
+      <button type="button" class="aba" role="tab" id="aba-pf" aria-controls="painel-pf" aria-selected="true">
+        Pessoa física
+      </button>
+      <button type="button" class="aba" role="tab" id="aba-pj" aria-controls="painel-pj" aria-selected="false">
+        Pessoa jurídica
+      </button>
+    </div>
+
+    <!-- ================= PESSOA FÍSICA ================= -->
+    <section id="painel-pf" role="tabpanel" aria-labelledby="aba-pf">
+      <form class="painel" id="form-pf" autocomplete="off">
+        <h2>Preencha com seus dados de pessoa física</h2>
+
+        <div class="grid-campos">
+          <Campo id="pf-salario" label="Salário bruto mensal" valor={5000} />
+          <Campo id="pf-dependentes" label="Dependentes" opcional mascara="inteiro" placeholder="0"
+            dica={`Dedução de R$ ${IRRF_MENSAL.dependente.toFixed(2).replace('.', ',')} por dependente.`} />
+          <Campo id="pf-pensao" label="Pensão alimentícia" opcional placeholder="R$ 0,00"
+            dica="Só o valor fixado em decisão judicial ou acordo homologado." />
+          <Campo id="pf-outras" label="Previdência privada" opcional placeholder="R$ 0,00"
+            dica="E outras deduções legais admitidas na base do IR." />
+          <Campo id="pf-descontos" label="Outros descontos" opcional placeholder="R$ 0,00"
+            dica="Plano de saúde, adiantamentos. Reduzem o líquido, não o imposto." />
+        </div>
+
+        <div class="acoes">
+          <button class="calc-btn" type="submit">Ver resultado</button>
+          <p class="nota-rodape-form">
+            Cálculo atualizado em {atualizadoEm}. Depois do primeiro cálculo, o resultado
+            acompanha o que você digita.
+          </p>
+        </div>
+      </form>
+
+      <div id="pf-resultados" hidden>
+      <div class="calc-destaque">
+        <div class="rotulo">Salário líquido mensal</div>
+        <div class="valor" id="pf-liquido">&nbsp;</div>
+        <div class="nota" id="pf-nota"></div>
+      </div>
+
+      <div class="grid-3" style="margin-bottom: 20px">
+        <div class="calc-kpi">
+          <div class="rotulo">INSS</div>
+          <div class="valor" id="pf-inss">&nbsp;</div>
+        </div>
+        <div class="calc-kpi">
+          <div class="rotulo">IRRF</div>
+          <div class="valor" id="pf-irrf">&nbsp;</div>
+        </div>
+        <div class="calc-kpi">
+          <div class="rotulo">Carga efetiva</div>
+          <div class="valor" id="pf-carga">&nbsp;</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Memória de cálculo</h3>
+        <div class="tabela-rolavel">
+          <table>
+            <tbody id="pf-memoria"></tbody>
+          </table>
+        </div>
+
+        <details class="memoria">
+          <summary>Como o INSS foi calculado, faixa a faixa</summary>
+          <div class="tabela-rolavel">
+            <table>
+              <thead>
+                <tr>
+                  <th>Faixa (R$)</th>
+                  <th class="calc-num">Base na faixa</th>
+                  <th class="calc-num">Alíquota</th>
+                  <th class="calc-num">Contribuição</th>
+                </tr>
+              </thead>
+              <tbody id="pf-inss-faixas"></tbody>
+            </table>
+          </div>
+          <p class="dica" style="margin-top: 10px">
+            O INSS é progressivo: cada alíquota incide apenas sobre a parcela do salário
+            contida na faixa. Desconto máximo do empregado em 2026:
+            R$ {INSS_EMPREGADO.descontoMaximo.toFixed(2).replace('.', ',')} no teto de
+            R$ {INSS_EMPREGADO.teto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}.
+          </p>
+        </details>
+      </div>
+
+      <div class="aviso" id="pf-aviso" hidden></div>
+      </div>
+    </section>
+
+    <!-- ================= PESSOA JURÍDICA ================= -->
+    <section id="painel-pj" role="tabpanel" aria-labelledby="aba-pj" hidden>
+      <form class="painel" id="form-pj" autocomplete="off">
+        <h2>Preencha com os dados da sua empresa</h2>
+
+        <div class="grid-campos">
+          <div class="campo">
+            <label for="pj-regime">Regime tributário</label>
+            <select id="pj-regime">
+              <option value="simples-auto" selected>Simples, decidir pelo Fator R</option>
+              <option value="simples-iii">Simples (Anexo III)</option>
+              <option value="simples-v">Simples (Anexo V)</option>
+              <option value="presumido">Lucro Presumido (serviços)</option>
+            </select>
+          </div>
+
+          <Campo id="pj-faturamento" label="Faturamento mensal" placeholder="R$ 0,00" />
+          <Campo id="pj-prolabore" label="Pró-labore mensal" placeholder="R$ 1.621,00"
+            dica="Mínimo legal: 1 salário mínimo (R$ 1.621,00). Sofre INSS de 11% e IRRF." />
+          <Campo id="pj-rbt12" label="Receita em 12 meses" opcional
+            placeholder="mensal × 12" dica="É a RBT12 que define a faixa e a alíquota efetiva do DAS." />
+          <Campo id="pj-folha12" label="Folha em 12 meses" opcional
+            placeholder="pró-labore × 12" dica="Salários, pró-labore e encargos. Numerador do Fator R." />
+          <Campo id="pj-custos" label="Custos operacionais" opcional placeholder="R$ 0,00"
+            dica="Contabilidade, certificado digital, emissor, conta PJ." />
+          <Campo id="pj-iss" label="Alíquota de ISS" opcional mascara="percentual" placeholder="2,00%"
+            dica="De 2% a 5% conforme o município (LC 116/2003). Vazio, usa o piso de 2%." />
+          <Campo id="pj-dependentes" label="Dependentes" opcional mascara="inteiro" placeholder="0"
+            dica="Usados no IRRF do pró-labore." />
+        </div>
+
+        <div class="acoes">
+          <button class="calc-btn" type="submit">Ver resultado</button>
+          <p class="nota-rodape-form">
+            Cálculo atualizado em {atualizadoEm}. Campos irrelevantes para o regime
+            escolhido são ocultados automaticamente.
+          </p>
+        </div>
+      </form>
+
+      <div id="pj-resultados" hidden>
+      <div class="calc-destaque">
+        <div class="rotulo">Líquido do sócio no mês</div>
+        <div class="valor" id="pj-liquido">&nbsp;</div>
+        <div class="nota" id="pj-nota"></div>
+      </div>
+
+      <div class="grid-3" style="margin-bottom: 20px">
+        <div class="calc-kpi">
+          <div class="rotulo">Tributos no mês</div>
+          <div class="valor" id="pj-tributos">&nbsp;</div>
+        </div>
+        <div class="calc-kpi">
+          <div class="rotulo">Alíquota efetiva</div>
+          <div class="valor" id="pj-aliquota">&nbsp;</div>
+        </div>
+        <div class="calc-kpi">
+          <div class="rotulo" id="pj-rotulo-enquadramento">Enquadramento</div>
+          <div class="valor" id="pj-enquadramento">&nbsp;</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Do faturamento ao bolso do sócio</h3>
+        <div class="tabela-rolavel">
+          <table>
+            <tbody id="pj-memoria"></tbody>
+          </table>
+        </div>
+
+        <details class="memoria" id="pj-detalhe-tributos">
+          <summary>Composição dos tributos</summary>
+          <div class="tabela-rolavel">
+            <table>
+              <tbody id="pj-tributos-detalhe"></tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+
+      <div class="aviso" id="pj-aviso" hidden></div>
+      </div>
+    </section>
+
+    <!-- ================= CONTEÚDO LEGAL ================= -->
+    <section class="calc-legal">
+      <div class="wrap-estreito" style="padding: 0">
+        <h2>O que está por trás dos números</h2>
+
+        <h3>A isenção até R$ 5.000 não zerou a tabela</h3>
+        <p>
+          A Lei nº 15.270/2025 manteve intacta a tabela progressiva do IRRF e criou um
+          <strong>redutor</strong> aplicado sobre o imposto já apurado. A conta é
+          <code>{REDUTOR_IRRF.constante.toFixed(2).replace('.', ',')} − (0,133145 × rendimento bruto mensal)</code>,
+          e o resultado decresce linearmente até zerar exatamente em
+          R$ {REDUTOR_IRRF.limiteRendimento.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}.
+        </p>
+        <p>
+          A consequência prática é que a faixa entre R$ 5.000,01 e R$ 7.350,00 não é um
+          degrau: é uma rampa. Cada real a mais de salário devolve R$ 0,133145 de imposto
+          ao caixa da Receita, além do que a própria tabela já cobra. Acima de
+          R$ 7.350,00 o redutor deixa de existir e vale a tabela cheia.
+        </p>
+
+        <h3>Anexo III ou Anexo V: a diferença mora na folha</h3>
+        <p>
+          Prestadores de serviço não escolhem o anexo, quem escolhe é o Fator R. A folha
+          dos últimos doze meses dividida pela receita bruta do mesmo período define o
+          enquadramento: {(SIMPLES.fatorRCorte * 100).toFixed(0)}% ou mais leva ao Anexo
+          III, que começa em 6%; abaixo disso, o Anexo V, que começa em 15,5%. A
+          distância entre as duas alíquotas iniciais é grande o bastante para que
+          aumentar o pró-labore saia mais barato do que pagar o Anexo V. É por isso que o
+          cálculo aqui mostra quanto falta de folha para virar a chave.
+        </p>
+
+        <h3>Lucro Presumido ficou mais caro em 2026</h3>
+        <p>
+          A LC nº 224/2025 majorou em 10% os percentuais de presunção sobre a parcela da
+          receita bruta anual que exceder R$ 5 milhões. Para serviços em geral, os 32%
+          habituais passam a {(LUCRO_PRESUMIDO.presuncaoServicosMajorada * 100)
+            .toFixed(1)
+            .replace('.', ',')}% nessa parcela, e só nela. Abaixo do limite, nada muda.
+        </p>
+
+        <h3>Dividendos: o limite de R$ 50 mil é um degrau, não uma rampa</h3>
+        <p>
+          Desde 2026, quando uma mesma pessoa jurídica paga a uma mesma pessoa física
+          residente mais de R$ {DIVIDENDOS.limiteMensalIsento.toLocaleString('pt-BR')} em
+          lucros no mês, incide IRRF de 10%. O detalhe que costuma passar batido: os 10%
+          incidem sobre o <strong>total</strong> do mês, não sobre o excedente. Distribuir
+          R$ 50.100 custa R$ 5.010 de imposto; distribuir R$ 50.000 custa zero. Há uma
+          faixa em que receber mais significa levar menos para casa, e planejar a
+          distribuição ao longo dos meses resolve o problema.
+        </p>
+
+        <h3>Reforma tributária: 2026 é ano de teste</h3>
+        <p>
+          CBS (0,9%) e IBS (0,1%) já aparecem destacados no documento fiscal, mas o
+          contribuinte que cumpre as obrigações acessórias fica dispensado do
+          recolhimento, e qualquer valor pago é compensado com PIS/COFINS. O efeito na
+          carga de 2026 é zero, e por isso esses percentuais não entram nas contas acima.
+          Em 2027 a história muda.
+        </p>
+
+        <h2 id="fontes" style="margin-top: 44px">Fontes legais</h2>
+        <ul class="fontes">
+          <li>
+            <span class="norma">Lei nº 15.270, de 26/11/2025:</span>
+            <span class="oque">redutor do IRRF, isenção efetiva até R$ 5.000, IRRF de 10% sobre dividendos acima de R$ 50 mil/mês e tributação mínima da alta renda (IRPFM).</span>
+          </li>
+          <li>
+            <span class="norma">Lei nº 15.191, de 11/08/2025:</span>
+            <span class="oque">tabela progressiva mensal do IRRF vigente a partir de janeiro de 2026.</span>
+          </li>
+          <li>
+            <span class="norma">Portaria Interministerial MPS/MF nº 13, de 09/01/2026:</span>
+            <span class="oque">faixas, alíquotas e teto de contribuição do INSS; salário mínimo de R$ 1.621,00.</span>
+          </li>
+          <li>
+            <span class="norma">LC nº 123/2006, com a redação da LC nº 155/2016:</span>
+            <span class="oque">Anexos I, III e V do Simples Nacional, limite de R$ 4,8 milhões e regra do Fator R (art. 18, §5º-J e §5º-M).</span>
+          </li>
+          <li>
+            <span class="norma">Leis nº 9.249/1995, 9.430/1996 e 9.718/1998:</span>
+            <span class="oque">presunção de 32% para serviços, IRPJ de 15% com adicional de 10% acima de R$ 60 mil no trimestre, CSLL de 9%, PIS e COFINS cumulativos.</span>
+          </li>
+          <li>
+            <span class="norma">LC nº 224/2025:</span>
+            <span class="oque">majoração de 10% nos percentuais de presunção sobre a receita anual acima de R$ 5 milhões, a partir de 2026.</span>
+          </li>
+          <li>
+            <span class="norma">EC nº 132/2023 e LC nº 214/2025:</span>
+            <span class="oque">alíquotas-teste de CBS e IBS em 2026, com dispensa de recolhimento.</span>
+          </li>
+          <li>
+            <span class="norma">Lei nº 8.212/1991, arts. 21 e 22:</span>
+            <span class="oque">contribuição do segurado contribuinte individual (11% sobre o pró-labore) e contribuição patronal de 20%.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</CalculadoraShell>
+
+<script>
+  import {
+    moeda,
+    parseInteiro,
+    parseMoeda,
+    parsePercentual,
+    percentual,
+  } from '../../lib/calc/format';
+  import { calcularSalarioLiquido } from '../../lib/calc/irpf';
+  import { calcularPj, type RegimePj } from '../../lib/calc/pj';
+  import { DIVIDENDOS, SIMPLES } from '../../lib/calc/tabelas-2026';
+
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  /** Devolve o container .campo de um input, para ocultar rótulo e dica junto. */
+  const campoDe = (id: string) => $(id).closest('.campo') as HTMLElement;
+
+  const linha = (rotulo: string, valor: string, classe = '') =>
+    `<tr class="${classe}"><td>${rotulo}</td><td class="calc-num">${valor}</td></tr>`;
+
+  /** Linha de saldo: verde quando sobra, vermelho quando falta. */
+  const linhaSaldo = (rotulo: string, valorNumerico: number, classe = 'total') =>
+    `<tr class="${classe}"><td>${rotulo}</td><td class="calc-num ${
+      valorNumerico > 0 ? 'positivo' : valorNumerico < 0 ? 'negativo' : ''
+    }">${moeda(valorNumerico)}</td></tr>`;
+
+  // ------------------------------------------------------------------ abas
+  const abas = Array.from(document.querySelectorAll<HTMLButtonElement>('.aba'));
+
+  function selecionarAba(alvo: HTMLButtonElement) {
+    for (const aba of abas) {
+      const ativo = aba === alvo;
+      aba.setAttribute('aria-selected', String(ativo));
+      const painel = document.getElementById(aba.getAttribute('aria-controls')!)!;
+      painel.hidden = !ativo;
+    }
+  }
+
+  abas.forEach((aba) => aba.addEventListener('click', () => selecionarAba(aba)));
+
+  // ------------------------------------------------------- pessoa física
+  const formPf = $<HTMLFormElement>('form-pf');
+
+  function calcularPf() {
+    const r = calcularSalarioLiquido({
+      salarioBruto: parseMoeda($<HTMLInputElement>('pf-salario').value),
+      dependentes: parseInteiro($<HTMLInputElement>('pf-dependentes').value),
+      pensaoAlimenticia: parseMoeda($<HTMLInputElement>('pf-pensao').value),
+      outrasDeducoes: parseMoeda($<HTMLInputElement>('pf-outras').value),
+      outrosDescontos: parseMoeda($<HTMLInputElement>('pf-descontos').value),
+    });
+
+    $('pf-liquido').textContent = moeda(r.liquido);
+    $('pf-inss').textContent = moeda(r.inss.total);
+    $('pf-irrf').textContent = moeda(r.ir.irrf);
+    $('pf-carga').textContent = percentual(r.cargaEfetiva);
+    $('pf-nota').textContent =
+      `Sobre um bruto de ${moeda(r.bruto)}, com alíquota efetiva de IR de ${percentual(r.ir.aliquotaEfetiva)}.`;
+
+    const aviso = $('pf-aviso');
+    if (r.bruto > 0 && r.ir.isento) {
+      aviso.hidden = false;
+      aviso.innerHTML =
+        '<strong>Isento de Imposto de Renda</strong>O redutor da Lei 15.270/2025 anulou integralmente o imposto apurado neste rendimento.';
+    } else if (r.ir.redutor > 0) {
+      aviso.hidden = false;
+      aviso.innerHTML = `<strong>Redutor aplicado: ${moeda(r.ir.redutor)}</strong>Sem o redutor da Lei 15.270/2025, o imposto do mês seria ${moeda(r.ir.impostoApurado)}.`;
+    } else {
+      aviso.hidden = true;
+    }
+
+    const modelo =
+      r.ir.modeloUsado === 'simplificado'
+        ? `desconto simplificado (${moeda(r.ir.descontoSimplificado)})`
+        : `deduções legais (${moeda(r.ir.deducoesLegais)})`;
+
+    $('pf-memoria').innerHTML = [
+      linha('Salário bruto', moeda(r.bruto)),
+      linha('(−) INSS', moeda(r.inss.total), 'subtracao'),
+      linha(
+        `(−) Dedução mais vantajosa: ${modelo}`,
+        moeda(r.ir.modeloUsado === 'simplificado' ? r.ir.descontoSimplificado : r.ir.deducoesLegais),
+        'subtracao',
+      ),
+      linha('(=) Base de cálculo do IR', moeda(r.ir.baseCalculo)),
+      linha(
+        `Imposto pela tabela (${percentual(r.ir.aliquotaNominal)} menos ${moeda(r.ir.parcelaDeduzir)})`,
+        moeda(r.ir.impostoApurado),
+      ),
+      linha('(−) Redutor da Lei 15.270/2025', moeda(r.ir.redutor), 'subtracao'),
+      linha('(=) IRRF retido', moeda(r.ir.irrf), 'subtracao'),
+      r.outrosDescontos > 0
+        ? linha('(−) Outros descontos em folha', moeda(r.outrosDescontos), 'subtracao')
+        : '',
+      linhaSaldo('(=) Salário líquido', r.liquido),
+    ].join('');
+
+    $('pf-inss-faixas').innerHTML =
+      r.inss.detalhe
+        .map(
+          (f) =>
+            `<tr><td>${f.faixa}</td><td class="calc-num">${moeda(f.baseNaFaixa)}</td><td class="calc-num">${percentual(f.aliquota)}</td><td class="calc-num">${moeda(f.valor)}</td></tr>`,
+        )
+        .join('') || '<tr><td colspan="4">Sem contribuição neste rendimento.</td></tr>';
+  }
+
+  // O resultado só aparece depois do primeiro "Ver resultado"; a partir daí
+  // acompanha a digitação sem exigir novo clique.
+  const resultadosPf = $('pf-resultados');
+
+  formPf.addEventListener('submit', (evento) => {
+    evento.preventDefault();
+    calcularPf();
+    resultadosPf.hidden = false;
+    resultadosPf.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  formPf.addEventListener('input', () => {
+    if (!resultadosPf.hidden) calcularPf();
+  });
+
+  calcularPf();
+
+  // ---------------------------------------------------- pessoa jurídica
+  const formPj = $<HTMLFormElement>('form-pj');
+  const selectRegime = $<HTMLSelectElement>('pj-regime');
+
+  function calcularPjUi() {
+    const regime = selectRegime.value as RegimePj;
+    const ehPresumido = regime === 'presumido';
+
+    campoDe('pj-iss').hidden = !ehPresumido;
+    campoDe('pj-folha12').hidden = regime !== 'simples-auto';
+
+    const faturamentoMensal = parseMoeda($<HTMLInputElement>('pj-faturamento').value);
+    const rbt12Informado = parseMoeda($<HTMLInputElement>('pj-rbt12').value);
+    const folha12Informada = parseMoeda($<HTMLInputElement>('pj-folha12').value);
+    const proLabore = parseMoeda($<HTMLInputElement>('pj-prolabore').value);
+
+    const r = calcularPj({
+      regime,
+      faturamentoMensal,
+      rbt12: rbt12Informado > 0 ? rbt12Informado : undefined,
+      folha12: folha12Informada > 0 ? folha12Informada : undefined,
+      proLabore,
+      custosOperacionais: parseMoeda($<HTMLInputElement>('pj-custos').value),
+      // Vazio cai no piso legal de 2% dentro do motor (LC 116/2003).
+      aliquotaIss: parsePercentual($<HTMLInputElement>('pj-iss').value) || undefined,
+      dependentes: parseInteiro($<HTMLInputElement>('pj-dependentes').value),
+    });
+
+    $('pj-liquido').textContent = moeda(r.liquidoSocio);
+    $('pj-tributos').textContent = moeda(r.tributosMensais);
+    $('pj-aliquota').textContent = percentual(
+      faturamentoMensal > 0 ? r.tributosMensais / faturamentoMensal : 0,
+    );
+
+    if (ehPresumido) {
+      $('pj-rotulo-enquadramento').textContent = 'Presunção aplicada';
+      $('pj-enquadramento').textContent = percentual(r.presumido!.presuncaoAplicada);
+    } else {
+      $('pj-rotulo-enquadramento').textContent = 'Anexo e alíquota efetiva';
+      $('pj-enquadramento').textContent = `${r.anexoAplicado} · ${percentual(r.simples!.aliquotaEfetiva)}`;
+    }
+
+    $('pj-nota').textContent = `Pró-labore líquido de ${moeda(r.retirada.proLaboreLiquido)} mais dividendos líquidos de ${moeda(r.retirada.dividendosLiquidos)}.`;
+
+    // ------- avisos
+    const avisos: string[] = [];
+
+    if (r.fatorR) {
+      avisos.push(
+        r.fatorR.atingiuCorte
+          ? `<strong>Fator R de ${percentual(r.fatorR.fatorR)}, enquadrado no Anexo III</strong>A folha alcança o corte de 28% e garante a alíquota menor.`
+          : `<strong>Fator R de ${percentual(r.fatorR.fatorR)}, enquadrado no Anexo V</strong>Faltam ${moeda(r.fatorR.folhaFaltante)} de folha em 12 meses (cerca de ${moeda(r.fatorR.folhaFaltante / 12)} por mês) para migrar ao Anexo III.`,
+      );
+    }
+
+    if (r.simples?.acimaDoLimite) {
+      avisos.push(
+        `<strong>Acima do limite do Simples Nacional</strong>A RBT12 informada supera ${moeda(SIMPLES.limiteAnual)}. O regime não se aplica nessa receita.`,
+      );
+    } else if (r.simples?.acimaDoSublimite) {
+      avisos.push(
+        `<strong>Acima do sublimite de ${moeda(SIMPLES.sublimiteIcmsIss)}</strong>ICMS e ISS saem do DAS e passam a ser recolhidos pelo regime normal do estado e do município.`,
+      );
+    }
+
+    if (r.presumido?.houveMajoracao) {
+      avisos.push(
+        '<strong>Presunção majorada em vigor</strong>Parte da receita anual supera R$ 5 milhões e recebe presunção de 35,2% (LC 224/2025).',
+      );
+    }
+
+    if (r.retirada.alertaDividendos) {
+      avisos.push(
+        `<strong>IRRF de 10% sobre dividendos: ${moeda(r.retirada.irrfDividendos)}</strong>A distribuição de ${moeda(r.retirada.dividendos)} supera o limite de ${moeda(DIVIDENDOS.limiteMensalIsento)} por mês, e a alíquota incide sobre o total, não sobre o excedente. Distribuir ${moeda(DIVIDENDOS.limiteMensalIsento)} neste mês e o restante em outro elimina a retenção.`,
+      );
+    }
+
+    const avisoEl = $('pj-aviso');
+    avisoEl.hidden = avisos.length === 0;
+    avisoEl.innerHTML = avisos.join(
+      '<hr style="border:none;border-top:1px solid rgba(245,57,26,.3);margin:12px 0">',
+    );
+
+    // ------- memória
+    $('pj-memoria').innerHTML = [
+      linha('Faturamento mensal', moeda(faturamentoMensal)),
+      linha('(−) Tributos da empresa', moeda(r.tributosMensais), 'subtracao'),
+      linha('(−) Custos operacionais', moeda(r.custosOperacionais), 'subtracao'),
+      linha('(−) Pró-labore bruto', moeda(r.retirada.proLabore), 'subtracao'),
+      linhaSaldo('(=) Lucro distribuível', r.retirada.dividendos, ''),
+      linha('(−) IRRF sobre dividendos', moeda(r.retirada.irrfDividendos), 'subtracao'),
+      linha('Pró-labore bruto', moeda(r.retirada.proLabore)),
+      linha('(−) INSS do sócio (11%)', moeda(r.retirada.inssProLabore), 'subtracao'),
+      linha('(−) IRRF do pró-labore', moeda(r.retirada.irrfProLabore), 'subtracao'),
+      linhaSaldo('(=) Líquido do sócio no mês', r.liquidoSocio),
+    ].join('');
+
+    // ------- composição dos tributos
+    const detalhe = r.presumido
+      ? [
+          linha('IRPJ (15% sobre a base presumida)', moeda(r.presumido.irpj)),
+          linha('IRPJ, adicional de 10%', moeda(r.presumido.irpjAdicional)),
+          linha('CSLL (9%)', moeda(r.presumido.csll)),
+          linha('PIS (0,65%)', moeda(r.presumido.pis)),
+          linha('COFINS (3%)', moeda(r.presumido.cofins)),
+          linha('ISS', moeda(r.presumido.iss)),
+          linha('CPP patronal sobre o pró-labore (20%)', moeda(r.presumido.cpp)),
+          linha('Total no mês', moeda(r.presumido.totalMensal), 'total'),
+        ]
+      : [
+          linha('Faixa da tabela', `${r.simples!.faixa}ª`),
+          linha('Alíquota nominal', percentual(r.simples!.aliquotaNominal)),
+          linha('Parcela a deduzir', moeda(r.simples!.parcelaDeduzir)),
+          linha('RBT12 considerada', moeda(r.simples!.rbt12)),
+          linha('Alíquota efetiva', percentual(r.simples!.aliquotaEfetiva)),
+          linha('DAS do mês', moeda(r.simples!.dasMensal), 'total'),
+        ];
+
+    $('pj-tributos-detalhe').innerHTML = detalhe.join('');
+  }
+
+  const resultadosPj = $('pj-resultados');
+
+  formPj.addEventListener('submit', (evento) => {
+    evento.preventDefault();
+    calcularPjUi();
+    resultadosPj.hidden = false;
+    resultadosPj.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  const recalcularPjSeVisivel = () => {
+    // Mesmo oculto, o cálculo roda para manter os campos condicionais corretos.
+    calcularPjUi();
+  };
+
+  formPj.addEventListener('input', recalcularPjSeVisivel);
+  formPj.addEventListener('change', recalcularPjSeVisivel);
+  calcularPjUi();
+</script>

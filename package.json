@@ -12,10 +12,14 @@
     "astro": "astro",
     "test:busca": "node tests/busca.test.mjs",
     "test:largura": "node tests/largura.test.mjs",
-    "test": "npm run test:busca && npm run test:largura && npm run test:contraste && npm run test:schema && npm run test:links",
+    "test": "npm run test:busca && npm run test:largura && npm run test:contraste && npm run test:schema && npm run test:links && npm run test:faq && npm run test:calc && npm run test:escala && npm run test:paginas",
     "test:contraste": "node tests/contraste.test.mjs",
     "test:schema": "node tests/schema.test.mjs",
-    "test:links": "node tests/links.test.mjs"
+    "test:links": "node tests/links.test.mjs",
+    "test:calc": "node --test tests/calc/calc.test.ts tests/calc/reforma.test.ts",
+    "test:faq": "node tests/faq-visivel.test.mjs",
+    "test:escala": "node tests/escala-larga.test.mjs",
+    "test:paginas": "node tests/paginas.test.mjs"
   },
   "dependencies": {
     "astro": "^7.3.2"

@@ -1,5 +1,10 @@
 ---
 import "../styles/tokens.css";
+// Escala do site em monitor largo. Não disputa com nenhuma regra de página — declara `zoom`
+// e `--zoom` no `:root` e só isso —, por isso pode vir cedo. Ver o cabeçalho do arquivo:
+// acima de 2100px a viewport útil fica travada e o site cresce junto, o que é o que impede a
+// foto do hero de deixar sobra nas laterais num monitor de 27" ou maior.
+import "../styles/escala-larga.css";
 // Depois dos tokens e de propósito fora dos prototype-*.css: corrige a variante da logo do
 // header para toda página, presente ou futura. Ver o cabeçalho do arquivo.
 import "../styles/header-logo.css";

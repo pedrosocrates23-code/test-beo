@@ -1,0 +1,491 @@
+---
+// As folhas vao aqui, e nao dentro do CalculadoraShell: a ordem da cascata depende
+// disso. Ver o cabecalho do shell.
+import "../../styles/prototype-contabilidade.css";
+import "../../styles/calculadoras.css";
+import CalculadoraShell from '../../components/elements/CalculadoraShell.astro';
+import Campo from '../../components/elements/Campo.astro';
+import { SALARIO_MINIMO, VIGENCIA } from '../../lib/calc/tabelas-2026';
+
+const titulo = 'Calculadora CLT vs PJ 2026: quanto você precisa faturar para empatar';
+const descricao =
+  'Compare o pacote CLT completo (salário líquido, 13º, férias com 1/3 e FGTS) com a retirada líquida de uma PJ no Simples Nacional ou Lucro Presumido. Tabelas de 2026 e o ponto de equilíbrio de faturamento.';
+
+const atualizadoEm = new Date(VIGENCIA.verificadoEm).toLocaleDateString('pt-BR', {
+  timeZone: 'UTC',
+});
+
+const faq = [
+  {
+    pergunta: "Quanto preciso faturar como PJ para ganhar o mesmo que meu salário CLT?",
+    resposta:
+      "Depende do anexo do Simples Nacional, do pró-labore e dos custos da empresa, mas a conta nunca é 1 para 1: o pacote CLT inclui 13º salário, férias com o terço constitucional e FGTS, que somados equivalem a cerca de 1,4 salário adicional por ano. A calculadora resolve o ponto de equilíbrio por busca numérica, considerando DAS, INSS do pró-labore, IRRF e custos operacionais.",
+  },
+  {
+    pergunta: "A contratação como PJ é legal?",
+    resposta:
+      "A prestação de serviço por pessoa jurídica é lícita. O que a lei veda é usá-la para mascarar uma relação de emprego: havendo pessoalidade, habitualidade, onerosidade e subordinação simultâneas (CLT, arts. 2º e 3º), a Justiça do Trabalho pode reconhecer o vínculo. O STF reconheceu repercussão geral sobre o tema em abril de 2025 (Tema 1389) e suspendeu nacionalmente os processos; em junho de 2026 autorizou a retomada na primeira e na segunda instância, mantendo suspensos os processos no TST. O mérito segue pendente de julgamento e, até a tese ser fixada, o cenário é de insegurança jurídica.",
+  },
+  {
+    pergunta: "O vale-transporte conta como ganho no comparativo?",
+    resposta:
+      "Só o excedente. O empregador pode descontar em folha, a título de coparticipação, até 6% do salário básico do empregado (Lei 7.418/1985, art. 4º, parágrafo único). Um vale-transporte de R$ 1.000 para um salário de R$ 5.000 sofre desconto de R$ 300 e representa R$ 700 de ganho real.",
+  },
+];
+---
+
+<CalculadoraShell
+  ativa="clt-vs-pj"
+  title={titulo}
+  description={descricao}
+  titulo="CLT × PJ"
+  lead="Comparar salário líquido com faturamento é a forma mais rápida de chegar à conclusão errada. Aqui os dois lados vão para a mesma régua: o pacote CLT inteiro, com 13º, férias, terço e FGTS, contra o que sobra no bolso do sócio depois de DAS, INSS, IRRF e custos da empresa."
+  ferramenta="Calculadora CLT × PJ"
+  faq={faq}
+>
+  <div class="wrap">
+    <form class="painel" id="form" autocomplete="off">
+      <h2>Preencha as informações abaixo para comparar as duas propostas</h2>
+
+      <fieldset>
+        <legend>Seus dados CLT</legend>
+
+        <div class="grid-campos">
+          <Campo id="clt-salario" label="Salário bruto mensal" valor={7000} />
+          <Campo id="clt-vr" label="Vale-refeição" opcional placeholder="R$ 0,00"
+            dica="Vale-refeição ou vale-alimentação." />
+          <Campo id="clt-vt" label="Vale-transporte" opcional placeholder="R$ 0,00"
+            dica="Desconto legal de até 6% do salário; só o excedente é ganho real." />
+          <Campo id="clt-saude" label="Plano de saúde" opcional placeholder="R$ 0,00"
+            dica="Valor custeado pelo empregador." />
+          <Campo id="clt-outros" label="Outros benefícios" opcional placeholder="R$ 0,00"
+            dica="Auxílio-creche, PLR mensalizada, bolsa de estudo." />
+          <Campo id="clt-dependentes" label="Dependentes" opcional mascara="inteiro" placeholder="0"
+            dica="Reduzem a base do IRRF." />
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="clt-fgts" checked />
+          <span>Contar o FGTS como remuneração, já que é patrimônio do trabalhador, ainda que de saque restrito.</span>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="clt-multa" />
+          <span>Contar a provisão da multa de 40%, que só se materializa em dispensa sem justa causa.</span>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Proposta PJ</legend>
+
+        <div class="grid-campos">
+          <Campo id="pj-faturamento" label="Faturamento mensal" placeholder="R$ 0,00"
+            dica="O valor proposto no contrato PJ." />
+
+          <div class="campo">
+            <label for="pj-regime">Regime</label>
+            <select id="pj-regime">
+              <option value="simples-auto" selected>Simples, decidir pelo Fator R</option>
+              <option value="simples-iii">Simples (Anexo III)</option>
+              <option value="simples-v">Simples (Anexo V)</option>
+              <option value="presumido">Lucro Presumido (serviços)</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <div class="rotulo-linha">
+              <label for="pj-estrategia">Estratégia de pró-labore</label>
+              <button
+                type="button"
+                class="ajuda"
+                data-dica="Pró-labore menor reduz INSS e IRRF hoje; maior sustenta o Fator R e a base da aposentadoria."
+                aria-label="Pró-labore menor reduz INSS e IRRF hoje; maior sustenta o Fator R e a base da aposentadoria."
+              >
+                <span aria-hidden="true">?</span>
+              </button>
+            </div>
+            <select id="pj-estrategia">
+              <option value="minimo" selected>Mínimo legal (1 salário mínimo)</option>
+              <option value="fator-r">28% do faturamento (segura o Anexo III)</option>
+              <option value="fixo">Valor fixo que eu definir</option>
+            </select>
+          </div>
+
+          <Campo id="pj-prolabore" label="Pró-labore mensal" opcional placeholder="R$ 0,00"
+            dica="Usado apenas na estratégia de valor fixo." />
+          <Campo id="pj-custos" label="Custos operacionais" opcional placeholder="R$ 0,00"
+            dica="Contabilidade, certificado digital, conta PJ, emissor." />
+          <Campo id="pj-iss" label="Alíquota de ISS" opcional mascara="percentual" placeholder="2,00%"
+            dica="Só no Lucro Presumido. Vazio, usa o piso legal de 2%." />
+        </div>
+      </fieldset>
+
+      <div class="acoes">
+        <button class="calc-btn" type="submit">Ver resultado</button>
+        <p class="nota-rodape-form">
+          Cálculo atualizado em {atualizadoEm}. Os valores são estimativas informativas e
+          não substituem a análise de um contador sobre o seu caso.
+        </p>
+      </div>
+    </form>
+
+    <div id="resultados" hidden>
+    <div class="calc-destaque">
+      <div class="rotulo" id="veredito-rotulo">Diferença mensal</div>
+      <div class="valor" id="veredito-valor">&nbsp;</div>
+      <div class="nota" id="veredito-nota"></div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 20px">
+      <div class="calc-kpi">
+        <div class="rotulo">Equivalente mensal (CLT)</div>
+        <div class="valor" id="kpi-clt">&nbsp;</div>
+      </div>
+      <div class="calc-kpi">
+        <div class="rotulo">Líquido mensal (PJ)</div>
+        <div class="valor" id="kpi-pj">&nbsp;</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>O que o CLT recebe no ano</h3>
+        <div class="tabela-rolavel">
+          <table>
+            <tbody id="tabela-clt"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>O que a PJ deixa no bolso</h3>
+        <div class="tabela-rolavel">
+          <table>
+            <tbody id="tabela-pj"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px">
+      <h3>O que a planilha não mostra</h3>
+      <div class="tabela-rolavel">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>CLT</th>
+              <th>PJ</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-direitos"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="aviso" id="aviso-equilibrio"></div>
+    <div class="aviso" id="aviso-extra" hidden></div>
+    </div>
+
+    <section class="calc-legal">
+      <div class="wrap-estreito" style="padding: 0">
+        <h2>Como ler esta comparação</h2>
+
+        <h3>O pacote CLT vale mais que o contracheque</h3>
+        <p>
+          Um empregado com carteira assinada recebe, ao longo de doze meses, treze
+          salários mais o terço constitucional de férias, e o empregador deposita 8% de
+          FGTS sobre tudo isso. Somado, o adicional equivale a aproximadamente 1,44
+          salário por ano antes dos impostos. É por isso que a comparação correta usa o
+          <strong>equivalente mensal</strong> do pacote anual, não o líquido do
+          contracheque.
+        </p>
+        <p>
+          O INSS incide sobre as férias gozadas e sobre o terço constitucional, tese que
+          o STF fixou no RE 1.072.485 (Tema 985). O 13º tem tributação exclusiva na
+          fonte, com base própria: por isso ele é calculado à parte aqui, e não somado ao
+          salário do mês.
+        </p>
+
+        <h3>Nem todo benefício vale o valor de face</h3>
+        <p>
+          O vale-transporte é o caso mais comum. A lei autoriza o empregador a descontar
+          em folha, a título de coparticipação, até 6% do salário básico do empregado.
+          Um vale de R$ 1.000 sobre um salário de R$ 5.000 sofre desconto de R$ 300 e
+          entra na comparação como R$ 700. Vale-refeição e plano de saúde custeados pelo
+          empregador entram pelo valor cheio.
+        </p>
+
+        <h3>O pró-labore é a decisão central da PJ</h3>
+        <p>
+          Pró-labore no mínimo legal reduz INSS e IRRF imediatos, mas produz três efeitos
+          silenciosos: derruba o Fator R e pode empurrar a empresa para o Anexo V, reduz
+          a base de aposentadoria ao piso, e limita o valor de benefícios como
+          auxílio-doença e salário-maternidade. Pró-labore de 28% do faturamento custa
+          mais em INSS, mas em muitos cenários se paga na diferença entre o Anexo III e o
+          Anexo V. A calculadora deixa as duas estratégias lado a lado justamente porque
+          não existe resposta única.
+        </p>
+
+        <h3>A pejotização está sub judice</h3>
+        <p>
+          Contratar uma pessoa jurídica para prestar serviço é lícito. O que a legislação
+          veda é usar a PJ para encobrir uma relação de emprego: presentes ao mesmo tempo
+          pessoalidade, habitualidade, onerosidade e subordinação (CLT, arts. 2º e 3º), a
+          Justiça do Trabalho pode reconhecer o vínculo, com todos os efeitos retroativos.
+        </p>
+        <p>
+          Em abril de 2025 o STF reconheceu repercussão geral sobre a competência e a
+          licitude desses contratos (Tema 1389) e determinou a suspensão nacional dos
+          processos que discutem a matéria. Em 18 de junho de 2026, a suspensão foi
+          parcialmente levantada: primeira e segunda instâncias da Justiça do Trabalho
+          voltaram a instruir e julgar esses casos, mas os processos no TST seguem
+          parados e o mérito do tema continua pendente. Enquanto não houver tese fixada,
+          o cenário é de insegurança jurídica para os dois lados, e nenhuma calculadora
+          precifica isso.
+        </p>
+
+        <h2 id="fontes" style="margin-top: 44px">Fontes legais</h2>
+        <ul class="fontes">
+          <li>
+            <span class="norma">CF/88, art. 7º:</span>
+            <span class="oque">13º salário, férias com adicional de um terço, FGTS e demais direitos do empregado.</span>
+          </li>
+          <li>
+            <span class="norma">CLT, arts. 2º e 3º:</span>
+            <span class="oque">requisitos da relação de emprego: pessoalidade, habitualidade, onerosidade e subordinação.</span>
+          </li>
+          <li>
+            <span class="norma">Lei nº 7.418/1985, art. 4º, parágrafo único:</span>
+            <span class="oque">coparticipação do empregado no vale-transporte, limitada a 6% do salário básico.</span>
+          </li>
+          <li>
+            <span class="norma">STF, Tema 1389 (repercussão geral reconhecida em 04/2025):</span>
+            <span class="oque">competência e licitude da contratação de pessoa jurídica para prestação de serviços; suspensão nacional desde 04/2025, parcialmente levantada em 06/2026 (1ª e 2ª instâncias liberadas, TST suspenso), mérito pendente.</span>
+          </li>
+          <li>
+            <span class="norma">STF, RE 1.072.485 (Tema 985):</span>
+            <span class="oque">incidência de contribuição previdenciária sobre o terço constitucional de férias gozadas.</span>
+          </li>
+          <li>
+            <span class="norma">Lei nº 4.090/1962 e Lei nº 8.036/1990:</span>
+            <span class="oque">13º salário e FGTS, inclusive a multa de 40% na dispensa sem justa causa.</span>
+          </li>
+          <li>
+            <span class="norma">Lei nº 15.270/2025 e Lei nº 15.191/2025:</span>
+            <span class="oque">tabela do IRRF de 2026, redutor da isenção e IRRF de 10% sobre dividendos acima de R$ 50 mil por mês.</span>
+          </li>
+          <li>
+            <span class="norma">Portaria Interministerial MPS/MF nº 13/2026:</span>
+            <span class="oque">tabela do INSS, teto de R$ 8.475,55 e salário mínimo de R$ {SALARIO_MINIMO.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}.</span>
+          </li>
+          <li>
+            <span class="norma">LC nº 123/2006, art. 18, §5º-J e §5º-M:</span>
+            <span class="oque">Fator R e enquadramento nos Anexos III e V do Simples Nacional.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</CalculadoraShell>
+
+<script>
+  import {
+    moeda,
+    parseInteiro,
+    parseMoeda,
+    parsePercentual,
+    percentual,
+  } from '../../lib/calc/format';
+  import {
+    compararCltPj,
+    detectarDegrauDividendos,
+    type EntradaClt,
+    type EntradaPj,
+    type EstrategiaProLabore,
+  } from '../../lib/calc/clt-pj';
+  import type { RegimePj } from '../../lib/calc/pj';
+
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const val = (id: string) => parseMoeda($<HTMLInputElement>(id).value);
+  const campoDe = (id: string) => $(id).closest('.campo') as HTMLElement;
+
+  const linha = (rotulo: string, valor: string, classe = '') =>
+    `<tr class="${classe}"><td>${rotulo}</td><td class="calc-num">${valor}</td></tr>`;
+
+  /** Linha de saldo: verde quando sobra, vermelho quando falta. */
+  const linhaSaldo = (rotulo: string, valorNumerico: number, classe = 'total') =>
+    `<tr class="${classe}"><td>${rotulo}</td><td class="calc-num ${
+      valorNumerico > 0 ? 'positivo' : valorNumerico < 0 ? 'negativo' : ''
+    }">${moeda(valorNumerico)}</td></tr>`;
+
+  const DIREITOS: [string, string, string][] = [
+    ['Aviso prévio e verbas rescisórias', 'Garantidos por lei', 'Só o que o contrato previr'],
+    ['Seguro-desemprego', 'Sim', 'Não'],
+    ['FGTS e multa de 40%', 'Sim', 'Não'],
+    ['Férias remuneradas de 30 dias', 'Direito, com adicional de 1/3', 'Autofinanciadas'],
+    ['13º salário', 'Direito', 'Autofinanciado'],
+    ['Auxílio-doença e salário-maternidade', 'Sobre o salário de contribuição', 'Sobre o pró-labore declarado'],
+    ['Estabilidade em acidente e gestação', 'Sim', 'Não'],
+    ['Obrigações contábeis mensais', 'Nenhuma', 'DAS, DEFIS, escrituração, contador'],
+    ['Risco de inadimplência do contratante', 'Salário é crédito privilegiado', 'Nota fiscal na fila dos credores'],
+  ];
+
+  function calcular() {
+    const estrategia = $<HTMLSelectElement>('pj-estrategia').value as EstrategiaProLabore;
+    const regime = $<HTMLSelectElement>('pj-regime').value as RegimePj;
+
+    campoDe('pj-prolabore').hidden = estrategia !== 'fixo';
+    campoDe('pj-iss').hidden = regime !== 'presumido';
+
+    const entradaClt: EntradaClt = {
+      salarioBruto: val('clt-salario'),
+      valeRefeicao: val('clt-vr'),
+      valeTransporte: val('clt-vt'),
+      planoSaude: val('clt-saude'),
+      outrosBeneficios: val('clt-outros'),
+      dependentes: parseInteiro($<HTMLInputElement>('clt-dependentes').value),
+      incluirFgts: $<HTMLInputElement>('clt-fgts').checked,
+      incluirMultaFgts: $<HTMLInputElement>('clt-multa').checked,
+    };
+
+    const entradaPj: EntradaPj = {
+      faturamentoMensal: val('pj-faturamento'),
+      regime,
+      estrategiaProLabore: estrategia,
+      proLaboreFixo: val('pj-prolabore'),
+      custosOperacionais: val('pj-custos'),
+      // Vazio cai no piso legal de 2% dentro do motor (LC 116/2003).
+      aliquotaIss: parsePercentual($<HTMLInputElement>('pj-iss').value) || undefined,
+    };
+
+    const r = compararCltPj(entradaClt, entradaPj);
+
+    // ---------- veredito
+    const vencedorPj = r.vencedor === 'pj';
+    $('veredito-rotulo').textContent =
+      r.vencedor === 'empate'
+        ? 'As duas propostas empatam'
+        : vencedorPj
+          ? 'A proposta PJ está à frente'
+          : 'A proposta CLT está à frente';
+    $('veredito-valor').textContent = `${r.diferencaMensal >= 0 ? '+' : '−'}${moeda(Math.abs(r.diferencaMensal))}`;
+    $('veredito-nota').textContent = `por mês para o lado ${vencedorPj ? 'PJ' : 'CLT'}, o que dá ${moeda(Math.abs(r.diferencaAnual))} no ano. Pró-labore aplicado: ${moeda(r.proLaboreAplicado)}.`;
+
+    $('kpi-clt').textContent = moeda(r.clt.equivalenteMensal);
+    $('kpi-pj').textContent = moeda(r.pj.liquidoSocio);
+    $('kpi-clt').className = `valor ${vencedorPj ? '' : 'positivo'}`;
+    $('kpi-pj').className = `valor ${vencedorPj ? 'positivo' : ''}`;
+
+    // ---------- ponto de equilíbrio
+    const equilibrio = $('aviso-equilibrio');
+    if (r.faturamentoEquivalente === null) {
+      equilibrio.innerHTML =
+        '<strong>Sem ponto de equilíbrio no Simples Nacional</strong>Nenhum faturamento dentro do limite de R$ 4,8 milhões anuais faz a PJ alcançar este pacote CLT com a configuração escolhida.';
+    } else {
+      const delta = r.faturamentoEquivalente - entradaPj.faturamentoMensal;
+      equilibrio.innerHTML = `<strong>Ponto de equilíbrio: ${moeda(r.faturamentoEquivalente)} por mês</strong>É o faturamento em que a PJ empata com o pacote CLT de ${moeda(r.clt.equivalenteMensal)}. A proposta atual está ${
+        Math.abs(delta) < 1
+          ? 'exatamente nesse ponto'
+          : delta > 0
+            ? `${moeda(delta)} abaixo dele`
+            : `${moeda(-delta)} acima dele`
+      }.`;
+    }
+
+    // ---------- avisos adicionais
+    const extras: string[] = [];
+
+    if (r.clt.beneficios.valeTransporteDesconto > 0) {
+      extras.push(
+        `<strong>Vale-transporte entrou por ${moeda(r.clt.beneficios.valeTransporteLiquido)}, não por ${moeda(r.clt.beneficios.valeTransporteBruto)}</strong>A coparticipação legal de até 6% do salário descontou ${moeda(r.clt.beneficios.valeTransporteDesconto)} em folha.`,
+      );
+    }
+
+    if (r.pj.fatorR && !r.pj.fatorR.atingiuCorte) {
+      extras.push(
+        `<strong>Fator R de ${percentual(r.pj.fatorR.fatorR)}, e a empresa cai no Anexo V</strong>Faltam ${moeda(r.pj.fatorR.folhaFaltante / 12)} de folha por mês para alcançar os 28% e migrar ao Anexo III. Vale testar a estratégia de pró-labore de 28%.`,
+      );
+    }
+
+    if (r.pj.retirada.alertaDividendos) {
+      extras.push(
+        `<strong>IRRF de 10% sobre dividendos: ${moeda(r.pj.retirada.irrfDividendos)}</strong>A distribuição do mês passou de R$ 50.000 e a alíquota incidiu sobre o total. Escalonar a distribuição ao longo do ano elimina a retenção.`,
+      );
+    }
+
+    const degrau = detectarDegrauDividendos(entradaPj);
+    if (degrau) {
+      extras.push(
+        `<strong>Atenção ao degrau dos dividendos</strong>Entre ${moeda(degrau.faturamentoAntes)} e ${moeda(degrau.faturamentoDepois)} de faturamento mensal, o líquido do sócio <em>cai</em> de ${moeda(degrau.liquidoAntes)} para ${moeda(degrau.liquidoDepois)}. Não é erro de conta: é o IRRF de 10% incidindo sobre o total dos dividendos, e não sobre o excedente.`,
+      );
+    }
+
+    extras.push(
+      `<strong>Reserve ${moeda(r.reservaSugeridaPj)} por mês</strong>É o que a PJ precisa poupar por conta própria para reproduzir 13º e terço de férias, direitos que o contrato PJ não tem.`,
+    );
+
+    const avisoExtra = $('aviso-extra');
+    avisoExtra.hidden = extras.length === 0;
+    avisoExtra.innerHTML = extras.join(
+      '<hr style="border:none;border-top:1px solid rgba(245,57,26,.3);margin:12px 0">',
+    );
+
+    // ---------- tabelas
+    $('tabela-clt').innerHTML = [
+      linha('11 meses de salário líquido', moeda(r.clt.mensal.liquido * 11)),
+      linha('Mês de férias (salário + 1/3, líquido)', moeda(r.clt.liquidoFerias)),
+      linha('13º salário líquido', moeda(r.clt.liquidoDecimoTerceiro)),
+      linha('Benefícios no ano', moeda(r.clt.beneficiosAnuais)),
+      entradaClt.incluirFgts ? linha('FGTS depositado no ano', moeda(r.clt.fgtsAnual)) : '',
+      r.clt.multaFgtsAnual > 0 ? linha('Provisão da multa de 40%', moeda(r.clt.multaFgtsAnual)) : '',
+      linhaSaldo('Total no ano', r.clt.totalLiquidoAnual),
+      linhaSaldo('Equivalente mensal', r.clt.equivalenteMensal),
+    ].join('');
+
+    const pj = r.pj;
+    $('tabela-pj').innerHTML = [
+      linha('Faturamento mensal', moeda(entradaPj.faturamentoMensal)),
+      linha(
+        pj.simples
+          ? `(−) DAS do Anexo ${pj.anexoAplicado} (${percentual(pj.simples.aliquotaEfetiva)})`
+          : '(−) Tributos do Lucro Presumido',
+        moeda(pj.tributosMensais),
+        'subtracao',
+      ),
+      linha('(−) Custos operacionais', moeda(pj.custosOperacionais), 'subtracao'),
+      linha('(−) INSS sobre o pró-labore', moeda(pj.retirada.inssProLabore), 'subtracao'),
+      linha('(−) IRRF sobre o pró-labore', moeda(pj.retirada.irrfProLabore), 'subtracao'),
+      pj.retirada.irrfDividendos > 0
+        ? linha('(−) IRRF sobre dividendos', moeda(pj.retirada.irrfDividendos), 'subtracao')
+        : '',
+      linhaSaldo('(=) Líquido mensal do sócio', pj.liquidoSocio),
+      linhaSaldo('Equivalente no ano', pj.liquidoSocio * 12),
+    ].join('');
+
+    $('tabela-direitos').innerHTML = DIREITOS.map(
+      ([item, clt, pjTexto]) => `<tr><td>${item}</td><td>${clt}</td><td>${pjTexto}</td></tr>`,
+    ).join('');
+  }
+
+  const form = $<HTMLFormElement>('form');
+  const resultados = $('resultados');
+
+  // O resultado só aparece depois do primeiro "Ver resultado". A partir daí,
+  // continua acompanhando o que o usuário digita, sem exigir novo clique.
+  form.addEventListener('submit', (evento) => {
+    evento.preventDefault();
+    calcular();
+    resultados.hidden = false;
+    resultados.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  const recalcularSeVisivel = () => {
+    if (!resultados.hidden) calcular();
+  };
+
+  form.addEventListener('input', recalcularSeVisivel);
+  form.addEventListener('change', recalcularSeVisivel);
+
+  // Campos condicionais precisam obedecer ao regime desde o primeiro render.
+  calcular();
+</script>

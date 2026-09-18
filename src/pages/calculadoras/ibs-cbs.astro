@@ -1,0 +1,730 @@
+---
+// As folhas vao aqui, e nao dentro do CalculadoraShell: a ordem da cascata depende
+// disso. Ver o cabecalho do shell.
+import "../../styles/prototype-contabilidade.css";
+import "../../styles/calculadoras.css";
+import CalculadoraShell from '../../components/elements/CalculadoraShell.astro';
+import Campo from '../../components/elements/Campo.astro';
+import {
+  ALIQUOTA_PADRAO_ESTIMADA,
+  ANO_TESTE_2026,
+  CASHBACK,
+  CRONOGRAMA,
+  TRATAMENTOS,
+} from '../../lib/calc/reforma';
+import { VIGENCIA } from '../../lib/calc/tabelas-2026';
+
+const titulo = 'Calculadora IBS e CBS Online: Reforma Tributária 2026 (LC 214/2025)';
+const descricao =
+  'Simule o IBS e a CBS do Regime Geral da Reforma Tributária: ano-teste 2026, transição até 2033, reduções de 30% e 60%, alíquota zero, créditos e comparação com PIS/COFINS, ICMS e ISS de hoje.';
+
+const atualizadoEm = new Date(VIGENCIA.verificadoEm).toLocaleDateString('pt-BR', {
+  timeZone: 'UTC',
+});
+
+const pctPadrao = (ALIQUOTA_PADRAO_ESTIMADA.total * 100).toFixed(2).replace('.', ',');
+
+const faq = [
+  {
+    pergunta: "Quanto vou pagar de IBS e CBS em 2026?",
+    resposta:
+      "Na prática, nada a mais. Em 2026 a CBS de 0,9% e o IBS de 0,1% são destacados no documento fiscal em caráter de teste. Quem cumpre as obrigações acessórias fica dispensado do recolhimento, e qualquer valor pago é compensado com o PIS/COFINS devido. O ano serve para calibrar sistemas, não para arrecadar.",
+  },
+  {
+    pergunta: "Qual será a alíquota do IBS e da CBS no regime pleno?",
+    resposta:
+      "Ainda não há alíquota fixada. A estimativa oficial usada pelo Comitê Gestor do IBS (Resolução CGIBS nº 14/2026) e pela Secretaria Extraordinária da Reforma Tributária aponta alíquota-padrão conjunta em torno de 27,91%, sendo cerca de 18,7% de IBS e 9,2% de CBS. O cálculo da alíquota de referência da CBS para 2027 será homologado pelo TCU e encaminhado ao Senado até 30 de outubro de 2026.",
+  },
+  {
+    pergunta: "O que muda no cálculo em relação a PIS/COFINS, ICMS e ISS?",
+    resposta:
+      "Três coisas centrais: o IBS e a CBS incidem por fora (a alíquota aplica-se sobre o preço sem tributo, que passa a ser destacado separadamente); a não cumulatividade é plena (praticamente toda aquisição da empresa gera crédito, exceto itens de uso pessoal); e a cobrança é no destino, encerrando a guerra fiscal entre estados.",
+  },
+  {
+    pergunta: "Quem tem direito a alíquota reduzida?",
+    resposta:
+      "A LC 214/2025 prevê redução de 60% para saúde, educação, medicamentos, dispositivos médicos, alimentos destinados ao consumo humano, produtos agropecuários e produções culturais; redução de 30% para 18 profissões intelectuais regulamentadas, como advogados, contadores e engenheiros; e alíquota zero para a cesta básica nacional do Anexo I, entre outros. Há ainda regimes específicos para combustíveis, serviços financeiros, planos de saúde e imóveis.",
+  },
+];
+---
+
+<CalculadoraShell
+  ativa="ibs-cbs"
+  title={titulo}
+  description={descricao}
+  titulo="Calculadora IBS e CBS"
+  lead="Regime Geral da tributação sobre consumo (LC 214/2025). Simule qualquer ano da transição, aplique as reduções da lei, desconte créditos e compare com a carga de PIS/COFINS, ICMS e ISS que você paga hoje."
+  ferramenta="Calculadora de IBS e CBS"
+  faq={faq}
+>
+  <div class="wrap">
+    <div class="abas" role="tablist" aria-label="Escolha o tipo de simulação">
+      <button type="button" class="aba" role="tab" id="aba-op" aria-controls="painel-op" aria-selected="true">
+        Simular operação
+      </button>
+      <button type="button" class="aba" role="tab" id="aba-comp" aria-controls="painel-comp" aria-selected="false">
+        Comparar com o sistema atual
+      </button>
+    </div>
+
+    <!-- ================= SIMULAR OPERAÇÃO ================= -->
+    <section id="painel-op" role="tabpanel" aria-labelledby="aba-op">
+      <form class="painel" id="form-op" autocomplete="off">
+        <h2>Preencha os dados da operação</h2>
+
+        <div class="grid-campos">
+          <div class="campo">
+            <div class="rotulo-linha">
+              <label for="op-ano">Ano da operação</label>
+              <button type="button" class="ajuda"
+                data-dica="Cada ano da transição tem alíquotas próprias. Só as de 2026 estão fixadas em norma; de 2027 em diante são estimativas oficiais."
+                aria-label="Cada ano da transição tem alíquotas próprias. Só as de 2026 estão fixadas em norma; de 2027 em diante são estimativas oficiais.">
+                <span aria-hidden="true">?</span>
+              </button>
+            </div>
+            <select id="op-ano">
+              {CRONOGRAMA.map((f) => (
+                <option value={f.ano} selected={f.ano === 2026}>{f.ano}: {f.titulo}</option>
+              ))}
+            </select>
+          </div>
+
+          <Campo id="op-valor" label="Valor da operação" placeholder="R$ 0,00"
+            dica="Valor sem IBS/CBS. O imposto é por fora: incide sobre este valor e soma-se a ele." />
+
+          <div class="campo">
+            <div class="rotulo-linha">
+              <label for="op-tratamento">Tratamento da operação</label>
+              <button type="button" class="ajuda"
+                data-dica="Reduções da LC 214/2025: 60% para saúde, educação, alimentos e agro; 30% para profissões regulamentadas; zero para a cesta básica do Anexo I."
+                aria-label="Reduções da LC 214/2025: 60% para saúde, educação, alimentos e agro; 30% para profissões regulamentadas; zero para a cesta básica do Anexo I.">
+                <span aria-hidden="true">?</span>
+              </button>
+            </div>
+            <select id="op-tratamento">
+              <option value="padrao" selected>Alíquota padrão</option>
+              <option value="reduzida-60">Redução de 60% (saúde, educação, alimentos...)</option>
+              <option value="reduzida-30">Redução de 30% (profissões regulamentadas)</option>
+              <option value="zero">Alíquota zero (cesta básica)</option>
+            </select>
+          </div>
+
+          <Campo id="op-creditos" label="Créditos do período" opcional placeholder="R$ 0,00"
+            dica="IBS/CBS suportados nas suas compras e insumos. A não cumulatividade é plena: quase toda aquisição da empresa gera crédito." />
+
+          <Campo id="op-aliquota" label="Alíquota-padrão total" opcional mascara="percentual" placeholder="27,91%"
+            dica="Vazio, usa a estimativa oficial de 27,91% (Resolução CGIBS 14/2026 e SERT). Preencha para simular outros cenários. Ignorada em 2026, cujas alíquotas são fixas." />
+        </div>
+
+        <div class="acoes">
+          <button class="calc-btn" type="submit">Ver resultado</button>
+          <p class="nota-rodape-form">
+            Cálculo atualizado em {atualizadoEm}. Alíquotas de 2027 em diante são
+            estimativas oficiais; as definitivas serão fixadas por resolução do Senado
+            Federal.
+          </p>
+        </div>
+      </form>
+
+      <div id="op-resultados" hidden>
+      <div class="calc-destaque">
+        <div class="rotulo" id="op-rotulo">IBS + CBS da operação</div>
+        <div class="valor" id="op-total">&nbsp;</div>
+        <div class="nota" id="op-nota"></div>
+      </div>
+
+      <div class="grid-3" style="margin-bottom: 20px">
+        <div class="calc-kpi">
+          <div class="rotulo">CBS (federal)</div>
+          <div class="valor" id="op-cbs">&nbsp;</div>
+        </div>
+        <div class="calc-kpi">
+          <div class="rotulo">IBS (estados e municípios)</div>
+          <div class="valor" id="op-ibs">&nbsp;</div>
+        </div>
+        <div class="calc-kpi">
+          <div class="rotulo">Preço com imposto</div>
+          <div class="valor" id="op-preco">&nbsp;</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Memória de cálculo</h3>
+        <div class="tabela-rolavel">
+          <table>
+            <tbody id="op-memoria"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="aviso" id="op-aviso" hidden></div>
+
+      <div class="card" style="margin-top: 20px" id="bloco-oficial">
+        <h3>Conferir na Calculadora oficial da Receita Federal</h3>
+        <p class="dica" style="margin-bottom: 16px">
+          Envia esta operação à Calculadora da Reforma Tributária (RFB/Serpro, piloto do
+          Regime Geral) e mostra o resultado oficial ao lado do nosso. O NCM determina o
+          enquadramento na tabela oficial CST × cClassTrib. Você também pode fazer a
+          mesma simulação diretamente na
+          <a href="https://piloto-cbs.tributos.gov.br/servico/calculadora-consumo/calculadora/regime-geral"
+            target="_blank" rel="noopener noreferrer">interface oficial da Receita Federal</a>.
+          É o mesmo motor que este botão consulta.
+        </p>
+        <div class="grid-campos" style="margin-bottom: 18px">
+          <div class="campo">
+            <div class="rotulo-linha">
+              <label for="of-ncm">NCM do produto</label>
+              <button type="button" class="ajuda"
+                data-dica="Código de 8 dígitos da Nomenclatura Comum do Mercosul, sem pontos. Ex.: 24021000."
+                aria-label="Código de 8 dígitos da Nomenclatura Comum do Mercosul, sem pontos. Ex.: 24021000.">
+                <span aria-hidden="true">?</span>
+              </button>
+            </div>
+            <div class="controle">
+              <input type="text" id="of-ncm" inputmode="numeric" maxlength="8" placeholder="24021000" autocomplete="off" />
+              <span class="marca-ok" aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="campo">
+            <label for="of-uf">UF da operação</label>
+            <div class="controle">
+              <input type="text" id="of-uf" maxlength="2" value="SP" autocomplete="off" style="text-transform: uppercase" />
+              <span class="marca-ok" aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="campo">
+            <div class="rotulo-linha">
+              <label for="of-municipio">Município (código IBGE)</label>
+              <button type="button" class="ajuda"
+                data-dica="Código IBGE de 7 dígitos. 3550308 é São Paulo capital."
+                aria-label="Código IBGE de 7 dígitos. 3550308 é São Paulo capital.">
+                <span aria-hidden="true">?</span>
+              </button>
+            </div>
+            <div class="controle">
+              <input type="text" id="of-municipio" inputmode="numeric" maxlength="7" value="3550308" autocomplete="off" />
+              <span class="marca-ok" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+        <button class="calc-btn" type="button" id="of-btn">Consultar API oficial</button>
+        <div class="aviso" id="of-resultado" hidden style="margin-top: 18px"></div>
+      </div>
+      </div>
+    </section>
+
+    <!-- ================= COMPARAR SISTEMAS ================= -->
+    <section id="painel-comp" role="tabpanel" aria-labelledby="aba-comp" hidden>
+      <form class="painel" id="form-comp" autocomplete="off">
+        <h2>Compare a carga de hoje com o regime pleno</h2>
+
+        <div class="grid-campos">
+          <Campo id="comp-preco" label="Preço de venda atual" placeholder="R$ 0,00"
+            dica="Preço praticado hoje, com PIS/COFINS, ICMS ou ISS embutidos." />
+
+          <div class="campo">
+            <div class="rotulo-linha">
+              <label for="comp-pis">Regime de PIS/COFINS</label>
+              <button type="button" class="ajuda"
+                data-dica="Cumulativo (3,65%): típico do Lucro Presumido. Não cumulativo (9,25%): típico do Lucro Real, com direito a créditos."
+                aria-label="Cumulativo (3,65%): típico do Lucro Presumido. Não cumulativo (9,25%): típico do Lucro Real, com direito a créditos.">
+                <span aria-hidden="true">?</span>
+              </button>
+            </div>
+            <select id="comp-pis">
+              <option value="cumulativo" selected>Cumulativo (3,65%)</option>
+              <option value="nao-cumulativo">Não cumulativo (9,25%)</option>
+            </select>
+          </div>
+
+          <Campo id="comp-icms" label="ICMS" opcional mascara="percentual" placeholder="0,00%"
+            dica="Alíquota embutida no preço de mercadorias. Deixe vazio para serviços." />
+          <Campo id="comp-iss" label="ISS" opcional mascara="percentual" placeholder="0,00%"
+            dica="Alíquota municipal embutida no preço de serviços. Deixe vazio para mercadorias." />
+
+          <div class="campo">
+            <div class="rotulo-linha">
+              <label for="comp-tratamento">Tratamento no novo sistema</label>
+              <button type="button" class="ajuda"
+                data-dica="A categoria da operação na LC 214/2025 define a alíquota do regime pleno."
+                aria-label="A categoria da operação na LC 214/2025 define a alíquota do regime pleno.">
+                <span aria-hidden="true">?</span>
+              </button>
+            </div>
+            <select id="comp-tratamento">
+              <option value="padrao" selected>Alíquota padrão</option>
+              <option value="reduzida-60">Redução de 60%</option>
+              <option value="reduzida-30">Redução de 30%</option>
+              <option value="zero">Alíquota zero</option>
+            </select>
+          </div>
+
+          <Campo id="comp-aliquota" label="Alíquota-padrão total" opcional mascara="percentual" placeholder="27,91%"
+            dica="Vazio, usa a estimativa oficial de 27,91%. Preencha para testar cenários." />
+        </div>
+
+        <div class="acoes">
+          <button class="calc-btn" type="submit">Ver resultado</button>
+          <p class="nota-rodape-form">
+            Comparação de operação isolada, mantida a receita líquida do vendedor. O
+            crédito amplo da cadeia tende a reduzir a carga real além do que aparece aqui.
+          </p>
+        </div>
+      </form>
+
+      <div id="comp-resultados" hidden>
+      <div class="calc-destaque">
+        <div class="rotulo" id="comp-rotulo">Diferença de carga na operação</div>
+        <div class="valor" id="comp-dif">&nbsp;</div>
+        <div class="nota" id="comp-nota"></div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom: 20px">
+        <div class="calc-kpi">
+          <div class="rotulo">Carga tributária hoje</div>
+          <div class="valor" id="comp-atual">&nbsp;</div>
+        </div>
+        <div class="calc-kpi">
+          <div class="rotulo">IBS + CBS no regime pleno</div>
+          <div class="valor" id="comp-novo">&nbsp;</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Lado a lado</h3>
+        <div class="tabela-rolavel">
+          <table>
+            <tbody id="comp-memoria"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="aviso" id="comp-aviso" hidden></div>
+      </div>
+    </section>
+
+    <!-- ================= CRONOGRAMA ================= -->
+    <section class="card" style="margin-top: 40px">
+      <h2 style="font-size: 1.25rem">Cronograma da transição (2026 a 2033)</h2>
+      <div class="tabela-rolavel">
+        <table>
+          <thead>
+            <tr>
+              <th>Ano</th>
+              <th>Fase</th>
+              <th>O que acontece</th>
+            </tr>
+          </thead>
+          <tbody>
+            {CRONOGRAMA.map((f) => (
+              <tr>
+                <td class="calc-num"><strong>{f.ano}</strong></td>
+                <td>{f.titulo}</td>
+                <td>{f.notas.join(' ')}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= CONTEÚDO LEGAL ================= -->
+    <section class="calc-legal">
+      <div class="wrap-estreito" style="padding: 0">
+        <h2>Como o novo sistema funciona</h2>
+
+        <h3>Imposto por fora: a alíquota que você vê é a que você paga</h3>
+        <p>
+          PIS/COFINS, ICMS e ISS incidem "por dentro": estão embutidos no preço, e um
+          ICMS nominal de 18% corresponde a uma carga real maior sobre o valor da
+          mercadoria. O IBS e a CBS invertem a lógica: incidem <strong>por fora</strong>,
+          sobre o valor da operação sem tributo, destacados no documento fiscal. Uma
+          operação de R$ 1.000 com alíquota de {pctPadrao}% custa R$ 1.000 + R$ 279,10
+          de tributo, e qualquer pessoa consegue conferir a conta.
+        </p>
+
+        <h3>Não cumulatividade plena: quase tudo gera crédito</h3>
+        <p>
+          No sistema atual, o direito a crédito é um contencioso permanente: cada insumo
+          discutido, cada regime com regra própria. Na LC 214/2025 a regra é uma só: toda
+          aquisição da empresa gera crédito do IBS e da CBS suportados, exceto bens e
+          serviços de uso e consumo pessoal. Energia, aluguel, software, frete, máquina,
+          material de escritório: tudo credita. O imposto pesa sobre o valor agregado de
+          cada elo, não sobre o faturamento em cascata.
+        </p>
+
+        <h3>Cobrança no destino e split payment</h3>
+        <p>
+          O IBS pertence ao estado e ao município de <strong>destino</strong> da operação,
+          o que encerra a guerra fiscal de incentivos na origem. E a lei prevê o
+          <strong>split payment</strong>: na liquidação financeira da venda, o valor do
+          tributo pode ser separado automaticamente e recolhido direto, sem passar pelo
+          caixa do vendedor, reduzindo inadimplência e fraude.
+        </p>
+
+        <h3>Ano-teste de 2026: destaque sem desembolso</h3>
+        <p>
+          Em 2026 a CBS de {(ANO_TESTE_2026.cbs * 100).toFixed(1).replace('.', ',')}% e o
+          IBS de {(ANO_TESTE_2026.ibs * 100).toFixed(1).replace('.', ',')}% aparecem no
+          documento fiscal, mas quem cumpre as obrigações acessórias fica dispensado de
+          recolher, e o que for recolhido compensa com PIS/COFINS. O objetivo do ano é
+          testar sistemas, notas e apurações, não arrecadar. A partir de 03/08/2026 o
+          preenchimento dos campos de IBS/CBS nos documentos fiscais tornou-se
+          obrigatório.
+        </p>
+
+        <h3>As alíquotas do regime pleno ainda não existem</h3>
+        <p>
+          Este é o ponto mais importante para ler qualquer simulação, inclusive esta. A
+          alíquota-padrão de {pctPadrao}% (IBS 18,7% + CBS ~9,2%) é a
+          <strong>estimativa oficial</strong> usada pelo Comitê Gestor do IBS na
+          Resolução CGIBS nº 14/2026 e pela Secretaria Extraordinária da Reforma
+          Tributária. A alíquota de referência real da CBS para 2027 será calculada pela
+          Receita Federal, homologada pelo TCU e encaminhada ao Senado até 30 de outubro
+          de 2026. Por isso o campo de alíquota desta calculadora é editável.
+        </p>
+
+        <h3>Reduções: quem paga menos que o padrão</h3>
+        <div class="tabela-rolavel">
+          <table>
+            <thead>
+              <tr>
+                <th>Tratamento</th>
+                <th class="calc-num">Alíquota estimada</th>
+                <th>Quem se enquadra</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.values(TRATAMENTOS).map((t) => (
+                <tr>
+                  <td><strong>{t.rotulo}</strong></td>
+                  <td class="calc-num">
+                    {((ALIQUOTA_PADRAO_ESTIMADA.total * (1 - t.reducao)) * 100)
+                      .toFixed(2)
+                      .replace('.', ',')}%
+                  </td>
+                  <td>{t.exemplos}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top: 12px">
+          Além das reduções, a LC 214/2025 cria <strong>regimes específicos</strong> com
+          mecânica própria: combustíveis (tributação monofásica), serviços financeiros,
+          planos de saúde, operações com imóveis (com redutores social e de ajuste),
+          cooperativas, bares e restaurantes, hotelaria e SAF. Nesses setores, a
+          simulação do regime geral não se aplica diretamente.
+        </p>
+
+        <h3>Cashback: devolução para quem ganha menos</h3>
+        <p>
+          Famílias inscritas no CadÚnico com renda per capita de até meio salário mínimo
+          recebem de volta {(CASHBACK.essenciais.cbs * 100).toFixed(0)}% da CBS e
+          {' '}{(CASHBACK.essenciais.ibs * 100).toFixed(0)}% do IBS pagos em
+          {' '}{CASHBACK.itensEssenciais.toLowerCase()}, com desconto direto na fatura
+          nos serviços domésticos. Nas demais compras, a devolução mínima é de
+          {' '}{(CASHBACK.geral.cbs * 100).toFixed(0)}% dos dois tributos.
+        </p>
+
+        <h3>Imposto Seletivo: o terceiro elemento</h3>
+        <p>
+          A partir de 2027, bens e serviços prejudiciais à saúde ou ao meio ambiente
+          (cigarros, bebidas alcoólicas e açucaradas, veículos, apostas, extração de
+          minério e petróleo) pagam também o Imposto Seletivo, por fora do IBS/CBS. Ele
+          não entra nesta simulação do regime geral.
+        </p>
+
+        <h2 id="fontes" style="margin-top: 44px">Fontes legais</h2>
+        <ul class="fontes">
+          <li>
+            <span class="norma">EC nº 132, de 20/12/2023 (ADCT arts. 124 a 133):</span>
+            <span class="oque">cria o IBS, a CBS e o Imposto Seletivo; fixa o ano-teste de 2026, o cronograma de transição até 2033 e a trava de referência.</span>
+          </li>
+          <li>
+            <span class="norma">LC nº 214, de 16/01/2025:</span>
+            <span class="oque">lei geral do IBS, da CBS e do IS: fato gerador, não cumulatividade plena, reduções de 30% e 60%, alíquota zero da cesta básica (Anexo I), cashback, split payment e regimes específicos.</span>
+          </li>
+          <li>
+            <span class="norma">LC nº 227, de 13/01/2026:</span>
+            <span class="oque">estrutura o Comitê Gestor do IBS (CGIBS), a distribuição da arrecadação e seu financiamento.</span>
+          </li>
+          <li>
+            <span class="norma">Resolução CGIBS nº 14, de 29/07/2026 (DOU 31/07/2026):</span>
+            <span class="oque">estimativa oficial de arrecadação do IBS para 2027; adota IBS de referência de 18,7% e alíquota-padrão conjunta estimada de 27,91%; confirma IBS 2027 em 0,1% (0,05% estadual + 0,05% municipal).</span>
+          </li>
+          <li>
+            <span class="norma">Notas técnicas SERT/MF:</span>
+            <span class="oque">metodologia de estimativa das alíquotas de referência do novo sistema (estimativa inicial de 26,5%, revisada para ~28%).</span>
+          </li>
+          <li>
+            <span class="norma">Leis nº 9.718/1998, 10.637/2002 e 10.833/2003:</span>
+            <span class="oque">PIS/COFINS cumulativo (3,65%) e não cumulativo (9,25%) usados no comparador.</span>
+          </li>
+          <li>
+            <span class="norma">Calculadora oficial da Reforma Tributária (RFB/Serpro):</span>
+            <span class="oque">motor público do Regime Geral, disponível como <a href="https://piloto-cbs.tributos.gov.br/servico/calculadora-consumo/calculadora/regime-geral" target="_blank" rel="noopener noreferrer">interface web</a> e como API. O motor desta página é validado automaticamente contra a API oficial (script validar-api-oficial), e o botão de conferência envia sua operação à fonte oficial via proxy.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</CalculadoraShell>
+
+<script>
+  import { moeda, parseMoeda, parsePercentual, percentual } from '../../lib/calc/format';
+  import {
+    calcularOperacao,
+    compararSistemas,
+    type Tratamento,
+  } from '../../lib/calc/reforma';
+  // `calcularOperacao` também alimenta a conferência contra a API oficial.
+
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+
+  const linha = (rotulo: string, valor: string, classe = '') =>
+    `<tr class="${classe}"><td>${rotulo}</td><td class="calc-num">${valor}</td></tr>`;
+
+  const linhaSaldo = (rotulo: string, valorNumerico: number, classe = 'total') =>
+    `<tr class="${classe}"><td>${rotulo}</td><td class="calc-num ${
+      valorNumerico > 0 ? 'positivo' : valorNumerico < 0 ? 'negativo' : ''
+    }">${moeda(valorNumerico)}</td></tr>`;
+
+  // ------------------------------------------------------------------ abas
+  const abas = Array.from(document.querySelectorAll<HTMLButtonElement>('.aba'));
+  abas.forEach((aba) =>
+    aba.addEventListener('click', () => {
+      for (const a of abas) {
+        const ativo = a === aba;
+        a.setAttribute('aria-selected', String(ativo));
+        document.getElementById(a.getAttribute('aria-controls')!)!.hidden = !ativo;
+      }
+    }),
+  );
+
+  // ---------------------------------------------------- simular operação
+  const formOp = $<HTMLFormElement>('form-op');
+
+  function calcularOp() {
+    const ano = Number($<HTMLSelectElement>('op-ano').value);
+    const aliquotaCustom = parsePercentual($<HTMLInputElement>('op-aliquota').value);
+
+    const r = calcularOperacao({
+      ano,
+      valorOperacao: parseMoeda($<HTMLInputElement>('op-valor').value),
+      tratamento: $<HTMLSelectElement>('op-tratamento').value as Tratamento,
+      creditos: parseMoeda($<HTMLInputElement>('op-creditos').value),
+      aliquotaRefTotal: aliquotaCustom > 0 ? aliquotaCustom : undefined,
+    });
+
+    $('op-total').textContent = moeda(r.debitoTotal);
+    $('op-cbs').textContent = moeda(r.debitoCbs);
+    $('op-ibs').textContent = moeda(r.debitoIbs);
+    $('op-preco').textContent = moeda(r.precoComImposto);
+    $('op-nota').textContent =
+      `Alíquota aplicada: ${percentual(r.aliquotaAplicada.total)} (${r.tratamento.rotulo.toLowerCase()}) sobre ${moeda(r.valorOperacao)}, por fora.`;
+
+    $('op-memoria').innerHTML = [
+      linha('Valor da operação (sem IBS/CBS)', moeda(r.valorOperacao)),
+      linha(`CBS a ${percentual(r.aliquotaAplicada.cbs)}`, moeda(r.debitoCbs)),
+      linha(`IBS a ${percentual(r.aliquotaAplicada.ibs)}`, moeda(r.debitoIbs)),
+      linha('(=) Débito do período', moeda(r.debitoTotal)),
+      r.creditos > 0 ? linha('(−) Créditos das aquisições', moeda(r.creditos), 'subtracao') : '',
+      linhaSaldo('(=) IBS/CBS a recolher', r.aRecolher),
+      r.creditoAcumulado > 0
+        ? linha('Crédito acumulado para os próximos períodos', moeda(r.creditoAcumulado))
+        : '',
+      linha('Preço da operação com imposto', moeda(r.precoComImposto), 'total'),
+    ].join('');
+
+    const avisos: string[] = [];
+
+    if (ano === 2026) {
+      avisos.push(
+        '<strong>Ano-teste: destaque sem desembolso</strong>Cumprindo as obrigações acessórias, o recolhimento destes valores é dispensado, e o que for pago compensa com PIS/COFINS. O destaque nos documentos fiscais é obrigatório desde 03/08/2026.',
+      );
+    } else {
+      avisos.push(
+        `<strong>${ano}: ${r.aliquotas.fase.titulo}</strong>${r.aliquotas.fase.notas.join(' ')} As alíquotas definitivas serão fixadas por resolução do Senado; edite o campo de alíquota para testar outros cenários.`,
+      );
+    }
+
+    if (r.tratamento.reducao > 0) {
+      avisos.push(
+        `<strong>${r.tratamento.rotulo}</strong>${r.tratamento.exemplos} Base: ${r.tratamento.fonte}.`,
+      );
+    }
+
+    const avisoEl = $('op-aviso');
+    avisoEl.hidden = avisos.length === 0;
+    avisoEl.innerHTML = avisos.join(
+      '<hr style="border:none;border-top:1px solid rgba(245,57,26,.3);margin:12px 0">',
+    );
+  }
+
+  const resultadosOp = $('op-resultados');
+  formOp.addEventListener('submit', (e) => {
+    e.preventDefault();
+    calcularOp();
+    resultadosOp.hidden = false;
+    resultadosOp.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  formOp.addEventListener('input', () => {
+    if (!resultadosOp.hidden) calcularOp();
+  });
+  formOp.addEventListener('change', () => {
+    if (!resultadosOp.hidden) calcularOp();
+  });
+
+  // ------------------------------------------- conferência na API oficial
+  const btnOficial = $<HTMLButtonElement>('of-btn');
+  const resultadoOficial = $('of-resultado');
+
+  btnOficial.addEventListener('click', async () => {
+    const ncm = $<HTMLInputElement>('of-ncm').value.replace(/\D/g, '');
+    // Tudo que vier da API oficial e' texto de TERCEIRO, e entra na pagina por innerHTML.
+    // `title`, `detail` e `memoriaCalculo` sao campos livres do lado de la, o `detail`,
+    // inclusive, ecoa de volta o que foi enviado ("...para NCM 22021000 e data ..."). Hoje
+    // o proxy so' deixa passar NCM de 8 digitos, UF de 2 letras e codigo IBGE, o que fecha
+    // a porta; mas fechar a porta la' e' defesa que depende de ninguem afrouxar a validacao
+    // depois. O escape aqui e' no ponto de insercao, que e' onde ele nao some numa
+    // refatoracao.
+    const esc = (v: unknown) =>
+      String(v ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+
+    const uf = $<HTMLInputElement>('of-uf').value.toUpperCase().trim();
+    const municipio = Number($<HTMLInputElement>('of-municipio').value.replace(/\D/g, ''));
+    const base = parseMoeda($<HTMLInputElement>('op-valor').value);
+
+    resultadoOficial.hidden = false;
+
+    if (ncm.length !== 8) {
+      resultadoOficial.innerHTML =
+        '<strong>Informe o NCM</strong>A calculadora oficial identifica o tratamento do produto pelo código NCM de 8 dígitos.';
+      return;
+    }
+    if (base <= 0) {
+      resultadoOficial.innerHTML =
+        '<strong>Informe o valor da operação</strong>Preencha o valor no formulário acima antes de consultar.';
+      return;
+    }
+
+    btnOficial.disabled = true;
+    btnOficial.textContent = 'Consultando...';
+    resultadoOficial.innerHTML = '<strong>Consultando a calculadora oficial...</strong>';
+
+    try {
+      const resposta = await fetch('/api/rtc', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ base, ncm, uf, municipio }),
+      });
+
+      const corpo = await resposta.json().catch(() => null);
+
+      if (!resposta.ok || !corpo) {
+        // 4xx de negócio da API oficial vem com title/detail (RFC 7807).
+        const detalhe =
+          corpo?.detail ?? corpo?.erro ?? `A consulta falhou (HTTP ${resposta.status}).`;
+        resultadoOficial.innerHTML = `<strong>${esc(corpo?.title ?? 'Não foi possível calcular')}</strong>${esc(detalhe)}`;
+        return;
+      }
+
+      const tot = corpo.total?.tribCalc?.IBSCBSTot;
+      const oficialCbs = Number(tot?.gCBS?.vCBS ?? 0);
+      const oficialIbs = Number(tot?.gIBS?.vIBS ?? 0);
+      const item = corpo.objetos?.[0]?.tribCalc?.IBSCBS?.gIBSCBS;
+      const memoria = item?.gCBS?.memoriaCalculo ?? '';
+
+      const local = calcularOperacao({
+        ano: Number($<HTMLSelectElement>('op-ano').value),
+        valorOperacao: base,
+        tratamento: $<HTMLSelectElement>('op-tratamento').value as Tratamento,
+      });
+
+      const bate =
+        Math.abs(oficialCbs - local.debitoCbs) <= 0.01 &&
+        Math.abs(oficialIbs - local.debitoIbs) <= 0.01;
+
+      resultadoOficial.innerHTML = [
+        `<strong>Resultado oficial (RFB/Serpro): CBS ${moeda(oficialCbs)} + IBS ${moeda(oficialIbs)}</strong>`,
+        `Nosso motor: CBS ${moeda(local.debitoCbs)} + IBS ${moeda(local.debitoIbs)}. ${
+          bate
+            ? 'Os valores conferem.'
+            : 'Há diferença: o NCM informado tem tratamento próprio na tabela oficial (redução, alíquota zero ou regime específico), diferente do selecionado no formulário.'
+        }`,
+        memoria ? `<em>Memória oficial: ${esc(memoria)}</em>` : '',
+      ]
+        .filter(Boolean)
+        .join('<br>');
+    } catch {
+      resultadoOficial.innerHTML =
+        '<strong>Proxy indisponível</strong>A API oficial não aceita chamadas diretas do navegador (CORS). Esta conferência funciona na versão hospedada na Vercel, onde o proxy serverless em /api/rtc faz a ponte.';
+    } finally {
+      btnOficial.disabled = false;
+      btnOficial.textContent = 'Consultar API oficial';
+    }
+  });
+
+  // ---------------------------------------------------- comparar sistemas
+  const formComp = $<HTMLFormElement>('form-comp');
+
+  function calcularComp() {
+    const aliquotaCustom = parsePercentual($<HTMLInputElement>('comp-aliquota').value);
+
+    const r = compararSistemas({
+      precoAtual: parseMoeda($<HTMLInputElement>('comp-preco').value),
+      regimePisCofins: $<HTMLSelectElement>('comp-pis').value as 'cumulativo' | 'nao-cumulativo',
+      icms: parsePercentual($<HTMLInputElement>('comp-icms').value),
+      iss: parsePercentual($<HTMLInputElement>('comp-iss').value),
+      tratamento: $<HTMLSelectElement>('comp-tratamento').value as Tratamento,
+      aliquotaRefTotal: aliquotaCustom > 0 ? aliquotaCustom : undefined,
+    });
+
+    const sobe = r.diferencaCarga > 0;
+    $('comp-rotulo').textContent = sobe
+      ? 'A carga da operação tende a subir'
+      : r.diferencaCarga < 0
+        ? 'A carga da operação tende a cair'
+        : 'A carga da operação tende a empatar';
+    $('comp-dif').textContent = `${sobe ? '+' : r.diferencaCarga < 0 ? '−' : ''}${moeda(Math.abs(r.diferencaCarga))}`;
+    $('comp-nota').textContent =
+      `De ${moeda(r.cargaAtual)} (${percentual(r.aliquotaAtualEfetiva)} por dentro) para ${moeda(r.tributoNovo)} (${percentual(r.aliquotaNova)} por fora), mantida a receita líquida de ${moeda(r.receitaLiquida)}.`;
+
+    $('comp-atual').textContent = moeda(r.cargaAtual);
+    $('comp-novo').textContent = moeda(r.tributoNovo);
+
+    $('comp-memoria').innerHTML = [
+      linha('Preço de venda atual', moeda(r.precoAtual)),
+      linha('(−) PIS/COFINS + ICMS/ISS embutidos', moeda(r.cargaAtual), 'subtracao'),
+      linhaSaldo('(=) Receita líquida do vendedor', r.receitaLiquida, ''),
+      linha(`IBS/CBS por fora a ${percentual(r.aliquotaNova)}`, moeda(r.tributoNovo)),
+      linha('(=) Novo preço com imposto', moeda(r.precoNovo), 'total'),
+      linhaSaldo('Diferença no preço final', r.diferencaPreco, ''),
+    ].join('');
+
+    const avisoEl = $('comp-aviso');
+    avisoEl.hidden = false;
+    avisoEl.innerHTML =
+      '<strong>Leia com o contexto certo</strong>Esta é uma operação isolada com margem constante. No sistema novo, os créditos amplos sobre TODAS as aquisições da empresa (energia, aluguel, software, frete) reduzem a carga efetiva da cadeia de um jeito que o sistema atual não permite, e que esta comparação não captura. Setores com regime específico (combustíveis, financeiro, planos de saúde, imóveis) têm mecânica própria.';
+  }
+
+  const resultadosComp = $('comp-resultados');
+  formComp.addEventListener('submit', (e) => {
+    e.preventDefault();
+    calcularComp();
+    resultadosComp.hidden = false;
+    resultadosComp.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  formComp.addEventListener('input', () => {
+    if (!resultadosComp.hidden) calcularComp();
+  });
+  formComp.addEventListener('change', () => {
+    if (!resultadosComp.hidden) calcularComp();
+  });
+</script>

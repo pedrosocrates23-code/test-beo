@@ -1,0 +1,63 @@
+---
+import { valorInicial, type TipoMascara } from '../../lib/calc/mascara';
+
+/**
+ * Campo de formulário com máscara de entrada e marcação de "preenchido".
+ *
+ * Todo campo numérico é `type="text"` de propósito: `type="number"` não aceita
+ * texto formatado, o que inviabiliza a máscara. A validação numérica fica na
+ * própria máscara, que só deixa passar dígitos.
+ *
+ * A explicação do campo não fica embaixo dele: vira tooltip no ícone ao lado do
+ * rótulo. Texto solto abaixo do campo altera a altura de cada célula e desalinha
+ * as linhas da grade.
+ *
+ * A máscara e o selo verde são ligados por um script global no Base.astro, que
+ * observa qualquer `[data-mascara]` da página. Nenhuma página repete a lógica.
+ */
+interface Props {
+  id: string;
+  label: string;
+  /** Marca o campo como opcional e acrescenta o sufixo no rótulo. */
+  opcional?: boolean;
+  /** Vira tooltip no ícone de ajuda, ao lado do rótulo. */
+  dica?: string;
+  mascara?: TipoMascara;
+  /** Valor inicial, já como número; a formatação é feita aqui. */
+  valor?: number;
+  placeholder?: string;
+}
+
+const { id, label, opcional = false, dica, mascara = 'moeda', valor, placeholder } =
+  Astro.props;
+
+const valorFormatado = typeof valor === 'number' ? valorInicial(mascara, valor) : '';
+const modo = mascara === 'inteiro' ? 'numeric' : 'decimal';
+---
+
+<div class="campo">
+  <div class="rotulo-linha">
+    <label for={id}>
+      {label}{opcional && <span class="opc"> (opcional)</span>}
+    </label>
+    {
+      dica && (
+        <button type="button" class="ajuda" data-dica={dica} aria-label={dica}>
+          <span aria-hidden="true">?</span>
+        </button>
+      )
+    }
+  </div>
+  <div class="controle">
+    <input
+      type="text"
+      id={id}
+      inputmode={modo}
+      data-mascara={mascara}
+      value={valorFormatado}
+      placeholder={placeholder}
+      autocomplete="off"
+    />
+    <span class="marca-ok" aria-hidden="true"></span>
+  </div>
+</div>

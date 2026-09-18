@@ -45,6 +45,47 @@ O campo `relacionados` de cada `src/data/artigos/*.json` já chega resolvido; o 
 novo o script que recalcula esse campo — senão os artigos novos não entram no rodapé de
 ninguém, e os antigos seguem apontando para vizinhos que mudaram.
 
+## Acima de 2100px o site roda sob `zoom` — `100vw` e `100vh` crus viram bug
+
+`src/styles/escala-larga.css` trava a viewport útil do site em 2100px: acima disso o `:root`
+recebe `zoom` contínuo e tudo — container, tipografia e a foto do hero — cresce junto. É o que
+impede a foto de deixar sobra nas laterais num monitor de 27" ou maior (eram 176px de cada lado
+a 2560px, 616px a 3440px), e é o mesmo efeito do zoom de 125% do Chrome, só que como regra.
+
+Medido em Chromium, porque o CSSWG não especifica: **`vw` e `vh` não são compensados pelo
+zoom.** Um `100vw` cru sob zoom 1,22 pinta 122% da tela e rola a página para o lado. O site
+escapa hoje porque todo uso de `100vw` está dentro de um `min()` com teto menor, e todo `vw`
+tipográfico está em `clamp()` já saturado nessas larguras.
+
+Ao escrever CSS novo: se a medida precisa valer a tela inteira, divida por `var(--zoom)`, que
+existe em qualquer largura justamente para isso. E lembre que media queries são avaliadas na
+largura **real** da janela, não nos 2100px úteis — um `min-width` novo acima de 2100px compara
+com a tela física.
+
+`npm run test:escala` mede a sobra da foto pixel a pixel e o estouro horizontal das 31 rotas
+nas cinco larguras. Ele reprova se a folha sair do Layout.
+
+## Página nova: a rota precisa entrar em `src/lib/paginas.ts`
+
+Aquele arquivo é a lista única das páginas fixas — as que não vêm de content collection — e
+alimenta o índice de busca (`/busca.json`) e o sitemap ao mesmo tempo. Antes eram duas listas
+paralelas mantidas à mão, e elas saíram de sincronia: as quatro páginas de calculadoras
+entraram no sitemap e ficaram de fora da busca, e a home nunca esteve nela. Cinco páginas
+publicadas, encontráveis pelo Google e invisíveis para quem usava a lupa do próprio site.
+
+**A ordem do array importa para a busca.** O overlay agrupa os resultados por `grupo` e ordena
+os grupos pela primeira aparição no índice (ver `filtrar`, em `BuscaOverlay.astro`). Mover uma
+linha reordena o resultado. O sitemap não depende da ordem: ele emite por `priority`.
+
+`npm run test:paginas` compara a lista com as rotas que o build realmente gerou, nos dois
+sentidos — rota sem entrada reprova, entrada sem rota também. Não há como a lista envelhecer
+em silêncio de novo.
+
+Detalhe que economiza tempo: o campo `resumo` **não é desenhado** no resultado da busca, que
+mostra só ícone e título. Ele existe para entrar no texto pesquisável. Por isso 19 artigos
+importados do Framer sem `lead` não deixam buraco na interface — só ficam buscáveis apenas
+pelo título e pela categoria. O teste avisa, não reprova.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build

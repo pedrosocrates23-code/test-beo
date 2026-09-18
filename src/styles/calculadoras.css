@@ -1,0 +1,797 @@
+/* ==========================================================================
+   Calculadoras fiscais, folha de estilo da seção /calculadoras/
+   ==========================================================================
+   Origem: calculadoras-fiscais/src/styles/global.css, o projeto que publicou
+   as três calculadoras em calculadoras-fiscais.vercel.app. Aqui ela chega com
+   duas mudanças, e nenhuma delas é cosmética:
+
+   1. TUDO ESTÁ ESCOPADO SOB `.calc`. Não é preciosismo: a folha de origem
+      define `.wrap`, `.nav`, `.hero`, `.card` e `.legal`, os cinco nomes
+      existem no Beorange e significam outra coisa. `.calc-legal`, em particular, é
+      a linha de links legais do rodapé; solta, esta folha reescrevia o rodapé
+      de toda página que a importasse.
+
+   2. AS CORES VÊM DO DESIGN SYSTEM, pela Ponte logo abaixo. A folha de origem
+      trazia paleta própria em literais (#f5391a, #000, #e3e3e3…). Em vez de
+      caçar cada uso nas 99 regras, os nomes dela passam a apontar para os
+      tokens, mesma técnica que o tokens.css já usa para `--coral` e `--ink`.
+      Quem escrever regra nova aqui deve usar o token direto, não o apelido.
+
+   O que NÃO veio: o @font-face da Outfit self-hosted (o Layout já carrega a
+   Outfit do Google Fonts), o reset (`*`, `html`, `body`) e o shell próprio das
+   calculadoras (`.topo`, `.marca`, `.nav`, `.rodape`), aqui quem faz o topo e
+   o rodapé são o Header.astro e o Footer.astro do site.
+   ========================================================================== */
+
+.calc {
+  /* ---------- Ponte: os nomes da folha de origem → tokens do design system ----------
+     À esquerda, o apelido que as 99 regras abaixo usam. À direita, o token que
+     manda de verdade. Trocar a cor da marca continua sendo uma linha no
+     tokens.css, e não uma varredura aqui. */
+  --laranja: var(--action-primary);
+  --laranja-escuro: var(--action-primary-hover);
+  --laranja-lavado: var(--bg-brand-subtle);
+
+  --tinta: var(--text-primary);
+  --tinta-suave: var(--text-secondary);
+  --linha: var(--border-subtle);
+  --linha-forte: var(--border-default);
+  --fundo: var(--bg-primary);
+  --superficie: var(--surface-card);
+  --superficie-alt: var(--bg-secondary);
+
+  --raio: var(--radius-lg);
+  --raio-sm: var(--radius-md);
+
+  --fonte: var(--font-family-base);
+
+  /* ---------- Sem token correspondente: ficam literais, e é de propósito ----------
+     O design system do Figma não tem cor de estado nem escala de sombra. Estes
+     quatro valores vieram da folha de origem e continuam literais até que o
+     designer defina os tokens. Quem inventar um `--success` aqui está criando
+     design system por conta própria, o lugar disso é o Figma, não este arquivo.
+
+     --positivo e --negativo carregam significado na memória de cálculo: o que
+     sai do bolso é vermelho, o que sobra é verde. Ambos passam em AA sobre o
+     branco (#0f7a4f: 5.3:1; #c62828: 5.9:1). */
+  --positivo: #0f7a4f;
+  --negativo: #c62828;
+  --sombra: 0 1px 2px rgba(0, 0, 0, 0.04), 0 10px 28px rgba(0, 0, 0, 0.05);
+  --mono: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
+
+  /* A seção respira como as demais do site; a origem usava `main`. */
+  padding-block: 44px 72px;
+}
+
+.calc h1,
+.calc h2,
+.calc h3 {
+  color: var(--tinta);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.4em;
+}
+
+.calc h1 {
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  font-weight: 800;
+}
+
+.calc h2 {
+  font-size: clamp(1.4rem, 2.8vw, 1.9rem);
+}
+
+.calc h3 {
+  font-size: 1.08rem;
+  font-weight: 650;
+}
+
+.calc p {
+  margin: 0 0 1em;
+}
+
+.calc a {
+  color: var(--tinta);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.calc a:hover {
+  color: var(--laranja);
+}
+
+.calc strong {
+  font-weight: 650;
+}
+
+.calc code {
+  font-family: var(--mono);
+  font-size: 0.9em;
+  background: var(--superficie-alt);
+  padding: 2px 6px;
+  border-radius: 5px;
+}
+
+/* A coluna de texto do "O que está por trás dos números" e das "Fontes legais".
+   Alinhada à ESQUERDA do container, e não centrada: centrada, ela criava uma margem de
+   182px à esquerda que não existe em nenhum outro bloco da página, o formulário, os
+   resultados e a memória de cálculo começam todos na borda do .wrap. O texto ficava
+   flutuando, deslocado em relação ao que vem antes e depois dele.
+
+   `margin-inline: 0 auto` zera só a margem da esquerda; a da direita continua absorvendo a
+   sobra, que é o que segura a linha em 720px e mantém a leitura confortável. Em tela
+   estreita não muda nada: lá o container já é menor que o teto. */
+.calc .wrap-estreito {
+  max-width: 720px;
+  margin-inline: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- cabeçalho de página ---------- */
+/* ---------- superfícies ---------- */
+.calc .card,
+.calc .painel {
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  padding: 28px;
+}
+
+.calc .painel {
+  box-shadow: var(--sombra);
+  margin-bottom: 28px;
+}
+
+.calc .painel > h2 {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 26px;
+}
+
+/* ---------------------------------------------------------------------------
+   Por que `minmax(min(Npx, 100%), 1fr)` e nao `minmax(Npx, 1fr)`
+   ---------------------------------------------------------------------------
+   `repeat(auto-fit, minmax(238px, 1fr))` promete uma coluna de no MINIMO 238px.
+   Num aparelho de 320px, o container util tem 206px, e o grid cumpre a promessa,
+   estourando a pagina em 179px. O sintoma engana: quem aparecia na medicao era o
+   header, porque ele e `position:fixed` e acompanha o documento esticado.
+
+   `min(238px, 100%)` mantem os 238px onde couberem e cede para 100% onde nao
+   couberem. Veio assim do projeto de origem, onde nao havia teste de largura para
+   pegar; aqui pegou o tests/largura.test.mjs, nos seis recortes de 320 a 430px.
+   --------------------------------------------------------------------------- */
+
+.calc .grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 20px;
+}
+
+.calc .grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: 16px;
+}
+
+/* ---------- formulário ---------- */
+.calc form {
+  margin: 0;
+}
+
+.calc fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+
+.calc fieldset:last-of-type {
+  margin-bottom: 0;
+}
+
+.calc legend {
+  font-weight: 700;
+  font-size: 0.74rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--tinta);
+  padding: 0 0 10px;
+  margin-bottom: 18px;
+  width: 100%;
+  border-bottom: 1px solid var(--linha);
+}
+
+.calc .grid-campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(238px, 100%), 1fr));
+  gap: 18px 20px;
+}
+
+/*
+  O rótulo ocupa uma linha só. Rótulo em duas linhas desalinha a altura das
+  colunas da grade e faz os campos vizinhos "pularem" na vertical.
+  O ícone de ajuda fica FORA do <label>, porque o label é recortado por
+  `overflow: hidden` e engoliria o tooltip.
+*/
+.calc .rotulo-linha {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.calc .campo label,
+.calc .campo > .rotulo-campo {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--tinta);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.calc .campo > label,
+.calc .campo > .rotulo-campo {
+  margin-bottom: 6px;
+}
+
+.calc .rotulo-linha label {
+  margin-bottom: 0;
+}
+
+@media (max-width: 520px) {
+  /* Em tela estreita, quebrar é melhor do que cortar. */
+  .calc .campo label,
+.calc .campo > .rotulo-campo {
+      white-space: normal;
+
+  }
+
+}
+/* ---------- tooltip de ajuda ---------- */
+.calc .ajuda {
+  position: relative;
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  padding: 0;
+  border: 1.5px solid var(--linha-forte);
+  border-radius: 50%;
+  background: var(--superficie);
+  color: var(--tinta-suave);
+  font-family: var(--fonte);
+  font-size: 0.66rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: help;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.calc .ajuda:hover,
+.calc .ajuda:focus-visible {
+  border-color: var(--laranja);
+  color: var(--laranja);
+}
+
+.calc .ajuda::after {
+  content: attr(data-dica);
+  position: absolute;
+  bottom: calc(100% + 9px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  width: max-content;
+  max-width: min(250px, calc(100vw - 32px));
+  padding: 9px 11px;
+  border-radius: 8px;
+  background: var(--tinta);
+  color: var(--text-inverse);
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: none;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s;
+}
+
+/* Setinha apontando para o ícone. */
+.calc .ajuda::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 31;
+  border: 5px solid transparent;
+  border-top-color: var(--tinta);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s;
+}
+
+.calc .ajuda:hover::after,
+.calc .ajuda:hover::before,
+.calc .ajuda:focus-visible::after,
+.calc .ajuda:focus-visible::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 640px) {
+  /* No celular o tooltip passa a ser da LARGURA DO CAMPO, e nao do botao.
+     A folha de origem ja tentava resolver isto com `left: 0`, mas `left` e relativo ao
+     proprio `.ajuda`, um botao de 17px que fica no fim do rotulo, a 209px da margem num
+     aparelho de 320px. O balao de 216px entao ia de 209 a 425: metade dele fora da tela, e
+     o `scrollWidth` do campo em 238 mesmo com o balao invisivel (`visibility: hidden` nao
+     tira a caixa do calculo de overflow). Era esta a origem do estouro de 173px que o
+     tests/largura.test.mjs acusava nas tres calculadoras, e nao o header, o header e
+     `position: fixed` e so acompanhava o documento ja esticado.
+
+     A ancora passa para o `.rotulo-linha`, que tem a largura do campo: com `left` e `right`
+     em zero o balao cabe exatamente nela, em qualquer aparelho. A setinha sai de cena no
+     mobile porque, ancorada na linha e nao no botao, ela apontaria para o lugar errado. */
+  .calc .rotulo-linha {
+    position: relative;
+  }
+  .calc .ajuda {
+    position: static;
+  }
+  .calc .ajuda::after {
+    left: 0;
+    right: 0;
+    width: auto;
+    max-width: none;
+    transform: none;
+  }
+  .calc .ajuda::before {
+    display: none;
+  }
+}
+.calc .opc {
+  font-weight: 400;
+  color: var(--tinta-suave);
+}
+
+/* Texto auxiliar em blocos explicativos. Nos campos, a dica virou tooltip. */
+.calc .dica {
+  display: block;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--tinta-suave);
+  font-weight: 400;
+}
+
+.calc .controle {
+  position: relative;
+}
+
+.calc input[type='text'],
+.calc input[type='number'],
+.calc select {
+  width: 100%;
+  padding: 11px 38px 11px 14px;
+  font-size: 1rem;
+  font-family: var(--fonte);
+  font-weight: 500;
+  color: var(--tinta);
+  background: var(--superficie);
+  border: 1.5px solid var(--linha-forte);
+  border-radius: var(--raio-sm);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.calc select {
+  padding-right: 14px;
+  cursor: pointer;
+}
+
+.calc input::placeholder {
+  color: var(--tinta-suave);
+  font-weight: 400;
+}
+
+.calc input:hover,
+.calc select:hover {
+  border-color: var(--tinta-suave);
+}
+
+.calc input:focus-visible,
+.calc select:focus-visible,
+.calc button:focus-visible {
+  outline: none;
+  border-color: var(--laranja);
+  box-shadow: 0 0 0 3px var(--laranja-lavado);
+}
+
+.calc .marca-ok {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%) scale(0.6);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--positivo);
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s;
+  pointer-events: none;
+}
+
+.calc .marca-ok::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 3px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--text-inverse);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.calc .controle.preenchido .marca-ok {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.calc .controle.preenchido input {
+  border-color: color-mix(in srgb, var(--positivo) 40%, var(--linha-forte));
+}
+
+.calc .check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 12px;
+  font-size: 0.88rem;
+  color: var(--tinta-suave);
+  cursor: pointer;
+}
+
+.calc .check input {
+  margin-top: 4px;
+  width: auto;
+  accent-color: var(--laranja);
+  flex-shrink: 0;
+}
+
+/* ---------- botão ---------- */
+.calc .acoes {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--linha);
+  text-align: center;
+}
+
+.calc .calc-btn {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  background: var(--laranja);
+  color: var(--text-inverse);
+  font-family: var(--fonte);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 15px 52px;
+  border-radius: 999px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.calc .calc-btn:hover {
+  background: var(--laranja-escuro);
+}
+
+.calc .calc-btn:active {
+  transform: translateY(1px);
+}
+
+.calc .nota-rodape-form {
+  margin-top: 16px;
+  font-size: 0.8rem;
+  color: var(--tinta-suave);
+  text-align: center;
+}
+
+/* ---------- abas ---------- */
+.calc .abas {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--superficie-alt);
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 26px;
+}
+
+.calc .aba {
+  appearance: none;
+  background: none;
+  border: none;
+  border-radius: 999px;
+  padding: 9px 22px;
+  font-size: 0.94rem;
+  font-family: var(--fonte);
+  font-weight: 600;
+  color: var(--tinta-suave);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.calc .aba[aria-selected='true'] {
+  background: var(--laranja);
+  color: var(--text-inverse);
+}
+
+.calc [role='tabpanel'][hidden],
+.calc #resultados[hidden] {
+  display: none;
+}
+
+/* ---------- resultados ---------- */
+
+/* Único bloco que foge do branco: o resultado principal. */
+.calc .calc-destaque {
+  background: linear-gradient(135deg, var(--laranja) 0%, var(--laranja-escuro) 100%);
+  color: var(--text-inverse);
+  border-radius: var(--raio);
+  padding: 26px 28px;
+  margin-bottom: 20px;
+}
+
+.calc .calc-destaque .rotulo {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-inverse);
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.calc .calc-destaque .valor {
+  font-size: clamp(2rem, 5.5vw, 2.9rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-inverse);
+}
+
+.calc .calc-destaque .nota {
+  font-size: 0.87rem;
+  color: var(--text-inverse);
+  opacity: 0.9;
+  margin-top: 8px;
+}
+
+.calc .calc-kpi {
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-sm);
+  padding: 16px 18px;
+}
+
+.calc .calc-kpi .rotulo {
+  font-size: 0.73rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+  font-weight: 700;
+}
+
+.calc .calc-kpi .valor {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--tinta);
+  margin-top: 4px;
+}
+
+.calc .calc-kpi .valor.positivo {
+  color: var(--positivo);
+}
+
+.calc table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.calc .tabela-rolavel {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.calc th,
+.calc td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid var(--linha);
+  color: var(--tinta);
+}
+
+.calc th {
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+  font-weight: 700;
+}
+
+.calc td.calc-num,
+.calc th.calc-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.calc tr.total td {
+  font-weight: 700;
+  border-top: 1.5px solid var(--tinta);
+  border-bottom: none;
+}
+
+/* Leitura por cor na memória de cálculo: o que sai é vermelho, o que sobra é verde. */
+.calc tr.subtracao td.calc-num,
+.calc td.calc-num.negativo {
+  color: var(--negativo);
+}
+
+.calc td.calc-num.positivo {
+  color: var(--positivo);
+  font-weight: 650;
+}
+
+.calc .aviso {
+  background: var(--superficie-alt);
+  border-left: 3px solid var(--laranja);
+  border-radius: var(--raio-sm);
+  padding: 15px 18px;
+  font-size: 0.89rem;
+  margin: 16px 0;
+  color: var(--tinta);
+}
+
+.calc .aviso strong {
+  display: block;
+  font-weight: 650;
+  margin-bottom: 3px;
+}
+
+.calc .aviso[hidden] {
+  display: none;
+}
+
+.calc .memoria {
+  margin-top: 18px;
+  border-top: 1px solid var(--linha);
+}
+
+.calc .memoria summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 14px 0 10px;
+  color: var(--tinta);
+  list-style: none;
+}
+
+.calc .memoria summary::-webkit-details-marker {
+  display: none;
+}
+
+.calc .memoria summary::before {
+  content: '+ ';
+  font-weight: 700;
+  color: var(--laranja);
+}
+
+.calc .memoria[open] summary::before {
+  content: '− ';
+}
+
+/* ---------- conteúdo legal ---------- */
+.calc .calc-legal {
+  margin-top: 60px;
+}
+
+.calc .calc-legal h2 {
+  position: relative;
+  padding-left: 18px;
+}
+
+.calc .calc-legal h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.18em;
+  bottom: 0.18em;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--laranja);
+}
+
+.calc .calc-legal h3 {
+  margin-top: 30px;
+}
+
+.calc .fontes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.calc .fontes li {
+  padding: 11px 0 11px 22px;
+  border-bottom: 1px solid var(--linha);
+  position: relative;
+}
+
+.calc .fontes li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: var(--laranja);
+  font-size: 0.8rem;
+}
+
+.calc .fontes li:last-child {
+  border-bottom: none;
+}
+
+.calc .fontes .norma {
+  font-weight: 650;
+}
+
+.calc .fontes .oque {
+  color: var(--tinta-suave);
+}
+
+.calc .cartao-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  padding: 28px;
+  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.calc .cartao-link:hover {
+  transform: translateY(-3px);
+  border-color: var(--tinta);
+  box-shadow: var(--sombra);
+  color: inherit;
+}
+
+.calc .cartao-link h2 {
+  margin-bottom: 10px;
+}
+
+.calc .cartao-link p {
+  color: var(--tinta-suave);
+  margin: 0;
+  font-size: 0.94rem;
+}
+
+.calc .cartao-link::after {
+  content: 'Abrir →';
+  display: inline-block;
+  margin-top: 14px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--laranja);
+}

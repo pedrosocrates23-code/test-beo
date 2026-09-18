@@ -150,6 +150,22 @@ export type DadosDaPagina =
     }
   | { tipo: "blog"; nome: string; descricao: string; migalhas: Migalha[] }
   | {
+      /** Página de calculadora. Traz DOIS nós além da WebPage: a própria ferramenta
+       *  (WebApplication) e o FAQ da página. Ver a nota 4 do cabeçalho — o FAQPage estava
+       *  listado como "quando tiver, entra", e as calculadoras são a primeira parte do site
+       *  com pergunta e resposta de verdade na página. */
+      tipo: "calculadora";
+      nome: string;
+      descricao: string;
+      migalhas: Migalha[];
+      /** Nome da ferramenta, como aparece no H1. */
+      ferramenta: string;
+      /** Pares pergunta/resposta que ESTÃO VISÍVEIS na página. O Google exige que o
+       *  conteúdo do FAQPage seja o mesmo que o usuário lê; FAQ só no JSON-LD é
+       *  motivo de ação manual. */
+      faq: { pergunta: string; resposta: string }[];
+    }
+  | {
       tipo: "artigo";
       nome: string;
       descricao: string;
@@ -224,6 +240,44 @@ export function montarGrafo(dados: DadosDaPagina, caminho: string): object[] {
       mainEntityOfPage: { "@id": `${url}#webpage` },
     });
     pagina.mainEntity = { "@id": `${url}#service` };
+  }
+
+  if (dados.tipo === "calculadora") {
+    // WebApplication desce de SoftwareApplication. A ferramenta é gratuita e roda no
+    // navegador, sem cadastro: `offers` com price 0 é o que declara isso de forma legível
+    // para o buscador — e é exigido pela documentação para SoftwareApplication.
+    grafo.push({
+      "@type": "WebApplication",
+      "@id": `${url}#app`,
+      name: dados.ferramenta,
+      description: dados.descricao,
+      url,
+      applicationCategory: "FinanceApplication",
+      operatingSystem: "Web",
+      browserRequirements: "Requer JavaScript",
+      inLanguage: "pt-BR",
+      isAccessibleForFree: true,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "BRL" },
+      provider: { "@id": ID_ORG },
+      publisher: { "@id": ID_ORG },
+      mainEntityOfPage: { "@id": `${url}#webpage` },
+    });
+    pagina.mainEntity = { "@id": `${url}#app` };
+
+    if (dados.faq.length > 0) {
+      grafo.push({
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        // Sem mainEntityOfPage nem isPartOf apontando para a WebPage: quem manda na
+        // página é a ferramenta, e duas mainEntity na mesma WebPage é a ambiguidade que
+        // o entity-ops manda evitar. O FAQ é um nó irmão, referenciado pelo @id.
+        mainEntity: dados.faq.map((f) => ({
+          "@type": "Question",
+          name: f.pergunta,
+          acceptedAnswer: { "@type": "Answer", text: f.resposta },
+        })),
+      });
+    }
   }
 
   // O nó do Blog acompanha a listagem E cada artigo. Só na listagem, o `isPartOf` de cada
