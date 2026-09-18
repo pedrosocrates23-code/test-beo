@@ -63,6 +63,9 @@ const TELAS_DOBRA = [
   ["iPad Pro 11 retrato",   834, 1194], ["iPad mini retrato",     744, 1133],
   ["Surface Pro paisagem", 1368,  912],
   ["desktop 1440x900",     1440,  900], ["desktop 1920x1080",    1920, 1080],
+  // Telas sob zoom. Só fazem sentido nesta lista depois que a medida passou a ser a altura
+  // pintada: com `offsetHeight` elas apareceriam com 71% e 58% em vez dos 71% e 95% reais.
+  ["monitor 27pol 2560",   2560, 1440], ["ultrawide 3440",       3440, 1440],
 ];
 /** Altura do hero da home a 1440x900, em px. É o desenho do Figma e não pode mudar: serve de
  *  âncora para provar que o aperto do tablet e a escala do monitor largo não vazam para o
@@ -152,16 +155,27 @@ for (const [nome, w, h] of TELAS_DOBRA) {
   const pag = await navegador.newPage({ viewport: { width: w, height: h } });
   await pag.goto(`${BASE}/`, { waitUntil: "load" });
   await pag.waitForTimeout(80);
-  const hero = await pag.evaluate(() => document.querySelector(".hero").offsetHeight);
-  const pct = (hero / h) * 100;
+  // ALTURA PINTADA, não `offsetHeight`. A pergunta aqui é quanto da JANELA o hero ocupa, e a
+  // janela se mede em pixels de tela. Sob `zoom`, `offsetHeight` continua em px CSS, sem a
+  // escala — dividi-lo pela altura real da janela mistura dois espaços e devolve um número
+  // otimista na exata proporção do zoom. Com as telas de hoje dá no mesmo, porque todas estão
+  // abaixo do limiar de 2100px e rodam com zoom 1; o erro só apareceria quando alguém
+  // acrescentasse uma tela larga à lista, que é quando ninguém está olhando.
+  // `getBoundingClientRect().height` já vem escalada e é a medida certa dos dois lados.
+  const hero = await pag.evaluate(() => {
+    const e = document.querySelector(".hero");
+    return { pintada: e.getBoundingClientRect().height, css: e.offsetHeight };
+  });
+  const pct = (hero.pintada / h) * 100;
   let veredito = "cabe";
   if (pct > 100) { falhas.push(`${nome} (${w}x${h}): hero ocupa ${pct.toFixed(0)}% da tela`); veredito = "PASSA DA DOBRA"; }
-  // O desktop de referência é âncora: o aperto do tablet não pode encostar nele.
-  if (w === 1440 && h === 900 && hero !== HERO_DESKTOP) {
-    falhas.push(`1440x900: hero deveria continuar com ${HERO_DESKTOP}px e veio com ${hero}px`);
+  // O desktop de referência é âncora: o aperto do tablet não pode encostar nele. A conferência
+  // é em px CSS, que é o espaço em que o valor do desenho (839px) foi medido.
+  if (w === 1440 && h === 900 && hero.css !== HERO_DESKTOP) {
+    falhas.push(`1440x900: hero deveria continuar com ${HERO_DESKTOP}px e veio com ${hero.css}px`);
     veredito = "DESKTOP MUDOU";
   }
-  console.log(nome.padEnd(22) + `| ${String(w).padStart(4)}x${String(h).padStart(4)} | ${String(hero).padStart(4)}px | ` +
+  console.log(nome.padEnd(22) + `| ${String(w).padStart(4)}x${String(h).padStart(4)} | ${hero.pintada.toFixed(0).padStart(4)}px | ` +
     `${pct.toFixed(0).padStart(8)}% | ${veredito}`);
   await pag.close();
 }
