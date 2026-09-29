@@ -1,7 +1,8 @@
 ---
 // Elemento: Footer.
 // Fonte da verdade: HTML oficial do designer (beorange-homepage_2.html, linhas 689-752).
-// Dados de contato marcados como ILUSTRATIVOS pelo próprio designer — preservados como estão.
+// Os dados de contato do HTML do designer eram ilustrativos; hoje todos são reais, informados
+// pelo cliente em 15/09/2026 (endereço, telefone, e-mail, redes) e 29/09/2026 (CNPJ e horário).
 // ATENÇÃO: este componente também é usado por /contabilidade e /blog/exemplo. O CSS que o
 // estiliza é global (prototype-*.css), importado pela página que o renderiza.
 // Único ponto variável entre páginas: a home aponta o logo para "#top", as demais para "/".
@@ -65,7 +66,7 @@ const ano = new Date().getFullYear();
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a href={logoHref} class="logo"><img class="logo-img logo-img--light" src="/img/logo.webp" alt="Beorange" width="218" height="48" /></a>
+        <a href={logoHref} class="logo"><img class="logo-img logo-img--light" src="/img/logo-fundo-escuro.svg" alt="Beorange" width="218" height="48" /></a>
         <p>Contabilidade, operação financeira e tecnologia para empresas em crescimento.</p>
         <div class="socials">
           {redes.map((r) => (

@@ -12,9 +12,10 @@ export interface Props {
   /** O que existe ATRÁS do header no topo da página. São três casos, e cada um pede uma
    *  variante diferente do logotipo:
    *
-   *    "escuro" (padrão) — hero escuro, como a home e a Contabilidade. Usa logo.webp, com o
-   *                        "be" branco e o "orange" laranja.
-   *    "claro"           — a página abre no branco, como o blog. Usa logo-dark.webp.
+   *    "escuro" (padrão) — hero escuro, como a home e a Contabilidade. Usa
+   *                        logo-fundo-escuro.svg, com o "be" branco e o "orange" laranja.
+   *    "claro"           — a página abre no branco, como o blog. Usa logo-fundo-claro.svg,
+   *                        com o "be" escuro e o "orange" laranja.
    *    "marca"           — a página abre sobre a faixa laranja (.brand-band), que é o caso do
    *                        /contato/. Aqui NÃO serve nenhuma das duas: na logo padrão o
    *                        "orange" é laranja e desaparece dentro do laranja do fundo, e a
@@ -44,9 +45,17 @@ const { logoHref = "/", ativo = null, tema = "escuro", portalHref = "https://ges
 // em margem vazia, o que o deixava visivelmente menor que as outras com a mesma altura de
 // CSS; foi recortado pela opacidade real do desenho, e não pelo getbbox(), que ia até o
 // antialiasing quase invisível. A 36px de altura no header: colorida 164px, branca 166px.
+//
+// O padrão da marca é o "orange" sempre em laranja (cliente, 29/09/2026). logo.webp e
+// logo-dark.webp faziam o contrário — "be" laranja e "range" branco ou escuro —, embora este
+// comentário e o protótipo do designer (.logo .be / .logo .rg em prototype-home.css) já
+// descrevessem o certo. logo-fundo-escuro.svg é o arquivo do cliente sem alteração
+// (Logo_Claro_Invertido.svg); logo-fundo-claro.svg é o mesmo vetor com o "be" em #2B2320,
+// a cor que o protótipo dá ao "be" sobre o branco. Proporção do viewBox: 4,54, a mesma dos
+// .webp, então as medidas abaixo não mudam.
 const LOGOS = {
-  light:  { src: "/img/logo.webp",        w: 218, h: 48 },
-  dark:   { src: "/img/logo-dark.webp",   w: 218, h: 48 },
+  light:  { src: "/img/logo-fundo-escuro.svg", w: 218, h: 48 },
+  dark:   { src: "/img/logo-fundo-claro.svg",  w: 218, h: 48 },
   branca: { src: "/img/logo-branca.webp", w: 221, h: 48 },
 } as const;
 

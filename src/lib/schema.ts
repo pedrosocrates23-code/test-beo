@@ -185,8 +185,10 @@ const FOTO_MYLE = {
 const LOGO_NODE = {
   "@type": "ImageObject",
   "@id": ID_LOGO,
-  url: abs("/img/blog/logo-header.svg"),
-  contentUrl: abs("/img/blog/logo-header.svg"),
+  // Versão para fundo claro: é sobre o branco que buscador e painel de conhecimento mostram o
+  // logo. "orange" em laranja, o padrão da marca (cliente, 29/09/2026).
+  url: abs("/img/logo-fundo-claro.svg"),
+  contentUrl: abs("/img/logo-fundo-claro.svg"),
   caption: "Beorange",
 } as const;
 
