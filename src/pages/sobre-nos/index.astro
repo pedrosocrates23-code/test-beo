@@ -20,6 +20,7 @@ import MobileMenu from "../../components/elements/MobileMenu.astro";
 import HeroIndice from "../../components/elements/HeroIndice.astro";
 import SecaoLista from "../../components/elements/SecaoLista.astro";
 import SeisFrentes from "../../components/elements/SeisFrentes.astro";
+import Reconhecimentos from "../../components/elements/Reconhecimentos.astro";
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
@@ -57,33 +58,48 @@ import Footer from "../../components/elements/Footer.astro";
     ]}
   />
 
-  <!-- DOBRA 3 — Como trabalhamos. Primeiro botão da página. -->
+  <!-- DOBRA 3 — Como trabalhamos. Primeiro botão da página.
+       Ícones a pedido do cliente (29/09/2026), desenhados para cada compromisso — ver o
+       Icone.astro. Duas colunas porque quatro cartões em três deixavam o último sozinho
+       numa segunda linha com duas vagas vazias. -->
   <SeisFrentes
     id="compromissos"
     titulo="Quatro compromissos que definem como atendemos"
     intro=""
+    colunas={2}
     frentes={[
-      { titulo: "A análise parte da sua operação", texto: "A leitura tributária começa pela sua contabilidade, seus documentos fiscais, seus contratos e sua cadeia de fornecedores." },
-      { titulo: "A decisão continua sendo sua", texto: "Organizamos, analisamos e apresentamos caminhos. A escolha, a aprovação e o direcionamento do negócio permanecem com você." },
-      { titulo: "A automação é assistida", texto: "A tecnologia prepara o trabalho e reduz digitação. Um analista valida antes de qualquer coisa entrar na operação." },
-      { titulo: "O diagnóstico vem antes da proposta", texto: "Todo cliente passa por diagnóstico contábil, fiscal, societário e tributário na entrada. É ele que define o escopo, não uma tabela padrão." },
+      { icone: "analise", titulo: "A análise parte da sua operação", texto: "A leitura tributária começa pela sua contabilidade, seus documentos fiscais, seus contratos e sua cadeia de fornecedores." },
+      { icone: "decisao", titulo: "A decisão continua sendo sua", texto: "Organizamos, analisamos e apresentamos caminhos. A escolha, a aprovação e o direcionamento do negócio permanecem com você." },
+      { icone: "automacao", titulo: "A automação é assistida", texto: "A tecnologia prepara o trabalho e reduz digitação. Um analista valida antes de qualquer coisa entrar na operação." },
+      { icone: "diagnostico", titulo: "O diagnóstico vem antes da proposta", texto: "Todo cliente passa por diagnóstico contábil, fiscal, societário e tributário na entrada. É ele que define o escopo, não uma tabela padrão." },
     ]}
   />
-  <SecaoLista titulo="" cta={{ texto: "Solicitar diagnóstico", href: "/contato/" }} />
+  {/* O documento deixava este botão sozinho, e o cliente pediu conteúdo para ele (29/09/2026).
+      O texto não traz promessa nova: o título retoma o quarto compromisso logo acima, e a
+      frase de apoio é a mesma que as páginas de solução já usam para o diagnóstico. */}
+  <SecaoLista
+    titulo="Veja esses compromissos aplicados à sua empresa"
+    texto="O diagnóstico mostra a situação atual e define o que vale a pena fazer, e em que ordem."
+    cta={{ texto: "Solicitar diagnóstico", href: "/contato/" }}
+  />
 
   <!-- DOBRA 4 — Reconhecimentos.
        [FALTA] ano exato e nome completo de cada premiação — ver o cabeçalho do arquivo.
        Os itens estão exatamente como o documento os escreve. Nenhum ano foi deduzido: prêmio
-       com ano errado numa página institucional é o tipo de erro que a concorrência printa. -->
-  <SecaoLista
-    variante="alternada"
+       com ano errado numa página institucional é o tipo de erro que a concorrência printa.
+       Era uma lista com check; virou cartões a pedido do cliente (29/09/2026), cada um com a
+       notícia do próprio blog que o comprova. Ligações conferidas no texto de cada notícia:
+       aporte, Fintech do Ano (Latin American Startup Awards), TOP 10 PR do Sebrae/PR e TOP
+       1.000 são o assunto das suas notícias; a de IA aponta para a matéria da Aya, onde a WIM
+       Angels "reconheceu o valor da Aya" — é o lastro mais próximo desse item. -->
+  <Reconhecimentos
     titulo="O que já reconheceram no caminho"
     itens={[
-      "Aporte pré-seed com valuation de R$ 10 milhões",
-      "Indicada a Fintech do Ano no Brasil",
-      "Top 10 PR no Prêmio Sebrae Startups 2026",
-      "Top 1.000 no Prêmio Sebrae Startups",
-      "Reconhecida por aplicação de inteligência artificial na contabilidade",
+      { icone: "crescimento", texto: "Aporte pré-seed com valuation de R$ 10 milhões", noticia: "/blog/beorange-recebe-aporte-pre-seed-com-valuation-de-10mi/" },
+      { icone: "trofeu", texto: "Indicada a Fintech do Ano no Brasil", noticia: "/blog/beorange-e-indicada-para-fintech-do-ano-no-brasil-pela-global-startups-awards/" },
+      { icone: "medalha", texto: "Top 10 PR no Prêmio Sebrae Startups 2026", noticia: "/blog/beorange-selecionada-top-10-pr-2026-sebrae/" },
+      { icone: "medalha", texto: "Top 1.000 no Prêmio Sebrae Startups", noticia: "/blog/somos-top-1-000-pelo-premio-sebrae-startups/" },
+      { icone: "ia", texto: "Reconhecida por aplicação de inteligência artificial na contabilidade", noticia: "/blog/beorange-revoluciona-a-contabilidade-com-inteligencia-artificial-na-aya/" },
     ]}
     cta={{ texto: "Ver na imprensa", href: "/imprensa/" }}
   />
@@ -94,6 +110,11 @@ import Footer from "../../components/elements/Footer.astro";
   <SecaoLista
     titulo="Quem cuida da sua operação"
     texto="Cada cliente tem um analista responsável, que conhece a operação e acompanha os números com a frequência definida no contrato: semanal, quinzenal, mensal ou trimestral. Não é central de atendimento. É a mesma pessoa, mês após mês."
+    bloco={{
+      titulo: "Quem dirige o time",
+      texto: "Myle Pontes, fundadora e CEO, contadora especializada em contabilidade internacional. É ela quem assina o conteúdo publicado no blog.",
+    }}
+    cta={{ texto: "Conhecer Myle Pontes", href: "/sobre-nos/myle-pontes/" }}
   />
 
   <!-- DOBRA 6 — Chamada para ação -->

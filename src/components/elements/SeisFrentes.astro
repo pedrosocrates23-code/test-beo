@@ -25,6 +25,12 @@ interface Props {
    *  terceira coluna sobraria vazia na segunda linha. Vale só de 941px para cima — no
    *  tablet a grade já cai para 2 e no celular para 1, como sempre. */
   colunas?: 2 | 3;
+  /** Troca a grade por um carrossel que avança sozinho, um lote de cartões por vez (3 no
+   *  computador, 2 no tablet, 1 no celular). Desligado por padrão: as onze páginas de
+   *  solução usam este componente pelo PaginaSolucao e não pediram carrossel.
+   *  Nasceu para as cinco camadas da /conta-beorange/ (29/09/2026): cinco cartões não
+   *  fecham em grade de colunas iguais, e a grade 3 + 2 não agradou. */
+  carrossel?: boolean;
 }
 
 const {
@@ -40,6 +46,7 @@ const {
     { icone: "assessoria", titulo: "Assessoria e Consultoria", texto: "Análise recorrente dos números com um analista dedicado.", link: { texto: "Ver Assessoria", href: "/contabilidade-beorange/assessoria/" } },
   ],
   colunas = 3,
+  carrossel = false,
 } = Astro.props;
 ---
 <section class="alt" id={id}>
@@ -48,21 +55,186 @@ const {
       <h2>{titulo}</h2>
       {intro && <p>{intro}</p>}
     </div>
-    <div class:list={["frentes", { "frentes--2col": colunas === 2 }]}>
-      {frentes.map((f) => (
-        <div class="frente rv">
-          {f.icone && <div class="ic"><Icone nome={f.icone} /></div>}
-          <h3>{f.titulo}</h3>
-          <p>{f.texto}</p>
-          {f.link && (() => {
-            const fora = classificarHref(f.link.href) === "fora";
-            return <div class="pfoot"><a href={f.link.href} class="link-cta" target={fora ? "_blank" : undefined} rel={fora ? "noopener noreferrer" : undefined}>{f.link.texto} <Icone nome="seta-direita" /></a></div>;
-          })()}
+    {/* No carrossel o .rv sai de cada cartão e vai para o conjunto: a revelação é disparada
+        por IntersectionObserver, e um cartão que entra na trilha de lado apareceria
+        esmaecendo no meio do deslize. */}
+    <div
+      class:list={[{ "frentes-carrossel rv": carrossel }]}
+      data-frentes-carrossel={carrossel ? "" : undefined}
+      role={carrossel ? "region" : undefined}
+      aria-roledescription={carrossel ? "carrossel" : undefined}
+      aria-label={carrossel ? titulo : undefined}
+    >
+      <div
+        class:list={["frentes", { "frentes--2col": colunas === 2 && !carrossel, "frentes--trilha": carrossel }]}
+        data-trilha={carrossel ? "" : undefined}
+      >
+        {frentes.map((f, i) => (
+          <div
+            class:list={["frente", { rv: !carrossel }]}
+            role={carrossel ? "group" : undefined}
+            aria-roledescription={carrossel ? "cartão" : undefined}
+            aria-label={carrossel ? `${i + 1} de ${frentes.length}: ${f.titulo}` : undefined}
+          >
+            {f.icone && <div class="ic"><Icone nome={f.icone} /></div>}
+            <h3>{f.titulo}</h3>
+            <p>{f.texto}</p>
+            {f.link && (() => {
+              const fora = classificarHref(f.link.href) === "fora";
+              return <div class="pfoot"><a href={f.link.href} class="link-cta" target={fora ? "_blank" : undefined} rel={fora ? "noopener noreferrer" : undefined}>{f.link.texto} <Icone nome="seta-direita" /></a></div>;
+            })()}
+          </div>
+        ))}
+      </div>
+      {carrossel && (
+        /* Controles nascem escondidos e o script os revela. Sem JavaScript o carrossel
+           continua funcionando como faixa rolável com o dedo ou a barra, e botão que não
+           faz nada é pior que botão ausente. */
+        <div class="fc-controles" data-controles hidden>
+          <div class="fc-pontos" data-pontos></div>
+          <div class="fc-botoes">
+            <button type="button" class="fc-btn" data-ant aria-label="Grupo anterior">
+              <Icone nome="seta-direita" class="fc-seta-ant" />
+            </button>
+            <button type="button" class="fc-btn" data-prox aria-label="Próximo grupo">
+              <Icone nome="seta-direita" />
+            </button>
+            <button type="button" class="fc-btn" data-pausa aria-label="Pausar a troca automática">
+              <svg class="fc-ic-pausa" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+              <svg class="fc-ic-play" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.5A1 1 0 0 0 8 5.5z"/></svg>
+            </button>
+          </div>
+          {/* Anuncia o grupo visível só quando quem manda é o leitor. Durante a troca
+              automática fica em "off": anunciar a cada 6 segundos atropela o leitor de tela. */}
+          <p class="fc-status" data-status aria-live="off"></p>
         </div>
-      ))}
+      )}
     </div>
   </div>
 </section>
+
+<script>
+  // Carrossel das frentes: avança um lote de cartões por vez, sozinho.
+  //
+  // A rolagem é a do navegador (overflow-x + scroll-snap), como no carrossel de depoimentos:
+  // arrasto no celular, teclado e barra vêm de graça. O script só decide PARA ONDE rolar.
+  //
+  // "Lote" é o que cabe na tela: 3 no computador, 2 no tablet, 1 no celular. Com cinco
+  // cartões em lotes de três, o segundo lote é 3-4-5, e não 4-5 com uma vaga vazia: o último
+  // destino é sempre o fim da trilha, e o scroll-snap não deixa passar dele.
+  //
+  // A troca automática para quando não deve rodar (WCAG 2.2.2): com o ponteiro em cima, com
+  // o foco dentro, fora da tela, com a aba em segundo plano, e para sempre quando o leitor
+  // aperta pausa. Quem pediu "reduzir movimento" no sistema já começa pausado.
+  const INTERVALO = 6000;
+
+  document.querySelectorAll<HTMLElement>("[data-frentes-carrossel]").forEach((raiz) => {
+    const trilha = raiz.querySelector<HTMLElement>("[data-trilha]");
+    const controles = raiz.querySelector<HTMLElement>("[data-controles]");
+    const pontos = raiz.querySelector<HTMLElement>("[data-pontos]");
+    const ant = raiz.querySelector<HTMLButtonElement>("[data-ant]");
+    const prox = raiz.querySelector<HTMLButtonElement>("[data-prox]");
+    const pausa = raiz.querySelector<HTMLButtonElement>("[data-pausa]");
+    const status = raiz.querySelector<HTMLElement>("[data-status]");
+    if (!trilha || !controles || !pontos || !ant || !prox || !pausa || !status) return;
+    const cartoes = Array.from(trilha.children) as HTMLElement[];
+    if (cartoes.length < 2) return;
+
+    const reduzir = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let pausadoPeloLeitor = reduzir.matches;
+    let ponteiroDentro = false;
+    let focoDentro = false;
+    let naTela = false;
+    let timer: number | undefined;
+
+    // Medidas lidas do layout, nunca fixadas aqui: o CSS decide quantos cabem por largura.
+    const passo = () => cartoes[1].offsetLeft - cartoes[0].offsetLeft;
+    const porVez = () => Math.max(1, Math.round((trilha.clientWidth + (passo() - cartoes[0].offsetWidth)) / passo()));
+    const larguraLote = () => passo() * porVez();
+    const maximo = () => trilha.scrollWidth - trilha.clientWidth;
+    const totalLotes = () => (maximo() <= 1 ? 1 : Math.ceil(maximo() / larguraLote() - 0.01) + 1);
+    const loteAtual = () => {
+      if (trilha.scrollLeft >= maximo() - 2) return totalLotes() - 1;
+      return Math.round(trilha.scrollLeft / larguraLote());
+    };
+
+    function irPara(lote: number) {
+      const n = totalLotes();
+      const alvo = ((lote % n) + n) % n;
+      trilha!.scrollTo({ left: Math.min(alvo * larguraLote(), maximo()), behavior: reduzir.matches ? "auto" : "smooth" });
+    }
+
+    function desenharPontos() {
+      const n = totalLotes();
+      controles!.hidden = n < 2;
+      if (pontos!.childElementCount !== n) {
+        pontos!.replaceChildren(
+          ...Array.from({ length: n }, (_, i) => {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "fc-ponto";
+            b.setAttribute("aria-label", `Ir para o grupo ${i + 1} de ${n}`);
+            b.addEventListener("click", () => { irPara(i); reiniciar(); });
+            return b;
+          }),
+        );
+      }
+      const atual = loteAtual();
+      Array.from(pontos!.children).forEach((b, i) => {
+        if (i === atual) b.setAttribute("aria-current", "true");
+        else b.removeAttribute("aria-current");
+      });
+      const primeiro = Math.min(atual * porVez(), cartoes.length - porVez()) + 1;
+      const ultimo = Math.min(primeiro + porVez() - 1, cartoes.length);
+      status!.textContent = primeiro === ultimo
+        ? `Cartão ${primeiro} de ${cartoes.length}`
+        : `Cartões ${primeiro} a ${ultimo} de ${cartoes.length}`;
+    }
+
+    function deveRodar() {
+      return !pausadoPeloLeitor && !ponteiroDentro && !focoDentro && naTela && !document.hidden && totalLotes() > 1;
+    }
+
+    function reiniciar() {
+      window.clearTimeout(timer);
+      timer = undefined;
+      if (deveRodar()) timer = window.setTimeout(() => { irPara(loteAtual() + 1); reiniciar(); }, INTERVALO);
+    }
+
+    function marcarPausa() {
+      raiz.classList.toggle("fc-pausado", pausadoPeloLeitor);
+      pausa!.setAttribute("aria-label", pausadoPeloLeitor ? "Retomar a troca automática" : "Pausar a troca automática");
+      status!.setAttribute("aria-live", pausadoPeloLeitor ? "polite" : "off");
+    }
+
+    ant.addEventListener("click", () => { irPara(loteAtual() - 1); reiniciar(); });
+    prox.addEventListener("click", () => { irPara(loteAtual() + 1); reiniciar(); });
+    pausa.addEventListener("click", () => { pausadoPeloLeitor = !pausadoPeloLeitor; marcarPausa(); reiniciar(); });
+
+    raiz.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") { ponteiroDentro = true; reiniciar(); } });
+    raiz.addEventListener("pointerleave", () => { ponteiroDentro = false; reiniciar(); });
+    raiz.addEventListener("focusin", () => { focoDentro = true; reiniciar(); });
+    raiz.addEventListener("focusout", (e) => {
+      if (!raiz.contains(e.relatedTarget as Node | null)) { focoDentro = false; reiniciar(); }
+    });
+    // Arrasto com o dedo é o leitor escolhendo o grupo: recomeça a contagem a partir dali.
+    trilha.addEventListener("pointerdown", reiniciar);
+    document.addEventListener("visibilitychange", reiniciar);
+    reduzir.addEventListener("change", () => { if (reduzir.matches) { pausadoPeloLeitor = true; marcarPausa(); reiniciar(); } });
+
+    new IntersectionObserver(([e]) => { naTela = e.isIntersecting; reiniciar(); }, { threshold: 0.4 }).observe(raiz);
+
+    let quadro = 0;
+    trilha.addEventListener("scroll", () => {
+      cancelAnimationFrame(quadro);
+      quadro = requestAnimationFrame(desenharPontos);
+    }, { passive: true });
+    new ResizeObserver(() => { desenharPontos(); reiniciar(); }).observe(trilha);
+
+    marcarPausa();
+    desenharPontos();
+  });
+</script>
 
 <style is:global>
   /* Quatro cards em três colunas deixam a segunda linha com um card e dois vazios — foi o
@@ -72,5 +244,65 @@ const {
      até 680px, e essas quebras continuam valendo. */
   @media (min-width: 941px) {
     .frentes.frentes--2col{grid-template-columns:repeat(2,1fr)}
+  }
+
+  /* ---------- CARROSSEL ----------
+     A trilha é a mesma grade do protótipo, virada de lado: uma linha só, colunas da largura
+     de um cartão, e o que não cabe fica fora da tela, à direita. Cartão tem a MESMA largura
+     da grade normal (um terço do container menos os vãos), então nada muda de tamanho ao
+     trocar de modo — só o que sobraria na segunda linha passa a vir depois.
+     O padding vertical dá espaço à sombra e ao translateY do hover: overflow-x:auto recorta
+     o eixo y também, e sem folga o cartão perderia a sombra de baixo ao ser apontado. */
+  .frentes.frentes--trilha{
+    grid-template-columns:none;
+    grid-auto-flow:column;
+    grid-auto-columns:calc((100% - 40px) / 3);
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    overscroll-behavior-x:contain;
+    scrollbar-width:none;
+    padding:8px 0 28px;
+    margin-bottom:-20px;
+  }
+  .frentes--trilha::-webkit-scrollbar{display:none}
+  .frentes--trilha > .frente{scroll-snap-align:start}
+  /* No tablet cabem dois. No celular, um e um pedaço do próximo: a ponta à direita é o que
+     avisa, sem texto, que a faixa continua. */
+  @media (max-width: 940px){
+    .frentes.frentes--trilha{grid-auto-columns:calc((100% - 20px) / 2)}
+  }
+  @media (max-width: 680px){
+    .frentes.frentes--trilha{grid-auto-columns:85%}
+  }
+
+  .fc-controles{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:28px}
+  .fc-controles[hidden]{display:none}
+  .fc-pontos{display:flex;gap:8px}
+  .fc-ponto{
+    width:8px;height:8px;padding:0;border:0;border-radius:999px;cursor:pointer;
+    /* --muted e não --border: ponto é controle, e controle precisa de 3:1 contra o fundo
+       (WCAG 1.4.11). Na cor da borda ele sumia no bege. */
+    background:var(--muted);transition:width .3s,background .3s;
+  }
+  .fc-ponto[aria-current="true"]{width:26px;background:var(--coral)}
+  /* Área de toque de 24px ao redor do ponto de 8px, sem mudar o desenho (WCAG 2.5.8). */
+  .fc-ponto{position:relative}
+  .fc-ponto::after{content:"";position:absolute;inset:-8px}
+  .fc-botoes{display:flex;gap:8px}
+  .fc-btn{
+    width:44px;height:44px;border-radius:999px;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;
+    background:#fff;border:1px solid var(--border);color:var(--ink);
+    transition:border-color .2s,color .2s;
+  }
+  .fc-btn:hover,.fc-btn:focus-visible{border-color:var(--coral);color:var(--coral)}
+  .fc-btn svg{width:18px;height:18px}
+  .fc-seta-ant{transform:scaleX(-1)}
+  .fc-ic-play{display:none}
+  .fc-pausado .fc-ic-pausa{display:none}
+  .fc-pausado .fc-ic-play{display:block}
+  .fc-status{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  @media (prefers-reduced-motion: reduce){
+    .fc-ponto{transition:none}
   }
 </style>

@@ -34,6 +34,7 @@ import HeroContabilidade from "../../components/elements/HeroContabilidade.astro
 import SecaoLista from "../../components/elements/SecaoLista.astro";
 import Depoimentos from "../../components/elements/Depoimentos.astro";
 import TrustBanner from "../../components/elements/TrustBanner.astro";
+import DiagnosticoEntrada from "../../components/elements/DiagnosticoEntrada.astro";
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
@@ -105,11 +106,16 @@ import Footer from "../../components/elements/Footer.astro";
     texto="Os resultados apresentados vêm da comparação entre a situação encontrada no diagnóstico de entrada e a situação depois da reorganização, no período informado em cada case. Regime tributário, setor, volume e qualidade da informação inicial mudam o efeito. Nenhum resultado é apresentado como projeção para outra empresa."
   />
 
-  <!-- DOBRA 5 — Chamada para ação -->
-  <SecaoLista
-    titulo="O próximo case começa com um diagnóstico"
-    cta={{ texto: "Solicitar diagnóstico", href: "/contato/" }}
-  />
+  <!-- DOBRA 5 — Chamada para ação.
+       Era um SecaoLista só com título e botão: meia faixa branca vazia, um botão que ainda
+       mandava o leitor para outra página, e o fecho mais fraco do site (29/09/2026). Passa a
+       ser o mesmo fecho de Contabilidade, Lucro Real, Reforma Tributária e das soluções — a
+       banda laranja com o formulário ao lado —, então quem chegou convencido ao fim da página
+       pede o diagnóstico ali mesmo.
+       O título continua o do documento. Texto e itens são os padrões do DiagnosticoEntrada,
+       os mesmos já publicados na /contabilidade-beorange/: nenhuma frase nova foi escrita
+       para preencher a faixa. -->
+  <DiagnosticoEntrada titulo="O próximo case começa com um diagnóstico" />
 
   <Footer />
 

@@ -1,0 +1,69 @@
+---
+// Elemento: reconhecimentos em cartões, cada um com a notícia que o comprova.
+//
+// Substitui a lista com check que a /sobre-nos/ usava para os prêmios. O cliente achou a
+// dobra fraca (29/09/2026): cinco bullets miúdos colados no título não pareciam relevantes.
+// O texto de cada item não mudou — o que mudou é o peso. Prêmio escrito numa lista é
+// afirmação; prêmio com a notícia a um clique é prova, e é isso que dá relevância à dobra.
+//
+// O cartão reaproveita o .frente e o .ic das seis frentes (prototype-contabilidade.css),
+// para sair com a mesma borda, o mesmo raio e o mesmo quadro de ícone do resto do site. Só a
+// grade é daqui: cinco itens não fecham em três colunas sem deixar dois vazios.
+import Icone, { type NomeIcone } from "./Icone.astro";
+
+interface Props {
+  id?: string;
+  titulo: string;
+  itens: { icone: NomeIcone; texto: string; noticia?: string }[];
+  cta?: { texto: string; href: string };
+  /** "alternada" (padrão, fundo bege) ou "clara". */
+  variante?: "clara" | "alternada";
+}
+
+const { id, titulo, itens, cta, variante = "alternada" } = Astro.props;
+---
+<section class={variante === "alternada" ? "alt" : undefined} id={id}>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>{titulo}</h2>
+    </div>
+    <ul class="reconhecimentos">
+      {itens.map((item) => (
+        <li class="frente rv">
+          <div class="ic"><Icone nome={item.icone} /></div>
+          <h3>{item.texto}</h3>
+          {item.noticia && (
+            <div class="pfoot">
+              <a href={item.noticia} class="link-cta">Ler a notícia <Icone nome="seta-direita" /></a>
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+    {cta && (
+      <div class="rv" style="margin-top:36px">
+        <a href={cta.href} class="btn btn-primary">{cta.texto}</a>
+      </div>
+    )}
+  </div>
+</section>
+
+<style is:global>
+  /* Flex com quebra e centro, não grid: cinco cartões numa linha no computador; na faixa do
+     tablet, três em cima e dois centralizados embaixo, que lê como composição e não como
+     linha incompleta; no celular, um por linha.
+     O respiro de 48px abaixo do título é o que faltava na lista antiga, em que os itens
+     começavam colados no h2. */
+  .reconhecimentos{
+    list-style:none;margin:48px 0 0;padding:0;
+    display:flex;flex-wrap:wrap;justify-content:center;gap:16px;
+  }
+  .reconhecimentos > .frente{flex:0 0 calc((100% - 32px) / 3);padding:24px 22px}
+  .reconhecimentos .frente h3{font-size:16px;line-height:1.4;margin-bottom:16px}
+  @media (min-width: 1100px){
+    .reconhecimentos > .frente{flex-basis:calc((100% - 64px) / 5)}
+  }
+  @media (max-width: 680px){
+    .reconhecimentos > .frente{flex-basis:100%}
+  }
+</style>

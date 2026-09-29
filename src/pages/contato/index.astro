@@ -136,7 +136,11 @@ const ENDERECO = "Av. Visc. de Guarapuava, 3263 - Centro, Curitiba - PR, 80010-1
 
   <!-- DOBRA 3 — O que acontece depois -->
   {/* A foto entra por prop, não por regra de página: esta folha serve também a /lucro-real/,
-      que usa a mesma dobra sem foto. Ver o comentário da regra em prototype-contabilidade.css. */}
+      que usa a mesma dobra sem foto. Ver o comentário da regra em prototype-contabilidade.css.
+      Nenhuma etapa leva `atual`. O destaque existe para escala de maturidade, em que o leitor
+      se reconhece num estágio e mira outro. Aqui são três passos que ele vai atravessar todos,
+      em ordem; o cartão da etapa 03 destacado parecia ênfase sem motivo, e o cliente apontou
+      exatamente isso (29/09/2026). */}
   <StagesSection
     foto="/img/contato/atendimento.webp"
     titulo={{ resto: "O que acontece depois que você envia" }}
@@ -144,7 +148,7 @@ const ENDERECO = "Av. Visc. de Guarapuava, 3263 - Centro, Curitiba - PR, 80010-1
     estagios={[
       { rotulo: "ETAPA 01", titulo: "Retorno", resumo: "Um especialista entra em contato em até um dia útil para entender o momento da empresa.", pontos: [] },
       { rotulo: "ETAPA 02", titulo: "Conversa", resumo: "Mapeamos modelo de negócio, regime tributário, volume de operação e o que hoje não funciona.", pontos: [] },
-      { rotulo: "ETAPA 03", titulo: "Diagnóstico", resumo: "Se fizer sentido, avançamos para o diagnóstico contábil, fiscal, societário e tributário, que define o escopo real.", pontos: [], atual: true },
+      { rotulo: "ETAPA 03", titulo: "Diagnóstico", resumo: "Se fizer sentido, avançamos para o diagnóstico contábil, fiscal, societário e tributário, que define o escopo real.", pontos: [] },
     ]}
     destaque="Não enviamos proposta antes de entender a operação. Escopo genérico costuma custar caro depois."
   />

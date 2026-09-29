@@ -65,6 +65,7 @@ import Footer from "../../components/elements/Footer.astro";
   <!-- DOBRA 3 — As cinco camadas -->
   <SeisFrentes
     id="camadas"
+    carrossel
     titulo="Cinco camadas que sustentam a operação financeira"
     intro=""
     frentes={[
@@ -152,9 +153,15 @@ import Footer from "../../components/elements/Footer.astro";
     ]}
   />
 
-  <!-- O documento fecha a página com este botão e nada mais: sem título e sem texto de
-       apoio, porque não há nenhum escrito para aqui. -->
-  <ContaBeorangeCta cta={{ texto: "Conhecer a Contabilidade Beorange", href: "/contabilidade-beorange/" }} />
+  <!-- O documento fechava a página só com o botão, e o cliente pediu conteúdo para a faixa
+       (29/09/2026). O texto não acrescenta promessa: o título vem da /sobre-nos/ ("contabilidade,
+       software e conta bancária dentro de um mesmo ambiente, sob o mesmo acompanhamento") e o
+       escopo é o mesmo que o menu Soluções descreve para a Contabilidade Beorange. -->
+  <ContaBeorangeCta
+    titulo="Conta e contabilidade no mesmo ambiente"
+    texto="A Contabilidade Beorange cuida do contábil, do fiscal, do departamento pessoal, do tributário e do societário sob o mesmo acompanhamento da sua conta."
+    cta={{ texto: "Conhecer a Contabilidade Beorange", href: "/contabilidade-beorange/" }}
+  />
 
   <Footer />
 

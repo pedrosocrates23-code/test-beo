@@ -226,14 +226,19 @@
     background-repeat:no-repeat;background-position:right -24px center;background-size:auto 100%;
   }
   .stages-sec .wrap{position:relative;z-index:1}
-  /* O cartão em destaque cai sobre a foto, e é assim na home também (nó 18:2180): o card
-     translúcido deixa a pessoa aparecer atrás do texto em vez de tapá-la com um retângulo
-     branco. Sem isto, o "ETAPA 03" vira um adesivo opaco colado no tronco dela.
-     Só vale onde HÁ foto: em /lucro-real/, que usa a mesma dobra sem foto, o cartão opaco
-     com borda continua sendo o certo — translúcido sobre fundo liso não significa nada. */
-  .stages-sec--foto .stage.on{
+  /* A terceira etapa cai sobre a foto, e o cartão translúcido é o que a mantém legível: a
+     pessoa aparece atrás do texto em vez de ser tapada por um retângulo branco, e as letras
+     não correm soltas sobre o tronco dela.
+     O cartão vale para TODAS as etapas, não só para a destacada. Em /contato/ nenhuma etapa
+     é destacada (o cliente estranhou a etapa 03 diferente das outras, 29/09/2026), e dar o
+     cartão só à que encosta na foto recriaria a mesma diferença por outro caminho. Com as
+     três iguais, a sequência lê como sequência.
+     Só vale onde HÁ foto: em /lucro-real/, que usa a mesma dobra sem foto, segue o desenho
+     original — etapas soltas e o cartão opaco com borda só na .on. Translúcido sobre fundo
+     liso não significa nada. */
+  .stages-sec--foto .stage{
     background:rgba(251,249,247,.82);
-    border-color:rgba(43,35,32,.06);
+    border:1px solid rgba(43,35,32,.06);
     -webkit-backdrop-filter:var(--desfoque-cartao);
     backdrop-filter:var(--desfoque-cartao);
     --desfoque-cartao:blur(3px);
@@ -241,12 +246,15 @@
   @media(max-width:940px){
     section.alt.stages-sec{background-image:none}
     /* sem foto atrás, o cartão volta a ser sólido */
-    .stages-sec--foto .stage.on{background:var(--surface);backdrop-filter:none}
+    .stages-sec--foto .stage{background:var(--surface);backdrop-filter:none}
   }
 
   .stages{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:60px;align-items:stretch}
   .stage{padding:30px 26px;border-radius:16px;position:relative}
-  .stage .num{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.12em}
+  /* Rótulo "ETAPA 0N" em laranja em todas as etapas, como na home (prototype-home.css). No
+     protótipo desta folha ele era cinza e só a .on ficava laranja; sem etapa destacada em
+     /contato/ (29/09/2026), as três ficavam cinza, com contraste de 3,17 — pedido do usuário. */
+  .stage .num{font-size:11.5px;font-weight:700;color:var(--coral);letter-spacing:.12em}
   .stage h3{margin:14px 0 9px;font-size:19px}
   .stage p{font-size:14.5px;margin-bottom:14px}
   .stage ul{list-style:none;display:flex;flex-direction:column;gap:9px}
