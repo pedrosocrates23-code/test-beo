@@ -60,7 +60,8 @@ const recentes = (await getCollection("artigos"))
 <script>
   const solBtn=document.getElementById('solBtn') as HTMLButtonElement, mega=document.getElementById('mega') as HTMLElement;
   function closeMega(){mega.classList.remove('open');solBtn.setAttribute('aria-expanded','false');}
-  solBtn.addEventListener('click',e=>{e.stopPropagation();const open=mega.classList.toggle('open');solBtn.setAttribute('aria-expanded',String(open));});
+  // o painel nasce alinhado ao botão: depois da rolagem o "Home" entra antes dele no pill
+  solBtn.addEventListener('click',e=>{e.stopPropagation();const open=mega.classList.toggle('open');if(open)mega.style.left=solBtn.offsetLeft+'px';solBtn.setAttribute('aria-expanded',String(open));});
   document.addEventListener('click',e=>{if(!mega.contains(e.target as Node)&&e.target!==solBtn)closeMega();});
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMega();});
   mega.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMega));
@@ -90,8 +91,18 @@ const recentes = (await getCollection("artigos"))
   });
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!mm.hidden)abrirMenu(false);});
   // header muda para fundo claro ao rolar (sai da foto do hero)
-  const onScroll=()=>header.classList.toggle('scrolled',window.scrollY>60);
+  // se o estado muda com o painel aberto, o "Home" desliza o botão para o lado; fecha o painel
+  // em vez de deixá-lo apontando para o lugar antigo
+  const onScroll=()=>{const antes=header.classList.contains('scrolled');if(header.classList.toggle('scrolled',window.scrollY>60)!==antes)closeMega();};
   onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+  // "#top" é o id do <header>, que é position:fixed: está sempre na tela, então o navegador
+  // considera o alvo já visível e não rola nada. O "Home" do pill e o logo do rodapé apontam
+  // para ele; a subida é feita aqui, sem deixar "#top" na URL.
+  const semAnimacao=window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll<HTMLAnchorElement>('a[href="#top"]').forEach(a=>a.addEventListener('click',e=>{
+    e.preventDefault();
+    window.scrollTo({top:0,behavior:semAnimacao.matches?'auto':'smooth'});
+  }));
   const io=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}})},{threshold:.12});
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 </script>

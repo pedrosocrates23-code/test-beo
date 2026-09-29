@@ -6,8 +6,8 @@
 // própria página), as demais apontam para "/".
 export interface Props {
   logoHref?: string;
-  /** Item do menu correspondente à página atual. A Home não marca nada — ela não está
-   *  representada no pill, então destacar qualquer item seria mentira para o usuário. */
+  /** Item do menu correspondente à página atual. A Home não marca nada — o item "Home" do
+   *  pill só aparece depois da rolagem, no lugar do logo, e é atalho de volta, não menu. */
   ativo?: "solucoes" | "sobre" | "cases" | "blog" | "contato" | null;
   /** O que existe ATRÁS do header no topo da página. São três casos, e cada um pede uma
    *  variante diferente do logotipo:
@@ -72,6 +72,11 @@ const noMobile = LOGOS.light;
       <img class="logo-img logo-img--mobile" src={noMobile.src} alt="" aria-hidden="true" width={noMobile.w} height={noMobile.h} />
     </a>
     <nav class="navpill" aria-label="Principal">
+      {/* "Home" só existe depois da rolagem, e é o substituto do logo, que some nesse momento
+          (ver header.site.scrolled .logo nos prototype-*.css). Por isso aponta para o mesmo
+          lugar do logo: #top na home, que sobe a página, e "/" nas demais. Fechado, ele fica
+          fora da leitura de tela e do Tab por visibility:hidden. Animação no <style> abaixo. */}
+      <a href={logoHref} class="pill-home"><span>Home</span></a>
       <button id="solBtn" aria-expanded="false" aria-controls="mega" class:list={{ "is-active": ativo === "solucoes" }}>Soluções
         <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
       </button>
@@ -152,6 +157,59 @@ const noMobile = LOGOS.light;
     top:calc(100% + 6px);
   }
   .mega.mega--enxuto.open{transform:translateY(0)}
+  /* Os 10px acima valem no topo da página. Depois da rolagem o "Home" entra antes do
+     "Soluções" e empurra o botão; aí o script do header (site.js e a cópia da home) acerta
+     o left pelo offsetLeft do botão ao abrir o painel, e fecha o painel se o header trocar
+     de estado com ele aberto. */
+
+  /* ---------- "Home" que surge no pill ao rolar (desktop) ----------
+     O pill fica ancorado à direita do .nav (o logo à esquerda, o hambúrguer escondido), então
+     crescer o primeiro item empurra só a borda esquerda: a barra estica para a esquerda e o
+     "Home" entra por ali. Nada de display:none → block, que faria o item aparecer do nada.
+
+     A largura anima por grid-template-columns 0fr → 1fr, e não por max-width: 1fr é a largura
+     natural do texto, então a curva termina exatamente quando o item fica pronto. Um max-width
+     chutado acima do real gastaria o fim da animação crescendo no vazio, e o movimento
+     pareceria parar antes da hora.
+
+     Fechado, o item ainda ocupa o gap de 2px do flex; a margem negativa devolve esses 2px
+     para o pill não ficar com um degrau à esquerda no topo da página. */
+  .navpill .pill-home{
+    display:grid;grid-template-columns:0fr;
+    padding-left:0;padding-right:0;margin-right:-2px;
+    opacity:0;visibility:hidden;
+    /* ao FECHAR: o texto some primeiro (.15s) e a barra recolhe; visibility só vira hidden
+       quando a barra acaba de recolher, senão o item sumiria no meio do movimento */
+    transition:
+      grid-template-columns .45s cubic-bezier(.22,1,.36,1),
+      padding .45s cubic-bezier(.22,1,.36,1),
+      margin .45s cubic-bezier(.22,1,.36,1),
+      opacity .15s ease,
+      visibility 0s linear .45s,
+      background .18s,color .18s;
+  }
+  .navpill .pill-home > span{min-width:0;overflow:hidden;white-space:nowrap}
+  header.site.scrolled .navpill .pill-home{
+    grid-template-columns:1fr;
+    padding-left:15px;padding-right:15px;margin-right:0;
+    opacity:1;visibility:visible;
+    /* ao ABRIR: a barra estica, e o texto chega um pouco depois, já com espaço para ele */
+    transition:
+      grid-template-columns .55s cubic-bezier(.22,1,.36,1),
+      padding .55s cubic-bezier(.22,1,.36,1),
+      margin .55s cubic-bezier(.22,1,.36,1),
+      opacity .3s ease .15s,
+      visibility 0s,
+      background .18s,color .18s;
+  }
+  @media(prefers-reduced-motion:reduce){
+    .navpill .pill-home,header.site.scrolled .navpill .pill-home{transition:none}
+  }
+  /* No celular o pill some e quem navega é o MobileMenu. O .mobile-open ainda reabre o pill
+     como coluna, e lá um "Home" solto seria item a mais no menu. */
+  @media(max-width:880px){
+    .navpill .pill-home{display:none}
+  }
 
   .mega--enxuto .mega-inner{display:block;padding:10px}
 
