@@ -34,8 +34,9 @@
  *   Estrela em review de si mesmo não é oportunidade perdida: é risco.
  * • FAQPage — o site não tem FAQ. Quando tiver, entra: o cartão só renderiza para saúde e
  *   governo desde ago/2023, mas continua alimentando People Also Ask e as respostas de IA.
- * • openingHoursSpecification e taxID — os dados existem, mas não em fonte primária que eu
- *   tenha conseguido ler. Campo sem lastro não entra. Ver PENDENTE, no fim do arquivo.
+ * • openingHoursSpecification — o cliente mandou três horários diferentes, e o de
+ *   funcionamento veio sem dias da semana. Campo sem lastro não entra. Ver PENDENTE, no fim
+ *   do arquivo.
  *
  * ── 5. Autoria ───────────────────────────────────────────────────────────────────────
  * Os 149 artigos assinam "Por Beorange", então `author` é a própria organização — que é o
@@ -94,6 +95,8 @@ const ORGANIZACAO = {
     "Gestão financeira",
   ],
 } as const;
+  /** Informado pelo cliente em 29/09/2026 — o mesmo número da linha final do rodapé. */
+  taxID: "47.029.891/0001-72",
 
 /** O logo é nó de primeiro nível, não objeto aninhado dentro de `logo`. Aninhado, o @id
  *  dele não existe no grafo, e a referência de `image` fica pendurada — apontando para um
@@ -320,19 +323,16 @@ export function montarGrafo(dados: DadosDaPagina, caminho: string): object[] {
 /* ── PENDENTE — campos que existem no mundo e ainda não no grafo ──────────────────────
  *
  * openingHoursSpecification
- *   O Perfil da Empresa no Google tem os horários, mas o Google devolve só um stub de
- *   redirecionamento para leitura automática (tentado por curl e por fetch em 16/09/2026).
- *   Entra assim, quando os horários vierem confirmados:
+ *   Em 29/09/2026 o cliente mandou três horários: atendimento de segunda a sexta, das 9h às
+ *   17h; funcionamento das 7h às 22h, sem dizer os dias; e o time trabalhando das 8h às 18h.
+ *   O rodapé mostra só o atendimento. Aqui falta decidir qual deles é o horário "aberto" da
+ *   empresa — e ele precisa bater com o do Perfil da Empresa no Google, senão o grafo
+ *   contradiz a ficha. Com a decisão, entra assim:
  *       openingHoursSpecification: [{
  *         "@type": "OpeningHoursSpecification",
  *         dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"],
- *         opens: "09:00", closes: "18:00"
+ *         opens: "09:00", closes: "17:00"
  *       }]
- *
- * taxID
- *   Candidato encontrado em agregador (Econodata): 47.029.891/0001-72, BE ORANGE ASSESSORIA
- *   E CONSULTORIA LTDA. Agregador não é fonte primária — confirmar no cartão CNPJ antes de
- *   publicar, aqui e no rodapé.
  *
  * sameAs → Perfil da Empresa no Google e Wikidata
  *   O GBP existe (o link que originou esta investigação aponta para ele) e entra em sameAs

@@ -17,8 +17,8 @@ export interface Props {
   telefoneLink?: string;
   email?: string;
   horario?: string;
-  /** CNPJ na linha final. Enquanto não vier o número real, fica de fora — CNPJ inventado
-   *  numa linha de copyright é informação cadastral falsa, não placeholder inofensivo. */
+  /** CNPJ na linha final. Só entra número confirmado pelo cliente — CNPJ inventado numa
+   *  linha de copyright é informação cadastral falsa, não placeholder inofensivo. */
   cnpj?: string;
   /** Perfis oficiais. Uma rede sem URL não entra: ícone de rede social apontando para "#"
    *  promete um perfil que não existe e derruba a confiança no rodapé inteiro. */
@@ -42,8 +42,14 @@ const {
   telefone = "+55 41 9644-0060",
   telefoneLink = "tel:+554196440060",
   email = "contato@beorange.app",
-  horario = "Segunda a sexta, em horário comercial",
-  cnpj,
+  // O cliente mandou três horários em 29/09/2026: atendimento (seg. a sex., 9h às 17h),
+  // funcionamento (7h às 22h, sem dias) e o expediente do time (8h às 18h). O rodapé mostra
+  // só o primeiro: é a promessa que o visitante usa para decidir quando ligar. Os 7h às 22h
+  // ao lado dele prometeriam alguém do outro lado da linha às 21h, e o próprio cliente avisa
+  // que o time sai às 18h; o expediente interno não é informação para quem está de fora.
+  horario = "Atendimento de segunda a sexta, das 9h às 17h",
+  // Informado pelo cliente em 29/09/2026 (BE ORANGE ASSESSORIA E CONSULTORIA LTDA).
+  cnpj = "47.029.891/0001-72",
   // Perfis oficiais confirmados pelo cliente em 15/09/2026. O YouTube saiu: o rodapé tinha o
   // ícone apontando para "#" e nenhum canal foi informado. Se existir, é só acrescentar aqui.
   redes = [
@@ -51,7 +57,7 @@ const {
     { nome: "LinkedIn", url: "https://www.linkedin.com/company/beorangeapp/", path: LOGO_LINKEDIN },
     { nome: "Facebook", url: "https://www.facebook.com/beorangeapp/", path: LOGO_FACEBOOK },
   ],
-  pendencia = "Faltam o horário exato de atendimento e o CNPJ.",
+  pendencia = "",
 } = Astro.props;
 const ano = new Date().getFullYear();
 ---
