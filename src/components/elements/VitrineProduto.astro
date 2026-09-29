@@ -1,0 +1,156 @@
+---
+// Elemento: vitrine de produto das páginas de solução.
+// Pedido do cliente (29/09/2026): as 11 páginas de solução estavam "sem apelo nenhum para os
+// produtos", só texto e listas abaixo de uma foto que é a mesma nas onze.
+//
+// É uma janela no estilo da interface Beorange, que sobe por cima da base do hero e mostra a
+// frente funcionando. O vocabulário é o do próprio designer: a barra com os três pontos é o
+// .shot ("PRODUCT MOCK (screenshot look)") e as linhas com status são o .panel/.pline dos
+// blocos alternados da home (beorange-homepage_2.html, dobra 3, painel "Análise tributária ·
+// Lucro Real"). Nada aqui é captura de tela real, e nada precisa ser: é ilustração.
+//
+// O QUE NÃO ENTRA, DE PROPÓSITO
+// Valor em reais, nome de cliente, data e contagem. Qualquer número numa tela de produto é
+// lido como dado — "R$ 12.480 recebidos" vira promessa comercial que ninguém aprovou. As
+// linhas usam os itens de escopo que a própria página já publica, e os status são estados de
+// interface ("Entregue", "Em validação"), não resultados.
+//
+// O menu lateral são as frentes reais do produto, com a da página acesa. É o argumento
+// central das duas soluções (as áreas trabalham na mesma estrutura), dito sem uma palavra.
+export interface LinhaVitrine {
+  /** Item de escopo, como a página o publica. */
+  item: string;
+  /** Linha de apoio: o bloco de escopo, o canal, o tipo. */
+  grupo?: string;
+  /** Estado de interface. */
+  status: string;
+  /** Linha ainda em curso: status neutro, com o ponto pulsando. */
+  andamento?: boolean;
+}
+
+export interface Props {
+  /** "Contabilidade Beorange" ou "Conta Beorange" — escolhe o menu lateral. */
+  produto: string;
+  /** Frente desta página; acende no menu lateral. Precisa bater com o `frente` da página. */
+  frente: string;
+  /** Título do painel, ex.: "Rotina fiscal do mês". */
+  titulo: string;
+  linhas: LinhaVitrine[];
+  /** Faixa opcional abaixo das linhas: uma sequência de etapas com uma acesa (a régua de
+   *  cobrança, por exemplo) e, se houver, os canais por onde ela sai. */
+  trilha?: { titulo: string; etapas: string[]; ativa?: number; canais?: string[] };
+}
+
+const { produto, frente, titulo, linhas, trilha } = Astro.props;
+
+// Mesmos nomes e mesma ordem do `frente` de cada página e das grades de frentes do site.
+const MENUS: Record<string, string[]> = {
+  "Contabilidade Beorange": [
+    "Contábil", "Fiscal", "Departamento Pessoal", "Tributário", "Societário", "Assessoria e Consultoria",
+  ],
+  "Conta Beorange": [
+    "Conta PJ e movimentação", "Portal de gestão financeira", "Cobranças e recebimentos", "BPO Financeiro", "Bora Financeira",
+  ],
+};
+const menu = MENUS[produto] ?? [];
+---
+<section class="vitrine" aria-label={`Ilustração: ${produto}, ${frente}`}>
+  <div class="wrap">
+    {/* aria-hidden no conteúdo: é ilustração, e os mesmos itens estão escritos na dobra de
+        escopo logo abaixo. Um leitor de tela ouviria a lista duas vezes. */}
+    <div class="shot vit rv" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><span class="t">{produto}</span></div>
+      <div class="vit-corpo">
+        {menu.length > 0 && (
+          <ul class="vit-menu">
+            {menu.map((m) => <li class:list={{ on: m === frente }}>{m}</li>)}
+          </ul>
+        )}
+        <div class="vit-main">
+          <div class="vit-cab">
+            <span class="vit-titulo">{titulo}</span>
+            <span class="vit-frente">{frente}</span>
+          </div>
+          {linhas.map((l, i) => (
+            <div class="trow vit-linha" style={`--i:${i}`}>
+              <div class="tl">
+                <span class="tic"><b></b></span>
+                <span>
+                  <span class="tt">{l.item}</span>
+                  {l.grupo && <span class="ts">{l.grupo}</span>}
+                </span>
+              </div>
+              <span class:list={["tag", { "vit-andamento": l.andamento }]}>{l.status}</span>
+            </div>
+          ))}
+          {trilha && (
+            <div class="vit-trilha vit-linha" style={`--i:${linhas.length}`}>
+              <span class="vit-trilha__t">{trilha.titulo}</span>
+              <div class="schedule">
+                {trilha.etapas.map((e, i) => <span class:list={{ act: i === (trilha.ativa ?? 0) }}>{e}</span>)}
+              </div>
+              {trilha.canais && trilha.canais.length > 0 && (
+                <div class="vit-canais">
+                  {trilha.canais.map((c) => <span class="chip y">{c}</span>)}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* A janela sobe por cima da base do hero. O hero ganha altura extra embaixo só quando é
+     seguido por uma vitrine — sem isso os botões dele ficariam debaixo da janela. :has() e não
+     uma prop no HeroContabilidade: o hero continua sem saber que a vitrine existe. */
+  .hero:has(+ .vitrine){padding-bottom:190px}
+  .vitrine{position:relative;z-index:3;margin-top:-130px;padding:0 0 88px;background:transparent}
+  .vitrine .vit{max-width:940px;margin:0 auto;text-align:left}
+
+  .vit-corpo{display:grid;grid-template-columns:210px 1fr}
+  .vit-menu{list-style:none;margin:0;padding:16px 12px;border-right:1px solid var(--border);background:var(--surface)}
+  .vit-menu li{font-size:12.5px;font-weight:500;color:var(--muted);padding:8px 11px;border-radius:9px;line-height:1.3}
+  .vit-menu li.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:0 2px 8px rgba(43,35,32,.06)}
+  .vit-main{padding:20px 22px 18px}
+  .vit-cab{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+  .vit-titulo{font-size:15px;font-weight:600;color:var(--ink)}
+  .vit-frente{font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+  .vit .trow{gap:16px}
+  .vit .tt{display:block;line-height:1.35}
+  .vit .ts{display:block;margin-top:2px}
+  .vit .tag{flex:none;white-space:nowrap}
+
+  /* Status em curso: neutro, com um ponto que pulsa — é o único movimento contínuo da
+     janela, e existe para ela parecer viva, não para chamar atenção. */
+  .vit .tag.vit-andamento{display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);color:var(--ink-2)}
+  .vit .tag.vit-andamento::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--coral);animation:vit-pulso 1.6s ease-in-out infinite}
+  @keyframes vit-pulso{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+
+  .vit-trilha{margin-top:12px;padding-top:14px;border-top:1px solid var(--border)}
+  .vit-trilha__t{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+  .vit-canais{display:flex;gap:6px;margin-top:10px}
+
+  /* Entrada: a janela sobe com o .rv de sempre, e as linhas chegam uma a uma logo depois.
+     O .rv.in vem do observer do site.js; como a janela já nasce na tela, ele acende no
+     carregamento. */
+  .vit .vit-linha{opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease;transition-delay:calc(var(--i) * 110ms + 350ms)}
+  .vit.in .vit-linha{opacity:1;transform:none}
+
+  @media(prefers-reduced-motion:reduce){
+    .vit .vit-linha{opacity:1;transform:none;transition:none}
+    .vit .tag.vit-andamento::before{animation:none}
+  }
+  @media(max-width:880px){
+    .vit-corpo{grid-template-columns:1fr}
+    .vit-menu{display:none}
+  }
+  @media(max-width:680px){
+    .hero:has(+ .vitrine){padding-bottom:140px}
+    .vitrine{margin-top:-96px;padding-bottom:56px}
+    .vit-main{padding:16px 14px 14px}
+    .vit .tic{display:none}
+  }
+</style>

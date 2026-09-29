@@ -16,6 +16,16 @@ import PaginaSolucao from "../../../components/elements/PaginaSolucao.astro";
   titulo="Apuração, escrituração e cumprimento das obrigações fiscais."
   lead="A frente fiscal cuida da apuração dos tributos e do cumprimento das obrigações fiscais da empresa nas esferas federal, estadual e municipal. O objetivo é assegurar regularidade, previsibilidade e consistência entre documentos, escrituração e declarações."
   ctaPrimario="Solicitar diagnóstico"
+  vitrine={{
+    // Linhas = itens do escopo abaixo; status = estado de interface, sem número nem data.
+    titulo: "Rotina fiscal do mês",
+    linhas: [
+      { item: "Escrituração fiscal", grupo: "Federal, estadual e municipal", status: "Em dia" },
+      { item: "Apuração de tributos federais, estaduais e municipais", status: "Apurado" },
+      { item: "Entrega das obrigações acessórias aplicáveis", status: "Entregue" },
+      { item: "Validação de documentos e bases fiscais", status: "Em validação", andamento: true },
+    ],
+  }}
   escopoTitulo="O que está incluído"
   escopo={[
     { rotulo: "Escopo", itens: [

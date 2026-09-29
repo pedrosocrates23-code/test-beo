@@ -1,0 +1,53 @@
+---
+// Elemento: dobra "Como atuamos" das páginas de solução, com as etapas desenhadas.
+// Pedido do cliente (29/09/2026): peso visual nas páginas de solução.
+//
+// Mesmo conteúdo que o SecaoLista mostrava — título, texto, etapas e ressalva —, mas no
+// arranjo de linha do designer: texto de um lado, visual do outro (.row / .row-visual). As
+// etapas viram o .flow do bloco "O dado nasce conectado à operação" da home
+// (beorange-homepage_2.html, dobra 3.2): cartões numerados ligados por seta, com o último
+// aceso, porque é nele que o trabalho entrega.
+interface Props {
+  titulo: string;
+  texto: string;
+  etapas: string[];
+  /** Texto miúdo obrigatório. Nunca escondido. */
+  ressalva?: string;
+}
+
+const { titulo, texto, etapas, ressalva } = Astro.props;
+---
+<section class="fluxo-sec">
+  <div class="wrap">
+    <div class="row">
+      <div class="row-txt rv">
+        <h2>{titulo}</h2>
+        <p>{texto}</p>
+      </div>
+      <div class="row-visual rv">
+        <ol class="flow" aria-label="Etapas">
+          {etapas.map((e, i) => (
+            <>
+              {i > 0 && (
+                <svg class="farrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+              )}
+              <li class:list={["fstep", { on: i === etapas.length - 1 }]}>
+                <span class="fn">{i + 1}</span><span class="fx">{e}</span>
+              </li>
+            </>
+          ))}
+        </ol>
+      </div>
+    </div>
+    {ressalva && <p class="ressalva rv">{ressalva}</p>}
+  </div>
+</section>
+
+<style is:global>
+  .fluxo-sec .row-txt h2{margin-bottom:16px}
+  .fluxo-sec .row-txt p{margin-bottom:0}
+  /* <ol> no lugar do <div> do protótipo: a ordem é o conteúdo. Zera o recuo e o marcador,
+     que o .flow não esperava. */
+  .fluxo-sec .flow{list-style:none;margin:0;padding:0}
+  .fluxo-sec .fstep .fx{line-height:1.4}
+</style>
