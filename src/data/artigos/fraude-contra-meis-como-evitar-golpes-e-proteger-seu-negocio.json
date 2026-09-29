@@ -5,7 +5,7 @@
  "lead": "O Microempreendedor Individual (MEI) é uma das principais portas de entrada para a formalização de pequenos negócios no Brasil. Com um CNPJ simplificado, possibilidade de emissão de notas fiscais e acesso a benefícios previdenciários, essa categoria atrai milhares de empreendedores todos os anos. No entanto, essa popularidade também tornou os MEIs alvos frequentes de golpes e fraudes financeiras.",
  "dataIso": "2025-03-27",
  "categoria": "Tributação",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Fraude contra MEIs: Como evitar golpes e proteger seu... | Beorange",
  "metaDescription": "O Microempreendedor Individual (MEI) é uma das principais portas de entrada para a formalização de pequenos negócios no Brasil. Com um CNPJ simplificado,...",
  "palavras": 733,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/fraude-contra-meis-como-evitar-golpes-e-proteger-seu-neg%C3%B3cio",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

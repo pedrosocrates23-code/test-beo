@@ -5,7 +5,7 @@
  "lead": "Em 2024, o Brasil registrou a maior carga tributária bruta em mais de 22 anos: 32,32% do PIB, de acordo com o Tesouro Nacional e a Receita Federal. Para as empresas, isso significa que uma fatia crescente da receita vai para impostos — e que qualquer pagamento feito a mais, sobre base errada ou com crédito não aproveitado, tem impacto direto no caixa.",
  "dataIso": "2026-04-09",
  "categoria": "Contábil",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Sua empresa pode ter crédito tributário parado sem usar.... | Beorange",
  "metaDescription": "Em 2024, o Brasil registrou a maior carga tributária bruta em mais de 22 anos: 32,32% do PIB, de acordo com o Tesouro Nacional e a Receita Federal. Para...",
  "palavras": 1661,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/sua-empresa-pode-ter-cr%C3%A9dito-tribut%C3%A1rio-parado-sem-usar.-veja-como-identificar-e-recuperar-antes-que-prescreva",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

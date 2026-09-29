@@ -5,7 +5,7 @@
  "lead": "Em 2026, abrir um CNPJ pode levar menos de um dia ou mais de um mês. A diferença está em três fatores: tipo de empresa, município de operação e, sobretudo, se os CNAEs foram definidos corretamente antes de iniciar o processo.",
  "dataIso": "2026-03-13",
  "categoria": "Societário",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Quanto tempo leva para abrir um CNPJ em 2026: prazo real e... | Beorange",
  "metaDescription": "Em 2026, abrir um CNPJ pode levar menos de um dia ou mais de um mês. A diferença está em três fatores: tipo de empresa, município de operação e,...",
  "palavras": 1635,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/quanto-tempo-leva-para-abrir-um-cnpj-em-2026-prazo-real-e-como-agilizar-o-processo",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

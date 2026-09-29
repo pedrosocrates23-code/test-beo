@@ -5,7 +5,7 @@
  "lead": "A Reforma Tributária de 2026 inaugura uma das mudanças mais profundas do sistema tributário brasileiro: a apuração assistida do IBS (Imposto sobre Bens e Serviços) e da CBS (Contribuição sobre Bens e Serviços).",
  "dataIso": "2025-10-20",
  "categoria": "Reforma Tributária",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Reforma Tributária 2026: como a apuração assistida do IBS e... | Beorange",
  "metaDescription": "A Reforma Tributária de 2026 inaugura uma das mudanças mais profundas do sistema tributário brasileiro: a apuração assistida do IBS (Imposto sobre Bens e...",
  "palavras": 964,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/reforma-tribut%C3%A1ria-2026-como-a-apura%C3%A7%C3%A3o-assistida-do-ibs-e-da-cbs-vai-transformar-a-gest%C3%A3o-fiscal-das-empresas",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

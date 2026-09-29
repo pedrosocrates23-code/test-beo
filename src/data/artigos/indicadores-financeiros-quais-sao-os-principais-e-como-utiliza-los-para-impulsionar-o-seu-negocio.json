@@ -5,7 +5,7 @@
  "lead": "Acompanhar os indicadores financeiros é essencial para o sucesso e crescimento sustentável de qualquer empresa. Sem essa análise, os gestores ficam no escuro sobre a real situação financeira do negócio, correndo riscos desnecessários. Para manter a empresa no caminho certo, é fundamental monitorar métricas que apontam a rentabilidade, liquidez e eficiência operacional.",
  "dataIso": "2025-03-25",
  "categoria": "Empreendedorismo",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Indicadores financeiros: quais são os principais e como... | Beorange",
  "metaDescription": "Acompanhar os indicadores financeiros é essencial para o sucesso e crescimento sustentável de qualquer empresa. Sem essa análise, os gestores ficam no...",
  "palavras": 786,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/indicadores-financeiros-quais-s%C3%A3o-os-principais-e-como-utiliz%C3%A1-los-para-impulsionar-o-seu-neg%C3%B3cio",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

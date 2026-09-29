@@ -5,7 +5,7 @@
  "lead": "Empreender pode ser uma alternativa para quem deseja melhorar a situação financeira, mas uma dúvida comum surge entre aqueles que estão com restrições no nome: é possível abrir uma empresa com o CPF negativado? Muitos brasileiros enfrentam dificuldades para obter crédito ou realizar transações financeiras devido a pendências em órgãos de proteção ao crédito, como SPC e Serasa, e se questionam se isso pode afetar o processo de formalização de um negócio.",
  "dataIso": "2025-03-11",
  "categoria": "Contabilidade",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Posso abrir uma empresa com nome sujo? Descubra as regras e... | Beorange",
  "metaDescription": "Empreender pode ser uma alternativa para quem deseja melhorar a situação financeira, mas uma dúvida comum surge entre aqueles que estão com restrições no...",
  "palavras": 804,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/posso-trocar-de-contador-veja-como-mudar-de-contador-e-migrar-sua-contabilidade-copy",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

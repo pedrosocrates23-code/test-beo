@@ -5,7 +5,7 @@
  "lead": "Stock options existem em milhares de contratos assinados por fundadores, executivos e colaboradores de startups e empresas de tecnologia no Brasil. Mas na hora de declarar o Imposto de Renda, a maioria não sabe responder a uma pergunta simples: quando exatamente o imposto é devido?",
  "dataIso": "2026-04-21",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Stock options no Brasil: quando o imposto é cobrado, como... | Beorange",
  "metaDescription": "Stock options existem em milhares de contratos assinados por fundadores, executivos e colaboradores de startups e empresas de tecnologia no Brasil. Mas na...",
  "palavras": 1330,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/stock-options-brasil-como-declarar-irpf-tributacao-socios-2026",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

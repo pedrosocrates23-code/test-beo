@@ -5,7 +5,7 @@
  "lead": "O eSocial é uma ferramenta essencial para empregadores, unificando o envio de informações trabalhistas, previdenciárias e fiscais ao governo. No entanto, a partir de 10 de fevereiro de 2025, a Consulta de Qualificação Cadastral Online foi descontinuada, obrigando empresas e órgãos públicos a utilizarem exclusivamente a Consulta Qualificação Cadastral em Lote (CQC).",
  "dataIso": "2025-03-04",
  "categoria": "Tributação",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "eSocial 2025: Fim da Consulta Online e a Obrigatoriedade da... | Beorange",
  "metaDescription": "O eSocial é uma ferramenta essencial para empregadores, unificando o envio de informações trabalhistas, previdenciárias e fiscais ao governo. No entanto,...",
  "palavras": 783,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/esocial-2025-fim-da-consulta-online-e-a-obrigatoriedade-da-consulta-em-lote",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

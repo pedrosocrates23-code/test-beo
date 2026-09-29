@@ -5,7 +5,7 @@
  "lead": "Empresas de software e SaaS no Brasil podem pagar entre 6% e mais de 20% de imposto sobre o faturamento, dependendo do regime tributário e dos CNAEs escolhidos. A diferença não é sorte: é planejamento.",
  "dataIso": "2026-03-18",
  "categoria": "Tributário",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Tributação de software e SaaS no Brasil: guia para empresas... | Beorange",
  "metaDescription": "Empresas de software e SaaS no Brasil podem pagar entre 6% e mais de 20% de imposto sobre o faturamento, dependendo do regime tributário e dos CNAEs...",
  "palavras": 1343,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/tributa%C3%A7%C3%A3o-de-software-e-saas-no-brasil-guia-para-empresas-de-tecnologia",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

@@ -5,7 +5,7 @@
  "lead": "A escolha da razão social é um dos primeiros passos na formalização de um negócio e impacta diretamente a identidade legal da empresa. Embora seja um termo bastante utilizado no mundo empresarial, muitos empreendedores ainda têm dúvidas sobre o que significa e como defini-lo corretamente.",
  "dataIso": "2025-03-13",
  "categoria": "Gestão Empresarial",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Razão Social: O Que é, Por Que é Importante e Como Definir... | Beorange",
  "metaDescription": "A escolha da razão social é um dos primeiros passos na formalização de um negócio e impacta diretamente a identidade legal da empresa. Embora seja um...",
  "palavras": 585,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/raz%C3%A3o-social-o-que-%C3%A9-por-que-%C3%A9-importante-e-como-definir-a-da-sua-empresa",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

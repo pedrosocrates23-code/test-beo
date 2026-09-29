@@ -5,7 +5,7 @@
  "lead": "O valor do INSS pró-labore sofreu uma importante alteração em 2025 devido ao reajuste do salário mínimo brasileiro, que passou de R$ 1.412 para R$ 1.518,00. Embora o percentual de recolhimento previdenciário continue o mesmo, a quantia a ser recolhida aumentou.",
  "dataIso": "2025-01-30",
  "categoria": "Contábil",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Mudanças no INSS Pró-Labore em 2025: Entenda o Impacto para... | Beorange",
  "metaDescription": "O valor do INSS pró-labore sofreu uma importante alteração em 2025 devido ao reajuste do salário mínimo brasileiro, que passou de R$ 1.412 para R$...",
  "palavras": 424,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/mudan%C3%A7as-no-inss-pr%C3%B3-labore-em-2025-entenda-o-impacto-para-sua-empresa",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

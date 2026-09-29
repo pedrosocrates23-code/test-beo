@@ -5,7 +5,7 @@
  "lead": "A duplicata escritural deixou de ser assunto de bastidor dos bancos e passou a entrar de vez na rotina de quem cuida de financeiro, cobrança e contabilidade. Com a combinação de Reforma Tributária, maior digitalização dos recebíveis e mais cruzamento de dados pelo Fisco, 2026 tende a ser o ano em que empresas no Lucro Real vão sentir, na prática, se suas rotinas de faturamento e recebimento são robustas, ou um risco silencioso para o caixa.",
  "dataIso": "2025-11-27",
  "categoria": "Reforma Tributária",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Duplicata escritural: como proteger o caixa da sua empresa... | Beorange",
  "metaDescription": "A duplicata escritural deixou de ser assunto de bastidor dos bancos e passou a entrar de vez na rotina de quem cuida de financeiro, cobrança e...",
  "palavras": 1928,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/duplicata-escritural-como-proteger-o-caixa-da-sua-empresa-em-2026",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

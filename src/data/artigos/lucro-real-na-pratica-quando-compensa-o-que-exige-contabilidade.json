@@ -5,7 +5,7 @@
  "lead": "No Brasil, a maioria das empresas de tecnologia entra no mercado pelo Simples Nacional. À medida que faturam mais, migram para o Lucro Presumido. E quando chegam a um determinado porte ou estrutura de custos, o Lucro Real passa a ser não apenas uma opção, mas muitas vezes a alternativa mais eficiente.",
  "dataIso": "2026-05-08",
  "categoria": "Contábil",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Lucro Real na prática: quando compensa e o que exige da sua... | Beorange",
  "metaDescription": "No Brasil, a maioria das empresas de tecnologia entra no mercado pelo Simples Nacional. À medida que faturam mais, migram para o Lucro Presumido. E quando...",
  "palavras": 1290,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/lucro-real-na-pratica-quando-compensa-o-que-exige-contabilidade",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

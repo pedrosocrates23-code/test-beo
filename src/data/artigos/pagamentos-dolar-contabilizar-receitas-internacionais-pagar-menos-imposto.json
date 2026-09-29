@@ -5,7 +5,7 @@
  "lead": "Receber em dólar parece simples: o cliente paga, o dinheiro cai na conta, a empresa usa. O problema é que a Receita Federal não enxerga isso dessa forma. Entre o momento do pagamento e o fechamento de câmbio, passam obrigações contábeis, tributárias e cambiais que, quando ignoradas, resultam em passivo fiscal silencioso, multas e, em alguns casos, autuaoão por subfaturamento.",
  "dataIso": "2026-05-12",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Pagamentos em dólar: como contabilizar receitas... | Beorange",
  "metaDescription": "Receber em dólar parece simples: o cliente paga, o dinheiro cai na conta, a empresa usa. O problema é que a Receita Federal não enxerga isso dessa forma....",
  "palavras": 1192,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/pagamentos-dolar-contabilizar-receitas-internacionais-pagar-menos-imposto",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

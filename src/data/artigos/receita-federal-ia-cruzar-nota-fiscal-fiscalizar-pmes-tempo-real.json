@@ -5,7 +5,7 @@
  "lead": "A Receita Federal não fiscaliza mais como fiscalizava há dez anos. O auditor que revisava manualmente pilhas de documentos foi substituido por sistemas que cruzam, em tempo real, as informações de notas fiscais eletrônicas, folhas de pagamento, declarações e extratos bancários de milhões de empresas simultaneamente.",
  "dataIso": "2026-05-11",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Receita Federal contratou IA para cruzar nota fiscal e... | Beorange",
  "metaDescription": "A Receita Federal não fiscaliza mais como fiscalizava há dez anos. O auditor que revisava manualmente pilhas de documentos foi substituido por sistemas...",
  "palavras": 1009,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/receita-federal-ia-cruzar-nota-fiscal-fiscalizar-pmes-tempo-real",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

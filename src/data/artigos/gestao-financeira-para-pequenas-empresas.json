@@ -5,7 +5,7 @@
  "lead": "Em um mundo empresarial repleto de desafios, as pequenas empresas enfrentam uma batalha constante para se manterem à tona. Uma das maiores pedras no caminho dessas organizações é a gestão financeira. Lidar com as finanças pode ser uma tarefa assustadora para muitos empreendedores, mas é crucial para o sucesso a longo prazo.",
  "dataIso": "2024-03-11",
  "categoria": "Financeiro",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Gestão Financeira para Pequenas Empresas: O Segredo do... | Beorange",
  "metaDescription": "Em um mundo empresarial repleto de desafios, as pequenas empresas enfrentam uma batalha constante para se manterem à tona. Uma das maiores pedras no...",
  "palavras": 610,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/gest%C3%A3o-financeira-para-pequenas-empresas",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

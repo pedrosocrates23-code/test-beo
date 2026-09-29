@@ -5,7 +5,7 @@
  "lead": "A maioria das empresas brasileiras paga mais imposto do que deve. Não por fraude ou erro grosséiro — mas porque a legislação tributária muda com frequência, as obrigações acessórias são complexas e há créditos legítimos que simplesmente nunca foram aproveitados.",
  "dataIso": "2026-04-06",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Créditos tributários: como identificar e recuperar valores... | Beorange",
  "metaDescription": "A maioria das empresas brasileiras paga mais imposto do que deve. Não por fraude ou erro grosséiro — mas porque a legislação tributária muda com...",
  "palavras": 1759,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/cr%C3%A9ditos-tribut%C3%A1rios-como-identificar-e-recuperar-valores-pagos-a-mais",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

@@ -5,7 +5,7 @@
  "lead": "A Reforma Tributária no Brasil foi aprovada em 2023 e começa a ser implementada a partir de 2026, em um processo gradual que se estende até 2033. Durante esse período, empresas precisarão lidar com dois modelos de tributação ao mesmo tempo, o atual e o novo.",
  "dataIso": "2025-09-24",
  "categoria": "Reforma Tributária",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Quando começa a Reforma Tributária? Veja as principais... | Beorange",
  "metaDescription": "A Reforma Tributária no Brasil foi aprovada em 2023 e começa a ser implementada a partir de 2026, em um processo gradual que se estende até 2033. Durante...",
  "palavras": 552,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/quando-come%C3%A7a-a-reforma-tribut%C3%A1ria-veja-as-principais-datas-at%C3%A9-2033",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

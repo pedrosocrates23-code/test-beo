@@ -5,7 +5,7 @@
  "lead": "Muitas startups chegam ao primeiro processo de due diligence ou ao primeiro pedido de financiamento e descobrem um problema que poderia ter sido evitado: a contabilidade foi tratada apenas como obrigação fiscal. Nenhum balanço patrimonial atualizado, nenhuma DRE gerencial confiável, nenhum histórico de distribuição de lucros documentado.",
  "dataIso": "2026-03-26",
  "categoria": "Contábil",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Contabilidade para startups: estrutura mínima para crescer... | Beorange",
  "metaDescription": "Muitas startups chegam ao primeiro processo de due diligence ou ao primeiro pedido de financiamento e descobrem um problema que poderia ter sido evitado:...",
  "palavras": 1423,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/contabilidade-para-startups-estrutura-m%C3%ADnima-para-crescer-com-seguran%C3%A7a",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

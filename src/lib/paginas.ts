@@ -109,6 +109,12 @@ export const PAGINAS_FIXAS: PaginaFixa[] = [
   { caminho: "/sobre-nos/", titulo: "Sobre nós", grupo: "Institucional",
     resumo: "Quem somos, como trabalhamos e por que a Beorange existe.",
     priority: 0.6, changefreq: "yearly" },
+  // A entity home da pessoa que assina os 149 artigos. Prioridade acima da /sobre-nos/ porque
+  // é a página que o `author` de todo BlogPosting referencia: se ela não for varrida, a
+  // referência existe no dado estruturado e não existe no índice.
+  { caminho: "/sobre-nos/myle-pontes/", titulo: "Myle Pontes", grupo: "Institucional",
+    resumo: "Fundadora e CEO da Beorange, contadora especializada em contabilidade internacional.",
+    priority: 0.7, changefreq: "monthly" },
   { caminho: "/cases/", titulo: "Cases", grupo: "Institucional",
     resumo: "Empresas que reorganizaram a estrutura administrativa.",
     priority: 0.6, changefreq: "monthly" },

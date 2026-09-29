@@ -5,7 +5,7 @@
  "lead": "",
  "dataIso": "2025-01-08",
  "categoria": "Simples Nacional",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Reenquadramento Simples Nacional: o que é e como fazer | Beorange",
  "metaDescription": "",
  "palavras": 865,
@@ -30,6 +30,7 @@
  ],
  "urlAntiga": "https://beorange.app/blog/reenquadramento-simples-nacional-o-que-%C3%A9-e-como-fazer",
  "notasDaMigracao": [
-  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito",
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
  ]
 }

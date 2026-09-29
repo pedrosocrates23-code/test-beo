@@ -5,7 +5,7 @@
  "lead": "Prestar serviços para clientes no exterior é uma realidade crescente para empresas de tecnologia brasileiras. SaaS com usuários internacionais, consultorias para grupos multinacionais, desenvolvimento de software sob demanda para contratantes estrangeiros: todos esses casos geram uma dúvida recorrente na hora de fechar o mês.",
  "dataIso": "2026-04-10",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Nota fiscal para clientes no exterior: como emitir... | Beorange",
  "metaDescription": "Prestar serviços para clientes no exterior é uma realidade crescente para empresas de tecnologia brasileiras. SaaS com usuários internacionais,...",
  "palavras": 1710,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/nota-fiscal-para-clientes-no-exterior-como-emitir-corretamente-e-garantir-a-isen%C3%A7%C3%A3o-de-iss",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

@@ -5,7 +5,7 @@
  "lead": "O prazo para entrega da Declaração do Imposto de Renda Pessoa Física (IRPF) 2025 está prestes a começar. A Receita Federal divulgou as regras para este ano, e os contribuintes devem ficar atentos às mudanças e obrigatoriedades para evitar problemas com o Fisco. Se você precisa declarar o Imposto de Renda, confira todas as informações essenciais para garantir uma entrega correta e sem complicações.",
  "dataIso": "2025-03-17",
  "categoria": "Tributação",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Declaração do Imposto de Renda 2025: Confira Regras, Prazos... | Beorange",
  "metaDescription": "O prazo para entrega da Declaração do Imposto de Renda Pessoa Física (IRPF) 2025 está prestes a começar. A Receita Federal divulgou as regras para este...",
  "palavras": 733,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/declara%C3%A7%C3%A3o-do-imposto-de-renda-2025-confira-regras-prazos-e-novidades",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

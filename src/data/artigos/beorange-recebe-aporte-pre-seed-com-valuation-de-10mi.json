@@ -5,7 +5,7 @@
  "lead": "A Beorange acaba de conquistar um investimento pré-seed¹, a partir de um valuation² de 10 milhões de reais. Esse aporte significativo permitirá à empresa acelerar o desenvolvimento de novas versões de sua inteligência artificial, que serão lançadas no mercado nos próximos seis meses.",
  "dataIso": "2024-03-06",
  "categoria": "Notícias",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Beorange recebe aporte pré-seed com valuation de 10mi | Beorange",
  "metaDescription": "A Beorange acaba de conquistar um investimento pré-seed¹, a partir de um valuation² de 10 milhões de reais. Esse aporte significativo permitirá à empresa...",
  "palavras": 334,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/beorange-recebe-aporte-pr%C3%A9-seed-com-valuation-de-10mi",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

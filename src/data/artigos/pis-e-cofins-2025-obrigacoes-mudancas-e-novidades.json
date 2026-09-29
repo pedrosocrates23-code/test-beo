@@ -5,7 +5,7 @@
  "lead": "",
  "dataIso": "2025-01-17",
  "categoria": "Tributação",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "PIS e COFINS 2025: Obrigações, mudanças e novidades | Beorange",
  "metaDescription": "",
  "palavras": 585,
@@ -31,6 +31,7 @@
  "urlAntiga": "https://beorange.app/blog/pis-e-cofins-2025-obriga%C3%A7%C3%B5es-mudan%C3%A7as-e-novidades",
  "notasDaMigracao": [
   "rebaixado 1 <h1> do corpo para <h2>",
-  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito"
+  "sem paragrafo de abertura aproveitavel: lead precisa ser escrito",
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
  ]
 }

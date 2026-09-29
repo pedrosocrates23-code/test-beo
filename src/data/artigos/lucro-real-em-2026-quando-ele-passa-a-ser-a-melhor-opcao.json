@@ -5,7 +5,7 @@
  "lead": "A discussão sobre qual regime tributário é mais vantajoso sempre volta à mesa no fim do ano. Com a Reforma Tributária batendo à porta e a transição começando em 2026, essa conversa ganha um novo capítulo: em muitos casos, o Lucro Real deixa de ser o “vilão da complexidade” e passa a ser uma opção estratégica para empresas que querem controlar melhor margem, fluxo de caixa e risco fiscal.",
  "dataIso": "2025-12-02",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Lucro Real em 2026: quando ele passa a ser a melhor opção? | Beorange",
  "metaDescription": "A discussão sobre qual regime tributário é mais vantajoso sempre volta à mesa no fim do ano. Com a Reforma Tributária batendo à porta e a transição...",
  "palavras": 1652,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/lucro-real-em-2026-quando-ele-passa-a-ser-a-melhor-op%C3%A7%C3%A3o",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

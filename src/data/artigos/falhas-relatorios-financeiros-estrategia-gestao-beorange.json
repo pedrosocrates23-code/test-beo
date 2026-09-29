@@ -5,7 +5,7 @@
  "lead": "A gestão de uma empresa é um voo baseado em instrumentos. Se esses instrumentos, os relatórios financeiros, estiverem descalibrados ou desatualizados, o pouso (ou melhor, a tomada de decisão) será arriscado.",
  "dataIso": "2025-10-28",
  "categoria": "Financeiro",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "5 Falhas Fatais em Relatórios Financeiros que Destroem o... | Beorange",
  "metaDescription": "A gestão de uma empresa é um voo baseado em instrumentos. Se esses instrumentos, os relatórios financeiros, estiverem descalibrados ou desatualizados, o...",
  "palavras": 1221,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/falhas-relatorios-financeiros-estrategia-gestao-beorange",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

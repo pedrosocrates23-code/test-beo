@@ -5,7 +5,7 @@
  "lead": "A contabilidade é um dos pilares mais importantes de qualquer empresa. No entanto, muitos empresários acabam insatisfeitos com o serviço contábil que contratam. Seja por falta de suporte, cobranças inesperadas, processos burocráticos ou simplesmente um atendimento ruim, a troca de contador pode ser a melhor decisão para garantir a saúde financeira do seu negócio.",
  "dataIso": "2025-03-10",
  "categoria": "Contabilidade",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Posso trocar de contador? Veja como mudar de contador e... | Beorange",
  "metaDescription": "A contabilidade é um dos pilares mais importantes de qualquer empresa. No entanto, muitos empresários acabam insatisfeitos com o serviço contábil que...",
  "palavras": 819,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/posso-trocar-de-contador-veja-como-mudar-de-contador-e-migrar-sua-contabilidade",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

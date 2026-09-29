@@ -5,7 +5,7 @@
  "lead": "O Simples Nacional, regime tributário especial para microempreendedores individuais (MEIs), sofreu um reajuste de 7,5% em 2025. O aumento está diretamente ligado ao reajuste do salário mínimo, que subiu para R$ 1.518 no início do ano. Com isso, as contribuições mensais dos MEIs também foram atualizadas.",
  "dataIso": "2025-02-27",
  "categoria": "Simples Nacional",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Reajuste no Simples Nacional em 2025: Veja os Novos Valores... | Beorange",
  "metaDescription": "O Simples Nacional, regime tributário especial para microempreendedores individuais (MEIs), sofreu um reajuste de 7,5% em 2025. O aumento está diretamente...",
  "palavras": 278,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/reajuste-no-simples-nacional-em-2025-veja-os-novos-valores-e-como-manter-sua-contribui%C3%A7%C3%A3o-em-dia",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

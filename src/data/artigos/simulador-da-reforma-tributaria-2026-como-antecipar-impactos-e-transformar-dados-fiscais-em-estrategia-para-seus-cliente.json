@@ -5,7 +5,7 @@
  "lead": "A Reforma Tributária de 2026 não é apenas uma mudança de lei; é uma virada de chave na forma como empresas operam, calculam e pagam tributos.",
  "dataIso": "2025-10-22",
  "categoria": "Reforma Tributária",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "Simulador da Reforma Tributária 2026: como antecipar... | Beorange",
  "metaDescription": "A Reforma Tributária de 2026 não é apenas uma mudança de lei; é uma virada de chave na forma como empresas operam, calculam e pagam tributos.",
  "palavras": 983,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/simulador-da-reforma-tribut%C3%A1ria-2026-como-antecipar-impactos-e-transformar-dados-fiscais-em-estrat%C3%A9gia-para-seus-clientes",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }

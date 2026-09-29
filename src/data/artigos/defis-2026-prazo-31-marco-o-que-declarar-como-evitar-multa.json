@@ -5,7 +5,7 @@
  "lead": "O prazo da DEFIS 2026 vence no dia 31 de março e, pela primeira vez na história do Simples Nacional, o atraso na entrega gera multa automática a partir de 1º de abril. A mudança veio com a Resolução CGSN nº 183/2025, publicada em 13 de outubro de 2025, que transformou a DEFIS em declaração com caráter declaratório e de confissão de dívida.",
  "dataIso": "2026-03-24",
  "categoria": "Fiscal",
- "autor": "Por Beorange",
+ "autor": "myle-pontes",
  "metaTitle": "DEFIS 2026: o que declarar, quem está obrigado e como... | Beorange",
  "metaDescription": "O prazo da DEFIS 2026 vence no dia 31 de março e, pela primeira vez na história do Simples Nacional, o atraso na entrega gera multa automática a partir de...",
  "palavras": 1707,
@@ -29,5 +29,7 @@
   }
  ],
  "urlAntiga": "https://beorange.app/blog/defis-2026-prazo-31-marco-o-que-declarar-como-evitar-multa",
- "notasDaMigracao": []
+ "notasDaMigracao": [
+  "Autoria: o Framer assinava “Por Beorange”. Em 17/09/2026 os 149 artigos passaram a ser assinados por Myle Pontes, fundadora e CEO, por decisão editorial."
+ ]
 }
