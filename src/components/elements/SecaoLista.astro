@@ -60,7 +60,7 @@ const classe = variante === "alternada" ? "alt" : variante === "escura" ? "dark"
       {texto && <p>{texto}</p>}
     </div>
     {itens.length > 0 && (
-      <div class="rv">
+      <div class="secao-lista__itens rv">
         {subtitulo && <div class="an-sub-h">{subtitulo}</div>}
         <ul class:list={["an-list", { "an-list--linha": itensEmLinha }]}>
           {itens.map((item) => <li><Icone nome="check" />{item}</li>)}
@@ -88,6 +88,13 @@ const classe = variante === "alternada" ? "alt" : variante === "escura" ? "dark"
 </section>
 
 <style is:global>
+  /* A lista vinha colada no bloco de título: 0px entre o h2 e o primeiro item quando não há
+     texto de apoio, e 0px entre o parágrafo e a lista quando há. No protótipo a .an-list
+     morava dentro da .an-grid, que dava 56px de respiro depois do .sec-head, e esse
+     invólucro não veio para cá. 20px, a medida pedida pelo usuário (29/09/2026): a lista
+     continua o parágrafo acima, então fica mais perto dele do que o botão, que fecha a
+     dobra a 32px. Apontado pelo cliente em 29/09/2026. */
+  .secao-lista__itens{margin-top:20px}
   /* A .an-list do protótipo usa `columns:2`, que reparte os itens em duas colunas de cima
      para baixo: com três itens, dois ficam à esquerda e um sozinho à direita. Para listas
      curtas de contato o conjunto lê melhor numa linha só.

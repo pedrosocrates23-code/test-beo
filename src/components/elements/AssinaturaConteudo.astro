@@ -85,7 +85,10 @@ const {
     padding:12px 14px;border:1px solid var(--border-default,#DDD5CE);border-radius:var(--radius-md,12px);
     font:400 15px var(--f,'Outfit',sans-serif);color:var(--text-primary,#2B2320);background:#fff;
   }
-  .assina__form input:focus-visible{outline:2px solid var(--action-primary,#F5380F);outline-offset:1px;border-color:transparent}
+  /* Foco neutro, como nos demais formulários (src/styles/formularios.css): contorno laranja em
+     volta do campo foi lido como sinal de erro pelo cliente (29/09/2026). O foco continua
+     visível para quem navega por teclado; só deixa de ser da cor da marca. */
+  .assina__form input:focus-visible{outline:none;border-color:var(--ink,#2B2320);box-shadow:0 0 0 3px rgba(43,35,32,.08)}
   .assina__ressalva{margin:12px 0 0;font-size:12.5px;color:var(--text-tertiary,#948B85)}
 
   .assina__alternativa{

@@ -13,6 +13,9 @@ import "../styles/header-logo.css";
 // prototype-*.css das páginas, então as regras que disputam com elas levam prefixo para
 // vencer por especificidade — ver o cabeçalho do arquivo.
 import "../styles/mobile.css";
+// Foco neutro e seta do seletor para todo .field de formulário. Pela mesma razão do mobile.css
+// (carrega antes das prototype-*.css), os seletores levam prefixo. Ver o cabeçalho do arquivo.
+import "../styles/formularios.css";
 // A sobreposição de busca vive no Layout porque o gatilho dela — a lupa do header — está em
 // toda página. Sem JS ela não abre, e o site continua navegável pelo menu; com JS, a mesma
 // busca atende o header, o campo do blog e os atalhos de teclado.
@@ -118,6 +121,11 @@ const grafo = schema ? montarGrafo(schema, caminho) : null;
   <body>
     <slot />
     <BuscaOverlay />
+    {/* Máscara de telefone e sugestões de e-mail para todo formulário do site. Ver o
+        cabeçalho do módulo: basta o campo usar type="tel" ou type="email". */}
+    <script>
+      import "../scripts/campos-formulario";
+    </script>
   </body>
 </html>
 

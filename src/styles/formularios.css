@@ -1,0 +1,52 @@
+/* Campos de formulário — correções que valem para todo .field do site.
+
+   A regra base dos campos está copiada nos três prototype-*.css. Corrigir lá seria corrigir
+   em triplicata, e a correção voltaria na primeira cópia esquecida; por isso mora aqui, numa
+   folha do Layout. Esta folha é carregada ANTES das prototype-*.css, então os seletores levam
+   `form` na frente para vencer por especificidade — (0,1,2) contra (0,1,1) na base e (0,2,2)
+   contra (0,2,1) no foco —, o mesmo recurso que o mobile.css usa.
+
+   Pedidos do cliente, 29/09/2026. */
+
+/* ---------- FOCO NEUTRO ----------
+   O foco era borda laranja com halo pêssego. O cliente leu isso como sinal de erro: laranja
+   e vermelho em volta de um campo que a pessoa acabou de clicar parecem "está errado".
+   O foco NÃO some, porque quem navega por teclado precisa saber em que campo está
+   (WCAG 2.4.7). Muda a cor: a borda vai para a tinta do texto (--ink, #2B2320), que contra a
+   borda de repouso (#E6DED8) é uma diferença clara, e o halo vira cinza quase imperceptível. */
+form .field input:focus,
+form .field select:focus,
+form .field textarea:focus{
+  outline:none;
+  border-color:var(--ink);
+  box-shadow:0 0 0 3px rgba(43,35,32,.08);
+}
+
+/* ---------- PLACEHOLDER ----------
+   Os campos não definiam cor de placeholder e ficavam com a do navegador (#757575 no
+   Chrome), escura o bastante para "(00) 00000-0000" parecer um valor já preenchido. O
+   cliente pediu mais leve (29/09/2026). Entra o token do design system feito para isso,
+   --text-placeholder (#B8AFA9), que nunca tinha chegado aos formulários.
+   opacity:1 porque o Firefox aplica opacidade própria ao placeholder e somaria as duas. */
+form .field input::placeholder,
+form .field textarea::placeholder{
+  color:var(--text-placeholder,#B8AFA9);
+  opacity:1;
+}
+
+/* ---------- SETA DO SELETOR ----------
+   A seta nativa do <select> não obedece padding: o Chrome a desenhava a 4,5px da borda
+   externa, quase encostada. O cliente pediu 4px de respiro. A nativa sai (appearance:none) e
+   entra a mesma seta desenhada, do mesmo tamanho (10px) e na cor do texto, a 8,5px da borda
+   externa: 1,5px de borda + 7px de posição.
+   O padding-right passa a 28px para o texto da opção nunca correr por baixo da seta. */
+form .field select{
+  -webkit-appearance:none;
+  appearance:none;
+  padding-right:28px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%232B2320' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 7px center;
+  background-size:10px 6px;
+  cursor:pointer;
+}

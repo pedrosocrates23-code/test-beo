@@ -526,7 +526,10 @@
   section.brand-band{background:var(--grad)}
   .diag2{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center}
   .d2l .eyebrow{color:rgba(255,255,255,.9);margin-bottom:16px}
-  .d2l h2{color:#fff;margin-bottom:16px}
+  /* h1 junto: o /contato/ abre com esta faixa e o título é o H1 da página (nivel={1} no
+     DiagnosticoEntrada). Só com h2 ele herdava a cor escura global sobre o laranja e ficava
+     sem os 16px antes do parágrafo. */
+  .d2l h1,.d2l h2{color:#fff;margin-bottom:16px}
   .d2l p{color:rgba(255,255,255,.94);font-size:16px}
   .d2l ul{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:13px}
   .d2l li{display:flex;gap:11px;align-items:flex-start;font-size:15px;color:#fff}
