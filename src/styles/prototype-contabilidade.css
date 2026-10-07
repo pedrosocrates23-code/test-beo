@@ -433,26 +433,27 @@
   section.dark .eyebrow{color:var(--orange)}
   /* ---------- DOBRA 2 — O PROBLEMA (foto de fundo à direita) ----------
      Figma nó 47:242: a foto (nó 70:2188, "image 8") vive numa moldura de 1440x836 (nó
-     70:2190) ancorada no topo-esquerda da seção, com overflow oculto. problema-bg.webp É
-     essa moldura já recortada — conferido contra o render do nó 70:2190, diff médio 0,68 de
-     255 —, então entra em escala 1:1, sem transformação a reproduzir.
+     70:2190) ancorada no topo-esquerda da seção, com overflow oculto.
+     problema-bg.webp foi trocado em 07/10/2026 pela foto nova da Myle (banner 4K, 3840x2160),
+     reduzida para 2972x1672 — 2x da altura da seção. Mesma composição da moldura do Figma: a
+     834px de altura a figura ocupa 836-1353 de 1483 (na moldura antiga, 816-1332 de 1440).
+     O asset anterior era 1x (1440x836) e pixelava em qualquer tela com escala do Windows acima
+     de 100% ou sob o zoom do escala-larga.css; 2x cobre DPR 2, e DPR 1,5 com zoom 1,22.
      ESCALA PELA ALTURA ('auto 100%'), nunca 'cover' — mesma decisão do hero da home. Com
-     'cover' a foto era esticada até a largura da viewport: numa tela de 1834px virava 1834 de
-     largura, 27% de ampliação sobre um asset de 1440, e a figura aparecia gigante e pixelada.
+     'cover' a foto era esticada até a largura da viewport e a figura aparecia gigante.
      Presa à altura, o tamanho da figura depende só da altura da seção — constante acima de
-     1140px, porque o .wrap trava em 1140 e o conteúdo para de refluir — então a imagem fica
-     em 1:1 (1437x834) em qualquer monitor, sem upscale, e o que muda com a tela é apenas
-     quanto branco sobra à esquerda.
+     1140px, porque o .wrap trava em 1140 e o conteúdo para de refluir — e o que muda com a
+     tela é apenas quanto branco sobra à esquerda.
      Âncora 'right top': o que precisa ficar parado é a figura contra a borda direita. A sobra
-     à esquerda é #fefefe, o mesmo fundo que a foto tem nas bordas (medido: 254,254,254 em
-     toda a coluna x=0), daí o background-color junto — sem ele a emenda seria de 1 nível.
-     A partir de 1366px apenas. A imagem trava em 1440 de largura e a figura caminha para a
-     esquerda conforme a tela encolhe: folga = vw/2 - 644 (figura em vw-619, texto acabando em
-     vw/2+25), que dá 39px a 1366px, 6px a 1300px e negativo a 1280px. */
+     à esquerda é #fff, o mesmo fundo que a foto tem nas bordas (medido: 255,255,255 em toda a
+     coluna x=0), daí o background-color junto — sem ele a emenda apareceria.
+     A partir de 1366px apenas. A figura caminha para a esquerda conforme a tela encolhe:
+     folga = vw/2 - 672 (figura em vw-647, texto acabando em vw/2+25), que dá 11px a 1366px
+     e negativo abaixo de 1344px. */
   .problema{position:relative}
   .problema .wrap{position:relative;z-index:1}
   @media(min-width:1366px){
-    .problema{background:#fefefe url('/img/contabilidade/problema-bg.webp') right top/auto 100% no-repeat}
+    .problema{background:#fff url('/img/contabilidade/problema-bg.webp') right top/auto 100% no-repeat}
   }
   .prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:44px}
   .prob{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
