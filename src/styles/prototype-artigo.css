@@ -384,13 +384,14 @@
      esticava a trilha, o .art-layout, o .article e a pagina. Medido a 320px: a .prose pedia
      527px de minimo num artigo com formulas, contra 264px de espaco util. */
   .art-layout{max-width:940px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:48px;align-items:start}
-  .share{position:sticky;top:110px;display:flex;flex-direction:column;gap:12px}
-  /* Rótulo na horizontal, acima dos ícones e alinhado pela borda esquerda deles, como no Figma
-     (nó 49:1746, "Compartilhar": 10px/700, line-height 16.5px, tracking 1px, 6px abaixo).
-     Antes vinha girado (writing-mode:vertical-rl) e o cliente apontou o alinhamento estranho
-     (29/09/2026). Ele é mais largo que a coluna de 44px e avança sobre o gap de 48px, como no
-     desenho: cabe (≈78px contra 92px) sem encostar no texto. nowrap para não quebrar em
-     "COMPARTI-LHAR" dentro da coluna. */
+  /* align-items:center: rótulo e ícones centrados no eixo da coluna (09/10/2026). */
+  .share{position:sticky;top:110px;display:flex;flex-direction:column;align-items:center;gap:12px}
+  /* Rótulo na horizontal, acima dos ícones. Antes vinha girado (writing-mode:vertical-rl) e o
+     cliente apontou o alinhamento estranho (29/09/2026). Ele tem ≈78px e a coluna, 44px, então
+     sempre transborda. Alinhado pela borda esquerda, como no Figma (nó 49:1746), ele avançava
+     34px sobre o gap de 48px e parava a 14px do texto: o cliente achou colado (09/10/2026).
+     Centrado sobre os ícones, transborda 17px para cada lado e fica a ≈31px do texto.
+     nowrap para não quebrar em "COMPARTI-LHAR" dentro da coluna. */
   .share .sl{font-size:10px;font-weight:700;letter-spacing:.1em;line-height:16.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap;margin-bottom:6px}
   /* O seletor cobre <a> E <button>: o copiar-link deixou de ser <a href="#"> e virou botao,
      porque copiar e acao e nao navegacao. Enquanto a regra falava so de `a`, o botao subia
