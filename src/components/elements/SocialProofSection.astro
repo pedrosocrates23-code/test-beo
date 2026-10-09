@@ -34,13 +34,15 @@ interface Props {
 
 const {
   titulo = "Quem já opera com essa estrutura",
-  etiquetaExemplo = "Conteúdo de exemplo",
+  // Etiqueta "Conteúdo de exemplo" e nota "Cases ilustrativos…" retiradas da home a pedido (09/10/2026).
+  // As props continuam: passar um texto faz voltar a aparecer.
+  etiquetaExemplo = "",
   cases = [
     { segmento: "Indústria · Embalagens", resultado: "Fechamento que levava semanas passou a sair no mês corrente.", tags: [{ texto: "Contabilidade" }, { texto: "Lucro Real", regime: true }] },
     { segmento: "Tecnologia · SaaS B2B", resultado: "Créditos de PIS e COFINS identificados e recuperados na operação.", tags: [{ texto: "Tributário" }, { texto: "Lucro Real", regime: true }] },
     { segmento: "Rede de serviços", resultado: "Fiscal, contábil e financeiro passaram a mostrar o mesmo número.", tags: [{ texto: "Conta + Contabilidade" }, { texto: "Lucro Presumido", regime: true }] },
   ],
-  notaCases = "Cases ilustrativos por segmento — substituir pelos 3 cases reais, com resultado mensurável e autorização por escrito.",
+  notaCases = "",
   linkCases = { texto: "Ver todos os cases", href: "/cases/" },
   // DADOS REAIS DO PERFIL DA EMPRESA NO GOOGLE — não edite nenhuma linha daqui sem voltar
   // à fonte. Lidos no próprio perfil em 16/09/2026, pelo link que o cliente forneceu

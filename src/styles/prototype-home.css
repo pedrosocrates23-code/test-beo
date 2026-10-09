@@ -105,13 +105,16 @@
   /* Pilha igual a do Figma: a imagem e FILHA da secao, entao fica NA FRENTE do gradiente
      de fundo. Inverter isso virava uma cortina preta sobre a foto (a mascara real do Figma
      e ~0.00 em toda a largura).
-     ENQUADRAMENTO: hero-desktop.webp e 4052x1540 (proporcao 2.631) e foi montado para que o
-     CENTRO do quadro do Figma caia exatamente no centro do arquivo — por isso 'center' aqui
-     reproduz o enquadramento do design sem nenhum ajuste fino.
-     Como foi montado: recorte VERTICAL do Figma (y 118..1658 do original) preservado, porque e
-     ele que define a escala do tablet; na horizontal usa a largura inteira do original (0..3650)
-     mais 402px replicados da borda esquerda, so para centralizar o quadro. A extensao e invisivel
-     (RGB 5,4,4 contra 7,6,5 da foto real). O original inteiro esta em hero-desktop-full.webp.
+     ENQUADRAMENTO: hero-desktop.webp e 2413x917 (proporcao 2.631, a mesma da foto anterior,
+     de que dependem o piso de altura abaixo e escala-larga.css) e foi montado para que a borda
+     esquerda da TELA do tablet caia ~37px CSS antes do centro do arquivo — por isso 'center'
+     aqui poe o tablet logo a direita da coluna de texto e inteiro dentro de 1440px.
+     Como foi montado (foto do painel, 09/10/2026): o original 1715x917 inteiro, sem recorte
+     vertical, com a tela de x=680 a 1458; o x=720 do original foi posto no centro do quadro
+     (colado em x=486) e as laterais foram estendidas com a propria borda borrada (486px a
+     esquerda, 212px a direita), com fusao de 120px na emenda. As bordas medem #0b0908 e
+     #252221, coladas no gradiente de tras.
+     O original inteiro esta em hero-desktop-full.webp.
      ESCALA PELA ALTURA (auto 100%), nao pela largura: assim o tamanho do tablet depende so
      da altura do hero e NAO da largura da tela — a composicao fica igual em qualquer monitor
      ou zoom, com o container parado em 1140px. Com cover, a foto crescia junto com a viewport

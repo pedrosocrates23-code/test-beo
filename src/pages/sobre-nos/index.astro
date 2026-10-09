@@ -18,9 +18,11 @@ import "../../styles/prototype-contabilidade.css";
 import Header from "../../components/elements/Header.astro";
 import MobileMenu from "../../components/elements/MobileMenu.astro";
 import HeroIndice from "../../components/elements/HeroIndice.astro";
-import SecaoLista from "../../components/elements/SecaoLista.astro";
+import Manifesto from "../../components/elements/Manifesto.astro";
 import SeisFrentes from "../../components/elements/SeisFrentes.astro";
-import Reconhecimentos from "../../components/elements/Reconhecimentos.astro";
+import DiagnosticoEntrada from "../../components/elements/DiagnosticoEntrada.astro";
+import SocialProofSection from "../../components/elements/SocialProofSection.astro";
+import SecaoComFoto from "../../components/elements/SecaoComFoto.astro";
 import Footer from "../../components/elements/Footer.astro";
 ---
 <Layout
@@ -45,17 +47,22 @@ import Footer from "../../components/elements/Footer.astro";
   <!-- DOBRA 2 — O que fazemos.
        As quatro linhas da lista são, segundo o documento, o bloco mais citável da página, e
        pedem "tratamento tipográfico de manifesto: corpo grande, muito respiro, uma linha por
-       vez". Hoje elas saem na lista com check padrão — o tratamento de manifesto é uma
-       pendência de design, não de texto. -->
-  <SecaoLista
+       vez". Desde 09/10/2026 saem numeradas, em cartões 2x2 sobre branco, com uma pessoa do
+       time à direita — o desenho da dobra "O problema" da /contabilidade-beorange/, a pedido
+       do cliente, que achou a banda escura da primeira versão pesada logo na abertura. -->
+  <Manifesto
     titulo="Uma estrutura, não um pacote de serviços"
     texto="A Beorange entrega contabilidade, software e conta bancária dentro de um mesmo ambiente, sob o mesmo acompanhamento. É uma estrutura administrativa integrada, formada por execução técnica, operação financeira, tecnologia, automação assistida e leitura estratégica dos números."
-    itens={[
+    linhas={[
       "Contabilidade para dar segurança e visão",
       "Conta para sustentar a operação",
       "Bora, a inteligência artificial da Beorange, para reduzir trabalho manual",
       "Assessoria para transformar números em decisão",
     ]}
+    foto={{
+      src: "/img/sobre-nos/time-beorange-estrutura.webp",
+      alt: "Integrante do time Beorange, sorrindo, de blazer preto sobre a camisa polo cinza com a gola laranja e o logo da empresa",
+    }}
   />
 
   <!-- DOBRA 3 — Como trabalhamos. Primeiro botão da página.
@@ -76,38 +83,51 @@ import Footer from "../../components/elements/Footer.astro";
   />
   {/* O documento deixava este botão sozinho, e o cliente pediu conteúdo para ele (29/09/2026).
       O texto não traz promessa nova: o título retoma o quarto compromisso logo acima, e a
-      frase de apoio é a mesma que as páginas de solução já usam para o diagnóstico. */}
-  <SecaoLista
+      frase de apoio é a mesma que as páginas de solução já usam para o diagnóstico.
+      Em 09/10/2026 o botão virou o próprio formulário, a pedido do cliente: a mesma faixa
+      laranja de diagnóstico das páginas de solução, com o título e a frase desta dobra. */}
+  <DiagnosticoEntrada
     titulo="Veja esses compromissos aplicados à sua empresa"
     texto="O diagnóstico mostra a situação atual e define o que vale a pena fazer, e em que ordem."
-    cta={{ texto: "Solicitar diagnóstico", href: "/contato/" }}
   />
 
   <!-- DOBRA 4 — Reconhecimentos.
        [FALTA] ano exato e nome completo de cada premiação — ver o cabeçalho do arquivo.
        Os itens estão exatamente como o documento os escreve. Nenhum ano foi deduzido: prêmio
        com ano errado numa página institucional é o tipo de erro que a concorrência printa.
-       Era uma lista com check; virou cartões a pedido do cliente (29/09/2026), cada um com a
-       notícia do próprio blog que o comprova. Ligações conferidas no texto de cada notícia:
-       aporte, Fintech do Ano (Latin American Startup Awards), TOP 10 PR do Sebrae/PR e TOP
-       1.000 são o assunto das suas notícias; a de IA aponta para a matéria da Aya, onde a WIM
-       Angels "reconheceu o valor da Aya" — é o lastro mais próximo desse item. -->
-  <Reconhecimentos
-    titulo="O que já reconheceram no caminho"
-    itens={[
-      { icone: "crescimento", texto: "Aporte pré-seed com valuation de R$ 10 milhões", noticia: "/blog/beorange-recebe-aporte-pre-seed-com-valuation-de-10mi/" },
-      { icone: "trofeu", texto: "Indicada a Fintech do Ano no Brasil", noticia: "/blog/beorange-e-indicada-para-fintech-do-ano-no-brasil-pela-global-startups-awards/" },
-      { icone: "medalha", texto: "Top 10 PR no Prêmio Sebrae Startups 2026", noticia: "/blog/beorange-selecionada-top-10-pr-2026-sebrae/" },
-      { icone: "medalha", texto: "Top 1.000 no Prêmio Sebrae Startups", noticia: "/blog/somos-top-1-000-pelo-premio-sebrae-startups/" },
-      { icone: "ia", texto: "Reconhecida por aplicação de inteligência artificial na contabilidade", noticia: "/blog/beorange-revoluciona-a-contabilidade-com-inteligencia-artificial-na-aya/" },
-    ]}
-    cta={{ texto: "Ver na imprensa", href: "/imprensa/" }}
-  />
+       Em 09/10/2026 a dobra passou ao formato da prova da home, a pedido do cliente:
+       avaliações do Google à esquerda (dado real, ver SocialProofSection.astro) e os
+       reconhecimentos à direita. Sai sem a fileira de cases, que é ilustrativa.
+       O que se perdeu com isso: os cartões levavam cada prêmio à notícia do blog que o
+       comprova, e o botão "Ver na imprensa" apontava para /imprensa/, que dá 404. -->
+  <div class="prova-sobre">
+    <SocialProofSection
+      titulo="O que já reconheceram no caminho"
+      cases={[]}
+      reconhecimentos={{
+        titulo: "Reconhecimentos",
+        itens: [
+          { antes: "Aporte pré-seed com valuation de ", forte: "R$ 10 milhões" },
+          { antes: "Indicada a ", forte: "Fintech do Ano", depois: " no Brasil" },
+          { forte: "Top 10 PR", depois: " no Prêmio Sebrae Startups 2026" },
+          { forte: "Top 1.000", depois: " no Prêmio Sebrae Startups" },
+          { antes: "Reconhecida por aplicação de ", forte: "inteligência artificial", depois: " na contabilidade" },
+        ],
+      }}
+    />
+  </div>
 
   <!-- DOBRA 5 — Quem atende.
-       [FALTA] a grade de lideranças com foto, nome, cargo e formação. Enquanto não vier, a
-       dobra fica com o parágrafo, exatamente como o documento prevê. -->
-  <SecaoLista
+       [FALTA] a grade de lideranças com foto, nome, cargo e formação. Até ela vir, a dobra
+       leva UMA foto do time real (estúdio da Beorange, recebida em 09/10/2026) — o documento
+       proíbe banco de imagens aqui. A foto é da MYLE, e não de alguém do atendimento, porque a
+       dobra nomeia a Myle no bloco e no botão: com outra pessoa ao lado, o visitante lia aquele
+       rosto como "Myle Pontes" (a Thais esteve aqui em 09/10/2026 e saiu por isso).
+       Foto de estúdio (a mesma sessão do blazer laranja da Contabilidade), com o fundo branco
+       removido para o degradê do cartão aparecer. A foto de evento, com microfone, foi testada
+       aqui e recusada pelo cliente: escura demais para o cartão claro. -->
+  <SecaoComFoto
+    variante="alternada"
     titulo="Quem cuida da sua operação"
     texto="Cada cliente tem um analista responsável, que conhece a operação e acompanha os números com a frequência definida no contrato: semanal, quinzenal, mensal ou trimestral. Não é central de atendimento. É a mesma pessoa, mês após mês."
     bloco={{
@@ -115,17 +135,29 @@ import Footer from "../../components/elements/Footer.astro";
       texto: "Myle Pontes, fundadora e CEO, contadora especializada em contabilidade internacional. É ela quem assina o conteúdo publicado no blog.",
     }}
     cta={{ texto: "Conhecer Myle Pontes", href: "/sobre-nos/myle-pontes/" }}
-  />
-
-  <!-- DOBRA 6 — Chamada para ação -->
-  <SecaoLista
-    variante="alternada"
-    titulo="Se a sua empresa chegou nesse ponto, vale uma conversa"
-    texto="Empresas que superaram o controle informal e precisam de mais previsibilidade, governança e segurança tributária costumam chegar até aqui. O primeiro passo é um diagnóstico da situação atual."
-    cta={{ texto: "Marcar uma conversa", href: "/contato/" }}
+    foto={{
+      src: "/img/sobre-nos/myle-pontes-card.webp",
+      alt: "Myle Pontes, fundadora e CEO da Beorange, sorrindo, de blazer laranja sobre blusa branca",
+      largura: 556,
+      altura: 781,
+    }}
+    selo="Myle Pontes, fundadora e CEO"
   />
 
   <Footer />
 
   <script is:inline src="/js/site.js"></script>
 </Layout>
+
+<style is:global>
+  /* A prova da home usa cartão branco de borda contínua; a folha desta página herdou do
+     protótipo de Contabilidade a versão tracejada de placeholder. */
+  .prova-sobre .reviews-ph{border-style:solid;background:#fff}
+  /* O .recog li é flex, e cada pedaço de texto vira uma coluna que não quebra junto com as
+     outras. Com as frases curtas da home não aparece; com o quinto item daqui ("Reconhecida
+     por aplicação de inteligência artificial na contabilidade") a soma das colunas passava
+     de 340px e a página rolava para o lado a 320px e 360px (medido em test:largura).
+     Em bloco, a frase corre inteira e a estrela fica pendurada à esquerda. */
+  .prova-sobre .recog li{display:block;position:relative;padding-left:25px}
+  .prova-sobre .recog li::before{position:absolute;left:0;top:0}
+</style>

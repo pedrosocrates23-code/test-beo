@@ -23,7 +23,6 @@ import ProblemaContabilidade from "./ProblemaContabilidade.astro";
 import EspecialidadeTributaria from "./EspecialidadeTributaria.astro";
 import SecaoLista from "./SecaoLista.astro";
 import SecaoFluxo from "./SecaoFluxo.astro";
-import VitrineProduto, { type LinhaVitrine } from "./VitrineProduto.astro";
 import SeisFrentes from "./SeisFrentes.astro";
 import DiagnosticoEntrada from "./DiagnosticoEntrada.astro";
 import Footer from "./Footer.astro";
@@ -55,18 +54,15 @@ export interface Props {
   /** Dobra 6 — frentes irmãs, pelo menos duas. */
   irmas?: { titulo: string; texto: string; href: string }[];
   ctaFinal?: { titulo: string; texto: string };
-  /** Janela de produto logo abaixo do hero (pedido do cliente, 29/09/2026). Opcional: sem
-   *  ela a página sai como antes. Com ela, a dobra 4 também passa a desenhar as etapas. */
-  vitrine?: {
-    titulo: string;
-    linhas: LinhaVitrine[];
-    trilha?: { titulo: string; etapas: string[]; ativa?: number; canais?: string[] };
-  };
+  /** Desenha as etapas da dobra 4 como fluxo (SecaoFluxo) em vez de lista com check.
+   *  Até 09/10/2026 isso vinha amarrado à janela de produto que subia sobre o hero (pedido do
+   *  cliente em 29/09/2026, retirada a pedido dele em 09/10/2026); o fluxo ficou. */
+  atuacaoEmFluxo?: boolean;
 }
 
 const {
   metaTitle, metaDescription, produto, produtoHref, frente, titulo, lead, ctaPrimario,
-  problema, escopo = [], escopoTitulo, atuacao, beneficios, integracao, irmas = [], ctaFinal, vitrine,
+  problema, escopo = [], escopoTitulo, atuacao, beneficios, integracao, irmas = [], ctaFinal, atuacaoEmFluxo = false,
 } = Astro.props;
 ---
 <Layout
@@ -95,9 +91,6 @@ const {
     ctaPrimario={{ texto: ctaPrimario, href: "#diagnostico" }}
     ctaSecundario={{ texto: `Ver todas as frentes de ${produto}`, href: produtoHref }}
   />
-  {/* Irmã adjacente do hero de propósito: o CSS dela usa .hero:has(+ .vitrine) para abrir
-      espaço embaixo dos botões. Nada pode entrar entre os dois. */}
-  {vitrine && <VitrineProduto produto={produto} frente={frente} {...vitrine} />}
 
   <!-- DOBRA 2 — O problema (só quando há texto escrito para ela) -->
   {problema && (
@@ -123,10 +116,10 @@ const {
   )}
 
   <!-- DOBRA 4 — Como atuamos -->
-  {atuacao && vitrine && atuacao.etapas && atuacao.etapas.length > 0 && (
+  {atuacao && atuacaoEmFluxo && atuacao.etapas && atuacao.etapas.length > 0 && (
     <SecaoFluxo titulo={atuacao.titulo} texto={atuacao.texto} etapas={atuacao.etapas} ressalva={atuacao.ressalva} />
   )}
-  {atuacao && !(vitrine && atuacao.etapas && atuacao.etapas.length > 0) && (
+  {atuacao && !(atuacaoEmFluxo && atuacao.etapas && atuacao.etapas.length > 0) && (
     <SecaoLista
       titulo={atuacao.titulo}
       texto={atuacao.texto}

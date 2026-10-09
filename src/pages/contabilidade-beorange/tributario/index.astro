@@ -32,17 +32,7 @@ import PaginaSolucao from "../../../components/elements/PaginaSolucao.astro";
     ],
     destaque: "Empresa no Lucro Real que não revisa crédito está financiando o próprio imposto.",
   }}
-  vitrine={{
-    // Título e os três primeiros status são os do painel do designer na home
-    // ("Análise tributária · Lucro Real": Revisado, Aproveitável, Em análise). Linhas = escopo.
-    titulo: "Análise tributária · Lucro Real",
-    linhas: [
-      { item: "Revisão das bases de IRPJ, CSLL, PIS e COFINS", grupo: "Análise e enquadramento", status: "Revisado" },
-      { item: "Análise e aproveitamento de créditos tributários", grupo: "Créditos e recuperação", status: "Aproveitável" },
-      { item: "Identificação de recolhimentos indevidos ou realizados a maior", grupo: "Créditos e recuperação", status: "Em análise", andamento: true },
-      { item: "Revisão de apurações e obrigações acessórias", grupo: "Revisão e conformidade", status: "Em dia" },
-    ],
-  }}
+  atuacaoEmFluxo
   escopoTitulo="Escopo da atuação tributária"
   escopo={[
     {

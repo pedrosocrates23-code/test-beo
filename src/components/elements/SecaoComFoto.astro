@@ -1,0 +1,81 @@
+---
+// Elemento: texto à esquerda, foto recortada à direita.
+//
+// Nasceu da dobra 5 da /sobre-nos/ ("Quem cuida da sua operação"), que até 09/10/2026 era
+// só parágrafo porque não havia foto do time. A foto chega como recorte de estúdio com fundo
+// transparente, então o fundo é desenhado aqui: um cartão em degradê claro da marca, com a
+// pessoa encostada na base. O recorte precisa terminar na borda de baixo do arquivo — é ela
+// que encosta no fim do cartão.
+//
+// Mesmo vocabulário do SecaoLista (título, texto, bloco de fecho, botão) para que a dobra
+// possa trocar de um para o outro sem reescrever o conteúdo.
+// CSS global: src/styles/prototype-contabilidade.css (.sec-head, .plan, .btn).
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  titulo: string;
+  texto?: string;
+  bloco?: { titulo: string; texto: string };
+  cta?: { texto: string; href: string };
+  foto: { src: string; alt: string; largura: number; altura: number };
+  /** Frase curta sobre a foto, no canto de baixo. Omita para a foto ficar limpa. */
+  selo?: string;
+  /** "clara" (padrão) ou "alternada" (fundo bege). */
+  variante?: "clara" | "alternada";
+}
+
+const { id, eyebrow, titulo, texto, bloco, cta, foto, selo, variante = "clara" } = Astro.props;
+---
+<section class={variante === "alternada" ? "alt" : undefined} id={id}>
+  <div class="wrap com-foto">
+    <div class="com-foto__texto">
+      <div class="sec-head rv">
+        {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+        <h2>{titulo}</h2>
+        {texto && <p>{texto}</p>}
+      </div>
+      {bloco && (
+        <div class="plan rv">
+          <h3>{bloco.titulo}</h3>
+          <p>{bloco.texto}</p>
+        </div>
+      )}
+      {cta && (
+        <div class="rv" style="margin-top:32px">
+          <a href={cta.href} class="btn btn-primary">{cta.texto}</a>
+        </div>
+      )}
+    </div>
+    <figure class="com-foto__fig rv">
+      <img src={foto.src} alt={foto.alt} width={foto.largura} height={foto.altura} loading="lazy" decoding="async" />
+      {selo && <figcaption class="com-foto__selo">{selo}</figcaption>}
+    </figure>
+  </div>
+</section>
+
+<style is:global>
+  .com-foto{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
+  .com-foto .plan{margin-top:32px}
+  .com-foto__fig{
+    position:relative;margin:0;overflow:hidden;
+    border-radius:var(--r-card);
+    background:
+      radial-gradient(90% 70% at 70% 30%,rgba(255,122,24,.22) 0%,rgba(255,122,24,0) 70%),
+      linear-gradient(160deg,#FFF4EE 0%,var(--coral-soft) 100%);
+    border:1px solid var(--border);
+    display:flex;justify-content:center;align-items:flex-end;
+    padding:36px 24px 0;
+    aspect-ratio:4 / 5;
+  }
+  .com-foto__fig img{display:block;width:auto;height:100%;max-width:100%;object-fit:contain;object-position:bottom}
+  .com-foto__selo{
+    position:absolute;left:18px;bottom:18px;
+    background:#fff;border:1px solid var(--border);border-radius:999px;
+    padding:9px 16px;font-size:13px;font-weight:600;color:var(--ink);
+    box-shadow:var(--shadow);
+  }
+  @media (max-width: 940px){
+    .com-foto{grid-template-columns:1fr;gap:36px}
+    .com-foto__fig{max-width:440px;width:100%;margin:0 auto}
+  }
+</style>

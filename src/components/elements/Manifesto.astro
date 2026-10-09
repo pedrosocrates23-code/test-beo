@@ -1,0 +1,82 @@
+---
+// Elemento: manifesto — título, texto e frases curtas numeradas em cartões 2x2, com uma pessoa
+// do time à direita.
+//
+// Nasceu da dobra 2 da /sobre-nos/. O documento de textos pede para as quatro linhas de
+// "Uma estrutura, não um pacote de serviços" um "tratamento tipográfico de manifesto: corpo
+// grande, muito respiro, uma linha por vez".
+//
+// Primeira versão (09/10/2026) era uma banda escura com as linhas numa coluna à direita; o
+// cliente achou a página "escura logo de cara" e pediu o desenho da dobra "O problema" da
+// /contabilidade-beorange/ (ProblemaContabilidade.astro): fundo branco, cartões 2x2 sob o
+// texto e uma pessoa do time encostada na borda direita. Os cartões reaproveitam .prob-grid e
+// .prob de prototype-contabilidade.css; no lugar do X vermelho do problema, o número em laranja,
+// porque aqui as linhas são o que a Beorange entrega, não a dor do leitor.
+//
+// A FOTO é um <img>, não background-image como na Contabilidade, para ter texto alternativo.
+// O arquivo é um quadro branco 2972x1672 com a pessoa já posicionada (mesmo enquadramento do
+// problema-bg.webp: cabeça a y=127, figura centrada em x=2190, ~1000px de largura) e entra
+// preso à ALTURA da seção e à borda direita — o equivalente de `right top / auto 100%`.
+// Só a partir de 1366px, pela mesma conta da Contabilidade: abaixo disso a figura caminha
+// para baixo do texto.
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  titulo: string;
+  texto?: string;
+  linhas: string[];
+  foto?: { src: string; alt: string };
+}
+
+const { id, eyebrow, titulo, texto, linhas, foto } = Astro.props;
+---
+<section class:list={["manifesto-sec", { "manifesto-sec--foto": foto }]} id={id}>
+  {foto && <img class="manifesto-sec__foto" src={foto.src} alt={foto.alt} width="2972" height="1672" loading="lazy" decoding="async" />}
+  <div class="wrap">
+    <div class="sec-head rv">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h2>{titulo}</h2>
+      {texto && <p>{texto}</p>}
+    </div>
+    <ol class="prob-grid manifesto-sec__linhas rv">
+      {linhas.map((linha, i) => (
+        <li class="prob">
+          <span class="manifesto-sec__n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+          <span>{linha}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style is:global>
+  .manifesto-sec{position:relative;overflow:hidden;background:#fff}
+  .manifesto-sec .wrap{position:relative;z-index:1}
+  .manifesto-sec__linhas{list-style:none;padding:0}
+  .manifesto-sec .prob{align-items:center}
+  .manifesto-sec .prob span:last-child{font-size:16px;font-weight:500;color:var(--ink);line-height:1.4}
+  .manifesto-sec__n{
+    width:32px;height:32px;border-radius:9px;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--coral-soft);color:var(--coral);
+    font-size:12.5px;font-weight:700;letter-spacing:.04em;
+  }
+  .manifesto-sec__foto{display:none}
+  /* Os cartões param antes da figura. Na Contabilidade eles correm a largura toda e passam por
+     cima do blazer. Como a foto é presa à altura, a figura começa em
+     ~vw - 0,43 x (1,78 x altura). Com a altura travada em 834px
+     abaixo, isso dá x≈806 a 1440px, e o texto começa em 178: 640px de grade param a ~15px do
+     braço. A 1366px sobra uma sobreposição de ~40px na manga, menor que a da Contabilidade. */
+  /* Altura mínima de 834px = a altura medida da dobra "O problema" na Contabilidade, para a
+     pessoa sair no MESMO tamanho da Myle de lá (a foto é presa à altura). O conteúdo aqui é
+     mais baixo, por isso vai centrado na vertical em vez de deixar a sobra toda embaixo. */
+  @media (min-width: 1366px){
+    .manifesto-sec--foto{min-height:834px;display:flex;align-items:center}
+    .manifesto-sec--foto > .wrap{width:100%}
+    .manifesto-sec--foto .manifesto-sec__linhas{max-width:640px}
+    .manifesto-sec__foto{
+      display:block;position:absolute;top:0;right:0;z-index:0;
+      height:100%;width:auto;max-width:none;pointer-events:none;
+    }
+  }
+</style>

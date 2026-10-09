@@ -16,22 +16,6 @@ import PaginaSolucao from "../../../components/elements/PaginaSolucao.astro";
   titulo="Cobrança organizada do início ao recebimento."
   lead="A Conta beorange centraliza a emissão, o acompanhamento e a automação das cobranças. A empresa pode emitir boletos, PIX e links de pagamento, configurar cobranças recorrentes e automatizar lembretes por meio de uma régua personalizada."
   ctaPrimario="Solicitar diagnóstico"
-  vitrine={{
-    // Linhas = as formas de cobrança do escopo; a trilha = a régua de cobrança do escopo
-    // (antes, no dia e depois do vencimento; e-mail e SMS). Sem valor e sem nome de pagador.
-    titulo: "Cobranças",
-    linhas: [
-      { item: "Boleto", grupo: "Cobrança recorrente", status: "Pago" },
-      { item: "Cobrança por PIX", grupo: "Cobrança avulsa", status: "Recebido" },
-      { item: "Link de pagamento", grupo: "Cobrança avulsa", status: "Lembrete enviado", andamento: true },
-    ],
-    trilha: {
-      titulo: "Régua de cobrança",
-      etapas: ["Antes do vencimento", "No vencimento", "Após o vencimento"],
-      ativa: 0,
-      canais: ["E-mail", "SMS"],
-    },
-  }}
   escopoTitulo="O que está incluído"
   escopo={[
     { rotulo: "Funcionalidades", itens: [
