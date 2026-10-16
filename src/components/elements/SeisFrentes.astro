@@ -31,6 +31,10 @@ interface Props {
    *  Nasceu para as cinco camadas da /conta-beorange/ (29/09/2026): cinco cartões não
    *  fecham em grade de colunas iguais, e a grade 3 + 2 não agradou. */
   carrossel?: boolean;
+  /** Esconde o link "Ver ..." de todos os cards. Para página de conversão, onde o visitante
+   *  deve ficar na página (pedido do cliente, 16/10/2026). Os links continuam nos dados:
+   *  é só tirar a prop para eles voltarem. */
+  semLinks?: boolean;
 }
 
 const {
@@ -47,6 +51,7 @@ const {
   ],
   colunas = 3,
   carrossel = false,
+  semLinks = false,
 } = Astro.props;
 ---
 <section class="alt" id={id}>
@@ -79,7 +84,7 @@ const {
             {f.icone && <div class="ic"><Icone nome={f.icone} /></div>}
             <h3>{f.titulo}</h3>
             <p>{f.texto}</p>
-            {f.link && (() => {
+            {f.link && !semLinks && (() => {
               const fora = classificarHref(f.link.href) === "fora";
               return <div class="pfoot"><a href={f.link.href} class="link-cta" target={fora ? "_blank" : undefined} rel={fora ? "noopener noreferrer" : undefined}>{f.link.texto} <Icone nome="seta-direita" /></a></div>;
             })()}

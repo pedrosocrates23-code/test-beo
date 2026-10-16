@@ -26,6 +26,10 @@ interface Props {
   /** Faixa de uma linha abaixo dos botões. Na Conta Beorange carrega o modelo de cobrança,
    *  que o documento manda expor já na primeira dobra por ser argumento comercial. */
   destaque?: string;
+  /** Variante com texto à ESQUERDA e foto como <img> (com alt e title) em vez de background.
+   *  Para quando a foto tem uma pessoa e o Figma pede o texto ao lado dela, não por cima.
+   *  Substitui `foto`: use um ou outro. */
+  fotoImg?: { src: string; srcset?: string; alt: string; title?: string; width: number; height: number };
 }
 
 const {
@@ -36,9 +40,29 @@ const {
   ctaSecundario = { texto: "Ver as seis frentes", href: "#frentes" },
   destaque,
   foto,
+  fotoImg,
 } = Astro.props;
 ---
-<section class="hero" style={foto ? `--hero-photo:url('${foto}')` : undefined}>
+<section
+  class:list={["hero", { "hero--esq": !!fotoImg }]}
+  style={fotoImg ? `--hero-photo:none;--hero-ratio:${fotoImg.width}/${fotoImg.height}` : foto ? `--hero-photo:url('${foto}')` : undefined}
+>
+  {fotoImg && (
+    /* Carrega já: é a imagem da primeira dobra (LCP), por isso eager + fetchpriority. */
+    <img
+      class="hero__foto"
+      src={fotoImg.src}
+      srcset={fotoImg.srcset}
+      sizes="100vw"
+      alt={fotoImg.alt}
+      title={fotoImg.title}
+      width={fotoImg.width}
+      height={fotoImg.height}
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  )}
   <div class="wrap">
     <div class="hero-inner rv in">
       {eyebrow && <span class="eyebrow">{eyebrow}</span>}

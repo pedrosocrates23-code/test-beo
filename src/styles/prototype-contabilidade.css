@@ -140,6 +140,27 @@
     color:rgba(255,255,255,.72);border-top:1px solid rgba(255,255,255,.18);padding-top:18px}
   .hero .btn-ghost{color:#fff;border-color:rgba(255,255,255,.42)}
   .hero .btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.10)}
+  /* ---------- HERO À ESQUERDA, FOTO EM <img> (/conta-beorange/) ----------
+     Figma 2179:917: texto alinhado à esquerda, na coluna do logo, e a pessoa da foto à direita,
+     sem nada por cima dela. A foto cobre a dobra (object-fit:cover) ancorada à direita, para a
+     figura ficar do lado do texto em qualquer largura. O véu à esquerda só garante contraste
+     do texto: a foto já é escura ali, e ele cresce no celular, onde o texto passa por cima. */
+  /* Proporção da própria foto (1440x714): a dobra tem a altura da imagem, então ela aparece
+     INTEIRA, sem o corte de zoom que o cover causava num hero mais baixo que a foto — é o
+     enquadramento do Figma. Se o texto precisar de mais altura (tela estreita), a dobra
+     cresce e só aí o cover corta um pouco. O texto fica centrado na altura livre. */
+  .hero--esq{text-align:left;aspect-ratio:var(--hero-ratio,1440/714);display:flex;align-items:center}
+  .hero__foto{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:72% center}
+  .hero--esq::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(90deg,rgba(13,10,9,.72) 0%,rgba(13,10,9,.42) 38%,rgba(13,10,9,0) 62%)}
+  .hero--esq h1{margin-left:0;margin-right:0;max-width:17ch}
+  .hero--esq p.lead{margin-left:0;margin-right:0;max-width:52ch}
+  .hero--esq .hero-cta{justify-content:flex-start}
+  .hero--esq .hero-destaque{margin-left:0;margin-right:0;max-width:46ch}
+  @media(max-width:820px){
+    .hero--esq::before{background:linear-gradient(180deg,rgba(13,10,9,.55) 0%,rgba(13,10,9,.72) 100%)}
+    .hero__foto{object-position:78% center}
+  }
   .photo-note{position:absolute;right:14px;top:14px;z-index:2;font-size:10.5px;color:rgba(255,255,255,.7);letter-spacing:.04em;background:rgba(0,0,0,.32);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px)}
 
   /* ---------- PRODUCT MOCK (screenshot look) ---------- */
@@ -250,6 +271,11 @@
   }
 
   .stages{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:60px;align-items:stretch}
+  /* Quatro etapas em três colunas deixavam a quarta sozinha na segunda linha. Com quatro, a
+     grade fecha em uma linha só; entre 941 e 1100px, onde quatro colunas ficam estreitas,
+     fecha em 2x2. Abaixo de 940px a regra de empilhar (mais adiante) assume. */
+  .stages--4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:1100px){.stages--4{grid-template-columns:repeat(2,1fr)}}
   .stage{padding:30px 26px;border-radius:16px;position:relative}
   /* Rótulo "ETAPA 0N" em laranja em todas as etapas, como na home (prototype-home.css). No
      protótipo desta folha ele era cinza e só a .on ficava laranja; sem etapa destacada em

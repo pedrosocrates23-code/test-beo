@@ -23,14 +23,23 @@ import Footer from "../../components/elements/Footer.astro";
     servico: "Contabilidade consultiva",
     migalhas: [{ nome: "Home", url: "/" }, { nome: "Contabilidade Beorange", url: "/contabilidade-beorange/" }],
   }}
-  title="Contabilidade Beorange | Contabilidade consultiva para empresas em crescimento"
+  title="Contabilidade Beorange | Consultiva para empresas em crescimento"
   description="Contábil, fiscal, DP, tributário, societário e assessoria recorrente em uma estrutura só. Profundidade em Lucro Real e preparação para IBS e CBS."
 >
 <Header ativo="solucoes" />
 <MobileMenu />
-<HeroContabilidade />
+<HeroContabilidade
+  fotoImg={{
+    src: "/img/contabilidade/hero-contabilidade.webp",
+    srcset: "/img/contabilidade/hero-contabilidade-800.webp 800w, /img/contabilidade/hero-contabilidade.webp 1440w, /img/contabilidade/hero-contabilidade-2x.webp 2880w",
+    alt: "Homem de costas diante de um monitor com painel de gráficos, sentado a uma mesa de mármore preto em um escritório de luz baixa e âmbar",
+    title: "Contabilidade consultiva Beorange: números confiáveis para decidir",
+    width: 1440,
+    height: 624,
+  }}
+/>
 <ProblemaContabilidade />
-<SeisFrentes />
+<SeisFrentes semLinks />
 <LeituraNumeros />
 <EspecialidadeTributaria />
 <ContaBeorangeCta
