@@ -29,7 +29,12 @@ interface Props {
   /** Variante com texto à ESQUERDA e foto como <img> (com alt e title) em vez de background.
    *  Para quando a foto tem uma pessoa e o Figma pede o texto ao lado dela, não por cima.
    *  Substitui `foto`: use um ou outro. */
-  fotoImg?: { src: string; srcset?: string; alt: string; title?: string; width: number; height: number };
+  fotoImg?: {
+    src: string; srcset?: string; alt: string; title?: string; width: number; height: number;
+    /** Recorte para tablet e celular (até 820px), com a figura em primeiro plano. Sem ele,
+     *  essas telas baixam a mesma imagem larga do computador e o CSS apenas a corta. */
+    mobileSrcset?: string;
+  };
 }
 
 const {
@@ -49,6 +54,8 @@ const {
 >
   {fotoImg && (
     /* Carrega já: é a imagem da primeira dobra (LCP), por isso eager + fetchpriority. */
+    <picture style="display:contents">
+      {fotoImg.mobileSrcset && <source media="(max-width: 820px)" srcset={fotoImg.mobileSrcset} sizes="100vw" />}
     <img
       class="hero__foto"
       src={fotoImg.src}
@@ -62,6 +69,7 @@ const {
       fetchpriority="high"
       decoding="async"
     />
+    </picture>
   )}
   <div class="wrap">
     <div class="hero-inner rv in">

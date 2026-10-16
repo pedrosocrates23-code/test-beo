@@ -54,7 +54,7 @@ const {
       <h2>{titulo.forte && <b>{titulo.forte}</b>} {titulo.resto}</h2>
       {intro && <p>{intro}</p>}
     </div>
-    <div class="stages rv">
+    <div class:list={["stages", "rv", { "stages--4": estagios.length === 4 }]}>
       {estagios.map((e) => (
         <div class:list={["stage", { on: e.atual }]}>
           <div class="num">{e.rotulo}</div><h3>{e.titulo}</h3><p>{e.resumo}</p>

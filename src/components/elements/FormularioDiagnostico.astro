@@ -43,9 +43,10 @@ const {
   rodape = "Respondemos em até um dia útil.",
   onSubmit = "event.preventDefault();this.reset();alert('Protótipo — envio de formulário ainda não conectado.');",
 } = Astro.props;
+import { WHATSAPP_URL } from "../../lib/whatsapp";
 ---
 <h3>{titulo}</h3>
-<form onsubmit={onSubmit}>
+<form onsubmit={onSubmit} data-conv="lead" data-ponto="formulario-diagnostico">
   <div class="form-grid">
     {campos.map((campo) => (
       <div class:list={["field", { full: campo.full }]}>
@@ -68,3 +69,10 @@ const {
     {rodape && <span class="rsv">{rodape}</span>}
   </div>
 </form>
+<p class="form-wa">Prefere falar agora? <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-ponto="formulario-diagnostico">Chame no WhatsApp</a></p>
+
+<style is:global>
+  /* Alternativa ao formulário para quem prefere conversar: link discreto abaixo do botão. */
+  .form-wa{margin-top:14px;font-size:13.5px;color:var(--muted)}
+  .form-wa a{color:var(--coral);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+</style>

@@ -1,4 +1,5 @@
 ---
+import { WHATSAPP_URL } from "../../lib/whatsapp";
 // Elemento: overlay de menu mobile.
 // Figma: nó 51:5 "beorange-menu-mobile" (Soluções fechado) e 52:2 (Soluções aberto).
 //
@@ -86,7 +87,7 @@ const {
     <div class="mm__rodape">
       <p class="mm__rotulo">{rotuloContato}</p>
       <p class="mm__contato">{contato}</p>
-      <a class="mm__cta" href="/contato/">
+      <a class="mm__cta" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-ponto="menu-mobile">
         Falar com um especialista
         <img src="/img/menu/icon-arrow-right.svg" alt="" width="16" height="16" />
       </a>

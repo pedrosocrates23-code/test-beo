@@ -10,6 +10,7 @@
 // É a exceção ao aviso do MobileMenu ("enquanto forem três listas, mudar uma rota exige
 // mudar as três"): esta não é uma quarta cópia.
 import { CALCULADORAS, caminhoDe } from "../../lib/calc/rotas";
+import { WHATSAPP_URL } from "../../lib/whatsapp";
 
 export interface Props {
   logoHref?: string;
@@ -119,6 +120,7 @@ const ano = new Date().getFullYear();
         <h4>Contato</h4>
         <p>{endereco}</p>
         <p><a href={telefoneLink}>{telefone}</a></p>
+        <p><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-ponto="rodape">WhatsApp</a></p>
         <p><a href={`mailto:${email}`}>{email}</a></p>
         <p>{horario}</p>
         {pendencia && <div class="foot-pending">{pendencia}</div>}

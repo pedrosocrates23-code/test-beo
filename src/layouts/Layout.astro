@@ -20,6 +20,7 @@ import "../styles/formularios.css";
 // toda página. Sem JS ela não abre, e o site continua navegável pelo menu; com JS, a mesma
 // busca atende o header, o campo do blog e os atalhos de teclado.
 import BuscaOverlay from "../components/elements/BuscaOverlay.astro";
+import WhatsAppFlutuante from "../components/elements/WhatsAppFlutuante.astro";
 import { montarGrafo, type DadosDaPagina } from "../lib/schema";
 
 export interface Props {
@@ -126,10 +127,13 @@ const grafo = schema ? montarGrafo(schema, caminho) : null;
   <body>
     <slot />
     <BuscaOverlay />
+    <WhatsAppFlutuante />
     {/* Máscara de telefone e sugestões de e-mail para todo formulário do site. Ver o
         cabeçalho do módulo: basta o campo usar type="tel" ou type="email". */}
     <script>
       import "../scripts/campos-formulario";
+      // Eventos de conversão (WhatsApp e formulários) para o dataLayer. Ver o módulo.
+      import "../scripts/conversao";
     </script>
   </body>
 </html>
