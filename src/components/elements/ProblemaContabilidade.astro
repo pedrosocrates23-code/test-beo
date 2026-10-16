@@ -21,6 +21,8 @@ interface Props {
   destaque?: string;
   /** Traz a foto de fundo. Passe false para a seção ficar só sobre o branco da página. */
   comFoto?: boolean;
+  /** Foto de fundo alternativa (mesma composição 2972x1672). Omita para usar a da Myle. */
+  foto?: { src: string; alt: string };
 }
 
 const {
@@ -35,13 +37,14 @@ const {
   ],
   destaque = "Contabilidade sem leitura é registro. Registro não muda decisão.",
   comFoto = true,
+  foto = { src: "/img/contabilidade/problema-bg.webp", alt: AUTORES["myle-pontes"].fotoAlt },
 } = Astro.props;
 ---
 <section class:list={{ problema: comFoto }}>
   {/* A foto é um <img>, não background-image, para ter texto alternativo com o nome dela.
       Mesmo arquivo e mesma regra de posição de antes: preso à altura da seção e à borda direita,
       só a partir de 1366px (ver .problema__foto em prototype-contabilidade.css). */}
-  {comFoto && <img class="problema__foto" src="/img/contabilidade/problema-bg.webp" alt={AUTORES["myle-pontes"].fotoAlt} width="2972" height="1672" loading="lazy" decoding="async" />}
+  {comFoto && <img class="problema__foto" src={foto.src} alt={foto.alt} width="2972" height="1672" loading="lazy" decoding="async" />}
   <div class="wrap">
     <div class="sec-head rv">
       <h2>{titulo}</h2>
