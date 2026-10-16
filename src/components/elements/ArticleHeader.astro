@@ -67,7 +67,7 @@ const {
   <div class="byline">
     <span class="av">
       {autorFoto
-        ? <img class="av-foto" src={autorFoto} alt="" width="48" height="48" loading="lazy" decoding="async" />
+        ? <img class="av-foto" src={autorFoto} alt={`Foto de ${autor}, ${autorCargo}`} width="48" height="48" loading="lazy" decoding="async" />
         : <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M57.3 8.6 A42 42 0 1 1 42.7 8.6" fill="none" stroke="#FF6A14" stroke-width="14"/></svg>}
     </span>
     <div>

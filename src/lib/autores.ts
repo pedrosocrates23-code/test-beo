@@ -82,7 +82,7 @@ export const AUTORES = {
      *  numa página que existe para dizer quem é a pessoa, foto de procedência incerta é o tipo
      *  de detalhe que derruba a página inteira. */
     foto: "/img/sobre-nos/myle-pontes.webp",
-    fotoAlt: "Myle Pontes, fundadora e CEO da Beorange, de blazer laranja, sorrindo",
+    fotoAlt: "Myle Pontes, fundadora e CEO da Beorange, sorrindo, de blazer laranja sobre blusa branca, com as mãos na lapela",
     avatar: "/img/sobre-nos/myle-pontes-avatar.webp",
     og: "/img/sobre-nos/myle-pontes-og.jpg",
     perfis: [

@@ -451,9 +451,13 @@
      folga = vw/2 - 672 (figura em vw-647, texto acabando em vw/2+25), que dá 11px a 1366px
      e negativo abaixo de 1344px. */
   .problema{position:relative}
+  .problema__foto{display:none}
   .problema .wrap{position:relative;z-index:1}
   @media(min-width:1366px){
-    .problema{background:#fff url('/img/contabilidade/problema-bg.webp') right top/auto 100% no-repeat}
+    .problema{background:#fff}
+    /* O que era `right top / auto 100%` no background: top:0, right:0, altura da seção, largura
+       automática. O branco à esquerda continua vindo do background-color da seção. */
+    .problema__foto{display:block;position:absolute;top:0;right:0;z-index:0;height:100%;width:auto;max-width:none;pointer-events:none}
   }
   .prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:44px}
   .prob{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}

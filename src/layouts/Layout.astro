@@ -34,6 +34,8 @@ export interface Props {
   /** Imagem da prévia ao compartilhar. Caminho a partir de public/. Sem ela entra a
    *  imagem padrão do site. */
   imagem?: string | null;
+  /** Descrição da imagem da prévia (og:image:alt). Omitir quando a imagem for a padrão do site. */
+  imagemAlt?: string;
   /** "website" para as páginas do site, "article" para post de blog. */
   tipoOg?: "website" | "article";
 }
@@ -43,6 +45,7 @@ const {
   canonical,
   schema,
   imagem,
+  imagemAlt,
   tipoOg = "website",
 } = Astro.props;
 
@@ -101,10 +104,12 @@ const grafo = schema ? montarGrafo(schema, caminho) : null;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={imagemOg} />
+    {imagemAlt && <meta property="og:image:alt" content={imagemAlt} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imagemOg} />
+    {imagemAlt && <meta name="twitter:image:alt" content={imagemAlt} />}
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

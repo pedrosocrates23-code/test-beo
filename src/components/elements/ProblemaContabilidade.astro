@@ -8,6 +8,7 @@
 // Enumera sintomas antes de oferecer a solução — os cards são a dor que o leitor reconhece.
 // A classe .problema é o que traz a foto de fundo; tirando-a, a seção funciona sobre branco.
 import Icone from "./Icone.astro";
+import { AUTORES } from "../../lib/autores";
 
 interface Props {
   titulo?: string;
@@ -37,6 +38,10 @@ const {
 } = Astro.props;
 ---
 <section class:list={{ problema: comFoto }}>
+  {/* A foto é um <img>, não background-image, para ter texto alternativo com o nome dela.
+      Mesmo arquivo e mesma regra de posição de antes: preso à altura da seção e à borda direita,
+      só a partir de 1366px (ver .problema__foto em prototype-contabilidade.css). */}
+  {comFoto && <img class="problema__foto" src="/img/contabilidade/problema-bg.webp" alt={AUTORES["myle-pontes"].fotoAlt} width="2972" height="1672" loading="lazy" decoding="async" />}
   <div class="wrap">
     <div class="sec-head rv">
       <h2>{titulo}</h2>
