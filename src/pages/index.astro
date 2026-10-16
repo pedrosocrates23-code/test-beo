@@ -41,8 +41,8 @@ const recentes = (await getCollection("artigos"))
 ---
 <Layout
   schema={{ tipo: "home" }}
-  title="Beorange | Contabilidade e infraestrutura financeira para empresas"
-  description="Contabilidade consultiva, conta PJ e automação financeira no mesmo ambiente. Especialistas em Lucro Real e na transição para IBS e CBS. Fale com um analista."
+  title="Beorange | Contabilidade e infraestrutura financeira"
+  description="Contabilidade consultiva, conta PJ e automação financeira no mesmo ambiente. Especialistas em Lucro Real e na transição para IBS e CBS."
 >
   <Header logoHref="#top" />
   <MobileMenu />
@@ -53,7 +53,14 @@ const recentes = (await getCollection("artigos"))
   <DualSolutionsSection />
   <SocialProofSection />
   <DiagnosticSection />
-  <ResourcesSection cards={recentes} nota={null} />
+  <ResourcesSection
+    titulo="Do blog da Beorange"
+    intro="Os artigos mais recentes sobre contabilidade, tributação e gestão financeira, escritos por quem opera essas frentes todos os dias."
+    cards={recentes}
+    nota={null}
+    link={{ texto: "Ver todos os artigos", href: "/blog/" }}
+    linkComoBotao
+  />
   <Footer logoHref="#top" />
 </Layout>
 

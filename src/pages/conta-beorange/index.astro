@@ -113,7 +113,27 @@ import Footer from "../../components/elements/Footer.astro";
       texto: "A Bora só processa documentos vindos de domínios previamente autorizados. Quando a origem é diferente, o item não entra na operação sem análise.",
     }}
     destaque="A automação prepara. A pessoa decide. Nenhum lançamento entra na operação sem passar por validação."
-  />
+  >
+    {/* Apoio visual ILUSTRATIVO, desenhado em HTML/CSS como o painel da dobra "Como acompanhamos"
+        (.dash). Os valores são exemplo, não dado de cliente; cada linha ilustra uma etapa do
+        texto da dobra. */}
+    <div slot="apoio">
+      <div class="dash" role="img" aria-label="Ilustração: lançamento criado pela Bora a partir de um documento recebido por e-mail, com origem verificada, validação do analista e pagamento encaminhado para aprovação">
+        <div class="dbar"><i></i><i></i><i></i><span class="t">Bora · documento recebido</span></div>
+        <div class="body">
+          <div class="dkpis">
+            <div class="dk"><div class="l">Fornecedor</div><div class="v" style="font-size:14px">Exemplo Ltda.</div></div>
+            <div class="dk"><div class="l">Valor</div><div class="v">R$ 4.280</div></div>
+            <div class="dk"><div class="l">Vencimento</div><div class="v">10/11</div></div>
+          </div>
+          <div class="dash-legend"><span><i style="background:var(--coral)"></i>Categoria sugerida pelo histórico: Serviços de terceiros</span></div>
+          <div class="flag"><span class="fd" style="background:#12B76A"></span><b>Origem</b>&nbsp;domínio autorizado · lido pela Bora</div>
+          <div class="flag"><span class="fd" style="background:#E8A317"></span><b>Lançamento</b>&nbsp;aguardando validação do analista</div>
+          <div class="flag"><span class="fd" style="background:var(--coral)"></span><b>Pagamento</b>&nbsp;segue para aprovação conforme a alçada</div>
+        </div>
+      </div>
+    </div>
+  </SecaoLista>
 
   <!-- DOBRA 6 — Modelo de cobrança -->
   <SecaoLista

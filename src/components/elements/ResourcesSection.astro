@@ -28,6 +28,8 @@ interface Props {
    *  Omita (ou passe null) para mostrar todos de uma vez, que é o comportamento das
    *  outras dobras do site. */
   porLote?: number | null;
+  /** Desenha a chamada do rodapé como botão em vez de link de texto (usado na home). */
+  linkComoBotao?: boolean;
 }
 
 const {
@@ -59,6 +61,7 @@ const {
   nota = "Títulos ilustrativos — curadoria (não ordem por data): um de Tributário, um de Reforma Tributária e um de Gestão financeira, a definir e revisar.",
   link = { texto: "Ver todos os conteúdos", href: "/blog/" },
   porLote = null,
+  linkComoBotao = false,
 } = Astro.props;
 
 const emLotes = porLote != null && porLote > 0 && cards.length > porLote;
@@ -104,7 +107,7 @@ const restantes = cards.length - visiveisDeInicio;
     {nota && <p class="ex-note rv">{nota}</p>}
     {link && (
       <div class="pend rv" style="margin-top:16px">
-        <a href={link.href} class="link-cta">{link.texto} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href={link.href} class={linkComoBotao ? "btn btn-primary" : "link-cta"}>{link.texto} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     )}
   </div>

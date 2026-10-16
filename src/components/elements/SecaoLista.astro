@@ -50,6 +50,7 @@ const {
   itensEmLinha = false,
 } = Astro.props;
 
+const temApoio = Astro.slots.has("apoio");
 const classe = variante === "alternada" ? "alt" : variante === "escura" ? "dark" : undefined;
 ---
 <section class={classe} id={id}>
@@ -59,12 +60,26 @@ const classe = variante === "alternada" ? "alt" : variante === "escura" ? "dark"
       <h2>{titulo}</h2>
       {texto && <p>{texto}</p>}
     </div>
-    {itens.length > 0 && (
+    {itens.length > 0 && !temApoio && (
       <div class="secao-lista__itens rv">
         {subtitulo && <div class="an-sub-h">{subtitulo}</div>}
         <ul class:list={["an-list", { "an-list--linha": itensEmLinha }]}>
           {itens.map((item) => <li><Icone nome="check" />{item}</li>)}
         </ul>
+      </div>
+    )}
+    {/* Com apoio visual (slot "apoio"), a lista vai para a esquerda, em coluna única, e o
+        painel para a direita — o mesmo arranjo da dobra "Como acompanhamos" da Contabilidade
+        (an-grid). Sem o slot, nada muda. */}
+    {itens.length > 0 && temApoio && (
+      <div class="an-grid secao-lista__grid">
+        <div class="rv">
+          {subtitulo && <div class="an-sub-h">{subtitulo}</div>}
+          <ul class="an-list an-list--coluna">
+            {itens.map((item) => <li><Icone nome="check" />{item}</li>)}
+          </ul>
+        </div>
+        <div class="rv"><slot name="apoio" /></div>
       </div>
     )}
     {/* Espaço para o que a seção precisar depois da lista — na página de contato, o mapa
@@ -105,6 +120,9 @@ const classe = variante === "alternada" ? "alt" : variante === "escura" ? "dark"
     display:flex;flex-wrap:wrap;gap:8px 36px;
   }
   .an-list.an-list--linha li{padding:4px 0}
+  /* Lista ao lado de um apoio visual: meia largura não comporta duas colunas. */
+  .an-list.an-list--coluna{columns:1}
+  .secao-lista__grid{margin-top:20px}
   @media (max-width: 680px){
     /* no celular volta a empilhar: três itens lado a lado não cabem */
     .an-list.an-list--linha{display:block}
