@@ -11,8 +11,9 @@
 //   - não há document.cookie em lugar nenhum do projeto;
 //   - o único armazenamento local é a chave "beorange-cookies", usada pelo banner para não
 //     reaparecer depois do aceite — e o banner NÃO está ativo em nenhuma página;
-//   - saem requisições para fonts.googleapis.com e fonts.gstatic.com (as fontes Outfit), que
-//     não gravam cookie, mas transmitem o IP do visitante ao Google.
+//   - a fonte Outfit é servida do próprio domínio (public/fonts/, desde 17/10/2026): não há
+//     mais requisição ao Google Fonts, então nenhum IP de visitante é enviado a terceiros por
+//     causa de tipografia.
 //
 // REVISÃO JURÍDICA CONTINUA NECESSÁRIA. Este texto descreve com precisão o estado atual do
 // site e segue o guia da ANPD, mas quem responde por ele é o jurídico da Beorange. E ele
@@ -37,6 +38,7 @@ import Footer from "../../components/elements/Footer.astro";
 >
   <Header tema="claro" />
   <MobileMenu />
+  <main>
 
   <PaginaLegal
     titulo="Política de Cookies"
@@ -76,10 +78,8 @@ import Footer from "../../components/elements/Footer.astro";
       </tbody>
     </table>
     <p>
-      Além disso, as fontes tipográficas do site são carregadas dos servidores do Google
-      (<code>fonts.googleapis.com</code> e <code>fonts.gstatic.com</code>). Esse carregamento
-      não grava cookies, mas transmite ao Google o endereço IP do seu dispositivo, por ser
-      necessário para entregar o arquivo.
+      As fontes tipográficas do site são entregues pelo próprio domínio da Beorange, sem
+      requisição a servidores de terceiros e sem gravação de cookies.
     </p>
 
     <h2 id="s3">3. Categorias de cookies</h2>
@@ -162,6 +162,7 @@ import Footer from "../../components/elements/Footer.astro";
     </p>
   </PaginaLegal>
 
+  </main>
   <Footer />
 
   <script is:inline src="/js/site.js"></script>

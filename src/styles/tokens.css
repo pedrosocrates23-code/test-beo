@@ -83,7 +83,7 @@
   --surface-overlay: var(--neutral-900);
 
   /* ---------- Tipografia ---------- */
-  --font-family-base: 'Outfit', sans-serif;
+  --font-family-base: 'Outfit', 'Outfit Fallback', sans-serif;
 
   /* ---------- Espaçamento ---------- */
   --space-2: 2px;   --space-4: 4px;   --space-8: 8px;   --space-12: 12px;

@@ -76,7 +76,7 @@ const ano = new Date().getFullYear();
         </div>
       </div>
       <div class="foot-col">
-        <h4>Contabilidade Beorange</h4>
+        <p class="foot-title">Contabilidade Beorange</p>
         <ul>
           <li><a href="/contabilidade-beorange/contabil/">Contábil</a></li>
           <li><a href="/contabilidade-beorange/fiscal/">Fiscal</a></li>
@@ -87,7 +87,7 @@ const ano = new Date().getFullYear();
         </ul>
       </div>
       <div class="foot-col">
-        <h4>Conta Beorange</h4>
+        <p class="foot-title">Conta Beorange</p>
         <ul>
           <li><a href="/conta-beorange/conta-pj/">Conta PJ e movimentação</a></li>
           <li><a href="/conta-beorange/cobrancas/">Cobranças e recebimentos</a></li>
@@ -97,7 +97,7 @@ const ano = new Date().getFullYear();
         </ul>
       </div>
       <div class="foot-col">
-        <h4>Calculadoras</h4>
+        <p class="foot-title">Calculadoras</p>
         <ul>
           {CALCULADORAS.map((c) => (
             <li><a href={caminhoDe(c.slug)}>{c.curto}</a></li>
@@ -106,7 +106,7 @@ const ano = new Date().getFullYear();
         </ul>
       </div>
       <div class="foot-col">
-        <h4>Beorange</h4>
+        <p class="foot-title">Beorange</p>
         <ul>
           <li><a href="/sobre-nos/">Sobre nós</a></li>
           <li><a href="/cases/">Cases</a></li>
@@ -117,7 +117,7 @@ const ano = new Date().getFullYear();
         </ul>
       </div>
       <div class="foot-col foot-contact">
-        <h4>Contato</h4>
+        <p class="foot-title">Contato</p>
         <p>{endereco}</p>
         <p><a href={telefoneLink}>{telefone}</a></p>
         <p><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-ponto="rodape">WhatsApp</a></p>

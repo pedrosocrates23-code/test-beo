@@ -28,12 +28,13 @@ export interface Props {
   /** `eager` no que já está na primeira tela; `lazy` no resto. */
   prioridade?: "eager" | "lazy";
 }
+import { capaSrcset, SIZES_CARD } from "../../lib/capa";
 const { thumb, imagem, cat, title, excerpt, meta, href, prioridade = "lazy" } = Astro.props;
 ---
 <article class="art-ph">
   <div class="thumb">
     {imagem
-      ? <img src={imagem} alt="" loading={prioridade} decoding="async" />
+      ? <img src={imagem} srcset={capaSrcset(imagem)} sizes={capaSrcset(imagem) ? SIZES_CARD : undefined} alt="" loading={prioridade} fetchpriority={prioridade === "eager" ? "high" : undefined} decoding={prioridade === "eager" ? "auto" : "async"} />
       : <span>{thumb}</span>}
   </div>
   <div class="abody">

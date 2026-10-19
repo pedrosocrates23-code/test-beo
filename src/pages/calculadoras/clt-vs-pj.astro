@@ -7,9 +7,9 @@ import CalculadoraShell from '../../components/elements/CalculadoraShell.astro';
 import Campo from '../../components/elements/Campo.astro';
 import { SALARIO_MINIMO, VIGENCIA } from '../../lib/calc/tabelas-2026';
 
-const titulo = 'Calculadora CLT vs PJ 2026: quanto você precisa faturar para empatar';
+const titulo = 'Calculadora CLT vs PJ 2026: quanto faturar para empatar';
 const descricao =
-  'Compare o pacote CLT completo (salário líquido, 13º, férias com 1/3 e FGTS) com a retirada líquida de uma PJ no Simples Nacional ou Lucro Presumido. Tabelas de 2026 e o ponto de equilíbrio de faturamento.';
+  'Compare o pacote CLT (líquido, 13º, férias com 1/3 e FGTS) com a retirada de uma PJ no Simples ou no Presumido e veja o faturamento de equilíbrio.';
 
 const atualizadoEm = new Date(VIGENCIA.verificadoEm).toLocaleDateString('pt-BR', {
   timeZone: 'UTC',

@@ -11,4 +11,8 @@ export default defineConfig({
   // reescrito no dia em que o domínio apontar para cá. Quem impede o preview de ser
   // indexado enquanto isso é o robots.txt, não este campo — ver src/pages/robots.txt.ts.
   site: 'https://beorange.app',
+
+  // CSS dentro do HTML: os dois .css externos bloqueavam a primeira pintura (Lighthouse mobile,
+  // 1,5 s estimados). O custo é o CSS repetido em cada página, que o cache de HTML absorve.
+  build: { inlineStylesheets: 'always' },
 });

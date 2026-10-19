@@ -20,7 +20,7 @@ import { VIGENCIA } from "../../lib/calc/tabelas-2026";
 
 const titulo = "Calculadoras fiscais e trabalhistas | Beorange";
 const descricao =
-  "Três calculadoras gratuitas com as tabelas de 2026: tributária (INSS, IRRF, Simples e Lucro Presumido), CLT × PJ com ponto de equilíbrio, e IBS e CBS da Reforma Tributária.";
+  "Três calculadoras gratuitas com as tabelas de 2026: tributária (INSS, IRRF, Simples e Presumido), CLT × PJ e IBS e CBS da Reforma Tributária.";
 
 const verificadoEm = new Date(VIGENCIA.verificadoEm).toLocaleDateString("pt-BR", {
   timeZone: "UTC",
@@ -41,6 +41,7 @@ const verificadoEm = new Date(VIGENCIA.verificadoEm).toLocaleDateString("pt-BR",
 >
   <Header tema="claro" />
   <MobileMenu />
+  <main>
 
   <HeroIndice
     titulo="Calculadoras"
@@ -66,6 +67,7 @@ const verificadoEm = new Date(VIGENCIA.verificadoEm).toLocaleDateString("pt-BR",
     </div>
   </div>
 
+  </main>
   <Footer />
 
   <script is:inline src="/js/site.js"></script>

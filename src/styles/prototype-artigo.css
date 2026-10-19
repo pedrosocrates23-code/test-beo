@@ -7,7 +7,7 @@
     --grad:linear-gradient(130deg,#FF7A18 0%,#F5380F 60%,#E71C0C 100%);
     --wash:radial-gradient(120% 120% at 85% 8%,#FFE9DD 0%,rgba(255,233,221,0) 55%);
     --shadow:0 18px 44px rgba(43,35,32,.06); --shadow-lg:0 30px 70px rgba(43,35,32,.10);
-    --f:'Outfit',system-ui,-apple-system,sans-serif; --max:1140px;
+    --f:'Outfit','Outfit Fallback',system-ui,-apple-system,sans-serif; --max:1140px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -84,6 +84,10 @@
      Qualificar com .navpill leva a (0,3,0) e resolve. O Figma (no 2056:48) nao define
      estado de hover para ele — a cor e sempre a mesma. */
   .navpill .pill-cta,.navpill .pill-cta:hover,.navpill .pill-cta:focus-visible{background:var(--coral);color:rgba(255,255,255,.88)}
+  /* "Fale com a gente": transparente, texto branco e contorno branco de 1px. O padding perde 1px
+     por lado para o botão manter a mesma altura e largura dos vizinhos (a borda soma 2px). */
+  .navpill .pill-contorno{color:#fff;border:1px solid #fff;padding:8px 14px}
+  .navpill .pill-contorno:hover,.navpill .pill-contorno:focus-visible{background:rgba(255,255,255,.12);color:#fff}
   .hamburger{display:none;background:rgba(28,22,19,.80);border:1px solid rgba(255,255,255,.12);border-radius:12px;cursor:pointer;padding:11px 10px}
   header.site.scrolled .hamburger{background:var(--ink)}
   /* mega dropdown card */
@@ -296,7 +300,7 @@
   .socials a{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;transition:.2s}
   .socials a:hover{background:var(--coral)}
   .socials svg{width:16px;height:16px;fill:#fff}
-  .foot-col h4{font-size:12.5px;font-weight:600;color:#fff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+  .foot-col .foot-title{font-size:12.5px;font-weight:600;color:#fff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
   .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
   .foot-col li a{font-size:13.5px;color:#b8afa9}
   .foot-col li a:hover{color:var(--orange)}

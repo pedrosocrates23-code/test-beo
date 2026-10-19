@@ -44,22 +44,25 @@ const {
   onSubmit = "event.preventDefault();this.reset();alert('Protótipo — envio de formulário ainda não conectado.');",
 } = Astro.props;
 import { WHATSAPP_URL } from "../../lib/whatsapp";
+// Prefixo único por instância: o formulário pode aparecer mais de uma vez na página, e o
+// `for` do label só funciona com id exclusivo.
+const uid = Math.random().toString(36).slice(2, 8);
 ---
-<h3>{titulo}</h3>
+{titulo && <h3>{titulo}</h3>}
 <form onsubmit={onSubmit} data-conv="lead" data-ponto="formulario-diagnostico">
   <div class="form-grid">
-    {campos.map((campo) => (
+    {campos.map((campo, i) => (
       <div class:list={["field", { full: campo.full }]}>
-        <label>{campo.rotulo}</label>
+        <label for={`f-${uid}-${i}`}>{campo.rotulo}</label>
         {campo.tipo === "select" ? (
-          <select required={campo.obrigatorio}>
+          <select id={`f-${uid}-${i}`} required={campo.obrigatorio}>
             {campo.vazio && <option value="" disabled selected>{campo.vazio}</option>}
             {campo.opcoes.map((o) => <option>{o}</option>)}
           </select>
         ) : campo.tipo === "textarea" ? (
-          <textarea required={campo.obrigatorio}></textarea>
+          <textarea id={`f-${uid}-${i}`} required={campo.obrigatorio}></textarea>
         ) : (
-          <input type={campo.tipo} required={campo.obrigatorio} placeholder={campo.placeholder} />
+          <input id={`f-${uid}-${i}`} type={campo.tipo} required={campo.obrigatorio} placeholder={campo.placeholder} />
         )}
       </div>
     ))}

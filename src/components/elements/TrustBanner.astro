@@ -9,10 +9,10 @@
 //  - contador que sobe de 0 até o número quando a seção entra na tela, aproveitando o
 //    IntersectionObserver que o protótipo já tem para o .rv
 export interface Props {
-  /** Número de empresas. O Figma deixou "XX" sem preencher; o nó mobile (48:74) diz 40. */
+  /** Número de empresas. O Figma deixou "XX" sem preencher; o nó mobile (48:74) dizia 40; vale 200 desde 16/10/2026. */
   total?: number;
 }
-const { total = 40 } = Astro.props;
+const { total = 200 } = Astro.props;
 
 // As marcas aparecem em preto; o filtro em .marcas-item img nivela todas no mesmo tom.
 // As cinco que entraram em 09/10/2026 vieram em SVG colorido e foram para WebP já pretas, em
@@ -91,10 +91,10 @@ const grupo = Array.from({ length: repeticoes }, () => marcas).flat();
    vez de zero. min-width em ch + tabular-nums evitam o titulo pular quando vai de 1 para
    2 digitos. */
 @property --num{syntax:"<integer>";initial-value:40;inherits:false}
-.odo{display:inline-block;min-width:2ch;text-align:center;font-variant-numeric:tabular-nums;counter-reset:num var(--num)}
+.odo{display:inline-block;min-width:3ch;text-align:center;font-variant-numeric:tabular-nums;counter-reset:num var(--num)}
 .odo::after{content:counter(num)}
 .marcas.in .odo{animation:marcas-conta 1.1s cubic-bezier(.16,.84,.3,1) forwards}
-@keyframes marcas-conta{from{--num:0}to{--num:var(--alvo,40)}}
+@keyframes marcas-conta{from{--num:0}to{--num:var(--alvo,200)}}
 
 /* marquee: o trilho tem 2 grupos identicos e anda exatamente -50%, entao a emenda e invisivel */
 .marcas-esteira{width:100%;position:relative;

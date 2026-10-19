@@ -104,6 +104,7 @@ const relacionados = relacionadosCrus.map((r) => ({
 >
   <Header ativo="blog" tema="claro" />
   <MobileMenu />
+  <main>
 
   <article class="article">
     <ArticleHeader
@@ -137,6 +138,7 @@ const relacionados = relacionadosCrus.map((r) => ({
     {relacionados.length > 0 && <RelatedArticles artigos={relacionados} />}
   </article>
 
+  </main>
   <Footer />
 
   <script is:inline src="/js/site.js"></script>

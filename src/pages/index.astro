@@ -44,8 +44,11 @@ const recentes = (await getCollection("artigos"))
   title="Beorange | Contabilidade e infraestrutura financeira"
   description="Contabilidade consultiva, conta PJ e automação financeira no mesmo ambiente. Especialistas em Lucro Real e na transição para IBS e CBS."
 >
+  <link slot="head" rel="preload" as="image" href="/img/home/hero-desktop.webp" type="image/webp" media="(min-width: 681px)" fetchpriority="high" />
+  <link slot="head" rel="preload" as="image" href="/img/home/hero-mobile.webp" type="image/webp" media="(max-width: 680px)" fetchpriority="high" />
   <Header logoHref="#top" />
   <MobileMenu />
+  <main>
   <HeroSection />
   <TrustBanner />
   <StagesSection />
@@ -61,6 +64,7 @@ const recentes = (await getCollection("artigos"))
     link={{ texto: "Ver todos os artigos", href: "/blog/" }}
     linkComoBotao
   />
+  </main>
   <Footer logoHref="#top" />
 </Layout>
 

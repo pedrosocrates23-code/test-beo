@@ -12,7 +12,7 @@
 //   painel  — cartão com uma escala de opções, uma delas ativa
 //   papeis  — quem pode o quê, em selos de permitido/negado
 type Visual =
-  | { tipo: "imagem"; src: string; alt: string; width: number; height: number }
+  | { tipo: "imagem"; src: string; srcset?: string; alt: string; title?: string; width: number; height: number }
   | { tipo: "fluxo"; passos: string[] }
   | {
       tipo: "painel";
@@ -44,10 +44,15 @@ const {
       ],
       visual: {
         tipo: "imagem",
-        src: "/img/home/app-beorange.webp",
-        alt: "Aplicativo da Conta Beorange em três telas: seleção de conta, token de acesso e extrato com as últimas transações",
-        width: 702,
-        height: 573,
+        // 1574x1285: 2,24x os 702px que a imagem ocupa no desktop, nítida em tela retina.
+        // O quadro repete o enquadramento da versão anterior (mesma caixa dos celulares), então
+        // o top:-140px e os 61.58% de prototype-home.css continuam valendo sem ajuste.
+        src: "/img/home/app-beorange-mockup.webp",
+        srcset: "/img/home/app-beorange-mockup-800.webp 800w, /img/home/app-beorange-mockup.webp 1574w",
+        alt: "Aplicativo da Conta Beorange em quatro telas: seleção da conta de acesso, token beorange para autorizar operações, extrato da conta corrente e tela inicial com saldo total e últimas transações",
+        title: "Aplicativo da Conta Beorange: acesso, token, extrato e saldo",
+        width: 1574,
+        height: 1285,
       },
     },
     {
@@ -112,7 +117,7 @@ const {
           </div>
           <div class="row-visual">
             {visual.tipo === "imagem" && (
-              <img class="row-img" src={visual.src} alt={visual.alt}
+              <img class="row-img" src={visual.src} srcset={visual.srcset} sizes={visual.srcset ? "(min-width: 941px) 702px, 100vw" : undefined} alt={visual.alt} title={visual.title}
                    width={visual.width} height={visual.height} loading="lazy" decoding="async" />
             )}
             {visual.tipo === "fluxo" && (

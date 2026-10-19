@@ -70,7 +70,9 @@ const TELAS_DOBRA = [
 /** Altura do hero da home a 1440x900, em px. É o desenho do Figma e não pode mudar: serve de
  *  âncora para provar que o aperto do tablet e a escala do monitor largo não vazam para o
  *  desktop. Se o texto do hero mudar, este número muda junto — de propósito. */
-const HERO_DESKTOP = 839;
+// 839 -> 820 em 17/10/2026: o H1 e o parágrafo do hero da home foram trocados a pedido do cliente
+// (medido: com o texto antigo e a fonte hospedada localmente o valor continuava 839).
+const HERO_DESKTOP = 820;
 
 const rotasDe = (dir, prefixo = "") => {
   const saida = [];

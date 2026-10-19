@@ -66,6 +66,7 @@ const todos = artigos.map(paraCard);
 >
   <Header ativo="blog" tema="claro" />
   <MobileMenu />
+  <main>
 
   <!-- DOBRA 1 — Abertura -->
   <HeroIndice
@@ -87,6 +88,7 @@ const todos = artigos.map(paraCard);
     cards={destaques}
     nota={null}
     link={null}
+    primeiraDobra
   />
 
   <!-- DOBRA 4 — Todos os artigos, do mais recente para o mais antigo, em lotes de 15.
@@ -107,6 +109,7 @@ const todos = artigos.map(paraCard);
   <!-- DOBRA 5 — Assinatura de conteúdo -->
   <AssinaturaConteudo />
 
+  </main>
   <Footer />
 
   <script is:inline src="/js/site.js"></script>
