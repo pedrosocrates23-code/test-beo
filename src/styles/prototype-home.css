@@ -153,8 +153,10 @@
   /* Figma no 1:882: 16px, line-height 29.7px, Outfit Regular 400, rgba(255,255,255,.82),
      caixa de 438px. O prototipo usava 18px e deixava a entrelinha vir do body (1.65), o que
      dava 29.7px por coincidencia — trocar so o tamanho derrubaria para 26.4px, entao a
-     entrelinha vai fixa. 46ch a 16px da ~432px, praticamente a caixa do Figma. */
-  .hero p.lead{font-size:16px;line-height:29.7px;max-width:46ch;color:rgba(255,255,255,.82)}
+     entrelinha vai fixa. 46ch a 16px da ~432px, praticamente a caixa do Figma. Estreitado para
+     42ch (~395px, pedido do cliente 19/10/2026): a 46ch a ultima palavra de cada linha ficava
+     colada na borda do mockup. So o paragrafo — o h1 e os botoes nao mudam. */
+  .hero p.lead{font-size:16px;line-height:29.7px;max-width:42ch;color:rgba(255,255,255,.82)}
   .hero-cta{display:flex;gap:13px;margin:34px 0 0;flex-wrap:wrap}
   .hero .btn-ghost{color:#fff;border-color:rgba(255,255,255,.42)}
   .hero .btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.10)}
