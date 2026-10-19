@@ -20,7 +20,6 @@ import "../styles/formularios.css";
 // toda página. Sem JS ela não abre, e o site continua navegável pelo menu; com JS, a mesma
 // busca atende o header, o campo do blog e os atalhos de teclado.
 import BuscaOverlay from "../components/elements/BuscaOverlay.astro";
-import WhatsAppFlutuante from "../components/elements/WhatsAppFlutuante.astro";
 import { montarGrafo, type DadosDaPagina } from "../lib/schema";
 
 export interface Props {
@@ -133,7 +132,9 @@ const grafo = schema ? montarGrafo(schema, caminho) : null;
   <body>
     <slot />
     <BuscaOverlay />
-    <WhatsAppFlutuante />
+    {/* Botão flutuante de WhatsApp removido em 19/10/2026, a pedido do cliente. O componente
+        WhatsAppFlutuante.astro continua no repositório: para reativar, basta importá-lo e
+        montá-lo aqui de novo. Os outros botões de WhatsApp (header, menu mobile, hero) não mudam. */}
     {/* Máscara de telefone e sugestões de e-mail para todo formulário do site. Ver o
         cabeçalho do módulo: basta o campo usar type="tel" ou type="email". */}
     <script>
