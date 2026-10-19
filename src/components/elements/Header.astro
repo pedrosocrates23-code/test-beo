@@ -94,9 +94,9 @@ const noMobile = LOGOS.light;
       <a href="/cases/" class:list={{ "is-active": ativo === "cases" }} aria-current={ativo === "cases" ? "page" : undefined}>Cases</a>
       <a href="/blog/" class:list={{ "is-active": ativo === "blog" }} aria-current={ativo === "blog" ? "page" : undefined}>Blog e Pesquisa</a>
       <button class="icon-btn" aria-label="Buscar"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></button>
-      {/* "Fale com a gente" vai direto ao WhatsApp (pedido do cliente, 16/10/2026): quem clica quer conversar agora. Fica transparente com contorno branco de 1px; o Login continua por último, preenchido de laranja. */}
-      <a href={WHATSAPP_URL} class="pill-contorno" target="_blank" rel="noopener noreferrer" data-ponto="header">Fale com a gente</a>
-      <a href={portalHref} class="pill-cta" rel="noopener" target="_blank">Login</a>
+      {/* "Fale com a gente" vai direto ao WhatsApp (pedido do cliente, 16/10/2026): quem clica quer conversar agora. Fica preenchido de laranja (pedido do cliente, 19/10/2026); o Login continua por último, transparente com contorno branco de 1px. */}
+      <a href={WHATSAPP_URL} class="pill-cta" target="_blank" rel="noopener noreferrer" data-ponto="header">Fale com a gente</a>
+      <a href={portalHref} class="pill-contorno" rel="noopener" target="_blank">Login</a>
 
     {/* Mega-dropdown "Soluções", enxuto a pedido (16/09/2026).
         Só os dois produtos, sem a lista de frentes e sem a coluna Especialidades.

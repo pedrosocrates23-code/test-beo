@@ -91,6 +91,8 @@
      por lado para o botão manter a mesma altura e largura dos vizinhos (a borda soma 2px). */
   .navpill .pill-contorno{color:#fff;border:1px solid #fff;padding:8px 14px}
   .navpill .pill-contorno:hover,.navpill .pill-contorno:focus-visible{background:rgba(255,255,255,.12);color:#fff}
+  /* Fale com a gente (laranja) e Login (contorno) ficam lado a lado; o gap de 2px da barra os deixava colados. */
+  .navpill .pill-cta + .pill-contorno{margin-left:8px}
   .hamburger{display:none;background:rgba(28,22,19,.80);border:1px solid rgba(255,255,255,.12);border-radius:12px;cursor:pointer;padding:11px 10px}
   header.site.scrolled .hamburger{background:var(--ink)}
   /* mega dropdown card */
@@ -452,7 +454,9 @@
     .mobile-open .navpill{display:flex;position:absolute;top:72px;left:16px;right:16px;flex-direction:column;align-items:stretch;background:rgba(28,22,19,.96);backdrop-filter:blur(14px);border-radius:18px;padding:12px;gap:2px;box-shadow:var(--shadow-lg)}
     .mobile-open .navpill a,.mobile-open .navpill button{width:100%;justify-content:flex-start}
     .mobile-open .navpill .icon-btn{display:none}
-    .mobile-open .navpill .pill-cta{justify-content:center;margin-top:6px}
+    .mobile-open .navpill .pill-cta,.mobile-open .navpill .pill-contorno{justify-content:center}
+    .mobile-open .navpill .pill-cta{margin-top:6px}
+    .mobile-open .navpill .pill-cta + .pill-contorno{margin-left:0;margin-top:6px}
   }
   /* Zoom exato do Figma (1586/1440 = 110.14%) onde a proporção do hero garante cobertura. */
   @media(min-width:1024px){
