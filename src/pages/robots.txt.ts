@@ -1,33 +1,24 @@
 // robots.txt, servido em /robots.txt.
 //
-// TRAVA DE INDEXAÇÃO
-// Este site ainda não é o oficial: beorange.app continua servindo o blog anterior, com os
-// MESMOS 149 artigos. Se a URL de preview da Vercel for indexada enquanto isso, os dois
-// endereços disputam as mesmas consultas e o buscador escolhe um — que pode ser o preview.
+// Varredura SEMPRE liberada (pedido do cliente, 19/10/2026): o site pode ser indexado.
 //
-// Por isso o padrão aqui é BLOQUEAR tudo. A liberação é explícita, por variável de ambiente
-// no build:
+// Antes havia uma trava de indexação: o padrão era "Disallow: /" e só a variável de ambiente
+// SITE_OFICIAL=true liberava, para o preview não disputar consultas com o blog anterior em
+// beorange.app. A trava foi removida a pedido. Duas coisas continuam valendo:
 //
-//     SITE_OFICIAL=true npm run build
+// - Nenhuma página tem <meta name="robots" content="noindex"> e o vercel.json não envia
+//   X-Robots-Tag: o robots.txt era a única barreira, e agora ela não existe.
+// - Cada página declara <link rel="canonical"> para https://beorange.app/..., então, se uma
+//   URL de preview da Vercel for indexada antes da virada de domínio, o canonical aponta o
+//   endereço oficial como o preferido.
 //
-// Enquanto ela não existir, sai "Disallow: /" e nenhuma versão de teste entra no índice.
-// No dia da virada, basta definir a variável no projeto da Vercel e publicar de novo —
-// nenhuma linha de código muda.
-//
-// O sitemap é anunciado SEMPRE, inclusive na versão bloqueada. Não custa nada: um robots
-// que proíbe a varredura também faz o buscador ignorar o sitemap, e deixar a linha ali
-// garante que ela não seja esquecida na virada.
+// O sitemap é anunciado sempre.
 import type { APIRoute } from "astro";
 
 const SITE = "https://beorange.app";
 
-/** Só `true` libera. Qualquer outro valor, e a ausência da variável, mantém o bloqueio —
- *  o padrão precisa ser o seguro, porque esquecer de bloquear custa caro e esquecer de
- *  liberar custa um build. */
-const oficial = import.meta.env.SITE_OFICIAL === "true";
-
-const liberado = `# beorange.app
-# Site oficial. Varredura liberada.
+const robots = `# beorange.app
+# Varredura liberada.
 
 User-agent: *
 Allow: /
@@ -42,22 +33,8 @@ Disallow: /busca.json
 Sitemap: ${SITE}/sitemap.xml
 `;
 
-const bloqueado = `# beorange.app — AMBIENTE DE TESTE
-#
-# Esta NÃO é a versão oficial do site. O endereço oficial é ${SITE}, que hoje
-# serve o blog anterior com o mesmo conteúdo.
-#
-# A varredura está bloqueada de propósito, para que este ambiente não dispute as mesmas
-# consultas que o site oficial. Para liberar, publique com SITE_OFICIAL=true.
-
-User-agent: *
-Disallow: /
-
-Sitemap: ${SITE}/sitemap.xml
-`;
-
 export const GET: APIRoute = async () =>
-  new Response(oficial ? liberado : bloqueado, {
+  new Response(robots, {
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "public, max-age=3600",
