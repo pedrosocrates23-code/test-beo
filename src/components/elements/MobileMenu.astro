@@ -17,7 +17,8 @@ import { WHATSAPP_URL } from "../../lib/whatsapp";
 //    relação com o que a Beorange vende. Por um tempo foram mantidos literais, por decisão
 //    do cliente; em 15/09/2026 o cliente pediu a troca pelos três produtos, que é o que o
 //    mega-menu do desktop já mostrava. Aqui eles também viraram links de verdade — antes
-//    todos apontavam para "#".
+//    todos apontavam para "#". Em 19/10/2026 o cliente pediu para tirar "Lucro Real" da
+//    lista: ficaram os dois produtos do mega-menu do desktop.
 //
 // Os dados abaixo são props com valor padrão: uma página nova troca o item ativo sem
 // duplicar o componente. Atenção — os links do menu também existem no Header e no Footer,
@@ -44,7 +45,6 @@ const {
   ],
   submenu: submenuSolucoes = [
     { label: "Contabilidade Beorange", href: "/contabilidade-beorange/" },
-    { label: "Lucro Real", href: "/lucro-real/" },
     { label: "Conta Beorange", href: "/conta-beorange/" },
   ],
   rotuloContato = "Fale conosco",
@@ -64,6 +64,15 @@ const {
         <img src="/img/menu/icon-close.svg" alt="" width="20" height="20" />
       </button>
     </div>
+
+    {/* Busca (pedido do cliente, 19/10/2026). Desenhado como campo de texto, não como ícone:
+        a primeira coisa que alguém tenta no celular é tocar onde "parece que dá para digitar".
+        O aria-label "Buscar" é o que o BuscaOverlay procura para ligar o clique; o diálogo
+        abre por cima do menu (camada superior) e, ao fechar, devolve a pessoa a ele. */}
+    <button class="mm__busca" type="button" aria-label="Buscar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <span>Buscar por assunto</span>
+    </button>
 
     <nav class="mm__nav" aria-label="Menu principal">
       <a class="mm__link mm__link--ativo" href="/">
@@ -115,6 +124,16 @@ const {
     background:rgba(255,255,255,.08);border:0;border-radius:50%;cursor:pointer;
   }
   .mm__fechar:hover{background:rgba(255,255,255,.16)}
+
+  /* 16px de fonte: abaixo disso o iOS dá zoom na página ao focar o campo da busca. */
+  .mm__busca{
+    display:flex;align-items:center;gap:10px;width:100%;margin-top:18px;padding:0 16px;height:48px;
+    flex:none;  /* o .mm__painel é coluna flex com altura fixa: sem isto o botão encolhe em tela baixa */
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);border-radius:12px;
+    font-family:var(--f);font-size:16px;color:rgba(255,255,255,.62);text-align:left;cursor:pointer;
+  }
+  .mm__busca svg{width:19px;height:19px;flex:none}
+  .mm__busca:hover,.mm__busca:focus-visible{background:rgba(255,255,255,.12);color:#fff}
 
   .mm__nav{display:flex;flex-direction:column;padding-top:8px}
   .mm__link{

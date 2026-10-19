@@ -1,11 +1,15 @@
 ---
 // Busca do site — sobreposição com desfoque, no formato de paleta de comandos.
 //
-// SÓ NO DESKTOP, a partir de 881px. Abaixo disso o gatilho não existe e o diálogo não abre:
-// a navegação no celular é o menu em tela cheia, e uma busca ali competia com ele sem
-// acrescentar caminho — quem chega pelo telefone usa o menu, não uma caixa de texto.
+// Serve desktop e celular (pedido do cliente, 19/10/2026). Antes era só desktop, a partir de
+// 881px: a navegação no celular era o menu em tela cheia e o gatilho não existia. Agora o menu
+// em tela cheia traz um campo "Buscar por assunto" no topo (MobileMenu.astro, aria-label
+// "Buscar") que abre este mesmo diálogo — uma busca só, com o mesmo índice e o mesmo filtro.
+// Abaixo de 881px o diálogo gruda no topo (o teclado do aparelho ocupa a metade de baixo) e o
+// botão "Esc" vira "Fechar".
 //
-// Abre pela lupa do header, pelo campo da página de blog, por Ctrl+K (ou ⌘K) e pela tecla "/".
+// Abre pela lupa do header, pelo campo do menu mobile, pelo campo da página de blog, por
+// Ctrl+K (ou ⌘K) e pela tecla "/".
 // Fecha com Esc, com clique fora ou no botão. O índice vem de /busca.json, baixado UMA vez na
 // primeira abertura e guardado em memória: 149 artigos mais as páginas fixas filtram
 // instantaneamente, sem ida à rede por tecla digitada.
@@ -306,6 +310,26 @@
     .busca{margin-top:20px}
     .busca__corpo{max-height:52vh}
   }
+
+  /* ----------------------------------------------------------------- celular
+     O centro ótico do desktop (margin calculado sobre 100vh) posiciona a caixa no meio da
+     tela, que é exatamente onde o teclado do aparelho aparece: o campo ficaria escondido. Aqui
+     o topo é fixo, abaixo da área segura, e a lista tem altura própria para sobrar espaço ao
+     teclado. Vem DEPOIS de max-height:640px para vencer a margem de 20px dele. */
+  @media(max-width:880px){
+    .busca{
+      width:calc(100vw - 24px);
+      margin:calc(env(safe-area-inset-top, 0px) + 12px) auto auto;
+    }
+    .busca__corpo{max-height:min(38vh, 372px)}
+    .busca__linha{padding:13px 14px}
+    /* "Esc" é tecla de teclado; no toque o botão diz o que faz. A área de toque sobe para
+       ~40px de altura, perto dos 44px recomendados. */
+    .busca__esc{font-size:0;padding:9px 12px;border-radius:10px}
+    .busca__esc::after{content:"Fechar";font:600 12.5px var(--f,'Outfit',sans-serif)}
+    /* O atalho "↵ Abrir" do item selecionado ensina uma tecla que não existe no toque. */
+    .busca__resultados :global(li[data-sel="sim"] .busca__enter){display:none}
+  }
   @media(prefers-reduced-motion:reduce){
     .busca__filtro svg{transition:none}
   }
@@ -551,13 +575,8 @@
       }
     }
 
-    /** A mesma medida do CSS que esconde o pill do header, onde vive a lupa. Abaixo dela não
-     *  há gatilho visível, e abrir por atalho deixaria o visitante numa interface sem saída
-     *  óbvia. */
-    const ehDesktop = () => window.matchMedia("(min-width: 881px)").matches;
-
     function abrir() {
-      if (!ehDesktop() || dialogo.open) return;
+      if (dialogo.open) return;
       dialogo.showModal();
       carregarIndice();
       campo.value = "";
@@ -611,10 +630,6 @@
       if (!menu.hidden && !menu.contains(alvo) && !botaoFiltro.contains(alvo)) abrirMenu(false);
     });
     dialogo.addEventListener("close", () => abrirMenu(false));
-
-    window.addEventListener("resize", () => {
-      if (dialogo.open && !ehDesktop()) dialogo.close();
-    });
 
     document.addEventListener("keydown", (e) => {
       const alvo = e.target as HTMLElement;
