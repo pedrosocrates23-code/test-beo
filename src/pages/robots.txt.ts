@@ -6,8 +6,11 @@
 // SITE_OFICIAL=true liberava, para o preview não disputar consultas com o blog anterior em
 // beorange.app. A trava foi removida a pedido. Duas coisas continuam valendo:
 //
-// - Nenhuma página tem <meta name="robots" content="noindex"> e o vercel.json não envia
-//   X-Robots-Tag: o robots.txt era a única barreira, e agora ela não existe.
+// - Em beorange.app nenhuma página tem noindex. Desde 21/10/2026 o test-beo.vercel.app tem:
+//   <meta name="robots" content="noindex, nofollow"> (Layout.astro, só no build do repo
+//   test-beo) e X-Robots-Tag no vercel.json (só host *.vercel.app). Por isso este arquivo NÃO
+//   pode voltar a dar "Disallow: /": com a varredura bloqueada o buscador nunca lê o noindex,
+//   e uma URL do teste já indexada fica no índice.
 // - Cada página declara <link rel="canonical"> para https://beorange.app/..., então, se uma
 //   URL de preview da Vercel for indexada antes da virada de domínio, o canonical aponta o
 //   endereço oficial como o preferido.

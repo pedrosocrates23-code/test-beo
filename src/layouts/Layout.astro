@@ -54,6 +54,18 @@ const {
 // qual é a versão que vale, caso o preview seja varrido apesar do robots.txt.
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
 
+// NOINDEX SÓ NO AMBIENTE DE TESTE (21/10/2026)
+// O site oficial migrou para beorange.app (Cloudflare Pages, repo Beorange-app/site) e este
+// repositório, test-beo, segue publicado em test-beo.vercel.app com o mesmo conteúdo. Para o
+// teste não disputar o índice com o oficial, a tag sai SÓ quando o build roda na Vercel a
+// partir do repo pedrosocrates23-code/test-beo — as duas variáveis são de sistema da Vercel.
+// Em qualquer outro lugar (Cloudflare, outro repo, build local) elas não existem ou não
+// batem, e a página continua indexável: se este commit chegar ao repo oficial, não faz nada.
+// O vercel.json reforça com X-Robots-Tag, filtrado pelo host *.vercel.app.
+const ambienteDeTeste =
+  process.env.VERCEL_GIT_REPO_OWNER === "pedrosocrates23-code" &&
+  process.env.VERCEL_GIT_REPO_SLUG === "test-beo";
+
 // PRÉVIA AO COMPARTILHAR (Open Graph e Twitter Card)
 // É daqui que WhatsApp, LinkedIn e X tiram título, descrição e imagem do cartão. O texto
 // pronto que a barra de compartilhamento monta acompanha o link, mas quem desenha o cartão
@@ -96,6 +108,7 @@ const grafo = schema ? montarGrafo(schema, caminho) : null;
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalUrl} />
+    {ambienteDeTeste && <meta name="robots" content="noindex, nofollow" />}
 
     <meta property="og:type" content={tipoOg} />
     <meta property="og:site_name" content="Beorange" />
